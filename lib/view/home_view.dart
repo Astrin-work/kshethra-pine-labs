@@ -70,7 +70,7 @@ class HomeWidget extends StatelessWidget {
                         height: 45,
                         child: Image.asset(Assets.icons.preBooking.path),
                       ),
-                      title: 'PRE-BOOKING',
+                      title: 'ADVANCE BOOKING',
                       onTap: () {
                         homepageViewmodel.preBookingPageNavigate(context);
                       },
@@ -142,6 +142,7 @@ class OptionSelectorWidget extends StatelessWidget {
             icon,
             5.kW,
             Text(
+              textAlign: TextAlign.center,
               title,
               style: styles.blackRegular18,
               maxLines: 3,

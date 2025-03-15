@@ -9,6 +9,16 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsGifsGen {
+  const $AssetsGifsGen();
+
+  /// File path: assets/gifs/payment_success.json
+  String get paymentSuccess => 'assets/gifs/payment_success.json';
+
+  /// List of all assets
+  List<String> get values => [paymentSuccess];
+}
+
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
@@ -59,18 +69,59 @@ class $AssetsImagesGen {
   AssetGenImage get loardShivaBackground =>
       const AssetGenImage('assets/images/loard_shiva_background.jpg');
 
+  /// File path: assets/images/lord_devi.jpg
+  AssetGenImage get lordDevi =>
+      const AssetGenImage('assets/images/lord_devi.jpg');
+
+  /// File path: assets/images/lord_durga.jpg
+  AssetGenImage get lordDurga =>
+      const AssetGenImage('assets/images/lord_durga.jpg');
+
+  /// File path: assets/images/lord_ganesh.jpg
+  AssetGenImage get lordGanesh =>
+      const AssetGenImage('assets/images/lord_ganesh.jpg');
+
+  /// File path: assets/images/lord_hanuman.jpg
+  AssetGenImage get lordHanuman =>
+      const AssetGenImage('assets/images/lord_hanuman.jpg');
+
+  /// File path: assets/images/lord_krishna.jpg
+  AssetGenImage get lordKrishna =>
+      const AssetGenImage('assets/images/lord_krishna.jpg');
+
+  /// File path: assets/images/lord_saraswati.jpg
+  AssetGenImage get lordSaraswati =>
+      const AssetGenImage('assets/images/lord_saraswati.jpg');
+
+  /// File path: assets/images/lord_siva.jpg
+  AssetGenImage get lordSiva =>
+      const AssetGenImage('assets/images/lord_siva.jpg');
+
+  /// File path: assets/images/lord_vishnu.jpg
+  AssetGenImage get lordVishnu =>
+      const AssetGenImage('assets/images/lord_vishnu.jpg');
+
   /// List of all assets
   List<AssetGenImage> get values => [
     backgroundImg,
     homeBackground,
     langBackground,
     loardShivaBackground,
+    lordDevi,
+    lordDurga,
+    lordGanesh,
+    lordHanuman,
+    lordKrishna,
+    lordSaraswati,
+    lordSiva,
+    lordVishnu,
   ];
 }
 
 class Assets {
   const Assets._();
 
+  static const $AssetsGifsGen gifs = $AssetsGifsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
 }
