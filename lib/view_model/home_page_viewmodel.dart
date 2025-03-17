@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/model/demo_model/booking_model.dart';
+import 'package:kshethra_mini/model/user_booking_model.dart';
 import 'package:kshethra_mini/view/booking_view.dart';
 import 'package:kshethra_mini/view/donation_view.dart';
 import 'package:kshethra_mini/view/e_hundi_view.dart';
@@ -12,13 +13,27 @@ class HomePageViewmodel extends ChangeNotifier {
   bool _isPassVissible = false;
   bool get isPassVissible => _isPassVissible;
 
+  List<UserBookingModel>_vazhipaduBookingList = [];
+   List<UserBookingModel>get vazhipaduBookingList => _vazhipaduBookingList; 
+
+  int _noOfBookingVazhipaddu = 1;
+  int get noOfBookingVazhipaddu => _noOfBookingVazhipaddu;
+
+  int _amtOfBookingVazhipaddu = 0;
+  int get amtOfBookingVazhipaddu => _amtOfBookingVazhipaddu;
+
   BookingModel _selectedGod = bList[0];
   BookingModel get selectedGod => _selectedGod;
 
   TextEditingController donationAmountController = TextEditingController();
+  TextEditingController bookingNameController = TextEditingController();
+
 
   String _donationAmount = "0";
   String get donationAmount => _donationAmount;
+
+  String _selectedStar = "Star";
+  String get selectedStar => _selectedStar;
 
   void tooglePass() {
     _isPassVissible = !_isPassVissible;
@@ -41,6 +56,9 @@ class HomePageViewmodel extends ChangeNotifier {
 
   void bookingPageNavigate(BuildContext context) {
     _selectedGod = bList[0];
+    _selectedStar = "Star"; 
+    _vazhipaduBookingList = [];
+    bookingNameController.clear();
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => BookingView()),
@@ -101,4 +119,69 @@ class HomePageViewmodel extends ChangeNotifier {
     _selectedGod = value;
     notifyListeners();
   }
+
+  void showVazhipadduDialogBox(
+    BuildContext context,
+    Map<String, dynamic> selectedVazhipaadu,
+  ) {
+    _noOfBookingVazhipaddu = 1;
+    int x = selectedVazhipaadu["prize"];
+    _amtOfBookingVazhipaddu = 1 * x;
+    showDialog(
+      context: context,
+      builder:
+          (context) =>
+              VazhipadduDialogBoxWidget(selectedVazhippadu: selectedVazhipaadu),
+    );
+  }
+
+  void addNoOfBookingVazhipaddu(int ammount) {
+    _noOfBookingVazhipaddu++;
+    _amtOfBookingVazhipaddu = _noOfBookingVazhipaddu * ammount;
+    notifyListeners();
+  }
+
+  void removeNoOfBookingVazhipaddu(int ammount) {
+    if (_noOfBookingVazhipaddu > 1) {
+      _noOfBookingVazhipaddu--;
+      _amtOfBookingVazhipaddu = _noOfBookingVazhipaddu * ammount;
+    }
+    notifyListeners();
+  }
+
+  void showStarDialog(BuildContext context) {
+    showDialog(context: context, builder: (context) => StarDialogBox());
+  }
+
+  void setStar(String star,BuildContext context) {
+    _selectedStar = star;
+    popFunction(context);
+    notifyListeners();
+  }
+
+  void bookingAddNewDevottee(){
+    bookingNameController.clear();
+    _selectedStar = "Star";
+    notifyListeners();
+  }
+
+
+  void setVazhipaduBookingList(Map<String, dynamic> selectedVazhipaadu){
+
+    _vazhipaduBookingList.add(UserBookingModel(
+      name:bookingNameController.text.trim(), star: _selectedStar, vazhiPad: [
+        {
+          "godName":selectedGod.god??"",
+          "vazhipadu":selectedVazhipaadu["vazhi"],
+          "prize":selectedVazhipaadu["prize"],
+          "rep": _noOfBookingVazhipaddu,
+          "tPrize":_amtOfBookingVazhipaddu
+        }
+      ],
+    )); 
+  }
+
+
+
+
 }
