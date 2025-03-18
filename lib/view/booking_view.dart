@@ -4,7 +4,7 @@ import 'package:kshethra_mini/model/star_model.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
-import 'package:kshethra_mini/utils/components/back_button_component.dart';
+import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
@@ -15,21 +15,54 @@ class BookingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return Scaffold(
-      floatingActionButton: BookingFloatButtonWidget(),
+      floatingActionButton: ResponsiveLayout(
+        pinelabDevice: BookingFloatButtonWidget(),
+        mediumDevice: BookingFloatButtonWidget(height: 65),
+        largeDevice: BookingFloatButtonWidget(height: 75),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            AppBarWidget(styles: styles),
+            AppBarWidget(title: 'Booking'),
             ResponsiveLayout(
               pinelabDevice: Padding(
                 padding: const EdgeInsets.only(left: 15.0, right: 15),
                 child: BookingFormWidget(),
               ),
-              mediumDevice: BookingFormWidget(),
-              largeDevice: BookingFormWidget(),
+              mediumDevice: Padding(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.screenWidth * 0.125,
+                  right: SizeConfig.screenWidth * 0.125,
+                ),
+                child: BookingFormWidget(
+                  crossAxisSpace: SizeConfig.screenWidth * 0.15,
+                  mainAxisSpace: SizeConfig.screenWidth * 0.1,
+                ),
+              ),
+              semiMediumDevice: Padding(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.screenWidth * 0.125,
+                  right: SizeConfig.screenWidth * 0.125,
+                ),
+                child: BookingFormWidget(
+                  crossAixisCount: 3,
+                  crossAxisSpace: SizeConfig.screenWidth * 0.05,
+                  mainAxisSpace: SizeConfig.screenWidth * 0.05,
+                ),
+              ),
+              largeDevice: Padding(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.screenWidth * 0.125,
+                  right: SizeConfig.screenWidth * 0.125,
+                ),
+                child: BookingFormWidget(
+                  crossAixisCount: 4,
+                  crossAxisSpace: SizeConfig.screenWidth * 0.015,
+                  mainAxisSpace: SizeConfig.screenWidth * 0.015,
+                ),
+              ),
             ),
           ],
         ),
@@ -38,38 +71,16 @@ class BookingView extends StatelessWidget {
   }
 }
 
-class AppBarWidget extends StatelessWidget {
-  const AppBarWidget({super.key, required this.styles});
-
-  final AppStyles styles;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: SizeConfig.screenHeight * 0.2,
-      width: SizeConfig.screenWidth,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(25),
-          bottomRight: Radius.circular(25),
-        ),
-        image: DecorationImage(
-          image: AssetImage(Assets.images.homeBackground.path),
-          fit: BoxFit.fill,
-        ),
-      ),
-      child: Column(
-        children: [
-          BackButtonComponent(),
-          Text("Booking", style: styles.whiteRegular20),
-        ],
-      ),
-    );
-  }
-}
-
 class BookingFormWidget extends StatelessWidget {
-  const BookingFormWidget({super.key});
+  final double? crossAxisSpace;
+  final double? mainAxisSpace;
+  final int? crossAixisCount;
+  const BookingFormWidget({
+    super.key,
+    this.crossAxisSpace,
+    this.mainAxisSpace,
+    this.crossAixisCount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +133,12 @@ class BookingFormWidget extends StatelessWidget {
                     right: 15,
                     bottom: SizeConfig.screenWidth * 0.2,
                   ),
-                  child: VazhipadduWidget(homepageViewmodel: homepageViewmodel),
+                  child: VazhipadduWidget(
+                    crossAixisCount: crossAixisCount,
+                    homepageViewmodel: homepageViewmodel,
+                    crossAxisSpace: crossAxisSpace,
+                    mainAxisSpace: mainAxisSpace,
+                  ),
                 ),
               ],
             ),
@@ -194,7 +210,16 @@ class GodWidget extends StatelessWidget {
 
 class VazhipadduWidget extends StatelessWidget {
   final HomePageViewmodel homepageViewmodel;
-  const VazhipadduWidget({super.key, required this.homepageViewmodel});
+  final double? crossAxisSpace;
+  final double? mainAxisSpace;
+  final int? crossAixisCount;
+  const VazhipadduWidget({
+    super.key,
+    required this.homepageViewmodel,
+    this.crossAxisSpace,
+    this.mainAxisSpace,
+    this.crossAixisCount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -209,9 +234,9 @@ class VazhipadduWidget extends StatelessWidget {
               : homepageViewmodel.selectedGod.vazhippad!.length,
 
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        mainAxisSpacing: 30,
-        crossAxisSpacing: 40,
-        crossAxisCount: 2,
+        mainAxisSpacing: mainAxisSpace ?? 30,
+        crossAxisSpacing: crossAxisSpace ?? 40,
+        crossAxisCount: crossAixisCount ?? 2,
       ),
       itemBuilder: (context, index) {
         return InkWell(
@@ -367,7 +392,17 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
                   children: [
                     MaterialButton(
                       minWidth: 101,
-                      onPressed: () {},
+                      onPressed: () {
+                        homepageViewmodel.isExistedDevotee
+                            ? homepageViewmodel.addVazhipaddToExisting(
+                              selectedVazhippadu,
+                              context,
+                            )
+                            : homepageViewmodel.setVazhipaduBookingList(
+                              selectedVazhippadu,
+                              context,
+                            );
+                      },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
@@ -469,7 +504,9 @@ class StarDialogBox extends StatelessWidget {
 }
 
 class BookingFloatButtonWidget extends StatelessWidget {
-  const BookingFloatButtonWidget({super.key});
+  final double? height;
+  final double? width;
+  const BookingFloatButtonWidget({super.key, this.height, this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -482,25 +519,33 @@ class BookingFloatButtonWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  height: SizeConfig.screenWidth * 0.135,
-                  width: SizeConfig.screenWidth * 0.7,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    image: DecorationImage(
-                      image: AssetImage(Assets.images.homeBackground.path),
-                      fit: BoxFit.fill,
+                InkWell(
+                  onTap: () {
+                    homepageViewmodel.navigateBookingPreviewView(context);
+                  },
+                  child: Container(
+                    height: height ?? SizeConfig.screenWidth * 0.135,
+                    width: width ?? SizeConfig.screenWidth * 0.7,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      image: DecorationImage(
+                        image: AssetImage(Assets.images.homeBackground.path),
+                        fit: BoxFit.fill,
+                      ),
                     ),
-                  ),
-                  child: Center(
-                    child: Text("PAY", style: styles.whiteRegular20),
+                    child: Center(
+                      child: Text(
+                        "PAY ₹${homepageViewmodel.totalVazhipaduAmt}",
+                        style: styles.whiteRegular20,
+                      ),
+                    ),
                   ),
                 ),
                 InkWell(
                   onTap: homepageViewmodel.bookingAddNewDevottee,
                   child: Container(
-                    height: SizeConfig.screenWidth * 0.135,
-                    width: SizeConfig.screenWidth * 0.15,
+                    height: height ?? SizeConfig.screenWidth * 0.135,
+                    width: width ?? SizeConfig.screenWidth * 0.15,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       image: DecorationImage(

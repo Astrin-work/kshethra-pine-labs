@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color kPrimaryColor = Color(0xFFf2bb4c);
+const Color kLightPrimaryColor = Color(0xFFfbe5b0);   //more lighter color 0xFFfef0c6
 const Color kDullPrimaryColor = Color(0xFFc28341);
 
 const kWhite = Color(0XFFFFFFFF);

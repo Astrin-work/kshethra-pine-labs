@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/model/demo_model/booking_model.dart';
 import 'package:kshethra_mini/model/user_booking_model.dart';
+import 'package:kshethra_mini/view/booking_preview_view.dart';
 import 'package:kshethra_mini/view/booking_view.dart';
 import 'package:kshethra_mini/view/donation_view.dart';
 import 'package:kshethra_mini/view/e_hundi_view.dart';
@@ -13,11 +16,17 @@ class HomePageViewmodel extends ChangeNotifier {
   bool _isPassVissible = false;
   bool get isPassVissible => _isPassVissible;
 
-  List<UserBookingModel>_vazhipaduBookingList = [];
-   List<UserBookingModel>get vazhipaduBookingList => _vazhipaduBookingList; 
+  bool _isExistedDevotee = false;
+  bool get isExistedDevotee => _isExistedDevotee;
+
+  List<UserBookingModel> _vazhipaduBookingList = [];
+  List<UserBookingModel> get vazhipaduBookingList => _vazhipaduBookingList;
 
   int _noOfBookingVazhipaddu = 1;
   int get noOfBookingVazhipaddu => _noOfBookingVazhipaddu;
+
+  int _totalVazhipaduAmt = 0;
+  int get totalVazhipaduAmt => _totalVazhipaduAmt;
 
   int _amtOfBookingVazhipaddu = 0;
   int get amtOfBookingVazhipaddu => _amtOfBookingVazhipaddu;
@@ -27,7 +36,6 @@ class HomePageViewmodel extends ChangeNotifier {
 
   TextEditingController donationAmountController = TextEditingController();
   TextEditingController bookingNameController = TextEditingController();
-
 
   String _donationAmount = "0";
   String get donationAmount => _donationAmount;
@@ -54,11 +62,16 @@ class HomePageViewmodel extends ChangeNotifier {
     );
   }
 
-  void bookingPageNavigate(BuildContext context) {
+  void bookingPageNavigate(BuildContext context){
+
     _selectedGod = bList[0];
-    _selectedStar = "Star"; 
-    _vazhipaduBookingList = [];
+    _selectedStar = "Star";
     bookingNameController.clear();
+    _isExistedDevotee = false;
+    _vazhipaduBookingList = [];
+    _totalVazhipaduAmt = 0;
+    
+    _isExistedDevotee = false;
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => BookingView()),
@@ -69,6 +82,19 @@ class HomePageViewmodel extends ChangeNotifier {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => PreBooking()),
+    );
+  }
+
+  void qrBooking(BuildContext context){
+       Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder:
+            (context) => QrCodeComponentt(
+              amount:"100",
+              paymentLink: "upi://pay?pa=6282488785@superyes&am=100&cu=INR"
+            ),
+      ),
     );
   }
 
@@ -102,13 +128,26 @@ class HomePageViewmodel extends ChangeNotifier {
   }
 
   void navigateQrPayment(BuildContext context) {
-    setQrAmount(donationAmountController.text);
+   _donationAmount = setQrAmount(donationAmountController.text.trim());
     popFunction(context);
     showDialog(context: context, builder: (context) => QrPaymentView());
   }
 
-  void setQrAmount(String amount) {
-    _donationAmount = "upi://pay?pa=6282488785@superyes&am=$amount&cu=INR";
+  void navigateBookingPreviewView(BuildContext context) {
+     _selectedGod = bList[0];
+    _selectedStar = "Star";
+    bookingNameController.clear();
+    _isExistedDevotee = false;
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => BookingPreviewView()),
+    );
+  }
+
+  String setQrAmount(String amount) {
+    String value = "upi://pay?pa=6282488785@superyes&am=$amount&cu=INR";
+
+    return value;
   }
 
   void clearDonationAmount() {
@@ -153,35 +192,91 @@ class HomePageViewmodel extends ChangeNotifier {
     showDialog(context: context, builder: (context) => StarDialogBox());
   }
 
-  void setStar(String star,BuildContext context) {
+  void setStar(String star, BuildContext context) {
     _selectedStar = star;
     popFunction(context);
     notifyListeners();
   }
 
-  void bookingAddNewDevottee(){
+  void bookingAddNewDevottee() {
     bookingNameController.clear();
     _selectedStar = "Star";
+    _isExistedDevotee = false;
     notifyListeners();
   }
 
+  void setVazhipaduBookingList(
+    Map<String, dynamic> selectedVazhipaadu,
+    BuildContext context,
+  ) {
+    // log(_amtOfBookingVazhipaddu.toString());
+    _vazhipaduBookingList.add(
+      UserBookingModel(
+        name: bookingNameController.text.trim(),
+        star: _selectedStar,
+        vazhiPad: [
+          {
+            "godName": selectedGod.god ?? "",
+            "vazhipadu": selectedVazhipaadu["vazhi"],
+            "prize": selectedVazhipaadu["prize"],
+            "rep": _noOfBookingVazhipaddu,
+            "tPrize": _amtOfBookingVazhipaddu,
+          },
+        ],
+      ),
+    );
 
-  void setVazhipaduBookingList(Map<String, dynamic> selectedVazhipaadu){
+    // UserBookingModel value = _vazhipaduBookingList.last;
 
-    _vazhipaduBookingList.add(UserBookingModel(
-      name:bookingNameController.text.trim(), star: _selectedStar, vazhiPad: [
-        {
-          "godName":selectedGod.god??"",
-          "vazhipadu":selectedVazhipaadu["vazhi"],
-          "prize":selectedVazhipaadu["prize"],
-          "rep": _noOfBookingVazhipaddu,
-          "tPrize":_amtOfBookingVazhipaddu
-        }
-      ],
-    )); 
+    _totalVazhipaduAmt += calculateBookingTotalAmt();
+    log(_totalVazhipaduAmt.toString(), name: "New Devotee");
+    _isExistedDevotee = true;
+
+    popFunction(context);
+    notifyListeners();
   }
 
+  int calculateBookingTotalAmt() {
+    UserBookingModel value = _vazhipaduBookingList.last;
 
+    int total = 0;
+    total += value.vazhiPad.last["tPrize"] as int;
 
+    return total;
+  }
 
+  void addVazhipaddToExisting(
+    Map<String, dynamic> selectedVazhipaadu,
+    BuildContext context,
+  ) {
+    _vazhipaduBookingList.last.vazhiPad.add({
+      "godName": selectedGod.god ?? "",
+      "vazhipadu": selectedVazhipaadu["vazhi"],
+      "prize": selectedVazhipaadu["prize"],
+      "rep": _noOfBookingVazhipaddu,
+      "tPrize": _amtOfBookingVazhipaddu,
+    });
+
+    // UserBookingModel value = _vazhipaduBookingList.last;
+
+    _totalVazhipaduAmt += calculateBookingTotalAmt();
+
+    log(_totalVazhipaduAmt.toString(), name: "Existing Devotee");
+    popFunction(context);
+    notifyListeners();
+  }
+
+  void vazhipaduDelete(int indexOfVazhipad, int indexOfPooja) {
+    int amt =
+        _vazhipaduBookingList[indexOfVazhipad].vazhiPad[indexOfPooja]["tPrize"];
+    log(amt.toString());
+    _totalVazhipaduAmt -= amt;
+    _vazhipaduBookingList[indexOfVazhipad].vazhiPad.removeAt(indexOfPooja);
+    if (_vazhipaduBookingList[indexOfVazhipad].vazhiPad.isEmpty ||
+        _vazhipaduBookingList[indexOfVazhipad].vazhiPad == []) {
+      _vazhipaduBookingList.removeAt(indexOfVazhipad);
+    }
+
+    notifyListeners();
+  }
 }
