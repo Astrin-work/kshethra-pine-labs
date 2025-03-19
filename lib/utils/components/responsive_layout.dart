@@ -7,12 +7,14 @@ class ResponsiveLayout extends StatelessWidget {
   final Widget mediumDevice;
   final Widget largeDevice;
   final Widget? semiMediumDevice;
+  final Widget? semiLargeDevice;
   const ResponsiveLayout({
     super.key,
     required this.pinelabDevice,
     required this.mediumDevice,
     required this.largeDevice,
     this.semiMediumDevice,
+    this.semiLargeDevice,
   });
 
   @override
@@ -30,6 +32,10 @@ class ResponsiveLayout extends StatelessWidget {
           log("Semi Meduim Device");
 
           return semiMediumDevice ?? mediumDevice;
+        } else if (constraints.maxWidth > 799 && constraints.maxWidth < 1100) {
+          log("Semi Meduim Device");
+
+          return semiLargeDevice ?? largeDevice;
         } else {
           log("Large Device");
           return largeDevice;

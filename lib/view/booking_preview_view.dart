@@ -4,11 +4,10 @@ import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/utils/components/qr_code_component.dart';
+import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
-import 'package:kshethra_mini/view/payment_complete_screen.dart';
-import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
+import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class BookingPreviewView extends StatelessWidget {
   const BookingPreviewView({super.key});
@@ -17,7 +16,11 @@ class BookingPreviewView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      floatingActionButton: FloatButtonWidget(),
+      floatingActionButton: ResponsiveLayout(
+        pinelabDevice: FloatButtonWidget(),
+        mediumDevice: FloatButtonWidget(height: 65),
+        largeDevice: FloatButtonWidget(height: 75),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [AppBarWidget(title: "Booking"), PreViewWidget()],
@@ -34,9 +37,9 @@ class PreViewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
-    return Consumer<HomePageViewmodel>(
-      builder: (context, homepageViewmodel, child) {
-        final vazhipaduList = homepageViewmodel.vazhipaduBookingList;
+    return Consumer<BookingViewmodel>(
+      builder: (context, bookingViewmodel, child) {
+        final vazhipaduList = bookingViewmodel.vazhipaduBookingList;
         return SizedBox(
           height: SizeConfig.screenHeight * 0.8,
           width: SizeConfig.screenWidth,
@@ -102,7 +105,7 @@ class PreViewWidget extends StatelessWidget {
                                     IconButton(
                                       color: kRed,
                                       onPressed: () {
-                                        homepageViewmodel.vazhipaduDelete(
+                                        bookingViewmodel.vazhipaduDelete(
                                           index,
                                           inde,
                                         );
@@ -137,9 +140,9 @@ class FloatButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
-    return Consumer<HomePageViewmodel>(
+    return Consumer<BookingViewmodel>(
       builder:
-          (context, homepageViewmodel, child) => Padding(
+          (context, bookingViewmodel, child) => Padding(
             padding: const EdgeInsets.only(left: 35.0, right: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,7 +163,7 @@ class FloatButtonWidget extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        "₹ ${homepageViewmodel.totalVazhipaduAmt}",
+                        "₹ ${bookingViewmodel.totalVazhipaduAmt}",
                         style: styles.whiteRegular20,
                       ),
                     ),
@@ -168,7 +171,17 @@ class FloatButtonWidget extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    homepageViewmodel.qrBooking(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:
+                            (context) => QrScannerComponent(
+                              amount: "${bookingViewmodel.totalVazhipaduAmt}",
+                              noOfScreen: 4,
+                              title: 'Booking',
+                            ),
+                      ),
+                    );
                   },
                   child: Container(
                     height: height ?? SizeConfig.screenWidth * 0.135,
@@ -198,53 +211,6 @@ class FloatButtonWidget extends StatelessWidget {
               ],
             ),
           ),
-    );
-  }
-}
-
-class QrCodeComponentt extends StatelessWidget {
-  final String amount;
-  final String paymentLink;
-  const QrCodeComponentt({
-    super.key,
-    required this.amount,
-    required this.paymentLink,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    AppStyles styles = AppStyles();
-    SizeConfig().init(context);
-    return SizedBox(
-      height: SizeConfig.screenHeight * 0.7,
-      width: SizeConfig.screenWidth,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text("Amount : ₹ $amount", style: styles.blackRegular22),
-          Text("Scan this QR Code to Pay", style: styles.blackRegular18),
-          SizedBox(
-            child: QrImageView(
-              data: paymentLink,
-              version: QrVersions.auto,
-              size: 300.0,
-            ),
-          ),
-          Text("demotemple@okicici", style: styles.blackRegular13),
-          MaterialButton(
-            child: Text("data"),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PaymentCompleteScreen(),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
     );
   }
 }

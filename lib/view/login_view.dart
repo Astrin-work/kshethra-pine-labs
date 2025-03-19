@@ -4,7 +4,7 @@ import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
-import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
+import 'package:kshethra_mini/view_model/auth_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class LoginView extends StatelessWidget {
@@ -56,9 +56,9 @@ class LoginWidget extends StatelessWidget {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return Center(
-      child: Consumer<HomePageViewmodel>(
+      child: Consumer<AuthViewmodel>(
         builder:
-            (context, homepageViewmodel, child) => SingleChildScrollView(
+            (context, authViewmodel, child) => SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -75,12 +75,12 @@ class LoginWidget extends StatelessWidget {
                   25.kH,
                   TextField(
                     style: styles.whiteRegular18,
-                    obscureText: !homepageViewmodel.isPassVissible,
+                    obscureText: !authViewmodel.isPassVissible,
                     decoration: InputDecoration(
                       suffixIcon: IconButton(
-                        onPressed: homepageViewmodel.tooglePass,
+                        onPressed: authViewmodel.tooglePass,
                         icon:
-                            homepageViewmodel.isPassVissible
+                            authViewmodel.isPassVissible
                                 ? Icon(Icons.visibility)
                                 : Icon(Icons.visibility_off),
                       ),
@@ -94,7 +94,7 @@ class LoginWidget extends StatelessWidget {
                   55.kH,
                   MaterialButton(
                     onPressed: () {
-                      homepageViewmodel.selectLanguagePageNavigate(context);
+                      authViewmodel.selectLanguagePageNavigate(context);
                     },
                     minWidth: 150,
                     height: 45,

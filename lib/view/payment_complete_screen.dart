@@ -8,7 +8,13 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class PaymentCompleteScreen extends StatelessWidget {
-  const PaymentCompleteScreen({super.key});
+  final String amount;
+  final int noOfScreen;
+  const PaymentCompleteScreen({
+    super.key,
+    required this.amount,
+    required this.noOfScreen,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,37 +23,40 @@ class PaymentCompleteScreen extends StatelessWidget {
     return Scaffold(
       body: Consumer<HomePageViewmodel>(
         builder:
-            (context, homepageViewmodel, child) => Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Amount : ₹ ${homepageViewmodel.donationAmountController.text}",
-                  style: styles.blackRegular22,
-                ),
-                Lottie.asset(Assets.gifs.paymentSuccess),
-                Text(
-                  "Your payment was sucessfull",
-                  style: styles.blackRegular18,
-                ),
-                Text("Thank You !", style: styles.primBold22),
-                25.kH,
-                MaterialButton(
-                  onPressed: () {
-                    // Navigator.pushAndRemoveUntil(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => HomeView()),
-                    //   (Route<dynamic> route) => false,
-                    // );
-                    homepageViewmodel.backtoHomePage(context);
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+            (context, homepageViewmodel, child) => Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text("Amount : ₹ $amount", style: styles.blackRegular22),
+                  SizedBox(
+                    height: SizeConfig.screenHeight * 0.45,
+                    child: Lottie.asset(Assets.gifs.paymentSuccess),
                   ),
-                  minWidth: SizeConfig.screenWidth * .05,
-                  color: kPrimaryColor,
-                  child: Text("Back to Home", style: styles.blackRegular15),
-                ),
-              ],
+                  Text(
+                    "Your payment was sucessfull",
+                    style: styles.blackRegular18,
+                  ),
+                  Text("Thank You !", style: styles.primBold22),
+                  25.kH,
+                  MaterialButton(
+                    onPressed: () {
+                      // Navigator.pushAndRemoveUntil(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => HomeView()),
+                      //   (Route<dynamic> route) => false,
+                      // );
+                      homepageViewmodel.backtoHomePage(context, noOfScreen);
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    minWidth: SizeConfig.screenWidth * .05,
+                    color: kPrimaryColor,
+                    child: Text("Back to Home", style: styles.blackRegular15),
+                  ),
+                  12.kH,
+                ],
+              ),
             ),
       ),
     );
