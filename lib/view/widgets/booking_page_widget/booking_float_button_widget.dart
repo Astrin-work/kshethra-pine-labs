@@ -9,7 +9,14 @@ import 'package:provider/provider.dart';
 class BookingFloatButtonWidget extends StatelessWidget {
   final double? height;
   final double? width;
-  const BookingFloatButtonWidget({super.key, this.height, this.width});
+  final void Function()? payOnTap;
+   final void Function()? addOnTap;
+  const BookingFloatButtonWidget({
+    super.key,
+    this.height,
+    this.width,
+    required this.payOnTap, this.addOnTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +30,7 @@ class BookingFloatButtonWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap: () {
-                    bookingViewmodel.navigateBookingPreviewView(context);
-                  },
+                  onTap: payOnTap,
                   child: Container(
                     height: height ?? SizeConfig.screenWidth * 0.135,
                     width: width ?? SizeConfig.screenWidth * 0.7,
@@ -45,7 +50,7 @@ class BookingFloatButtonWidget extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: bookingViewmodel.bookingAddNewDevottee,
+                  onTap:addOnTap?? bookingViewmodel.bookingAddNewDevottee,
                   child: Container(
                     height: height ?? SizeConfig.screenWidth * 0.135,
                     width: width ?? SizeConfig.screenWidth * 0.15,

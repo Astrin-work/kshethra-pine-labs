@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:kshethra_mini/utils/components/dialog_box_widget.dart';
 import 'package:kshethra_mini/view/booking_view.dart';
 import 'package:kshethra_mini/view/donation_view.dart';
 import 'package:kshethra_mini/view/e_hundi_view.dart';
 import 'package:kshethra_mini/view/home_view.dart';
 import 'package:kshethra_mini/view/advance_booking.dart';
+import 'package:kshethra_mini/view/super_admin_home_view.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -59,5 +61,23 @@ class HomePageViewmodel extends ChangeNotifier {
     String value = "upi://pay?pa=6282488785@superyes&am=$amount&cu=INR";
 
     return value;
+  }
+
+  void showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder:
+          (context) => DialogBoxWidget(
+            title: 'Do you want to Logout ?',
+            fButton: 'Logout',
+            fOnTap: () {},
+            sButton: 'Cancel',
+            sOnTap: () => popFunction(context),
+          ),
+    );
+  }
+
+  void navigateSuperAdminHomeView(BuildContext context){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SuperAdminHomeView()));
   }
 }

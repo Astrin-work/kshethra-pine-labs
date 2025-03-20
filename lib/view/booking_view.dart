@@ -4,6 +4,8 @@ import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/booking_float_button_widget.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/booking_form_widget.dart';
+import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class BookingView extends StatelessWidget {
   const BookingView({super.key});
@@ -12,10 +14,27 @@ class BookingView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      floatingActionButton: ResponsiveLayout(
-        pinelabDevice: BookingFloatButtonWidget(),
-        mediumDevice: BookingFloatButtonWidget(height: 65),
-        largeDevice: BookingFloatButtonWidget(height: 75),
+      floatingActionButton: Consumer<BookingViewmodel>(
+        builder:
+            (context, bookingViewmodel, child) => ResponsiveLayout(
+              pinelabDevice: BookingFloatButtonWidget(
+                payOnTap: () {
+                  bookingViewmodel.navigateBookingPreviewView(context);
+                },
+              ),
+              mediumDevice: BookingFloatButtonWidget(
+                height: 65,
+                payOnTap: () {
+                  bookingViewmodel.navigateBookingPreviewView(context);
+                },
+              ),
+              largeDevice: BookingFloatButtonWidget(
+                height: 75,
+                payOnTap: () {
+                  bookingViewmodel.navigateBookingPreviewView(context);
+                },
+              ),
+            ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -65,4 +84,3 @@ class BookingView extends StatelessWidget {
     );
   }
 }
-

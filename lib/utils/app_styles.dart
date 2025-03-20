@@ -26,6 +26,7 @@ class AppStyles {
   TextStyle get primBold22 =>
       _baseTextStyle(kDullPrimaryColor, 27.0, FontWeight.w500);
   TextStyle get whiteSemi15 => _baseTextStyle(kWhite, 15.0, FontWeight.w600);
+   TextStyle get whiteRegular15 => _baseTextStyle(kWhite, 15.0, FontWeight.w400);
   TextStyle get whiteRegular18 => _baseTextStyle(kWhite, 18.0, FontWeight.w300);
   TextStyle get whiteRegular20 => _baseTextStyle(kWhite, 25.0, FontWeight.w500);
 

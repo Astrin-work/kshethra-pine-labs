@@ -17,9 +17,15 @@ class BookingPreviewView extends StatelessWidget {
     SizeConfig().init(context);
     return Scaffold(
       floatingActionButton: ResponsiveLayout(
-        pinelabDevice: FloatButtonWidget(),
-        mediumDevice: FloatButtonWidget(height: 65),
-        largeDevice: FloatButtonWidget(height: 75),
+        pinelabDevice: FloatButtonWidget(title: 'Booking', noOfScreens: 4,),
+        mediumDevice: FloatButtonWidget(
+          title: 'Booking',
+          noOfScreens: 4,
+          height: 65),
+        largeDevice: FloatButtonWidget(
+          title: 'Booking',
+          noOfScreens: 4,
+          height: 75),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -61,10 +67,15 @@ class PreViewWidget extends StatelessWidget {
                           vazhipaduList[index].name,
                           style: styles.blackRegular15,
                         ),
-                        Text(
-                          vazhipaduList[index].star,
-                          style: styles.blackRegular13,
-                        ),
+                        bookingViewmodel.advBookOption == "star"
+                            ? Text(
+                              vazhipaduList[index].star ?? "",
+                              style: styles.blackRegular13,
+                            )
+                            : Text(
+                              vazhipaduList[index].date ?? "",
+                              style: styles.blackRegular13,
+                            ),
                         Container(
                           color: kWhite,
                           child: ListView.builder(
@@ -132,9 +143,12 @@ class PreViewWidget extends StatelessWidget {
 }
 
 class FloatButtonWidget extends StatelessWidget {
+  final int? amount;
   final double? height;
   final double? width;
-  const FloatButtonWidget({super.key, this.height, this.width});
+  final String title;
+  final int noOfScreens;
+  const FloatButtonWidget({super.key, this.height, this.width, this.amount, required this.title, required this.noOfScreens});
 
   @override
   Widget build(BuildContext context) {
@@ -162,10 +176,13 @@ class FloatButtonWidget extends StatelessWidget {
                       ),
                     ),
                     child: Center(
-                      child: Text(
-                        "₹ ${bookingViewmodel.totalVazhipaduAmt}",
-                        style: styles.whiteRegular20,
-                      ),
+                      child:
+                          amount != null
+                              ? Text("₹ $amount", style: styles.whiteRegular20)
+                              : Text(
+                                "₹ ${bookingViewmodel.totalVazhipaduAmt}",
+                                style: styles.whiteRegular20,
+                              ),
                     ),
                   ),
                 ),
@@ -176,9 +193,9 @@ class FloatButtonWidget extends StatelessWidget {
                       MaterialPageRoute(
                         builder:
                             (context) => QrScannerComponent(
-                              amount: "${bookingViewmodel.totalVazhipaduAmt}",
-                              noOfScreen: 4,
-                              title: 'Booking',
+                              amount: amount != null?"$amount" :"${bookingViewmodel.totalVazhipaduAmt}",
+                              noOfScreen: noOfScreens,
+                              title: title,
                             ),
                       ),
                     );

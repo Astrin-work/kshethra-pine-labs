@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/model/demo_model/booking_model.dart';
 import 'package:kshethra_mini/model/user_booking_model.dart';
+import 'package:kshethra_mini/view/advance_booking_preview_view.dart';
 import 'package:kshethra_mini/view/advanced_booking_confirm_view.dart';
 import 'package:kshethra_mini/view/booking_preview_view.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_dialogbox_widget.dart';
@@ -17,8 +18,17 @@ class BookingViewmodel extends ChangeNotifier {
   int _noOfBookingVazhipaddu = 1;
   int get noOfBookingVazhipaddu => _noOfBookingVazhipaddu;
 
+  int _advBookingAmt = 0;
+  int get advBookingAmt => _advBookingAmt;
+
+    int _totalAdvBookingAmt = 0;
+  int get totalAdvBookingAmt => _totalAdvBookingAmt;
+
   int _totalVazhipaduAmt = 0;
   int get totalVazhipaduAmt => _totalVazhipaduAmt;
+
+  int _advBookingSavedAmt = 0;
+  int get advBookingSavedAmt => _advBookingSavedAmt;
 
   int _amtOfBookingVazhipaddu = 0;
   int get amtOfBookingVazhipaddu => _amtOfBookingVazhipaddu;
@@ -30,6 +40,10 @@ class BookingViewmodel extends ChangeNotifier {
 
   TextEditingController bookingPhnoController = TextEditingController();
 
+  TextEditingController bookingRepController = TextEditingController();
+
+  TextEditingController bookingAddressController = TextEditingController();
+
   String _selectedStar = "Star";
   String get selectedStar => _selectedStar;
 
@@ -40,9 +54,12 @@ class BookingViewmodel extends ChangeNotifier {
   String get selectedDate => _selectedDate;
 
   void setBookingPage() {
+    _advBookOption = "";
+    _advBookingSavedAmt = 0;
     _selectedGod = bList[0];
     _selectedStar = "Star";
     _selectedDate = "Date";
+    bookingAddressController.clear();
     bookingNameController.clear();
     _isExistedDevotee = false;
     _vazhipaduBookingList = [];
@@ -56,7 +73,6 @@ class BookingViewmodel extends ChangeNotifier {
 
   String setQrAmount(String amount) {
     String value = "upi://pay?pa=6282488785@superyes&am=$amount&cu=INR";
-
     return value;
   }
 
@@ -74,6 +90,14 @@ class BookingViewmodel extends ChangeNotifier {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => BookingPreviewView()),
+    );
+  }
+
+  void naviagteAdvBookingPreview(BuildContext context) {
+    //  _totalVazhipaduAmt = _advBookingSavedAmt;
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AdvanceBookingPreviewView()),
     );
   }
 
@@ -114,6 +138,10 @@ class BookingViewmodel extends ChangeNotifier {
     BuildContext context,
     Map<String, dynamic> selectedVazhipaadu,
   ) {
+    bookingRepController.text = "1";
+    int x = selectedVazhipaadu["prize"];
+
+    _totalVazhipaduAmt = _advBookingSavedAmt + (1 * x);
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -123,6 +151,29 @@ class BookingViewmodel extends ChangeNotifier {
             ),
       ),
     );
+  }
+
+  void bookingRepOnchange(
+    String value,
+    Map<String, dynamic> selectedVazhipaadu,
+  ) {
+    int x = selectedVazhipaadu["prize"];
+
+    if (value.trim() != null && value.trim() != "") {
+      int rep = int.parse(value.trim());
+      _totalVazhipaduAmt = _advBookingSavedAmt + (rep * x);
+    } else {
+      _totalVazhipaduAmt = _advBookingSavedAmt;
+    }
+    notifyListeners();
+  }
+
+  void advBookingAddVazhipadu(
+    Map<String, dynamic> selectedVazhipaadu,
+    BuildContext context,
+  ) {
+    _advBookingSavedAmt = _totalVazhipaduAmt;
+    setVazhipaduAdvBookingList(selectedVazhipaadu, context);
   }
 
   void setGod(BookingModel value) {
@@ -167,6 +218,7 @@ class BookingViewmodel extends ChangeNotifier {
 
   void bookingAddNewDevottee() {
     bookingNameController.clear();
+    bookingPhnoController.clear();
     _selectedStar = "Star";
     _isExistedDevotee = false;
     notifyListeners();
@@ -176,7 +228,6 @@ class BookingViewmodel extends ChangeNotifier {
     Map<String, dynamic> selectedVazhipaadu,
     BuildContext context,
   ) {
-    // log(_amtOfBookingVazhipaddu.toString());
     _vazhipaduBookingList.add(
       UserBookingModel(
         name: bookingNameController.text.trim(),
@@ -192,9 +243,6 @@ class BookingViewmodel extends ChangeNotifier {
         ],
       ),
     );
-
-    // UserBookingModel value = _vazhipaduBookingList.last;
-
     _totalVazhipaduAmt += calculateBookingTotalAmt();
     log(_totalVazhipaduAmt.toString(), name: "New Devotee");
     _isExistedDevotee = true;
@@ -202,6 +250,39 @@ class BookingViewmodel extends ChangeNotifier {
     popFunction(context);
     notifyListeners();
   }
+
+  void setVazhipaduAdvBookingList(
+    Map<String, dynamic> selectedVazhipaadu,
+    BuildContext context,
+  ) {
+    _advBookingAmt =
+        selectedVazhipaadu["prize"] *
+        int.parse(bookingRepController.text.trim());
+    _vazhipaduBookingList.add(
+      UserBookingModel(
+        name: bookingNameController.text.trim(),
+        phno: bookingPhnoController.text.trim(),
+        star: _selectedStar,
+        date: _selectedDate,
+        vazhiPad: [
+          {
+            "godName": selectedGod.god ?? "",
+            "vazhipadu": selectedVazhipaadu["vazhi"],
+            "prize": selectedVazhipaadu["prize"],
+            "rep": bookingRepController.text.trim(),
+            "tPrize": _advBookingAmt,
+          },
+        ],
+      ),
+    );
+    _totalAdvBookingAmt +=_advBookingAmt;
+    // _totalVazhipaduAmt = _advBookingSavedAmt;
+    log(_totalAdvBookingAmt.toString(), name: "adv booking");
+
+    notifyListeners();
+  }
+
+
 
   int calculateBookingTotalAmt() {
     UserBookingModel value = _vazhipaduBookingList.last;
@@ -232,6 +313,8 @@ class BookingViewmodel extends ChangeNotifier {
     popFunction(context);
     notifyListeners();
   }
+
+  void setAdvBookingAmt() {}
 
   void vazhipaduDelete(int indexOfVazhipad, int indexOfPooja) {
     int amt =
