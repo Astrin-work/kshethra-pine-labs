@@ -1,16 +1,21 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kshethra_mini/model/demo_model/e_hundi_model.dart';
 import 'package:kshethra_mini/utils/components/dialog_box_widget.dart';
 import 'package:kshethra_mini/view/booking_view.dart';
 import 'package:kshethra_mini/view/donation_view.dart';
 import 'package:kshethra_mini/view/e_hundi_view.dart';
 import 'package:kshethra_mini/view/home_view.dart';
 import 'package:kshethra_mini/view/advance_booking.dart';
+import 'package:kshethra_mini/view/super_admin_add_donation_view.dart';
 import 'package:kshethra_mini/view/super_admin_add_prathistta_view.dart';
+import 'package:kshethra_mini/view/super_admin_add_temple_view.dart';
+import 'package:kshethra_mini/view/super_admin_add_vazhipaddu_view.dart';
 import 'package:kshethra_mini/view/super_admin_god_list_view.dart';
 import 'package:kshethra_mini/view/super_admin_home_view.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
@@ -20,6 +25,18 @@ import 'package:provider/provider.dart';
 class HomePageViewmodel extends ChangeNotifier {
   Uint8List? _addGodImage;
   Uint8List? get addGodImage => _addGodImage;
+
+  String _selectedPrathishtta = "Add prathishtta";
+  String get selectedPrathishtta => _selectedPrathishtta;
+
+  String _selectedTemple = "Select temple";
+  String get selectedTemple => _selectedTemple;
+
+  bool _isDropdownVissible = false;
+  bool get isDropdownVissible => _isDropdownVissible;
+
+  bool _isTempleDropdownVissible = false;
+  bool get isTempleDropdownVissible => _isTempleDropdownVissible;
 
   final ImagePicker _imagePicker = ImagePicker();
 
@@ -97,8 +114,17 @@ class HomePageViewmodel extends ChangeNotifier {
     );
   }
 
+  void navigateSuperAdminAddTempleView(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SuperAdminAddTempleView()),
+    );
+  }
+
   void navigateSuperAdminAddPrathisttaView(BuildContext context) {
     _addGodImage = null;
+    _selectedTemple = "Select temple";
+    _isTempleDropdownVissible = false;
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SuperAdminAddPrathisttaView()),
@@ -201,5 +227,59 @@ class HomePageViewmodel extends ChangeNotifier {
 
     _addGodImage = data.buffer.asUint8List();
     notifyListeners();
+  }
+
+  void navigateSuperAdminAddVazhipadduView(BuildContext context) {
+    _selectedTemple = "Select temple";
+    _isTempleDropdownVissible = false;
+    _isDropdownVissible = false;
+    _selectedPrathishtta = "Add prathishtta";
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SuperAdminAddVazhipadduView()),
+    );
+  }
+
+  void addPoojaDropDownOnchange(String value) {
+    _selectedPrathishtta = value;
+    _isDropdownVissible = false;
+    notifyListeners();
+  }
+
+  void templeDropDownOnchange(String value) {
+    _selectedTemple = value;
+    _isTempleDropdownVissible = false;
+    notifyListeners();
+  }
+
+  void toggleIsDropdownVissible() {
+    _isDropdownVissible = !_isDropdownVissible;
+    notifyListeners();
+  }
+
+  void toggleTempleDropdownVissible() {
+    _isTempleDropdownVissible = !_isTempleDropdownVissible;
+    notifyListeners();
+  }
+
+  void addVazhipaddFloatButton(BuildContext context) {
+    popFunction(context);
+  }
+
+  void navigateSuperAdminAddDonationView(BuildContext context) {
+    _selectedTemple = "Select temple";
+    _isTempleDropdownVissible = false;
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SuperAdminAddDonationView()),
+    );
+  }
+
+  void addDonationFloatButton(BuildContext context) {
+    popFunction(context);
+  }
+
+  void addTempleFloatButton(BuildContext context) {
+    popFunction(context);
   }
 }

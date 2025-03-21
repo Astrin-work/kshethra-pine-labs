@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
+import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -18,9 +19,19 @@ class SuperAdminHomeView extends StatelessWidget {
         children: [
           AppBarWidget(title: "Super Admin Page"),
           35.kH,
-          Padding(
-            padding: const EdgeInsets.only(left: 15.0, right: 15),
-            child: SuperAdminWidget(),
+          ResponsiveLayout(
+            pinelabDevice: Padding(
+              padding: const EdgeInsets.only(left: 15.0, right: 15),
+              child: SuperAdminWidget(),
+            ),
+            mediumDevice: Padding(
+              padding: const EdgeInsets.only(left: 45.0, right: 45),
+              child: SuperAdminWidget(),
+            ),
+            largeDevice: Padding(
+              padding: const EdgeInsets.only(left: 65, right: 65),
+              child: SuperAdminWidget(),
+            ),
           ),
         ],
       ),
@@ -34,12 +45,20 @@ class SuperAdminWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    AppStyles styles = AppStyles();
     return SizedBox(
       child: Consumer<HomePageViewmodel>(
         builder:
             (context, homepageViewmodel, child) => Column(
               children: [
+                OptionBoxWidget(
+                  title: 'Add Temple',
+                  onTap: () {
+                    homepageViewmodel.navigateSuperAdminAddTempleView(
+                      context,
+                    );
+                  },
+                ),
+                20.kH,
                 OptionBoxWidget(
                   title: 'Add Prathishtta',
                   onTap: () {
@@ -49,9 +68,23 @@ class SuperAdminWidget extends StatelessWidget {
                   },
                 ),
                 20.kH,
-                OptionBoxWidget(title: 'Add VazhiPaddu', onTap: () {}),
+                OptionBoxWidget(
+                  title: 'Add VazhiPaddu',
+                  onTap: () {
+                    homepageViewmodel.navigateSuperAdminAddVazhipadduView(
+                      context,
+                    );
+                  },
+                ),
                 20.kH,
-                OptionBoxWidget(title: 'Add Sambhavana', onTap: () {}),
+                OptionBoxWidget(
+                  title: 'Add Donation',
+                  onTap: () {
+                    homepageViewmodel.navigateSuperAdminAddDonationView(
+                      context,
+                    );
+                  },
+                ),
               ],
             ),
       ),

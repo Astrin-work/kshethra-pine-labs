@@ -3,6 +3,8 @@ import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
+import 'package:kshethra_mini/utils/components/existing_temple_dropdown_component.dart';
+import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -33,9 +35,25 @@ class SuperAdminAddPrathisttaView extends StatelessWidget {
           children: [
             AppBarWidget(title: "Add Prathishtta"),
             35.kH,
-            Padding(
-              padding: const EdgeInsets.only(left: 15.0, right: 15),
-              child: AddWidget(),
+            ResponsiveLayout(
+              pinelabDevice: Padding(
+                padding: const EdgeInsets.only(left: 15.0, right: 15),
+                child: AddWidget(),
+              ),
+              mediumDevice: Padding(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.screenWidth * 0.15,
+                  right: SizeConfig.screenWidth * 0.15,
+                ),
+                child: AddWidget(),
+              ),
+              largeDevice: Padding(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.screenWidth * 0.25,
+                  right: SizeConfig.screenWidth * 0.25,
+                ),
+                child: AddWidget(),
+              ),
             ),
           ],
         ),
@@ -83,12 +101,18 @@ class AddWidget extends StatelessWidget {
                 ),
               ),
               25.kH,
-              TextField(
-                style: styles.blackRegular15,
-                decoration: InputDecoration(
-                  hintText: "Name of prathishtta",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
+              ExistingTempleDropdownComponent(),
+              25.kH,
+              SizedBox(
+                width: 300,
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  style: styles.blackRegular15,
+                  decoration: InputDecoration(
+                    hintText: "Name of prathishtta",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
                 ),
               ),
