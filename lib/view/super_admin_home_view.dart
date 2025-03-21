@@ -3,6 +3,8 @@ import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
+import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class SuperAdminHomeView extends StatelessWidget {
   const SuperAdminHomeView({super.key});
@@ -34,14 +36,24 @@ class SuperAdminWidget extends StatelessWidget {
     SizeConfig().init(context);
     AppStyles styles = AppStyles();
     return SizedBox(
-      child: Column(
-        children: [
-          OptionBoxWidget(title: 'Add Prathistta', onTap: () {}),
-          20.kH,
-          OptionBoxWidget(title: 'Add VazhiPaddu', onTap: () {}),
-          20.kH,
-          OptionBoxWidget(title: 'Add Sambhavana', onTap: () {}),
-        ],
+      child: Consumer<HomePageViewmodel>(
+        builder:
+            (context, homepageViewmodel, child) => Column(
+              children: [
+                OptionBoxWidget(
+                  title: 'Add Prathishtta',
+                  onTap: () {
+                    homepageViewmodel.navigateSuperAdminAddPrathisttaView(
+                      context,
+                    );
+                  },
+                ),
+                20.kH,
+                OptionBoxWidget(title: 'Add VazhiPaddu', onTap: () {}),
+                20.kH,
+                OptionBoxWidget(title: 'Add Sambhavana', onTap: () {}),
+              ],
+            ),
       ),
     );
   }

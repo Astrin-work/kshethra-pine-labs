@@ -38,6 +38,8 @@ dependencies:
   build_runner: ^2.4.15
   qr_flutter: ^4.1.0
   lottie: ^3.3.1
+  image_picker: ^1.1.2
+  permission_handler: ^11.4.0
 
 dev_dependencies:
   flutter_test:

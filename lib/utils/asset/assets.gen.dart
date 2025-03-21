@@ -26,12 +26,24 @@ class $AssetsIconsGen {
   AssetGenImage get backArrow =>
       const AssetGenImage('assets/icons/back_arrow.png');
 
+  /// File path: assets/icons/camera_icon.png
+  AssetGenImage get cameraIcon =>
+      const AssetGenImage('assets/icons/camera_icon.png');
+
   /// File path: assets/icons/donation.png
   AssetGenImage get donation =>
       const AssetGenImage('assets/icons/donation.png');
 
   /// File path: assets/icons/e_hundi.png
   AssetGenImage get eHundi => const AssetGenImage('assets/icons/e_hundi.png');
+
+  /// File path: assets/icons/image_icon.png
+  AssetGenImage get imageIcon =>
+      const AssetGenImage('assets/icons/image_icon.png');
+
+  /// File path: assets/icons/plus_icon.png
+  AssetGenImage get plusIcon =>
+      const AssetGenImage('assets/icons/plus_icon.png');
 
   /// File path: assets/icons/pray.png
   AssetGenImage get pray => const AssetGenImage('assets/icons/pray.png');
@@ -43,8 +55,11 @@ class $AssetsIconsGen {
   /// List of all assets
   List<AssetGenImage> get values => [
     backArrow,
+    cameraIcon,
     donation,
     eHundi,
+    imageIcon,
+    plusIcon,
     pray,
     preBooking,
   ];

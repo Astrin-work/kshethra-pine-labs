@@ -27,7 +27,6 @@ class BookingFormWidget extends StatelessWidget {
     return Consumer<BookingViewmodel>(
       builder:
           (context, bookingViewmodel, child) => SizedBox(
-            //     height: SizeConfig.screenHeight * 0.8,
             child: Column(
               children: [
                 25.kH,

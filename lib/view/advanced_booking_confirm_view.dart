@@ -27,32 +27,108 @@ class AdvancedBookingConfirmView extends StatelessWidget {
     return Consumer<BookingViewmodel>(
       builder:
           (context, bookingViewmodel, child) => Scaffold(
-            floatingActionButton: BookingFloatButtonWidget(
-              payOnTap: () {
-                bookingViewmodel.popFunction(context);
+            floatingActionButton: ResponsiveLayout(
+              pinelabDevice: BookingFloatButtonWidget(
+                payOnTap: () {
+                  bookingViewmodel.popFunction(context);
 
-                bookingViewmodel.setVazhipaduAdvBookingList(
-                  selectedVazhipaadu,
-                  context,
-                );
-                bookingViewmodel.naviagteAdvBookingPreview(context);
-              },
-              addOnTap: () {
-                bookingViewmodel.bookingAddNewDevottee();
-                bookingViewmodel.popFunction(context);
-                bookingViewmodel.advBookingAddVazhipadu(
-                  selectedVazhipaadu,
-                  context,
-                );
-              },
+                  bookingViewmodel.setVazhipaduAdvBookingList(
+                    selectedVazhipaadu,
+                    context,
+                  );
+                  bookingViewmodel.naviagteAdvBookingPreview(context);
+                },
+                addOnTap: () {
+                  bookingViewmodel.bookingAddNewDevottee();
+                  bookingViewmodel.popFunction(context);
+                  bookingViewmodel.advBookingAddVazhipadu(
+                    selectedVazhipaadu,
+                    context,
+                  );
+                },
+              ),
+              mediumDevice: BookingFloatButtonWidget(
+                height: 65,
+                payOnTap: () {
+                  bookingViewmodel.popFunction(context);
+
+                  bookingViewmodel.setVazhipaduAdvBookingList(
+                    selectedVazhipaadu,
+                    context,
+                  );
+                  bookingViewmodel.naviagteAdvBookingPreview(context);
+                },
+                addOnTap: () {
+                  bookingViewmodel.bookingAddNewDevottee();
+                  bookingViewmodel.popFunction(context);
+                  bookingViewmodel.advBookingAddVazhipadu(
+                    selectedVazhipaadu,
+                    context,
+                  );
+                },
+              ),
+              largeDevice: BookingFloatButtonWidget(
+                height: 75,
+                payOnTap: () {
+                  bookingViewmodel.popFunction(context);
+
+                  bookingViewmodel.setVazhipaduAdvBookingList(
+                    selectedVazhipaadu,
+                    context,
+                  );
+                  bookingViewmodel.naviagteAdvBookingPreview(context);
+                },
+                addOnTap: () {
+                  bookingViewmodel.bookingAddNewDevottee();
+                  bookingViewmodel.popFunction(context);
+                  bookingViewmodel.advBookingAddVazhipadu(
+                    selectedVazhipaadu,
+                    context,
+                  );
+                },
+              ),
             ),
             body: SingleChildScrollView(
               child: Column(
                 children: [
                   AppBarWidget(title: selectedVazhipaadu["vazhi"]),
-                  AdvancedBookingConfirmForm(
-                    selectedVazhipaadu: selectedVazhipaadu,
+
+                  ResponsiveLayout(
+                    pinelabDevice: Padding(
+                      padding: const EdgeInsets.only(left: 15.0, right: 15),
+                      child: AdvancedBookingConfirmForm(
+                        selectedVazhipaadu: selectedVazhipaadu,
+                      ),
+                    ),
+                    mediumDevice: Padding(
+                      padding: EdgeInsets.only(
+                        left: SizeConfig.screenWidth * 0.125,
+                        right: SizeConfig.screenWidth * 0.125,
+                      ),
+                      child: AdvancedBookingConfirmForm(
+                        selectedVazhipaadu: selectedVazhipaadu,
+                      ),
+                    ),
+                    semiMediumDevice: Padding(
+                      padding: EdgeInsets.only(
+                        left: SizeConfig.screenWidth * 0.125,
+                        right: SizeConfig.screenWidth * 0.125,
+                      ),
+                      child: AdvancedBookingConfirmForm(
+                        selectedVazhipaadu: selectedVazhipaadu,
+                      ),
+                    ),
+                    largeDevice: Padding(
+                      padding: EdgeInsets.only(
+                        left: SizeConfig.screenWidth * 0.125,
+                        right: SizeConfig.screenWidth * 0.125,
+                      ),
+                      child: AdvancedBookingConfirmForm(
+                        selectedVazhipaadu: selectedVazhipaadu,
+                      ),
+                    ),
                   ),
+
                   125.kH,
                 ],
               ),

@@ -149,7 +149,7 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       SizedBox(
-                        width: SizeConfig.screenWidth * 0.4,
+                        //   width: SizeConfig.screenWidth * 0.4,
                         child: Text(
                           "Number of Days for Repeat",
                           style: styles.blackRegular15,
@@ -158,7 +158,7 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                       ),
                       Text(":", style: styles.blackSemi18),
                       SizedBox(
-                        width: SizeConfig.screenWidth * 0.3,
+                        width: SizeConfig.screenWidth * 0.2,
                         child: TextField(
                           controller: bookingViewmodel.bookingRepController,
                           onChanged: (value) {
