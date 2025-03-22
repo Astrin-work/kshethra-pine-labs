@@ -29,39 +29,41 @@ class HomeView extends StatelessWidget {
                 fit: BoxFit.fill,
               ),
             ),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  BackButtonComponent(),
-                  Consumer<HomePageViewmodel>(
-                    builder:
-                        (context, homePageViewmodel, child) => SizedBox(
-                          child: Row(
-                            children: [
-                              IconButton(
-                                iconSize: 30,
-                                onPressed: () {
-                                  homePageViewmodel.navigateSuperAdminHomeView(
-                                    context,
-                                  );
-                                },
-                                icon: Icon(Icons.settings),
-                              ),
-                              5.kW,
-                              IconButton(
-                                iconSize: 30,
-                                onPressed: () {
-                                  homePageViewmodel.showLogoutDialog(context);
-                                },
-                                icon: Icon(Icons.logout),
-                              ),
-                            ],
+            child: SafeArea(
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    BackButtonComponent(),
+                    Consumer<HomePageViewmodel>(
+                      builder:
+                          (context, homePageViewmodel, child) => SizedBox(
+                            child: Row(
+                              children: [
+                                IconButton(
+                                  iconSize: 30,
+                                  onPressed: () {
+                                    homePageViewmodel.navigateSuperAdminHomeView(
+                                      context,
+                                    );
+                                  },
+                                  icon: Icon(Icons.settings),
+                                ),
+                                5.kW,
+                                IconButton(
+                                  iconSize: 30,
+                                  onPressed: () {
+                                    homePageViewmodel.showLogoutDialog(context);
+                                  },
+                                  icon: Icon(Icons.logout),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

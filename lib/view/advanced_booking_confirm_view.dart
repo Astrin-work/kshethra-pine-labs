@@ -10,7 +10,6 @@ import 'package:kshethra_mini/view/widgets/advanced_booking_page_widget/advance_
 import 'package:kshethra_mini/view/widgets/booking_page_widget/booking_float_button_widget.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/star_dialodbox_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
-import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class AdvancedBookingConfirmView extends StatelessWidget {

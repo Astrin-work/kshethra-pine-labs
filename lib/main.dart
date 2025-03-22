@@ -10,11 +10,12 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => HomePageViewmodel()),
-      ChangeNotifierProvider(create: (_) => EHundiViewmodel()),
-      ChangeNotifierProvider(create: (_) => DonationViewmodel()),
-      ChangeNotifierProvider(create: (_) => AuthViewmodel()),
-      ChangeNotifierProvider(create: (_) => BookingViewmodel()),
+      providers: [
+        ChangeNotifierProvider(create: (_) => HomePageViewmodel()),
+        ChangeNotifierProvider(create: (_) => EHundiViewmodel()),
+        ChangeNotifierProvider(create: (_) => DonationViewmodel()),
+        ChangeNotifierProvider(create: (_) => AuthViewmodel()),
+        ChangeNotifierProvider(create: (_) => BookingViewmodel()),
       ],
       child: MyApp(),
     ),

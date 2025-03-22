@@ -8,13 +8,14 @@ import 'package:provider/provider.dart';
 
 class GodWidget extends StatelessWidget {
   const GodWidget({super.key});
+     
 
   @override
   Widget build(BuildContext context) {
      AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return SizedBox(
-       height: 140,
+       height: 145,
       width: SizeConfig.screenWidth,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -25,7 +26,7 @@ class GodWidget extends StatelessWidget {
             child: Consumer<BookingViewmodel>(
               builder:
                   (context, bookingViewmodel, child) => Column(
-                    children: [
+                    children: [      
                       InkWell(
                         onTap: () {
                           bookingViewmodel.setGod(bList[index]);

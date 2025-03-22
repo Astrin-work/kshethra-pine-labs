@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 
 class BackButtonComponent extends StatelessWidget {
