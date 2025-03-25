@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:kshethra_mini/view/language_select_view.dart';
 
 class AuthViewmodel extends ChangeNotifier{
+
+TextEditingController userNameController = TextEditingController();
+TextEditingController passwordController = TextEditingController();
+
+final loginKey = GlobalKey<FormState>();
+
    bool _isPassVissible = false;
   bool get isPassVissible => _isPassVissible;
 
@@ -10,9 +16,12 @@ class AuthViewmodel extends ChangeNotifier{
     notifyListeners();
   }
    void selectLanguagePageNavigate(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => LanguageSelectView()),
-    );
+    bool valid = loginKey.currentState?.validate()??false;
+    if(valid){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LanguageSelectView()),
+      );
+    }
   }
 }

@@ -6,30 +6,35 @@ import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/utils/components/qr_code_component.dart';
 import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
+import 'package:kshethra_mini/utils/components/snack_bar_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
+import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class BookingPreviewView extends StatelessWidget {
-  const BookingPreviewView({super.key});
+  final String page;
+  const BookingPreviewView({super.key, required this.page});
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
       floatingActionButton: ResponsiveLayout(
-        pinelabDevice: FloatButtonWidget(title: 'Booking', noOfScreens: 4,),
+        pinelabDevice: FloatButtonWidget(title: 'Booking', noOfScreens: 4),
         mediumDevice: FloatButtonWidget(
           title: 'Booking',
           noOfScreens: 4,
-          height: 65),
+          height: 65,
+        ),
         largeDevice: FloatButtonWidget(
           title: 'Booking',
           noOfScreens: 4,
-          height: 75),
+          height: 75,
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [AppBarWidget(title: "Booking"), PreViewWidget()],
+          children: [AppBarWidget(title: "Booking"), PreViewWidget(page: page)],
         ),
       ),
     );
@@ -37,7 +42,8 @@ class BookingPreviewView extends StatelessWidget {
 }
 
 class PreViewWidget extends StatelessWidget {
-  const PreViewWidget({super.key});
+  final String page;
+  const PreViewWidget({super.key, required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +73,13 @@ class PreViewWidget extends StatelessWidget {
                           vazhipaduList[index].name,
                           style: styles.blackRegular15,
                         ),
-                        bookingViewmodel.advBookOption == "star"
+                        page == "booking"
                             ? Text(
                               vazhipaduList[index].star ?? "",
                               style: styles.blackRegular13,
                             )
                             : Text(
-                              vazhipaduList[index].date ?? "",
+                              vazhipaduList[index].option ?? "",
                               style: styles.blackRegular13,
                             ),
                         Container(
@@ -116,10 +122,16 @@ class PreViewWidget extends StatelessWidget {
                                     IconButton(
                                       color: kRed,
                                       onPressed: () {
-                                        bookingViewmodel.vazhipaduDelete(
-                                          index,
-                                          inde,
-                                        );
+                                        page == "booking"
+                                            ? bookingViewmodel.vazhipaduDelete(
+                                              index,
+                                              inde,
+                                            )
+                                            : bookingViewmodel
+                                                .advBookingDeleteVazhipadd(
+                                                  index,
+                                                  inde,
+                                                );
                                       },
                                       icon: Icon(Icons.delete),
                                     ),
@@ -148,7 +160,14 @@ class FloatButtonWidget extends StatelessWidget {
   final double? width;
   final String title;
   final int noOfScreens;
-  const FloatButtonWidget({super.key, this.height, this.width, this.amount, required this.title, required this.noOfScreens});
+  const FloatButtonWidget({
+    super.key,
+    this.height,
+    this.width,
+    this.amount,
+    required this.title,
+    required this.noOfScreens,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -188,16 +207,11 @@ class FloatButtonWidget extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.push(
+                    bookingViewmodel.bookingPreviewSecondFloatButton(
                       context,
-                      MaterialPageRoute(
-                        builder:
-                            (context) => QrScannerComponent(
-                              amount: amount != null?"$amount" :"${bookingViewmodel.totalVazhipaduAmt}",
-                              noOfScreen: noOfScreens,
-                              title: title,
-                            ),
-                      ),
+                      amount,
+                      noOfScreens,
+                      title,
                     );
                   },
                   child: Container(

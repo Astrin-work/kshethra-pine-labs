@@ -10,7 +10,6 @@ class BackButtonComponent extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(left: 7.0),
         child: Container(
-          //  color: kRed,
           height: 30,
           alignment: Alignment.topLeft,
           child: InkWell(

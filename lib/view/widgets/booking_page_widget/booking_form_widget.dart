@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
+import 'package:kshethra_mini/utils/validation.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/god_widget.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/star_dialodbox_widget.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_widget.dart';
@@ -30,14 +31,18 @@ class BookingFormWidget extends StatelessWidget {
             child: Column(
               children: [
                 25.kH,
-                TextField(
-                  controller: bookingViewmodel.bookingNameController,
-                  textAlign: TextAlign.center,
-                  style: styles.blackRegular15,
-                  decoration: InputDecoration(
-                    hintText: "Name",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+                Form(
+                  key: bookingViewmodel.bookingKey,
+                  child: TextFormField(
+                    validator: Validation.nameValidation,
+                    controller: bookingViewmodel.bookingNameController,
+                    textAlign: TextAlign.center,
+                    style: styles.blackRegular15,
+                    decoration: InputDecoration(
+                      hintText: "Name",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                     ),
                   ),
                 ),
@@ -97,7 +102,8 @@ class BookingFormWidget extends StatelessWidget {
                   child: VazhipadduWidget(
                     crossAixisCount: crossAixisCount,
                     crossAxisSpace: crossAxisSpace,
-                    mainAxisSpace: mainAxisSpace, screeName: 'bookingPage',
+                    mainAxisSpace: mainAxisSpace,
+                    screeName: 'bookingPage',
                   ),
                 ),
               ],

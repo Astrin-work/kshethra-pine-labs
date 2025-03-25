@@ -3,6 +3,7 @@ import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/qr_code_component.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
+import 'package:kshethra_mini/utils/validation.dart';
 import 'package:kshethra_mini/view_model/donation_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -25,15 +26,25 @@ class DonationDialogWidget extends StatelessWidget {
                   style: styles.blackRegular18,
                 ),
                 10.kH,
-                TextField(
-                  controller: donationViewmodel.donationAmountController,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: donationViewmodel.clearDonationAmount,
-                      icon: Icon(Icons.close),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+                Form(
+                  key: donationViewmodel.donationKey,
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    validator:
+                        (value) => Validation.numberValidation(
+                          value,
+                          "Enter a amount",
+                          "Invalid amount",
+                        ),
+                    controller: donationViewmodel.donationAmountController,
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        onPressed: donationViewmodel.clearDonationAmount,
+                        icon: Icon(Icons.close),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                     ),
                   ),
                 ),
@@ -43,22 +54,7 @@ class DonationDialogWidget extends StatelessWidget {
                   children: [
                     MaterialButton(
                       onPressed: () {
-                        donationViewmodel.popFunction(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => QrScannerComponent(
-                                  amount:
-                                      donationViewmodel
-                                          .donationAmountController
-                                          .text
-                                          .trim(),
-                                  noOfScreen: 3,
-                                  title: 'Donation',
-                                ),
-                          ),
-                        );
+                        donationViewmodel.navigateScannerPage(context);
                       },
                       shape: RoundedRectangleBorder(
                         side: BorderSide(color: kDullPrimaryColor, width: 2),

@@ -3,6 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/model/demo_model/booking_model.dart';
 import 'package:kshethra_mini/model/user_booking_model.dart';
+import 'package:kshethra_mini/utils/app_color.dart';
+import 'package:kshethra_mini/utils/components/qr_code_component.dart';
+import 'package:kshethra_mini/utils/components/snack_bar_widget.dart';
 import 'package:kshethra_mini/view/advance_booking_preview_view.dart';
 import 'package:kshethra_mini/view/advanced_booking_confirm_view.dart';
 import 'package:kshethra_mini/view/booking_preview_view.dart';
@@ -21,7 +24,7 @@ class BookingViewmodel extends ChangeNotifier {
   int _advBookingAmt = 0;
   int get advBookingAmt => _advBookingAmt;
 
-    int _totalAdvBookingAmt = 0;
+  int _totalAdvBookingAmt = 0;
   int get totalAdvBookingAmt => _totalAdvBookingAmt;
 
   int _totalVazhipaduAmt = 0;
@@ -35,6 +38,9 @@ class BookingViewmodel extends ChangeNotifier {
 
   BookingModel _selectedGod = bList[0];
   BookingModel get selectedGod => _selectedGod;
+
+  final bookingKey = GlobalKey<FormState>();
+  final advBookingKey = GlobalKey<FormState>();
 
   TextEditingController bookingNameController = TextEditingController();
 
@@ -56,6 +62,7 @@ class BookingViewmodel extends ChangeNotifier {
   void setBookingPage() {
     _advBookOption = "";
     _advBookingSavedAmt = 0;
+    _totalAdvBookingAmt = 0;
     _selectedGod = bList[0];
     _selectedStar = "Star";
     _selectedDate = "Date";
@@ -83,14 +90,26 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void navigateBookingPreviewView(BuildContext context) {
-    _selectedGod = bList[0];
-    _selectedStar = "Star";
-    bookingNameController.clear();
-    _isExistedDevotee = false;
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => BookingPreviewView()),
-    );
+    if (_totalVazhipaduAmt != 0) {
+      _selectedGod = bList[0];
+      _selectedStar = "Star";
+      bookingNameController.clear();
+      _isExistedDevotee = false;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BookingPreviewView(page: 'booking'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBarWidget(
+          msg: "Please select a Vazhippadu",
+          color: kGrey,
+        ).build(context),
+      );
+    }
+    notifyListeners();
   }
 
   void naviagteAdvBookingPreview(BuildContext context) {
@@ -157,6 +176,10 @@ class BookingViewmodel extends ChangeNotifier {
     String value,
     Map<String, dynamic> selectedVazhipaadu,
   ) {
+    bool valid = advBookingKey.currentState?.validate() ?? false;
+    if (!valid) {
+      return;
+    }
     int x = selectedVazhipaadu["prize"];
 
     if (value.trim() != null && value.trim() != "") {
@@ -172,8 +195,24 @@ class BookingViewmodel extends ChangeNotifier {
     Map<String, dynamic> selectedVazhipaadu,
     BuildContext context,
   ) {
+    bool valid = advBookingKey.currentState?.validate() ?? false;
+    if (!valid) {
+      return;
+    }
+    if (_advBookOption == "") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBarWidget(
+          msg: "Select one option from Star or Date",
+          color: kGrey,
+        ).build(context),
+      );
+      return;
+    }
+
     _advBookingSavedAmt = _totalVazhipaduAmt;
     setVazhipaduAdvBookingList(selectedVazhipaadu, context);
+    bookingAddNewDevottee();
+    popFunction(context);
   }
 
   void setGod(BookingModel value) {
@@ -185,15 +224,26 @@ class BookingViewmodel extends ChangeNotifier {
     BuildContext context,
     Map<String, dynamic> selectedVazhipaadu,
   ) {
+    bool valid = bookingKey.currentState?.validate() ?? false;
+    if (!valid) return;
+
     _noOfBookingVazhipaddu = 1;
     int x = selectedVazhipaadu["prize"];
     _amtOfBookingVazhipaddu = 1 * x;
-    showDialog(
-      context: context,
-      builder:
-          (context) =>
-              VazhipadduDialogBoxWidget(selectedVazhippadu: selectedVazhipaadu),
-    );
+    if (_selectedStar != "Star") {
+      showDialog(
+        context: context,
+        builder:
+            (context) => VazhipadduDialogBoxWidget(
+              selectedVazhippadu: selectedVazhipaadu,
+            ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBarWidget(msg: "Select your star", color: kGrey).build(context),
+      );
+    }
+    notifyListeners();
   }
 
   void addNoOfBookingVazhipaddu(int ammount) {
@@ -255,6 +305,21 @@ class BookingViewmodel extends ChangeNotifier {
     Map<String, dynamic> selectedVazhipaadu,
     BuildContext context,
   ) {
+    bool valid = advBookingKey.currentState?.validate() ?? false;
+    if (!valid) {
+      return;
+    }
+
+    if (_advBookOption == "") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBarWidget(
+          msg: "Select one option from Star or Date",
+          color: kGrey,
+        ).build(context),
+      );
+      return;
+    }
+
     _advBookingAmt =
         selectedVazhipaadu["prize"] *
         int.parse(bookingRepController.text.trim());
@@ -264,6 +329,7 @@ class BookingViewmodel extends ChangeNotifier {
         phno: bookingPhnoController.text.trim(),
         star: _selectedStar,
         date: _selectedDate,
+        option: advBookOption == "star" ? _selectedStar : _selectedDate,
         vazhiPad: [
           {
             "godName": selectedGod.god ?? "",
@@ -275,14 +341,14 @@ class BookingViewmodel extends ChangeNotifier {
         ],
       ),
     );
-    _totalAdvBookingAmt +=_advBookingAmt;
+
+    _totalAdvBookingAmt += _advBookingAmt;
     // _totalVazhipaduAmt = _advBookingSavedAmt;
     log(_totalAdvBookingAmt.toString(), name: "adv booking");
-
+    popFunction(context);
+    naviagteAdvBookingPreview(context);
     notifyListeners();
   }
-
-
 
   int calculateBookingTotalAmt() {
     UserBookingModel value = _vazhipaduBookingList.last;
@@ -327,6 +393,44 @@ class BookingViewmodel extends ChangeNotifier {
       _vazhipaduBookingList.removeAt(indexOfVazhipad);
     }
 
+    notifyListeners();
+  }
+
+  void advBookingDeleteVazhipadd(int indexOfVazhipad, int indexOfPooja) {
+    int amt =
+        _vazhipaduBookingList[indexOfVazhipad].vazhiPad[indexOfPooja]["tPrize"];
+    vazhipaduDelete(indexOfVazhipad, indexOfPooja);
+
+    _totalAdvBookingAmt -= amt;
+    notifyListeners();
+  }
+
+  void bookingPreviewSecondFloatButton(
+    BuildContext context,
+    int? amount,
+    int noOfScreens,
+    String title,
+  ) {
+    if (totalVazhipaduAmt == 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBarWidget(
+          msg: "Payment request denied !",
+          color: kRed,
+        ).build(context),
+      );
+      return;
+    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder:
+            (context) => QrScannerComponent(
+              amount: amount != null ? "$amount" : "$totalVazhipaduAmt",
+              noOfScreen: noOfScreens,
+              title: title,
+            ),
+      ),
+    );
     notifyListeners();
   }
 }

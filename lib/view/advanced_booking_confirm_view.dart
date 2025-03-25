@@ -29,17 +29,12 @@ class AdvancedBookingConfirmView extends StatelessWidget {
             floatingActionButton: ResponsiveLayout(
               pinelabDevice: BookingFloatButtonWidget(
                 payOnTap: () {
-                  bookingViewmodel.popFunction(context);
-
                   bookingViewmodel.setVazhipaduAdvBookingList(
                     selectedVazhipaadu,
                     context,
                   );
-                  bookingViewmodel.naviagteAdvBookingPreview(context);
                 },
                 addOnTap: () {
-                  bookingViewmodel.bookingAddNewDevottee();
-                  bookingViewmodel.popFunction(context);
                   bookingViewmodel.advBookingAddVazhipadu(
                     selectedVazhipaadu,
                     context,
