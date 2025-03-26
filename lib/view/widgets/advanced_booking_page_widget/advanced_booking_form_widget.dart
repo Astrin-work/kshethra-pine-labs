@@ -27,7 +27,8 @@ class AdvancedBookingFormWidget extends StatelessWidget {
             padding: EdgeInsets.only(
               left: 15.0,
               right: 15,
-              bottom: SizeConfig.screenWidth * 0.2,
+              bottom: 10,
+              // bottom: SizeConfig.screenWidth * 0.2,
             ),
             child: VazhipadduWidget(
               crossAixisCount: crossAixisCount,

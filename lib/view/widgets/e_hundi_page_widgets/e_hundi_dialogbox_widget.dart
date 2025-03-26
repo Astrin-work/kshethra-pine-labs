@@ -3,6 +3,7 @@ import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/qr_code_component.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
+import 'package:kshethra_mini/utils/validation.dart';
 import 'package:kshethra_mini/view_model/e_hundi_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -18,18 +19,28 @@ class EHundiDialogWidget extends StatelessWidget {
         builder:
             (context, eHundiViewmodel, child) => Column(
               children: [
-                TextField(
-                  controller: eHundiViewmodel.eHundiAmountController,
-                  textAlign: TextAlign.center,
-                  style: styles.blackRegular13,
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: eHundiViewmodel.clearHundiAmount,
-                      icon: Icon(Icons.close),
-                    ),
-                    hintText: "Enter the Amount",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+                Form(
+                  key: eHundiViewmodel.eHundiKey,
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    validator:
+                        (value) => Validation.numberValidation(
+                          value,
+                          "Enter a amount",
+                          "Enter valid amount",
+                        ),
+                    controller: eHundiViewmodel.eHundiAmountController,
+                    textAlign: TextAlign.center,
+                    style: styles.blackRegular13,
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        onPressed: eHundiViewmodel.clearHundiAmount,
+                        icon: Icon(Icons.close),
+                      ),
+                      hintText: "Enter the Amount",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                     ),
                   ),
                 ),
@@ -39,22 +50,7 @@ class EHundiDialogWidget extends StatelessWidget {
                   children: [
                     MaterialButton(
                       onPressed: () {
-                        eHundiViewmodel.popFunction(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => QrScannerComponent(
-                                  amount:
-                                      eHundiViewmodel
-                                          .eHundiAmountController
-                                          .text
-                                          .trim(),
-                                  noOfScreen: 3,
-                                  title: 'E-Hundi',
-                                ),
-                          ),
-                        );
+                        eHundiViewmodel.navigateScannerPage(context);
                       },
                       shape: RoundedRectangleBorder(
                         side: BorderSide(color: kDullPrimaryColor, width: 2),

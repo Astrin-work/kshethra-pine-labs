@@ -26,9 +26,7 @@ class LanguageSelectView extends StatelessWidget {
                       bottomRight: Radius.circular(25),
                     ),
                     image: DecorationImage(
-                      image: AssetImage(
-                        Assets.images.loardShivaBackground.path,
-                      ),
+                      image: AssetImage(Assets.images.lordSivaBgWithLogo.path),
                       fit: BoxFit.fill,
                     ),
                   ),

@@ -25,7 +25,7 @@ class HomeView extends StatelessWidget {
                 bottomRight: Radius.circular(25),
               ),
               image: DecorationImage(
-                image: AssetImage(Assets.images.homeBackground.path),
+                image: AssetImage(Assets.images.homeBgWithLogo.path),
                 fit: BoxFit.fill,
               ),
             ),
@@ -44,9 +44,8 @@ class HomeView extends StatelessWidget {
                                 IconButton(
                                   iconSize: 30,
                                   onPressed: () {
-                                    homePageViewmodel.navigateSuperAdminHomeView(
-                                      context,
-                                    );
+                                    homePageViewmodel
+                                        .navigateSuperAdminHomeView(context);
                                   },
                                   icon: Icon(Icons.settings),
                                 ),

@@ -107,6 +107,7 @@ class DonationFormWidget extends StatelessWidget {
                       );
                     },
                   ),
+                  15.kH,
                 ],
               ),
             ),

@@ -5,6 +5,7 @@ import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/utils/components/existing_temple_dropdown_component.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
+import 'package:kshethra_mini/utils/validation.dart';
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -50,48 +51,66 @@ class AddVazhipadduWidget extends StatelessWidget {
       builder:
           (context, homepageViewmodel, child) => Padding(
             padding: const EdgeInsets.only(left: 15.0, right: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                25.kH,
-                ExistingTempleDropdownComponent(),
-                25.kH,
-                Text("Select Prathishtta :", style: styles.blackRegular15),
-                10.kH,
-                DropDownWidget(),
-                25.kH,
-                Text("Name of Vazhipaddu :", style: styles.blackRegular15),
-                10.kH,
-                SizedBox(
-                  width: 300,
-                  child: TextField(
-                    style: styles.blackRegular15,
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      hintText: "Add Vazhipaddu",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
+            child: Form(
+              key: homepageViewmodel.addVazhippaduKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  25.kH,
+                  ExistingTempleDropdownComponent(),
+                  25.kH,
+                  Text("Select Prathishtta :", style: styles.blackRegular15),
+                  10.kH,
+                  DropDownWidget(),
+                  25.kH,
+                  Text("Name of Vazhipaddu :", style: styles.blackRegular15),
+                  10.kH,
+                  SizedBox(
+                    width: 300,
+                    child: TextFormField(
+                      validator:
+                          (value) => Validation.emptyValidation(
+                            value,
+                            "Enter a vazhippadu",
+                          ),
+                      controller: homepageViewmodel.addVazhippaduNameController,
+                      style: styles.blackRegular15,
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                        hintText: "Add Vazhipaddu",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                25.kH,
-                Text("Prize of Vazhipaddu :", style: styles.blackRegular15),
-                10.kH,
-                SizedBox(
-                  width: 300,
-                  child: TextField(
-                    style: styles.blackRegular15,
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      hintText: "₹ Prize",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
+                  25.kH,
+                  Text("Prize of Vazhipaddu :", style: styles.blackRegular15),
+                  10.kH,
+                  SizedBox(
+                    width: 300,
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      validator:
+                          (value) => Validation.numberValidation(
+                            value,
+                            "Enter the prize of vazhipaddu",
+                            "Enter a valid prize",
+                          ),
+                      controller:
+                          homepageViewmodel.addVazhippaduPrizeController,
+                      style: styles.blackRegular15,
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                        hintText: "₹ Prize",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
     );

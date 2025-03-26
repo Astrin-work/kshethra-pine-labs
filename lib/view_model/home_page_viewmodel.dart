@@ -5,7 +5,9 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/components/dialog_box_widget.dart';
+import 'package:kshethra_mini/utils/components/snack_bar_widget.dart';
 import 'package:kshethra_mini/view/booking_view.dart';
 import 'package:kshethra_mini/view/donation_view.dart';
 import 'package:kshethra_mini/view/e_hundi_view.dart';
@@ -22,6 +24,25 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class HomePageViewmodel extends ChangeNotifier {
+  final addTempleFormKey = GlobalKey<FormState>();
+  TextEditingController addTempleName = TextEditingController();
+  TextEditingController addTempleAdminUname = TextEditingController();
+  TextEditingController addTempleAdminPass = TextEditingController();
+  TextEditingController addTempleDevoteeUname = TextEditingController();
+  TextEditingController addTempleDevoteePass = TextEditingController();
+  TextEditingController addTemplePhno = TextEditingController();
+  TextEditingController addTempleAddress = TextEditingController();
+
+  final addPrathishttaKey = GlobalKey<FormState>();
+  TextEditingController addPrathishttaNameController = TextEditingController();
+
+  final addVazhippaduKey = GlobalKey<FormState>();
+  TextEditingController addVazhippaduNameController = TextEditingController();
+  TextEditingController addVazhippaduPrizeController = TextEditingController();
+
+  final addDonationKey = GlobalKey<FormState>();
+  TextEditingController addDonationNameController = TextEditingController();
+
   Uint8List? _addGodImage;
   Uint8List? get addGodImage => _addGodImage;
 
@@ -114,6 +135,7 @@ class HomePageViewmodel extends ChangeNotifier {
   }
 
   void navigateSuperAdminAddTempleView(BuildContext context) {
+    clearController();
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SuperAdminAddTempleView()),
@@ -121,9 +143,7 @@ class HomePageViewmodel extends ChangeNotifier {
   }
 
   void navigateSuperAdminAddPrathisttaView(BuildContext context) {
-    _addGodImage = null;
-    _selectedTemple = "Select temple";
-    _isTempleDropdownVissible = false;
+    clearController();
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SuperAdminAddPrathisttaView()),
@@ -211,6 +231,31 @@ class HomePageViewmodel extends ChangeNotifier {
   }
 
   void addGodFloatButton(BuildContext context) {
+    bool valid = addPrathishttaKey.currentState?.validate() ?? false;
+
+    if (!valid) {
+      return;
+    }
+
+    if (_addGodImage == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBarWidget(
+          msg: "Please add Prathishtta image",
+          color: kGrey,
+        ).build(context),
+      );
+      return;
+    }
+
+    if (_selectedTemple == "Select temple") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBarWidget(
+          msg: "Please Select a temple",
+          color: kGrey,
+        ).build(context),
+      );
+      return;
+    }
     popFunction(context);
   }
 
@@ -229,10 +274,8 @@ class HomePageViewmodel extends ChangeNotifier {
   }
 
   void navigateSuperAdminAddVazhipadduView(BuildContext context) {
-    _selectedTemple = "Select temple";
-    _isTempleDropdownVissible = false;
-    _isDropdownVissible = false;
-    _selectedPrathishtta = "Add prathishtta";
+    clearController();
+
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SuperAdminAddVazhipadduView()),
@@ -262,12 +305,37 @@ class HomePageViewmodel extends ChangeNotifier {
   }
 
   void addVazhipaddFloatButton(BuildContext context) {
+    bool valid = addVazhippaduKey.currentState?.validate() ?? false;
+
+    if (!valid) {
+      return;
+    }
+
+    if (_selectedTemple == "Select temple") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBarWidget(
+          msg: "Please Select a temple",
+          color: kGrey,
+        ).build(context),
+      );
+      return;
+    }
+
+    if (_selectedPrathishtta == "Add prathishtta") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBarWidget(
+          msg: "Please select a Prathishtta",
+          color: kGrey,
+        ).build(context),
+      );
+      return;
+    }
+
     popFunction(context);
   }
 
   void navigateSuperAdminAddDonationView(BuildContext context) {
-    _selectedTemple = "Select temple";
-    _isTempleDropdownVissible = false;
+    clearController();
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SuperAdminAddDonationView()),
@@ -275,10 +343,46 @@ class HomePageViewmodel extends ChangeNotifier {
   }
 
   void addDonationFloatButton(BuildContext context) {
+    bool valid = addDonationKey.currentState?.validate() ?? false;
+    if (!valid) {
+      return;
+    }
+    if (_selectedTemple == "Select temple") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBarWidget(
+          msg: "Please Select a temple",
+          color: kGrey,
+        ).build(context),
+      );
+      return;
+    }
     popFunction(context);
   }
 
   void addTempleFloatButton(BuildContext context) {
+    bool valid = addTempleFormKey.currentState?.validate() ?? false;
+    if (!valid) {
+      return;
+    }
     popFunction(context);
+  }
+
+  void clearController() {
+    addTempleName.clear();
+    addTempleAdminUname.clear();
+    addTempleAdminPass.clear();
+    addTempleDevoteeUname.clear();
+    addTempleDevoteePass.clear();
+    addTemplePhno.clear();
+    addTempleAddress.clear();
+    addPrathishttaNameController.clear();
+    addVazhippaduNameController.clear();
+    addVazhippaduPrizeController.clear();
+    addDonationNameController.clear();
+    _selectedTemple = "Select temple";
+    _isTempleDropdownVissible = false;
+    _isDropdownVissible = false;
+    _selectedPrathishtta = "Add prathishtta";
+    _addGodImage = null;
   }
 }

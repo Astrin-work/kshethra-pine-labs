@@ -6,6 +6,7 @@ import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/utils/components/existing_temple_dropdown_component.dart';
 import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
+import 'package:kshethra_mini/utils/validation.dart';
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -105,13 +106,22 @@ class AddWidget extends StatelessWidget {
               25.kH,
               SizedBox(
                 width: 300,
-                child: TextField(
-                  textAlign: TextAlign.center,
-                  style: styles.blackRegular15,
-                  decoration: InputDecoration(
-                    hintText: "Name of prathishtta",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+                child: Form(
+                  key: homepageViewmodel.addPrathishttaKey,
+                  child: TextFormField(
+                    validator:
+                        (value) => Validation.emptyValidation(
+                          value,
+                          "Enter prathishtta name",
+                        ),
+                    controller: homepageViewmodel.addPrathishttaNameController,
+                    textAlign: TextAlign.center,
+                    style: styles.blackRegular15,
+                    decoration: InputDecoration(
+                      hintText: "Name of prathishtta",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                     ),
                   ),
                 ),

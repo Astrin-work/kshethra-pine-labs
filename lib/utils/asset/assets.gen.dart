@@ -76,6 +76,10 @@ class $AssetsImagesGen {
   AssetGenImage get homeBackground =>
       const AssetGenImage('assets/images/home_background.png');
 
+  /// File path: assets/images/home_bg_with_logo.png
+  AssetGenImage get homeBgWithLogo =>
+      const AssetGenImage('assets/images/home_bg_with_logo.png');
+
   /// File path: assets/images/lang_background.png
   AssetGenImage get langBackground =>
       const AssetGenImage('assets/images/lang_background.png');
@@ -112,6 +116,10 @@ class $AssetsImagesGen {
   AssetGenImage get lordSiva =>
       const AssetGenImage('assets/images/lord_siva.jpg');
 
+  /// File path: assets/images/lord_siva_bg_with_logo.png
+  AssetGenImage get lordSivaBgWithLogo =>
+      const AssetGenImage('assets/images/lord_siva_bg_with_logo.png');
+
   /// File path: assets/images/lord_vishnu.jpg
   AssetGenImage get lordVishnu =>
       const AssetGenImage('assets/images/lord_vishnu.jpg');
@@ -120,6 +128,7 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [
     backgroundImg,
     homeBackground,
+    homeBgWithLogo,
     langBackground,
     loardShivaBackground,
     lordDevi,
@@ -129,6 +138,7 @@ class $AssetsImagesGen {
     lordKrishna,
     lordSaraswati,
     lordSiva,
+    lordSivaBgWithLogo,
     lordVishnu,
   ];
 }

@@ -30,20 +30,24 @@ class DialogBoxWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               MaterialButton(
+                minWidth: 85,
+                height: 42,
                 onPressed: fOnTap,
                 shape: RoundedRectangleBorder(
                   side: BorderSide(color: kBlack),
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: Text(fButton, style: styles.blackRegular13),
+                child: Text(fButton, style: styles.blackRegular15),
               ),
               MaterialButton(
+                minWidth: 85,
+                height: 42,
                 onPressed: sOnTap,
                 shape: RoundedRectangleBorder(
                   side: BorderSide(color: kBlack),
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: Text(sButton, style: styles.blackRegular13),
+                child: Text(sButton, style: styles.blackRegular15),
               ),
             ],
           ),

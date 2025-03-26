@@ -3,6 +3,7 @@ import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
+import 'package:kshethra_mini/utils/validation.dart';
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -41,41 +42,74 @@ class AddTempleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     AppStyles styles = AppStyles();
-    return Column(
-      children: [
-        25.kH,
-        TextFieldWidget(title: "Name of the temple :", hint: "Temple"),
-        TextFieldWidget(title: "Username for admin :", hint: "Uname admin"),
-        TextFieldWidget(title: "Password for admin :", hint: "Admin password"),
-        TextFieldWidget(
-          title: "Username for devotee  :",
-          hint: "Uname devotee ",
-        ),
-        TextFieldWidget(
-          title: "Password for devotee  :",
-          hint: "devotee  password",
-        ),
-        TextFieldWidget(title: "Phone number of the temple :", hint: "Phno"),
-        TextFieldWidget(
-          title: "Address of the temple :",
-          hint: "Address",
-          maxLines: 4,
-        ),
-      ],
+    return Consumer<HomePageViewmodel>(
+      builder:
+          (context, homepageViewmodel, child) => Form(
+            key: homepageViewmodel.addTempleFormKey,
+            child: Column(
+              children: [
+                25.kH,
+                TextFieldWidget(
+                  title: "Name of the temple :",
+                  hint: "Temple",
+                  controller: homepageViewmodel.addTempleName,
+                ),
+                TextFieldWidget(
+                  title: "Username for admin :",
+                  hint: "Uname admin",
+                  controller: homepageViewmodel.addTempleAdminUname,
+                ),
+                TextFieldWidget(
+                  title: "Password for admin :",
+                  hint: "Admin password",
+                  controller: homepageViewmodel.addTempleAdminPass,
+                ),
+                TextFieldWidget(
+                  title: "Username for devotee  :",
+                  hint: "Uname devotee ",
+                  controller: homepageViewmodel.addTempleDevoteeUname,
+                ),
+                TextFieldWidget(
+                  title: "Password for devotee  :",
+                  hint: "devotee  password",
+                  controller: homepageViewmodel.addTempleDevoteePass,
+                ),
+                TextFieldWidget(
+                  keyboardType: TextInputType.number,
+                  validator: (value) => Validation.phoneValidation(value),
+                  title: "Phone number of the temple :",
+                  hint: "Phno",
+                  controller: homepageViewmodel.addTemplePhno,
+                ),
+                TextFieldWidget(
+                  title: "Address of the temple :",
+                  hint: "Address",
+                  maxLines: 4,
+                  controller: homepageViewmodel.addTempleAddress,
+                ),
+              ],
+            ),
+          ),
     );
   }
 }
 
 class TextFieldWidget extends StatelessWidget {
+  final TextInputType? keyboardType;
   final String title;
   final String hint;
   final int? maxLines;
+  final TextEditingController controller;
+  final String? Function(String?)? validator;
 
   const TextFieldWidget({
     super.key,
     required this.title,
     required this.hint,
     this.maxLines,
+    required this.controller,
+    this.validator,
+    this.keyboardType,
   });
 
   @override
@@ -89,7 +123,12 @@ class TextFieldWidget extends StatelessWidget {
         10.kH,
         SizedBox(
           width: 300,
-          child: TextField(
+          child: TextFormField(
+            keyboardType: keyboardType,
+            validator:
+                validator ??
+                (value) => Validation.emptyValidation(value, "Enter a value"),
+            controller: controller,
             maxLines: maxLines ?? 1,
             style: styles.blackRegular15,
             textAlign: TextAlign.center,
