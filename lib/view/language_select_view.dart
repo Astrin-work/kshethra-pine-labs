@@ -31,7 +31,6 @@ class LanguageSelectView extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 LanguageBox(),
               ],
             ),
@@ -46,7 +45,6 @@ class LanguageBox extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return SizedBox(
-      //width: SizeConfig.screenWidth*.5,
       height: SizeConfig.screenHeight * 0.6,
       child: ResponsiveLayout(
         pinelabDevice: SmallDeviceWidget(),
