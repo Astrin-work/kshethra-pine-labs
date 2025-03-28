@@ -22,6 +22,10 @@ class $AssetsGifsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/astrins_logo.png
+  AssetGenImage get astrinsLogo =>
+      const AssetGenImage('assets/icons/astrins_logo.png');
+
   /// File path: assets/icons/back_arrow.png
   AssetGenImage get backArrow =>
       const AssetGenImage('assets/icons/back_arrow.png');
@@ -54,6 +58,7 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+    astrinsLogo,
     backArrow,
     cameraIcon,
     donation,
@@ -71,6 +76,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/background_img.jpg
   AssetGenImage get backgroundImg =>
       const AssetGenImage('assets/images/background_img.jpg');
+
+  /// File path: assets/images/clean_bg.jpg
+  AssetGenImage get cleanBg =>
+      const AssetGenImage('assets/images/clean_bg.jpg');
 
   /// File path: assets/images/home_background.png
   AssetGenImage get homeBackground =>
@@ -127,6 +136,7 @@ class $AssetsImagesGen {
   /// List of all assets
   List<AssetGenImage> get values => [
     backgroundImg,
+    cleanBg,
     homeBackground,
     homeBgWithLogo,
     langBackground,

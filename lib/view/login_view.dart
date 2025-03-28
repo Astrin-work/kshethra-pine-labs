@@ -20,29 +20,36 @@ class LoginView extends StatelessWidget {
         width: SizeConfig.screenWidth,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(Assets.images.backgroundImg.path),
+            image: AssetImage(Assets.images.cleanBg.path),
             fit: BoxFit.fill,
           ),
         ),
-        child: ResponsiveLayout(
-          pinelabDevice: Padding(
-            padding: EdgeInsets.only(left: 20, right: 20),
-            child: LoginWidget(),
-          ),
-          mediumDevice: Padding(
-            padding: EdgeInsets.only(
-              left: SizeConfig.screenWidth * 0.15,
-              right: SizeConfig.screenWidth * 0.15,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            SizedBox(child: Image.asset(Assets.icons.astrinsLogo.path)),
+            ResponsiveLayout(
+              pinelabDevice: Padding(
+                padding: EdgeInsets.only(left: 20, right: 20),
+                child: LoginWidget(),
+              ),
+              mediumDevice: Padding(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.screenWidth * 0.15,
+                  right: SizeConfig.screenWidth * 0.15,
+                ),
+                child: LoginWidget(),
+              ),
+              largeDevice: Padding(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.screenWidth * 0.25,
+                  right: SizeConfig.screenWidth * 0.25,
+                ),
+                child: LoginWidget(),
+              ),
             ),
-            child: LoginWidget(),
-          ),
-          largeDevice: Padding(
-            padding: EdgeInsets.only(
-              left: SizeConfig.screenWidth * 0.25,
-              right: SizeConfig.screenWidth * 0.25,
-            ),
-            child: LoginWidget(),
-          ),
+            80.kH,
+          ],
         ),
       ),
     );

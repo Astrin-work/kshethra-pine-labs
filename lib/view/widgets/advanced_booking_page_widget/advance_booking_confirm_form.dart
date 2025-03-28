@@ -54,7 +54,7 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                         ),
                       ),
                     ),
-                
+
                     25.kH,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -94,7 +94,7 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                             );
                           },
                           child: Container(
-                            height: 125,
+                            height: 55,
                             width: 125,
                             decoration:
                                 bookingViewmodel.advBookOption == "star"
@@ -104,7 +104,10 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                                     )
                                     : BoxDecoration(
                                       color: kScaffoldColor,
-                                      border: Border.all(color: kBlack, width: 2),
+                                      border: Border.all(
+                                        color: kBlack,
+                                        width: 1,
+                                      ),
                                       borderRadius: BorderRadius.circular(15),
                                     ),
                             child: Center(
@@ -124,7 +127,7 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                             bookingViewmodel.selectBookingDate(context);
                           },
                           child: Container(
-                            height: 125,
+                            height: 55,
                             width: 125,
                             decoration:
                                 bookingViewmodel.advBookOption == "date"
@@ -134,7 +137,10 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                                     )
                                     : BoxDecoration(
                                       color: kScaffoldColor,
-                                      border: Border.all(color: kBlack, width: 2),
+                                      border: Border.all(
+                                        color: kBlack,
+                                        width: 1,
+                                      ),
                                       borderRadius: BorderRadius.circular(15),
                                     ),
                             child: Center(
@@ -149,6 +155,12 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                           ),
                         ),
                       ],
+                    ),
+                    25.kH,
+                    RepCheckBoxWidget(),
+                    Visibility(
+                      visible: bookingViewmodel.selectedRepMethod == "Weekly",
+                      child: WeeklyWidget(),
                     ),
                     25.kH,
                     Row(
@@ -209,6 +221,256 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                     ),
                   ],
                 ),
+              ),
+            ),
+          ),
+    );
+  }
+}
+
+class WeeklyWidget extends StatelessWidget {
+  const WeeklyWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    AppStyles styles = AppStyles();
+    return Consumer<BookingViewmodel>(
+      builder:
+          (context, bookingViewmodel, child) => SizedBox(
+            child: Column(
+              children: [
+                5.kH,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          Text("Sun", style: styles.blackRegular13),
+                          Checkbox(
+                            value: bookingViewmodel.toggleSelectedWeeklyDay(
+                              "Sun",
+                            ),
+                            onChanged: (v) {
+                              bookingViewmodel.switchSelectedWeeklyDay("Sun");
+                            },
+                            activeColor: kDullPrimaryColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          Text("Mon", style: styles.blackRegular13),
+                          Checkbox(
+                            value: bookingViewmodel.toggleSelectedWeeklyDay(
+                              "Mon",
+                            ),
+                            onChanged: (v) {
+                              bookingViewmodel.switchSelectedWeeklyDay("Mon");
+                            },
+                            activeColor: kDullPrimaryColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          Text("Tue", style: styles.blackRegular13),
+                          Checkbox(
+                            value: bookingViewmodel.toggleSelectedWeeklyDay(
+                              "Tue",
+                            ),
+                            onChanged: (v) {
+                              bookingViewmodel.switchSelectedWeeklyDay("Tue");
+                            },
+                            activeColor: kDullPrimaryColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          Text("Wed", style: styles.blackRegular13),
+                          Checkbox(
+                            value: bookingViewmodel.toggleSelectedWeeklyDay(
+                              "Wed",
+                            ),
+                            onChanged: (v) {
+                              bookingViewmodel.switchSelectedWeeklyDay("Wed");
+                            },
+                            activeColor: kDullPrimaryColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          Text("Thu", style: styles.blackRegular13),
+                          Checkbox(
+                            value: bookingViewmodel.toggleSelectedWeeklyDay(
+                              "Thu",
+                            ),
+                            onChanged: (v) {
+                              bookingViewmodel.switchSelectedWeeklyDay("Thu");
+                            },
+                            activeColor: kDullPrimaryColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          Text("Fri", style: styles.blackRegular13),
+                          Checkbox(
+                            value: bookingViewmodel.toggleSelectedWeeklyDay(
+                              "Fri",
+                            ),
+                            onChanged: (v) {
+                              bookingViewmodel.switchSelectedWeeklyDay("Fri");
+                            },
+                            activeColor: kDullPrimaryColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          Text("Sat", style: styles.blackRegular13),
+                          Checkbox(
+                            value: bookingViewmodel.toggleSelectedWeeklyDay(
+                              "Sat",
+                            ),
+                            onChanged: (v) {
+                              bookingViewmodel.switchSelectedWeeklyDay("Sat");
+                            },
+                            activeColor: kDullPrimaryColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+    );
+  }
+}
+
+class RepCheckBoxWidget extends StatelessWidget {
+  const RepCheckBoxWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    AppStyles styles = AppStyles();
+    return Consumer<BookingViewmodel>(
+      builder:
+          (context, bookingViewmodel, child) => SizedBox(
+            // color: kGreen,
+            width: 250,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        child: Row(
+                          children: [
+                            Text("Once", style: styles.blackRegular15),
+                            Checkbox(
+                              value: bookingViewmodel.toggleSelectedRepMethod(
+                                "Once",
+                              ),
+                              onChanged: (value) {
+                                bookingViewmodel.switchSelectedRepMethod(
+                                  "Once",
+                                );
+                              },
+
+                              activeColor: kDullPrimaryColor,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        child: Row(
+                          children: [
+                            Text("Weekly", style: styles.blackRegular15),
+                            Checkbox(
+                              value: bookingViewmodel.toggleSelectedRepMethod(
+                                "Weekly",
+                              ),
+                              onChanged: (value) {
+                                bookingViewmodel.switchSelectedRepMethod(
+                                  "Weekly",
+                                );
+                              },
+
+                              activeColor: kDullPrimaryColor,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        child: Row(
+                          children: [
+                            Text("Daily", style: styles.blackRegular15),
+                            Checkbox(
+                              value: bookingViewmodel.toggleSelectedRepMethod(
+                                "Daily",
+                              ),
+                              onChanged: (value) {
+                                bookingViewmodel.switchSelectedRepMethod(
+                                  "Daily",
+                                );
+                              },
+
+                              activeColor: kDullPrimaryColor,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        child: Row(
+                          children: [
+                            Text("Monthly", style: styles.blackRegular15),
+                            Checkbox(
+                              value: bookingViewmodel.toggleSelectedRepMethod(
+                                "Monthly",
+                              ),
+                              onChanged: (value) {
+                                bookingViewmodel.switchSelectedRepMethod(
+                                  "Monthly",
+                                );
+                              },
+
+                              activeColor: kDullPrimaryColor,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),

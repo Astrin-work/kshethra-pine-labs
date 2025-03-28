@@ -53,6 +53,12 @@ class BookingViewmodel extends ChangeNotifier {
   String _selectedStar = "Star";
   String get selectedStar => _selectedStar;
 
+  String _selectedRepMethod = "Once";
+  String get selectedRepMethod => _selectedRepMethod;
+
+  String _selectedWeeklyDay = "Sun";
+  String get selectedWeeklyDay => _selectedWeeklyDay;
+
   String _advBookOption = "";
   String get advBookOption => _advBookOption;
 
@@ -157,6 +163,8 @@ class BookingViewmodel extends ChangeNotifier {
     BuildContext context,
     Map<String, dynamic> selectedVazhipaadu,
   ) {
+    _selectedRepMethod = "Once";
+    _selectedWeeklyDay = "Sun";
     bookingRepController.text = "1";
     int x = selectedVazhipaadu["prize"];
 
@@ -182,7 +190,7 @@ class BookingViewmodel extends ChangeNotifier {
     }
     int x = selectedVazhipaadu["prize"];
 
-    if (value.trim() != null && value.trim() != "") {
+    if (value.trim() != "") {
       int rep = int.parse(value.trim());
       _totalVazhipaduAmt = _advBookingSavedAmt + (rep * x);
     } else {
@@ -432,5 +440,31 @@ class BookingViewmodel extends ChangeNotifier {
       ),
     );
     notifyListeners();
+  }
+
+  void switchSelectedRepMethod(String value) {
+    _selectedRepMethod = value;
+    notifyListeners();
+  }
+
+  bool toggleSelectedRepMethod(String value) {
+    if (_selectedRepMethod == value) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void switchSelectedWeeklyDay(String value) {
+    _selectedWeeklyDay = value;
+    notifyListeners();
+  }
+
+  bool toggleSelectedWeeklyDay(String value) {
+    if (_selectedWeeklyDay == value) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
