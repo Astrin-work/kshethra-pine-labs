@@ -27,7 +27,10 @@ class LoginView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            SizedBox(child: Image.asset(Assets.icons.astrinsLogo.path)),
+            SizedBox(
+              width: 150,
+              child: Image.asset(Assets.icons.astrinsLogo.path),
+            ),
             ResponsiveLayout(
               pinelabDevice: Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),

@@ -25,42 +25,56 @@ class HomeView extends StatelessWidget {
                 bottomRight: Radius.circular(25),
               ),
               image: DecorationImage(
-                image: AssetImage(Assets.images.homeBgWithLogo.path),
+                image: AssetImage(Assets.images.homeBackground.path),
                 fit: BoxFit.fill,
               ),
             ),
             child: SafeArea(
               child: Align(
                 alignment: Alignment.topCenter,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
                   children: [
-                    BackButtonComponent(),
-                    Consumer<HomePageViewmodel>(
-                      builder:
-                          (context, homePageViewmodel, child) => SizedBox(
-                            child: Row(
-                              children: [
-                                IconButton(
-                                  iconSize: 30,
-                                  onPressed: () {
-                                    homePageViewmodel
-                                        .navigateSuperAdminHomeView(context);
-                                  },
-                                  icon: Icon(Icons.settings),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        BackButtonComponent(),
+                        Consumer<HomePageViewmodel>(
+                          builder:
+                              (context, homePageViewmodel, child) => SizedBox(
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      iconSize: 30,
+                                      onPressed: () {
+                                        homePageViewmodel
+                                            .navigateSuperAdminHomeView(
+                                              context,
+                                            );
+                                      },
+                                      icon: Icon(Icons.settings),
+                                    ),
+                                    5.kW,
+                                    IconButton(
+                                      iconSize: 30,
+                                      onPressed: () {
+                                        homePageViewmodel.showLogoutDialog(
+                                          context,
+                                        );
+                                      },
+                                      icon: Icon(Icons.logout),
+                                    ),
+                                  ],
                                 ),
-                                5.kW,
-                                IconButton(
-                                  iconSize: 30,
-                                  onPressed: () {
-                                    homePageViewmodel.showLogoutDialog(context);
-                                  },
-                                  icon: Icon(Icons.logout),
-                                ),
-                              ],
-                            ),
-                          ),
+                              ),
+                        ),
+                      ],
                     ),
+                    Spacer(),
+                    SizedBox(
+                      height: SizeConfig.screenHeight * 0.27,
+                      child: Image.asset(Assets.icons.kshethraLogo.path),
+                    ),
+                    Spacer(),
                   ],
                 ),
               ),

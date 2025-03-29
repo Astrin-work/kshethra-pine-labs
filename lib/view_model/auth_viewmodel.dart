@@ -29,7 +29,7 @@ class AuthViewmodel extends ChangeNotifier {
   void selectLanguagePageNavigate(BuildContext context) {
     bool valid = loginKey.currentState?.validate() ?? false;
     if (valid) {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LanguageSelectView()),
       );

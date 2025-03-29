@@ -23,39 +23,42 @@ class PaymentCompleteScreen extends StatelessWidget {
     return Scaffold(
       body: Consumer<HomePageViewmodel>(
         builder:
-            (context, homepageViewmodel, child) => Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text("Amount : ₹ $amount", style: styles.blackRegular22),
-                  SizedBox(
-                    height: SizeConfig.screenHeight * 0.45,
-                    child: Lottie.asset(Assets.gifs.paymentSuccess),
-                  ),
-                  Text(
-                    "Your payment was sucessfull",
-                    style: styles.blackRegular18,
-                  ),
-                  Text("Thank You !", style: styles.primBold22),
-                  25.kH,
-                  MaterialButton(
-                    onPressed: () {
-                      // Navigator.pushAndRemoveUntil(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => HomeView()),
-                      //   (Route<dynamic> route) => false,
-                      // );
-                      homepageViewmodel.backtoHomePage(context, noOfScreen);
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+            (context, homepageViewmodel, child) => SafeArea(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    12.kH,
+                    Text("Amount : ₹ $amount", style: styles.blackRegular22),
+                    SizedBox(
+                      height: SizeConfig.screenHeight * 0.45,
+                      child: Lottie.asset(Assets.gifs.paymentSuccess),
                     ),
-                    minWidth: SizeConfig.screenWidth * .05,
-                    color: kPrimaryColor,
-                    child: Text("Back to Home", style: styles.blackRegular15),
-                  ),
-                  12.kH,
-                ],
+                    Text(
+                      "Your payment was sucessfull",
+                      style: styles.blackRegular18,
+                    ),
+                    Text("Thank You !", style: styles.primBold22),
+                    25.kH,
+                    MaterialButton(
+                      onPressed: () {
+                        // Navigator.pushAndRemoveUntil(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => HomeView()),
+                        //   (Route<dynamic> route) => false,
+                        // );
+                        homepageViewmodel.backtoHomePage(context, noOfScreen);
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      minWidth: SizeConfig.screenWidth * .05,
+                      color: kPrimaryColor,
+                      child: Text("Back to Home", style: styles.blackRegular15),
+                    ),
+                    12.kH,
+                  ],
+                ),
               ),
             ),
       ),

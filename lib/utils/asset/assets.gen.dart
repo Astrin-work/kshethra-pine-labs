@@ -22,6 +22,10 @@ class $AssetsGifsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/astrins_kshethra_logo.png
+  AssetGenImage get astrinsKshethraLogo =>
+      const AssetGenImage('assets/icons/astrins_kshethra_logo.png');
+
   /// File path: assets/icons/astrins_logo.png
   AssetGenImage get astrinsLogo =>
       const AssetGenImage('assets/icons/astrins_logo.png');
@@ -45,8 +49,9 @@ class $AssetsIconsGen {
   AssetGenImage get imageIcon =>
       const AssetGenImage('assets/icons/image_icon.png');
 
-  /// File path: assets/icons/kshetra.png
-  AssetGenImage get kshetra => const AssetGenImage('assets/icons/kshetra.png');
+  /// File path: assets/icons/kshethra_logo.png
+  AssetGenImage get kshethraLogo =>
+      const AssetGenImage('assets/icons/kshethra_logo.png');
 
   /// File path: assets/icons/plus_icon.png
   AssetGenImage get plusIcon =>
@@ -61,13 +66,14 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+    astrinsKshethraLogo,
     astrinsLogo,
     backArrow,
     cameraIcon,
     donation,
     eHundi,
     imageIcon,
-    kshetra,
+    kshethraLogo,
     plusIcon,
     pray,
     preBooking,
@@ -77,10 +83,6 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  /// File path: assets/images/background_img.jpg
-  AssetGenImage get backgroundImg =>
-      const AssetGenImage('assets/images/background_img.jpg');
-
   /// File path: assets/images/clean_bg.jpg
   AssetGenImage get cleanBg =>
       const AssetGenImage('assets/images/clean_bg.jpg');
@@ -88,10 +90,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/home_background.png
   AssetGenImage get homeBackground =>
       const AssetGenImage('assets/images/home_background.png');
-
-  /// File path: assets/images/home_bg_with_logo.png
-  AssetGenImage get homeBgWithLogo =>
-      const AssetGenImage('assets/images/home_bg_with_logo.png');
 
   /// File path: assets/images/lang_background.png
   AssetGenImage get langBackground =>
@@ -129,20 +127,14 @@ class $AssetsImagesGen {
   AssetGenImage get lordSiva =>
       const AssetGenImage('assets/images/lord_siva.jpg');
 
-  /// File path: assets/images/lord_siva_bg_with_logo.png
-  AssetGenImage get lordSivaBgWithLogo =>
-      const AssetGenImage('assets/images/lord_siva_bg_with_logo.png');
-
   /// File path: assets/images/lord_vishnu.jpg
   AssetGenImage get lordVishnu =>
       const AssetGenImage('assets/images/lord_vishnu.jpg');
 
   /// List of all assets
   List<AssetGenImage> get values => [
-    backgroundImg,
     cleanBg,
     homeBackground,
-    homeBgWithLogo,
     langBackground,
     loardShivaBackground,
     lordDevi,
@@ -152,7 +144,6 @@ class $AssetsImagesGen {
     lordKrishna,
     lordSaraswati,
     lordSiva,
-    lordSivaBgWithLogo,
     lordVishnu,
   ];
 }

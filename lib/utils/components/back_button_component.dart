@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 
 class BackButtonComponent extends StatelessWidget {
@@ -15,6 +16,7 @@ class BackButtonComponent extends StatelessWidget {
           child: InkWell(
             onTap: () => Navigator.pop(context),
             child: Image.asset(
+              color: kWhite,
               Assets.icons.backArrow.path,
               width: 30,
               height: 30,
