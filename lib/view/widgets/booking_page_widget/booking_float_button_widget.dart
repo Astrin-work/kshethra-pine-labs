@@ -10,12 +10,13 @@ class BookingFloatButtonWidget extends StatelessWidget {
   final double? height;
   final double? width;
   final void Function()? payOnTap;
-   final void Function()? addOnTap;
+  final void Function()? addOnTap;
   const BookingFloatButtonWidget({
     super.key,
     this.height,
     this.width,
-    required this.payOnTap, this.addOnTap,
+    required this.payOnTap,
+    this.addOnTap,
   });
 
   @override
@@ -50,7 +51,7 @@ class BookingFloatButtonWidget extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap:addOnTap?? bookingViewmodel.bookingAddNewDevottee,
+                  onTap: addOnTap ?? bookingViewmodel.bookingAddNewDevottee,
                   child: Container(
                     height: height ?? SizeConfig.screenWidth * 0.135,
                     width: width ?? SizeConfig.screenWidth * 0.15,

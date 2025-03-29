@@ -28,7 +28,7 @@ class AppBarWidget extends StatelessWidget {
       child: Column(
         children: [
           BackButtonComponent(),
-          Text(title, style: styles.whiteRegular20),
+          Text(title, style: styles.blackRegular20),
         ],
       ),
     );

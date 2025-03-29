@@ -337,6 +337,8 @@ class BookingViewmodel extends ChangeNotifier {
         phno: bookingPhnoController.text.trim(),
         star: _selectedStar,
         date: _selectedDate,
+        repMethode: _selectedRepMethod,
+        day: _selectedRepMethod == "Weekly" ? _selectedWeeklyDay : '',
         option: advBookOption == "star" ? _selectedStar : _selectedDate,
         vazhiPad: [
           {

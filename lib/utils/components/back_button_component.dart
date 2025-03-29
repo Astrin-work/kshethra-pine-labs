@@ -16,7 +16,7 @@ class BackButtonComponent extends StatelessWidget {
           child: InkWell(
             onTap: () => Navigator.pop(context),
             child: Image.asset(
-              color: kWhite,
+              //     color: kWhite,
               Assets.icons.backArrow.path,
               width: 30,
               height: 30,
