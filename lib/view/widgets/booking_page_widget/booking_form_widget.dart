@@ -34,6 +34,7 @@ class BookingFormWidget extends StatelessWidget {
                 Form(
                   key: bookingViewmodel.bookingKey,
                   child: TextFormField(
+                    autofocus: true,
                     validator: Validation.nameValidation,
                     controller: bookingViewmodel.bookingNameController,
                     textAlign: TextAlign.center,

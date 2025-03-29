@@ -29,6 +29,7 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFormField(
+                      autofocus: true,
                       validator: Validation.nameValidation,
                       controller: bookingViewmodel.bookingNameController,
                       textAlign: TextAlign.center,

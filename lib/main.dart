@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/view/login_view.dart';
+import 'package:kshethra_mini/view/splash_screen_view.dart';
 import 'package:kshethra_mini/view_model/auth_viewmodel.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:kshethra_mini/view_model/donation_viewmodel.dart';
@@ -26,6 +27,6 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: LoginView(), debugShowCheckedModeBanner: false);
+    return MaterialApp(home: SplashScreenView(), debugShowCheckedModeBanner: false);
   }
 }

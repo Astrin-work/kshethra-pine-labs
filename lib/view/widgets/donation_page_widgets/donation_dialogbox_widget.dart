@@ -28,6 +28,7 @@ class DonationDialogWidget extends StatelessWidget {
                 Form(
                   key: donationViewmodel.donationKey,
                   child: TextFormField(
+                    autofocus: true,
                     keyboardType: TextInputType.number,
                     validator:
                         (value) => Validation.numberValidation(
@@ -80,9 +81,3 @@ class DonationDialogWidget extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-

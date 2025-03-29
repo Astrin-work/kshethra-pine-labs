@@ -50,6 +50,7 @@ class AddTempleWidget extends StatelessWidget {
               children: [
                 25.kH,
                 TextFieldWidget(
+                  autoFocus: true,
                   title: "Name of the temple :",
                   hint: "Temple",
                   controller: homepageViewmodel.addTempleName,
@@ -99,6 +100,7 @@ class TextFieldWidget extends StatelessWidget {
   final String title;
   final String hint;
   final int? maxLines;
+  final bool? autoFocus;
   final TextEditingController controller;
   final String? Function(String?)? validator;
 
@@ -110,6 +112,7 @@ class TextFieldWidget extends StatelessWidget {
     required this.controller,
     this.validator,
     this.keyboardType,
+    this.autoFocus,
   });
 
   @override
@@ -124,6 +127,7 @@ class TextFieldWidget extends StatelessWidget {
         SizedBox(
           width: 300,
           child: TextFormField(
+            autofocus: autoFocus ?? false,
             keyboardType: keyboardType,
             validator:
                 validator ??

@@ -45,6 +45,9 @@ class $AssetsIconsGen {
   AssetGenImage get imageIcon =>
       const AssetGenImage('assets/icons/image_icon.png');
 
+  /// File path: assets/icons/kshetra.png
+  AssetGenImage get kshetra => const AssetGenImage('assets/icons/kshetra.png');
+
   /// File path: assets/icons/plus_icon.png
   AssetGenImage get plusIcon =>
       const AssetGenImage('assets/icons/plus_icon.png');
@@ -64,6 +67,7 @@ class $AssetsIconsGen {
     donation,
     eHundi,
     imageIcon,
+    kshetra,
     plusIcon,
     pray,
     preBooking,

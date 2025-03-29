@@ -33,6 +33,7 @@ class DonationFormWidget extends StatelessWidget {
                 children: [
                   25.kH,
                   TextFormField(
+                    autofocus: true,
                     validator: Validation.nameValidation,
                     controller: donationViewmodel.donationNameController,
                     textAlign: TextAlign.center,

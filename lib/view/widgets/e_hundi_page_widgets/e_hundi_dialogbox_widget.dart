@@ -21,6 +21,7 @@ class EHundiDialogWidget extends StatelessWidget {
                 Form(
                   key: eHundiViewmodel.eHundiKey,
                   child: TextFormField(
+                    autofocus: true,
                     keyboardType: TextInputType.number,
                     validator:
                         (value) => Validation.numberValidation(
