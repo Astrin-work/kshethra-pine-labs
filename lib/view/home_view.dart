@@ -24,7 +24,7 @@ class HomeView extends StatelessWidget {
                 bottomRight: Radius.circular(25),
               ),
               image: DecorationImage(
-                image: AssetImage(Assets.images.homeBackground.path),
+                image: AssetImage(Assets.images.langBackground.path),
                 fit: BoxFit.fill,
               ),
             ),
@@ -40,6 +40,7 @@ class HomeView extends StatelessWidget {
                         Consumer<HomePageViewmodel>(
                           builder:
                               (context, homePageViewmodel, child) => SizedBox(
+                                height: 20,
                                 child: Row(
                                   children: [
                                     IconButton(
@@ -70,7 +71,7 @@ class HomeView extends StatelessWidget {
                     ),
                     Spacer(),
                     SizedBox(
-                      height: SizeConfig.screenHeight * 0.27,
+                      height: SizeConfig.screenHeight * 0.22,
                       child: Image.asset(Assets.icons.kshethraLogo.path),
                     ),
                     Spacer(),

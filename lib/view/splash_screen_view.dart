@@ -25,7 +25,7 @@ class SplashScreenView extends StatelessWidget {
             children: [
               15.kH,
               Spacer(),
-              Image.asset(Assets.icons.kshethraLogo.path),
+              SizedBox(width:140,child: Image.asset(Assets.icons.kshethraLogo.path)),
               Spacer(),
               SizedBox(
                 width: 150,

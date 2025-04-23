@@ -5,6 +5,7 @@ import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/utils/validation.dart';
+import 'package:kshethra_mini/view/widgets/login_widget.dart';
 import 'package:kshethra_mini/view_model/auth_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -24,117 +25,47 @@ class LoginView extends StatelessWidget {
             fit: BoxFit.fill,
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            SizedBox(
-              width: 150,
-              child: Image.asset(Assets.icons.astrinsLogo.path),
-            ),
-            ResponsiveLayout(
-              pinelabDevice: Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
-                child: LoginWidget(),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              SizedBox(height: 100,),
+              SizedBox(
+                width: 150,
+                child: Image.asset(Assets.icons.kshethraLogo.path),
               ),
-              mediumDevice: Padding(
-                padding: EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.15,
-                  right: SizeConfig.screenWidth * 0.15,
+              SizedBox(height: 20,),
+              ResponsiveLayout(
+                pinelabDevice: Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: LoginWidget(),
                 ),
-                child: LoginWidget(),
-              ),
-              largeDevice: Padding(
-                padding: EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.25,
-                  right: SizeConfig.screenWidth * 0.25,
+                mediumDevice: Padding(
+                  padding: EdgeInsets.only(
+                    left: SizeConfig.screenWidth * 0.15,
+                    right: SizeConfig.screenWidth * 0.15,
+                  ),
+                  child: LoginWidget(),
                 ),
-                child: LoginWidget(),
+                largeDevice: Padding(
+                  padding: EdgeInsets.only(
+                    left: SizeConfig.screenWidth * 0.25,
+                    right: SizeConfig.screenWidth * 0.25,
+                  ),
+                  child: LoginWidget(),
+                ),
               ),
-            ),
-            80.kH,
-          ],
+              10.kH,
+              SizedBox(
+                width: 130,
+                child: Image.asset(Assets.icons.astrinsLogo.path),
+              ),
+
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class LoginWidget extends StatelessWidget {
-  const LoginWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    AppStyles styles = AppStyles();
-    SizeConfig().init(context);
-    return Center(
-      child: Consumer<AuthViewmodel>(
-        builder:
-            (context, authViewmodel, child) => SingleChildScrollView(
-              child: Form(
-                key: authViewmodel.loginKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextFormField(
-                      validator:
-                          (value) => Validation.emptyValidation(
-                            value,
-                            "Enter your Username",
-                          ),
-
-                      controller: authViewmodel.userNameController,
-                      style: styles.whiteRegular18,
-                      decoration: InputDecoration(
-                        hintText: "User Name",
-                        hintStyle: styles.whiteRegular18,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                    ),
-                    25.kH,
-                    TextFormField(
-                      validator:
-                          (value) => Validation.emptyValidation(
-                            value,
-                            "Enter your Password",
-                          ),
-                      controller: authViewmodel.passwordController,
-                      style: styles.whiteRegular18,
-                      obscureText: !authViewmodel.isPassVissible,
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          onPressed: authViewmodel.tooglePass,
-                          icon:
-                              authViewmodel.isPassVissible
-                                  ? Icon(Icons.visibility)
-                                  : Icon(Icons.visibility_off),
-                        ),
-                        hintText: "Password",
-                        hintStyle: styles.whiteRegular18,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                    ),
-                    55.kH,
-                    MaterialButton(
-                      onPressed: () {
-                        authViewmodel.selectLanguagePageNavigate(context);
-                      },
-                      minWidth: 150,
-                      height: 45,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      color: kWhite,
-                      child: Text("LOGIN", style: styles.blackRegular18),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-      ),
-    );
-  }
-}

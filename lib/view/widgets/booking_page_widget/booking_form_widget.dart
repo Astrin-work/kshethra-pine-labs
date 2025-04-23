@@ -47,7 +47,7 @@ class BookingFormWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                25.kH,
+                20.kH,
                 MaterialButton(
                   minWidth: SizeConfig.screenWidth,
                   height: 55,

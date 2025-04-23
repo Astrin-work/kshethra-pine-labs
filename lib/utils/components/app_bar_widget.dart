@@ -22,7 +22,7 @@ class AppBarWidget extends StatelessWidget {
         ),
         image: DecorationImage(
           image: AssetImage(Assets.images.homeBackground.path),
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
         ),
       ),
       child: Column(
