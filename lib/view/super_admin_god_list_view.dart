@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/model/demo_model/e_hundi_model.dart';
-import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
@@ -12,7 +11,6 @@ class SuperAdminGodListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    AppStyles styles = AppStyles();
     return Scaffold(
       body: ResponsiveLayout(
         pinelabDevice: Padding(

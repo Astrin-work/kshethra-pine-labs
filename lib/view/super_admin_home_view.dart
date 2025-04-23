@@ -13,7 +13,6 @@ class SuperAdminHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    AppStyles styles = AppStyles();
     return Scaffold(
       body: Column(
         children: [

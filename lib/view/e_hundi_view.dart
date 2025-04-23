@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kshethra_mini/model/demo_model/e_hundi_model.dart';
-import 'package:kshethra_mini/utils/app_color.dart';
-import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view/widgets/e_hundi_page_widgets/god_list_widget.dart';
-import 'package:provider/provider.dart';
 
 class EHundiView extends StatelessWidget {
   const EHundiView({super.key});

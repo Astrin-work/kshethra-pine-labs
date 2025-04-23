@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kshethra_mini/view/login_view.dart';
 import 'package:kshethra_mini/view/splash_screen_view.dart';
 import 'package:kshethra_mini/view_model/auth_viewmodel.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';

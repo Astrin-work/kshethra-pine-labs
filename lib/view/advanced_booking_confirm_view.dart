@@ -1,13 +1,10 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view/widgets/advanced_booking_page_widget/advance_booking_confirm_form.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/booking_float_button_widget.dart';
-import 'package:kshethra_mini/view/widgets/booking_page_widget/star_dialodbox_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +17,6 @@ class AdvancedBookingConfirmView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return Consumer<BookingViewmodel>(
       builder:

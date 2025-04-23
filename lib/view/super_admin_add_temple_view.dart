@@ -41,7 +41,6 @@ class AddTempleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    AppStyles styles = AppStyles();
     return Consumer<HomePageViewmodel>(
       builder:
           (context, homepageViewmodel, child) => Form(

@@ -16,7 +16,6 @@ class SuperAdminAddPrathisttaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    AppStyles styles = AppStyles();
     return Scaffold(
       floatingActionButton: Consumer<HomePageViewmodel>(
         builder:
