@@ -1,0 +1,46 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../utils/app_styles.dart';
+import '../../../utils/asset/assets.gen.dart';
+import '../../../utils/components/size_config.dart';
+import '../../../view_model/home_page_viewmodel.dart';
+
+class LangWidget extends StatelessWidget {
+  final String lang;
+  final String disc;
+  const LangWidget({super.key, required this.lang, required this.disc});
+
+  @override
+  Widget build(BuildContext context) {
+    AppStyles styles = AppStyles();
+    SizeConfig().init(context);
+    return Consumer<HomePageViewmodel>(
+      builder:
+          (context, homepageViewmodel, child) => InkWell(
+        onTap: () {
+          homepageViewmodel.homePageNavigate(context);
+        },
+        child: Container(
+          height: 80,
+          width: 120,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(Assets.images.langBackground.path),
+              fit: BoxFit.fill,
+            ),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(lang, style: styles.blackRegular22),
+              Text(disc, style: styles.blackRegular18),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
