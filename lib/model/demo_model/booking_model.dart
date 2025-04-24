@@ -1,9 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 
 class BookingModel {
   String? god;
   String? godImg;
-  List<Map<String,dynamic>>? vazhippad;
+  List<Map<String, dynamic>>? vazhippad;
 
   BookingModel({
     required this.god,
@@ -14,89 +15,87 @@ class BookingModel {
 
 List<BookingModel> bList = [
   BookingModel(
-    god: "Shivan",
+    god: "Shivan".tr(),
     godImg: Assets.images.lordSiva.path,
     vazhippad: [
-      {"vazhi": "Abhishekam", "prize": 50},
-      {"vazhi": "Abhishekam", "prize": 40},
-      {"vazhi": "Archana", "prize": 501},
-      {"vazhi": "Rudrabhishekam", "prize": 100},
-      {"vazhi": "Neyvilakku", "prize": 150},
-      {"vazhi": "Annadanam", "prize": 15000},
+      {"vazhi": "Abhishekam".tr(), "prize": 50},
+      {"vazhi": "Abhishekam".tr(), "prize": 40},
+      {"vazhi": "Archana".tr(), "prize": 501},
+      {"vazhi": "Rudrabhishekam".tr(), "prize": 100},
+      {"vazhi": "Neyvilakku".tr(), "prize": 150},
+      {"vazhi": "Annadanam".tr(), "prize": 15000},
     ],
   ),
-
   BookingModel(
-    god: "Devi",
+    god: "Devi".tr(),
     godImg: Assets.images.lordDevi.path,
     vazhippad: [
-      {"vazhi": "Chuttuvillaku", "prize": 1001},
-      {"vazhi": "Trikala pooja", "prize": 501},
-      {"vazhi": "Bhagavath seva", "prize": 501},
-      {"vazhi": "Kalabhabishekam", "prize": 50},
-      {"vazhi": "Thrimadhuram", "prize": 50},
-      {"vazhi": "Chandhanam charth", "prize": 150},
-      {"vazhi": "Neyvilakku", "prize": 150},
-      {"vazhi": "Annadanam", "prize": 15000},
+      {"vazhi": "Chuttuvillaku".tr(), "prize": 1001},
+      {"vazhi": "Trikala pooja".tr(), "prize": 501},
+      {"vazhi": "Bhagavath seva".tr(), "prize": 501},
+      {"vazhi": "Kalabhabishekam".tr(), "prize": 50},
+      {"vazhi": "Thrimadhuram".tr(), "prize": 50},
+      {"vazhi": "Chandhanam charth".tr(), "prize": 150},
+      {"vazhi": "Neyvilakku".tr(), "prize": 150},
+      {"vazhi": "Annadanam".tr(), "prize": 15000},
     ],
   ),
   BookingModel(
-    god: "Vishnu",
+    god: "Vishnu".tr(),
     godImg: Assets.images.lordVishnu.path,
     vazhippad: [
-      {"vazhi": "Chuttuvillaku", "prize": 1000},
-      {"vazhi": "Trikala pooja", "prize": 501},
-      {"vazhi": "Bhagavath seva", "prize": 501},
-      {"vazhi": "Kalabhabishekam", "prize": 50},
+      {"vazhi": "Chuttuvillaku".tr(), "prize": 1000},
+      {"vazhi": "Trikala pooja".tr(), "prize": 501},
+      {"vazhi": "Bhagavath seva".tr(), "prize": 501},
+      {"vazhi": "Kalabhabishekam".tr(), "prize": 50},
     ],
   ),
   BookingModel(
-    god: "Saraswati",
+    god: "Saraswati".tr(),
     godImg: Assets.images.lordSaraswati.path,
     vazhippad: [
-      {"vazhi": "Mala", "prize": 150},
-      {"vazhi": "Malar Para", "prize": 10},
-      {"vazhi": "Ney Vilakku", "prize": 10},
-      {"vazhi": "Payasam", "prize": 100},
-      {"vazhi": "Janma Nakshathra Pooja", "prize": 1001},
+      {"vazhi": "Mala".tr(), "prize": 150},
+      {"vazhi": "Malar Para".tr(), "prize": 10},
+      {"vazhi": "Ney Vilakku".tr(), "prize": 10},
+      {"vazhi": "Payasam".tr(), "prize": 100},
+      {"vazhi": "Janma Nakshathra Pooja".tr(), "prize": 1001},
     ],
   ),
   BookingModel(
-    god: "Ganapathy",
+    god: "Ganapathy".tr(),
     godImg: Assets.images.lordGanesh.path,
     vazhippad: [
-      {"vazhi": "Abhishekam", "prize": 50},
-      {"vazhi": "Abhishekam", "prize": 40},
-      {"vazhi": "Archana", "prize": 501},
-      {"vazhi": "Rudrabhishekam", "prize": 100},
-      {"vazhi": "Neyvilakku", "prize": 150},
-      {"vazhi": "Annadanam", "prize": 15000},
-      {"vazhi": "Mala", "prize": 150},
-      {"vazhi": "Malar Para", "prize": 10},
-      {"vazhi": "Ney Vilakku", "prize": 10},
-      {"vazhi": "Payasam", "prize": 100},
-      {"vazhi": "Janma Nakshathra Pooja", "prize": 1001},
+      {"vazhi": "Abhishekam".tr(), "prize": 50},
+      {"vazhi": "Abhishekam".tr(), "prize": 40},
+      {"vazhi": "Archana".tr(), "prize": 501},
+      {"vazhi": "Rudrabhishekam".tr(), "prize": 100},
+      {"vazhi": "Neyvilakku".tr(), "prize": 150},
+      {"vazhi": "Annadanam".tr(), "prize": 15000},
+      {"vazhi": "Mala".tr(), "prize": 150},
+      {"vazhi": "Malar Para".tr(), "prize": 10},
+      {"vazhi": "Ney Vilakku".tr(), "prize": 10},
+      {"vazhi": "Payasam".tr(), "prize": 100},
+      {"vazhi": "Janma Nakshathra Pooja".tr(), "prize": 1001},
     ],
   ),
-
   BookingModel(
-    god: "Hanuman",
+    god: "Hanuman".tr(),
     godImg: Assets.images.lordHanuman.path,
     vazhippad: [
-      {"vazhi": "Ney Vilakku", "prize": 10},
-      {"vazhi": "Payasam", "prize": 100},
-      {"vazhi": "Janma Nakshathra Pooja", "prize": 1001},
+      {"vazhi": "Ney Vilakku".tr(), "prize": 10},
+      {"vazhi": "Payasam".tr(), "prize": 100},
+      {"vazhi": "Janma Nakshathra Pooja".tr(), "prize": 1001},
     ],
   ),
   BookingModel(
-    god: "Krishna",
+    god: "Krishna".tr(),
     godImg: Assets.images.lordKrishna.path,
     vazhippad: [
-      {"vazhi": "Annadanam", "prize": 15000},
+      {"vazhi": "Annadanam".tr(), "prize": 15000},
     ],
   ),
   BookingModel(
-    god: "Durga",
+    god: "Durga".tr(),
     godImg: Assets.images.lordDurga.path,
     vazhippad: [],
   ),

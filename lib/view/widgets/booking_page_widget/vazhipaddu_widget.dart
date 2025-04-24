@@ -25,7 +25,8 @@ class VazhipadduWidget extends StatelessWidget {
     SizeConfig().init(context);
     return Consumer<BookingViewmodel>(
       builder:
-          (context, bookingViewmodel, child) => GridView.builder(
+          (context, bookingViewmodel, child) =>
+              GridView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemCount:
