@@ -3,7 +3,6 @@ import 'package:kshethra_mini/view/widgets/laguage_select_widgets/small_device_w
 
 import '../../../utils/components/responsive_layout.dart';
 import '../../../utils/components/size_config.dart';
-import '../../language_select_view.dart';
 import 'large_device_widget.dart';
 
 class LanguageBox extends StatelessWidget {

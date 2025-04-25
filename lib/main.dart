@@ -1,38 +1,35 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:kshethra_mini/view/login_view.dart';
+import 'package:hive/hive.dart';
+import 'package:kshethra_mini/utils/hive/constants.dart';
+import 'package:kshethra_mini/view/language_select_view.dart';
 import 'package:kshethra_mini/view_model/auth_viewmodel.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:kshethra_mini/view_model/donation_viewmodel.dart';
 import 'package:kshethra_mini/view_model/e_hundi_viewmodel.dart';
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
-void main() async {
+Box? box;
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
+
+  final dir = await path_provider.getApplicationDocumentsDirectory();
+  Hive.init(dir.path);
+
+  box = await Hive.openBox(Constants.BOX_NAME);
 
   runApp(
-    EasyLocalization(
-      supportedLocales: const [
-        Locale('en'),
-        Locale('ml'),
-        Locale('ta'),
-        Locale('te'),
-        Locale('hi'),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => HomePageViewmodel()),
+        ChangeNotifierProvider(create: (_) => EHundiViewmodel()),
+        ChangeNotifierProvider(create: (_) => DonationViewmodel()),
+        ChangeNotifierProvider(create: (_) => AuthViewmodel()),
+        ChangeNotifierProvider(create: (_) => BookingViewmodel()),
       ],
-      path: 'assets/languages',
-      fallbackLocale: const Locale('en'),
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => HomePageViewmodel()),
-          ChangeNotifierProvider(create: (_) => EHundiViewmodel()),
-          ChangeNotifierProvider(create: (_) => DonationViewmodel()),
-          ChangeNotifierProvider(create: (_) => AuthViewmodel()),
-          ChangeNotifierProvider(create: (_) => BookingViewmodel()),
-        ],
-        child: const MyApp(),
-      ),
+      child: const MyApp(),
     ),
   );
 }
@@ -42,13 +39,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
+      home: LanguageSelectView(),
       debugShowCheckedModeBanner: false,
-      locale: context.locale,
-      supportedLocales: context.supportedLocales,
-      localizationsDelegates: context.localizationDelegates,
-      home: LoginView(),
     );
-
   }
 }

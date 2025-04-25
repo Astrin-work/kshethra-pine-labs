@@ -3,8 +3,11 @@ import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
+import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
+
+import '../../../view_model/home_page_viewmodel.dart';
 
 class VazhipadduWidget extends StatelessWidget {
   final double? crossAxisSpace;
@@ -21,12 +24,12 @@ class VazhipadduWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return Consumer<BookingViewmodel>(
       builder:
-          (context, bookingViewmodel, child) =>
-              GridView.builder(
+          (context, bookingViewmodel, child) => GridView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemCount:
@@ -75,16 +78,28 @@ class VazhipadduWidget extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              "${bookingViewmodel.selectedGod.vazhippad![index]["vazhi"]}",
-                              style: styles.blackRegular15,
+                            BuildTextWidget(
+                              text:
+                                  "${bookingViewmodel.selectedGod.vazhippad![index]["vazhi"]}",
+                              toLang: currentLang,
                               textAlign: TextAlign.center,
                             ),
-                            Text(
-                              "₹ ${bookingViewmodel.selectedGod.vazhippad![index]["prize"]}",
-                              style: styles.blackRegular15,
+                            BuildTextWidget(
+                              text:
+                              "${bookingViewmodel.selectedGod.vazhippad![index]["prize"]}",
+                              toLang: currentLang,
                               textAlign: TextAlign.center,
                             ),
+                            // Text(
+                            //   "${bookingViewmodel.selectedGod.vazhippad![index]["vazhi"]}",
+                            //   style: styles.blackRegular15,
+                            //   textAlign: TextAlign.center,
+                            // ),
+                            // Text(
+                            //   "₹ ${bookingViewmodel.selectedGod.vazhippad![index]["prize"]}",
+                            //   style: styles.blackRegular15,
+                            //   textAlign: TextAlign.center,
+                            // ),
                           ],
                         ),
                       ),

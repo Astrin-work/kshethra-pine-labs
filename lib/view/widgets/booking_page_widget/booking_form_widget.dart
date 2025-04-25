@@ -6,8 +6,11 @@ import 'package:kshethra_mini/utils/validation.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/god_widget.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/star_dialodbox_widget.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_widget.dart';
+import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
+
+import '../../../view_model/home_page_viewmodel.dart';
 
 class BookingFormWidget extends StatelessWidget {
   final double? crossAxisSpace;
@@ -23,6 +26,7 @@ class BookingFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return Consumer<BookingViewmodel>(
@@ -33,19 +37,20 @@ class BookingFormWidget extends StatelessWidget {
                 25.kH,
                 Form(
                   key: bookingViewmodel.bookingKey,
-                  child: TextFormField(
-                    autofocus: true,
-                    validator: Validation.nameValidation,
-                    controller: bookingViewmodel.bookingNameController,
-                    textAlign: TextAlign.center,
-                    style: styles.blackRegular15,
-                    decoration: InputDecoration(
-                      hintText: "Name",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
+                    child: TextFormField(
+                      autofocus: true,
+                      validator: Validation.nameValidation,
+                      controller: bookingViewmodel.bookingNameController,
+                      textAlign: TextAlign.center,
+                      style: styles.blackRegular15,
+                      decoration:
+                      InputDecoration(
+                        hintText:'Name',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
                       ),
                     ),
-                  ),
                 ),
                 20.kH,
                 MaterialButton(

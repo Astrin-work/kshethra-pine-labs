@@ -3,8 +3,11 @@ import 'package:kshethra_mini/model/demo_model/booking_model.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
+import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
+
+import '../../../view_model/home_page_viewmodel.dart';
 
 class GodWidget extends StatelessWidget {
   const GodWidget({super.key});
@@ -12,6 +15,7 @@ class GodWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
      AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return SizedBox(
@@ -55,10 +59,11 @@ class GodWidget extends StatelessWidget {
                       ),
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: Text(
-                          bList[index].god ?? "",
-                          style: styles.blackRegular15,
-                        ),
+                        child:BuildTextWidget(text:   bList[index].god ?? "", toLang:currentLang )
+                        // Text(
+                        //   bList[index].god ?? "",
+                        //   style: styles.blackRegular15,
+                        // ),
                       ),
                     ],
                   ),

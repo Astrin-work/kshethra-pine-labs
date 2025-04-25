@@ -5,7 +5,8 @@ import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view/widgets/home_page_widgets/option_selector_widget.dart';
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
-import 'package:easy_localization/easy_localization.dart';
+
+import '../build_text_widget.dart';
 
 class HomeWidget extends StatelessWidget {
   const HomeWidget({super.key});
@@ -14,14 +15,24 @@ class HomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
+
+    final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
+
     return Consumer<HomePageViewmodel>(
       builder: (context, homepageViewmodel, child) => SizedBox(
         height: SizeConfig.screenHeight * 0.6,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text("welcome".tr(), style: styles.blackRegular22),
-
+            BuildTextWidget(
+              text: "Welcome",
+              color: Colors.black,
+              size: 20,
+              fontWeight: FontWeight.w500,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              toLang: currentLang,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -30,7 +41,15 @@ class HomeWidget extends StatelessWidget {
                     height: 52,
                     child: Image.asset(Assets.icons.pray.path),
                   ),
-                  title: 'booking'.tr(),
+                  titleWidget: BuildTextWidget(
+                    text: 'Booking',
+                    color: Colors.black,
+                    size: 16,
+                    fontWeight: FontWeight.w500,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    toLang: currentLang,
+                  ),
                   onTap: () {
                     homepageViewmodel.bookingPageNavigate(context);
                   },
@@ -40,14 +59,21 @@ class HomeWidget extends StatelessWidget {
                     height: 45,
                     child: Image.asset(Assets.icons.preBooking.path),
                   ),
-                  title: 'advance_booking'.tr(),
+                  titleWidget: BuildTextWidget(
+                    text: 'Advance Booking',
+                    color: Colors.black,
+                    size: 16,
+                    fontWeight: FontWeight.w500,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    toLang: currentLang,
+                  ),
                   onTap: () {
                     homepageViewmodel.preBookingPageNavigate(context);
                   },
                 ),
               ],
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -56,7 +82,15 @@ class HomeWidget extends StatelessWidget {
                     height: 50,
                     child: Image.asset(Assets.icons.donation.path),
                   ),
-                  title: 'donation'.tr(),
+                  titleWidget: BuildTextWidget(
+                    text: 'Donation',
+                    color: Colors.black,
+                    size: 16,
+                    fontWeight: FontWeight.w500,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    toLang: currentLang,
+                  ),
                   onTap: () {
                     homepageViewmodel.donationPageNavigate(context);
                   },
@@ -66,7 +100,15 @@ class HomeWidget extends StatelessWidget {
                     height: 50,
                     child: Image.asset(Assets.icons.eHundi.path),
                   ),
-                  title: 'e_hundi'.tr(),
+                  titleWidget: BuildTextWidget(
+                    text: 'E-Hundi',
+                    color: Colors.black,
+                    size: 16,
+                    fontWeight: FontWeight.w500,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    toLang: currentLang,
+                  ),
                   onTap: () {
                     homepageViewmodel.eHundiPageNavigate(context);
                   },

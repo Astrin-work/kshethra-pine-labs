@@ -1,12 +1,15 @@
-import 'package:easy_localization/easy_localization.dart';
+
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/model/star_model.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
+import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
+
+import '../../../view_model/home_page_viewmodel.dart';
 
 class StarDialogBox extends StatelessWidget {
   final double? mainAxisSpace;
@@ -23,68 +26,84 @@ class StarDialogBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return AlertDialog(
       backgroundColor: kWhite,
       content: Consumer<BookingViewmodel>(
-        builder: (context, bookingViewmodel, child) => SizedBox(
-          height: SizeConfig.screenHeight * 0.7,
-          width: SizeConfig.screenWidth * 0.7,
-          child: Column(
-            children: [
-              Text("Select your Star".tr(), style: styles.blackRegular18),
-              15.kH,
-              // Use Flexible here instead of Expanded
-              Flexible(
-                child: GridView.builder(
-                  itemCount: stars.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    mainAxisSpacing: mainAxisSpace ?? 15,
-                    crossAxisSpacing: crossAxisSpace ?? 10,
-                    childAspectRatio: 1.85,
-                    crossAxisCount: axisCount ?? 2,
+        builder:
+            (context, bookingViewmodel, child) => SizedBox(
+              height: SizeConfig.screenHeight * 0.7,
+              width: SizeConfig.screenWidth * 0.7,
+              child: Column(
+                children: [
+                  // Text("Select your Star".tr(), style: styles.blackRegular18),
+                  BuildTextWidget(
+                    text: "Select your Star",
+                    toLang: currentLang,
+                    color: kBlack,
+                    fontWeight: FontWeight.w500,
+                    size: 16,
                   ),
-                  itemBuilder: (context, index) => InkWell(
-                    onTap: () {
-                      bookingViewmodel.setStar(
-                        stars[index].star ?? "".tr(),
-                        context,
-                      );
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        image: DecorationImage(
-                          image: AssetImage(
-                            Assets.images.homeBackground.path,
-                          ),
-                        ),
+                  15.kH,
+                  Flexible(
+                    child: GridView.builder(
+                      itemCount: stars.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        mainAxisSpacing: mainAxisSpace ?? 15,
+                        crossAxisSpacing: crossAxisSpace ?? 10,
+                        childAspectRatio: 1.85,
+                        crossAxisCount: axisCount ?? 2,
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 2.5),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: kWhite,
-                            borderRadius: BorderRadius.circular(
-                              borderRadius ?? 15,
+                      itemBuilder:
+                          (context, index) => InkWell(
+                            onTap: () {
+                              bookingViewmodel.setStar(
+                                stars[index].star ?? "",
+                                context,
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    Assets.images.homeBackground.path,
+                                  ),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 2.5,
+                                ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: kWhite,
+                                    borderRadius: BorderRadius.circular(
+                                      borderRadius ?? 15,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: BuildTextWidget(
+                                      text: stars[index].star ?? "",
+                                      toLang: currentLang,
+                                      color: kBlack,
+                                    ),
+                                    // Text(
+                                    //   stars[index].star ?? "",
+                                    //   style: styles.blackRegular13,
+                                    // ),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                          child: Center(
-                            child: Text(
-                              stars[index].star ?? "",
-                              style: styles.blackRegular13,
-                            ),
-                          ),
-                        ),
-                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
       ),
     );
   }

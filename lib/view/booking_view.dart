@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/utils/components/responsive_layout.dart';
@@ -40,7 +40,7 @@ class BookingView extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            AppBarWidget(title: 'Booking'.tr()),
+            AppBarWidget(title: 'Booking'),
 
             ResponsiveLayout(
               pinelabDevice: Padding(

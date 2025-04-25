@@ -55,6 +55,9 @@ class HomePageViewmodel extends ChangeNotifier {
 
   bool _isTempleDropdownVissible = false;
   bool get isTempleDropdownVissible => _isTempleDropdownVissible;
+  String _currentLanguage = "en";
+
+  String get currentLanguage => _currentLanguage;
 
   final ImagePicker _imagePicker = ImagePicker();
 
@@ -65,12 +68,18 @@ class HomePageViewmodel extends ChangeNotifier {
     );
   }
 
+
   void bookingPageNavigate(BuildContext context) {
     context.read<BookingViewmodel>().setBookingPage();
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => BookingView()),
     );
+  }
+
+  void updateLanguage(String languageCode) {
+    _currentLanguage = languageCode;
+    notifyListeners();
   }
 
   void preBookingPageNavigate(BuildContext context) {

@@ -6,11 +6,14 @@ import 'package:kshethra_mini/utils/components/size_config.dart';
 class OptionSelectorWidget extends StatelessWidget {
   final void Function()? onTap;
   final Widget icon;
-  final String title;
+  final String? title;
+  final Widget? titleWidget;
+
   const OptionSelectorWidget({
     super.key,
     required this.icon,
-    required this.title,
+    this.title,
+    this.titleWidget,
     required this.onTap,
   });
 
@@ -35,14 +38,15 @@ class OptionSelectorWidget extends StatelessWidget {
           children: [
             icon,
             5.kW,
-            Text(
-              textAlign: TextAlign.center,
-              title,
-              style: styles.blackRegular18,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              softWrap: true,
-            ),
+            titleWidget ??
+                Text(
+                  title ?? '',
+                  textAlign: TextAlign.center,
+                  style: styles.blackRegular18,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: true,
+                ),
           ],
         ),
       ),
