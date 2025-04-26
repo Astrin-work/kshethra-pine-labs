@@ -34,8 +34,12 @@ class AdvanceBookingPreviewView extends StatelessWidget {
               ),
             ),
       ),
-      body: Column(
-        children: [AppBarWidget(title: "Advanced Booking"), PreViewWidget(page: 'advanced booking',)],
+      body:
+      Column(
+        children: [
+          AppBarWidget(title: "Advanced Booking"),
+          PreViewWidget(page: 'advanced booking'),
+        ],
       ),
     );
   }

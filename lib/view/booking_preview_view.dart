@@ -6,8 +6,11 @@ import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/float_button_widget.dart';
+import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
+
+import '../view_model/home_page_viewmodel.dart';
 
 class BookingPreviewView extends StatelessWidget {
   final String page;
@@ -45,6 +48,7 @@ class PreViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return Consumer<BookingViewmodel>(
@@ -102,8 +106,20 @@ class PreViewWidget extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(poojaList[inde]["vazhipadu"]),
-                                        Text(poojaList[inde]["godName"]),
+                                        BuildTextWidget(
+                                          text: poojaList[inde]["vazhipadu"],
+                                          size: 14,
+                                          color: kBlack,
+                                          toLang: currentLang,
+                                        ),
+                                        BuildTextWidget(
+                                          text: poojaList[inde]["godName"],
+                                          size: 14,
+                                          color: kBlack,
+                                          toLang: currentLang,
+                                        ),
+                                        // Text(poojaList[inde]["vazhipadu"]),
+                                        // Text(poojaList[inde]["godName"]),
                                       ],
                                     ),
                                     Spacer(),
@@ -151,5 +167,3 @@ class PreViewWidget extends StatelessWidget {
     );
   }
 }
-
-

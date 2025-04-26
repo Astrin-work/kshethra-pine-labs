@@ -1,10 +1,14 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/model/demo_model/e_hundi_model.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
+import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/e_hundi_viewmodel.dart';
 import 'package:provider/provider.dart';
+
+import '../../../view_model/home_page_viewmodel.dart';
 
 class GodListWidget extends StatelessWidget {
   final double? crossAxisSpace;
@@ -19,6 +23,7 @@ class GodListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return Consumer<EHundiViewmodel>(
@@ -60,10 +65,16 @@ class GodListWidget extends StatelessWidget {
                         ),
                       ),
                       10.kH,
-                      Text(
-                        hundiList[index].god ?? "",
-                        style: styles.blackRegular15,
+                      BuildTextWidget(
+                        text: hundiList[index].god ?? "",
+                        color: kBlack,
+                        toLang: currentLang,
+                        // toLang: currentLang,
                       ),
+                      // Text(
+                      //   hundiList[index].god ?? "",
+                      //   style: styles.blackRegular15,
+                      // ),
                     ],
                   ),
                 ),

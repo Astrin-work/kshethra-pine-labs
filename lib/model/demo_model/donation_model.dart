@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+
 class DonationModel {
   String? donat;
 
@@ -5,13 +7,13 @@ class DonationModel {
 }
 
 List<DonationModel> donations = [
-  DonationModel(donat: "General Donation through upi and net banking"),
-  DonationModel(donat: "Annadhanam"),
-  DonationModel(donat: "Chuttuvillaku"),
-  DonationModel(donat: "General Donation"),
-  DonationModel(donat: "Annadhanam"),
-  DonationModel(donat: "Chuttuvillaku"),
-  DonationModel(donat: "General Donation"),
-  DonationModel(donat: "Annadhanam"),
-  DonationModel(donat: "Chuttuvillaku"),
+  DonationModel(donat: "general_donation_through_upi_and_net_banking".tr()),
+  DonationModel(donat: "annadhanam".tr()),
+  DonationModel(donat: "chuttuvillaku".tr()),
+  DonationModel(donat: "general_donation".tr()),
+  DonationModel(donat: "annadhanam".tr()),
+  DonationModel(donat: "chuttuvillaku".tr()),
+  DonationModel(donat: "general_donation".tr()),
+  DonationModel(donat: "annadhanam".tr()),
+  DonationModel(donat: "chuttuvillaku".tr()),
 ];

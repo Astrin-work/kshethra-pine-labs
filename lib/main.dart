@@ -9,6 +9,7 @@ import 'package:kshethra_mini/view_model/e_hundi_viewmodel.dart';
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:easy_localization/easy_localization.dart';
 
 Box? box;
 
@@ -18,18 +19,31 @@ Future<void> main() async {
   final dir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(dir.path);
 
+  await EasyLocalization.ensureInitialized();
   box = await Hive.openBox(Constants.BOX_NAME);
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => HomePageViewmodel()),
-        ChangeNotifierProvider(create: (_) => EHundiViewmodel()),
-        ChangeNotifierProvider(create: (_) => DonationViewmodel()),
-        ChangeNotifierProvider(create: (_) => AuthViewmodel()),
-        ChangeNotifierProvider(create: (_) => BookingViewmodel()),
+    EasyLocalization(
+      supportedLocales:  [
+        Locale('en'),
+        Locale('ml'),
+        Locale('hi'),
+        Locale('ta'),
+        Locale('te'),
+        Locale('kn'),
       ],
-      child: const MyApp(),
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en'),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => HomePageViewmodel()),
+          ChangeNotifierProvider(create: (_) => EHundiViewmodel()),
+          ChangeNotifierProvider(create: (_) => DonationViewmodel()),
+          ChangeNotifierProvider(create: (_) => AuthViewmodel()),
+          ChangeNotifierProvider(create: (_) => BookingViewmodel()),
+        ],
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -39,9 +53,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: LanguageSelectView(),
+    return MaterialApp(
+      home: const LanguageSelectView(),
       debugShowCheckedModeBanner: false,
+      locale: context.locale,
+      supportedLocales: context.supportedLocales,
+      localizationsDelegates: context.localizationDelegates,
     );
   }
 }

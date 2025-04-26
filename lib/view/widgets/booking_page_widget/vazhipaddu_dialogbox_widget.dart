@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
+import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
+
+import '../../../view_model/home_page_viewmodel.dart';
 
 class VazhipadduDialogBoxWidget extends StatelessWidget {
   final Map<String, dynamic> selectedVazhippadu;
@@ -14,6 +17,7 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return AlertDialog(
@@ -124,7 +128,8 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       color: kWhite,
-                      child: Text("Continue", style: styles.blackRegular15),
+                      child:BuildTextWidget(text: "Continue",color: kBlack,toLang:currentLang,),
+                      // Text("Continue", style: styles.blackRegular15),
                     ),
                     MaterialButton(
                       minWidth: 101,
@@ -135,7 +140,8 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       color: kWhite,
-                      child: Text("Cancel", style: styles.blackRegular15),
+                      child: BuildTextWidget(text: "Cancel",color: kBlack,toLang:currentLang,),
+                      // Text("Cancel", style: styles.blackRegular15),
                     ),
                   ],
                 ),

@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
+import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +20,7 @@ class PaymentCompleteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return Scaffold(
@@ -29,16 +32,24 @@ class PaymentCompleteScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     12.kH,
-                    Text("Amount : ₹ $amount", style: styles.blackRegular22),
+                    // Text("Amount : ₹ $amount", style: styles.blackRegular22),
+                    BuildTextWidget(
+                      text: "Amount ₹ $amount",
+                      color: kBlack,
+                      size: 23,
+                      fontWeight: FontWeight.w400,
+                      toLang: currentLang,
+                    ),
                     SizedBox(
                       height: SizeConfig.screenHeight * 0.45,
                       child: Lottie.asset(Assets.gifs.paymentSuccess),
                     ),
                     Text(
-                      "Your payment was sucessfull",
+                      "Your payment was sucessfull".tr(),
                       style: styles.blackRegular18,
+                      textAlign: TextAlign.center,
                     ),
-                    Text("Thank You !", style: styles.primBold22),
+                    Text("Thank You !", style: styles.primBold22).tr(),
                     25.kH,
                     MaterialButton(
                       onPressed: () {
@@ -54,7 +65,10 @@ class PaymentCompleteScreen extends StatelessWidget {
                       ),
                       minWidth: SizeConfig.screenWidth * .05,
                       color: kPrimaryColor,
-                      child: Text("Back to Home", style: styles.blackRegular15),
+                      child: Text(
+                        "Back to Home".tr(),
+                        style: styles.blackRegular15,
+                      ),
                     ),
                     12.kH,
                   ],

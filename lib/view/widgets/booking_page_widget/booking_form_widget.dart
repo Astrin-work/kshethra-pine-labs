@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/responsive_layout.dart';
@@ -45,7 +46,7 @@ class BookingFormWidget extends StatelessWidget {
                       style: styles.blackRegular15,
                       decoration:
                       InputDecoration(
-                        hintText:'Name',
+                        hintText:'Name'.tr(),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),

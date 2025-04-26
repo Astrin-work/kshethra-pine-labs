@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
@@ -25,13 +26,12 @@ class HomeWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             BuildTextWidget(
-              text: "Welcome",
+              text: "Welcome".tr(),
               color: Colors.black,
               size: 20,
               fontWeight: FontWeight.w500,
               maxLines: 2,
               textAlign: TextAlign.center,
-              toLang: currentLang,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

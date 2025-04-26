@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/model/demo_model/booking_model.dart';
 import 'package:kshethra_mini/model/user_booking_model.dart';
@@ -50,7 +51,7 @@ class BookingViewmodel extends ChangeNotifier {
 
   TextEditingController bookingAddressController = TextEditingController();
 
-  String _selectedStar = "Star";
+  String _selectedStar = "Star".tr();
   String get selectedStar => _selectedStar;
 
   String _selectedRepMethod = "Once";
@@ -62,7 +63,7 @@ class BookingViewmodel extends ChangeNotifier {
   String _advBookOption = "";
   String get advBookOption => _advBookOption;
 
-  String _selectedDate = "Date";
+  String _selectedDate = "Date".tr();
   String get selectedDate => _selectedDate;
 
   void setBookingPage() {
@@ -70,8 +71,8 @@ class BookingViewmodel extends ChangeNotifier {
     _advBookingSavedAmt = 0;
     _totalAdvBookingAmt = 0;
     _selectedGod = bList[0];
-    _selectedStar = "Star";
-    _selectedDate = "Date";
+    _selectedStar = "Star".tr();
+    _selectedDate = "Date".tr();
     bookingAddressController.clear();
     bookingNameController.clear();
     _isExistedDevotee = false;
@@ -98,7 +99,7 @@ class BookingViewmodel extends ChangeNotifier {
   void navigateBookingPreviewView(BuildContext context) {
     if (_totalVazhipaduAmt != 0) {
       _selectedGod = bList[0];
-      _selectedStar = "Star";
+      _selectedStar = "Star".tr();
       bookingNameController.clear();
       _isExistedDevotee = false;
       Navigator.push(
@@ -127,7 +128,7 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void setAdvBookOption(String value) {
-    value == "date" ? _selectedStar = "Star" : _selectedDate = "Date";
+    value == "date" ? _selectedStar = "Star".tr() : _selectedDate = "Date".tr();
     _advBookOption = value;
     notifyListeners();
   }

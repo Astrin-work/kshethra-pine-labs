@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 
 class EHundiModel {
@@ -8,12 +9,12 @@ class EHundiModel {
 }
 
 List<EHundiModel> hundiList = [
-  EHundiModel(god: "Shivan", godImg: Assets.images.lordSiva.path),
-  EHundiModel(god: "Devi", godImg: Assets.images.lordDevi.path),
-  EHundiModel(god: "Vishnu", godImg: Assets.images.lordVishnu.path),
-  EHundiModel(god: "Saraswati", godImg: Assets.images.lordSaraswati.path),
-  EHundiModel(god: "Ganapathy", godImg: Assets.images.lordGanesh.path),
-  EHundiModel(god: "Hanuman", godImg: Assets.images.lordHanuman.path),
-  EHundiModel(god: "Krishna", godImg: Assets.images.lordKrishna.path),
-  EHundiModel(god: "Durga", godImg: Assets.images.lordDurga.path),
+  EHundiModel(god: "Shivan".tr(), godImg: Assets.images.lordSiva.path),
+  EHundiModel(god: "Devi".tr(), godImg: Assets.images.lordDevi.path),
+  EHundiModel(god: "Vishnu".tr(), godImg: Assets.images.lordVishnu.path),
+  EHundiModel(god: "Saraswati".tr(), godImg: Assets.images.lordSaraswati.path),
+  EHundiModel(god: "Ganapathy".tr(), godImg: Assets.images.lordGanesh.path),
+  EHundiModel(god: "Hanuman".tr(), godImg: Assets.images.lordHanuman.path),
+  EHundiModel(god: "Krishna".tr(), godImg: Assets.images.lordKrishna.path),
+  EHundiModel(god: "Durga".tr(), godImg: Assets.images.lordDurga.path),
 ];

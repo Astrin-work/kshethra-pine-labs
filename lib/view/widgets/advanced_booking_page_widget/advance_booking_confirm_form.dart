@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
@@ -5,8 +6,11 @@ import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/utils/validation.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/star_dialodbox_widget.dart';
+import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
+
+import '../../../view_model/home_page_viewmodel.dart';
 
 class AdvancedBookingConfirmForm extends StatelessWidget {
   final Map<String, dynamic> selectedVazhipaadu;
@@ -17,6 +21,7 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return Consumer<BookingViewmodel>(
@@ -35,7 +40,7 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: styles.blackRegular15,
                       decoration: InputDecoration(
-                        hintText: "Name",
+                        hintText: "Name".tr(),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
@@ -49,7 +54,7 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: styles.blackRegular15,
                       decoration: InputDecoration(
-                        hintText: "Phno",
+                        hintText: "Phone".tr(),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
@@ -168,7 +173,15 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         SizedBox(
-                          child: Text(
+                          child:
+                          // BuildTextWidget(
+                          //   text: 'Number of Days for Repeat',
+                          //   size: 16,
+                          //   color: kBlack,
+                          //   textAlign: TextAlign.center,
+                          //   toLang:,
+                          // ),
+                          Text(
                             "Number of Days for Repeat",
                             style: styles.blackRegular15,
                             textAlign: TextAlign.center,
@@ -214,7 +227,7 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                       maxLines: 4,
                       style: styles.blackRegular15,
                       decoration: InputDecoration(
-                        hintText: "Address",
+                        hintText: "Address".tr(),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
@@ -375,6 +388,7 @@ class RepCheckBoxWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
     AppStyles styles = AppStyles();
     return Consumer<BookingViewmodel>(
       builder:
@@ -382,7 +396,7 @@ class RepCheckBoxWidget extends StatelessWidget {
             // color: kGreen,
             width: 250,
             child: Padding(
-              padding: const EdgeInsets.only(left: 15.0),
+              padding: const EdgeInsets.only(left: 8.0),
               child: Column(
                 children: [
                   Row(
@@ -391,7 +405,13 @@ class RepCheckBoxWidget extends StatelessWidget {
                       SizedBox(
                         child: Row(
                           children: [
-                            Text("Once", style: styles.blackRegular15),
+                            BuildTextWidget(
+                              text: 'Once',
+                              color: kBlack,
+                              size: 14,
+                              toLang: currentLang,
+                            ),
+                            // Text("Once", style: styles.blackRegular15),
                             Checkbox(
                               value: bookingViewmodel.toggleSelectedRepMethod(
                                 "Once",
@@ -410,7 +430,7 @@ class RepCheckBoxWidget extends StatelessWidget {
                       SizedBox(
                         child: Row(
                           children: [
-                            Text("Weekly", style: styles.blackRegular15),
+                            Text("Weekly".tr(), style: styles.blackRegular15),
                             Checkbox(
                               value: bookingViewmodel.toggleSelectedRepMethod(
                                 "Weekly",
@@ -434,7 +454,13 @@ class RepCheckBoxWidget extends StatelessWidget {
                       SizedBox(
                         child: Row(
                           children: [
-                            Text("Daily", style: styles.blackRegular15),
+                            BuildTextWidget(
+                              text: 'Daily',
+                              color: kBlack,
+                              size: 14,
+                              toLang: currentLang,
+                            ),
+                            // Text("Daily", style: styles.blackRegular15),
                             Checkbox(
                               value: bookingViewmodel.toggleSelectedRepMethod(
                                 "Daily",
@@ -453,7 +479,7 @@ class RepCheckBoxWidget extends StatelessWidget {
                       SizedBox(
                         child: Row(
                           children: [
-                            Text("Monthly", style: styles.blackRegular15),
+                            Text("Monthly".tr(), style: styles.blackRegular15),
                             Checkbox(
                               value: bookingViewmodel.toggleSelectedRepMethod(
                                 "Monthly",

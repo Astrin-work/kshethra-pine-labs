@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,10 +25,17 @@ class LangWidget extends StatelessWidget {
     SizeConfig().init(context);
     return Consumer<HomePageViewmodel>(
       builder: (context, homepageViewmodel, child) => InkWell(
-        onTap: () {
+        // onTap: () {
+        //   homepageViewmodel.updateLanguage(locale.languageCode);
+        //   homepageViewmodel.homePageNavigate(context);
+        //
+        // },
+        onTap: () async {
+          await context.setLocale(Locale(locale.languageCode));
           homepageViewmodel.updateLanguage(locale.languageCode);
           homepageViewmodel.homePageNavigate(context);
         },
+
         child: Container(
           height: 80,
           width: 120,

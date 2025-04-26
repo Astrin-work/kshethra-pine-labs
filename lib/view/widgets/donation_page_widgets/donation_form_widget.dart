@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/model/demo_model/donation_model.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
@@ -39,7 +40,7 @@ class DonationFormWidget extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: styles.blackRegular15,
                     decoration: InputDecoration(
-                      hintText: "Name",
+                      hintText: "Name".tr(),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
@@ -53,7 +54,7 @@ class DonationFormWidget extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: styles.blackRegular15,
                     decoration: InputDecoration(
-                      hintText: "Phno",
+                      hintText: "Phone".tr(),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),

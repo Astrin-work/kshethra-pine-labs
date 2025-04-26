@@ -1,4 +1,5 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/model/star_model.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
@@ -87,7 +88,7 @@ class StarDialogBox extends StatelessWidget {
                                   child: Center(
                                     child: BuildTextWidget(
                                       text: stars[index].star ?? "",
-                                      toLang: currentLang,
+                                      // toLang: currentLang,
                                       color: kBlack,
                                     ),
                                     // Text(

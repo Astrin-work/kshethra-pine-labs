@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/utils/components/responsive_layout.dart';
@@ -14,7 +15,7 @@ class AdvanceBooking extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            AppBarWidget(title: "Advanced Booking"),
+            AppBarWidget(title: "Advanced Booking".tr()),
              ResponsiveLayout(
               pinelabDevice: Padding(
                 padding: const EdgeInsets.only(left: 15.0, right: 15),
