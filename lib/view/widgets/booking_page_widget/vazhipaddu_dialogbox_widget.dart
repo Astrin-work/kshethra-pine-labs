@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
@@ -25,7 +26,14 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
         builder:
             (context, bookingViewmodel, child) => Column(
               children: [
-                Text(selectedVazhippadu["vazhi"], style: styles.blackSemi18),
+                // BuildTextWidget(
+                //   text: selectedVazhippadu["vazhi"],
+                //   color: kBlack,
+                //   size: 18,
+                //   fontWeight: FontWeight.w300,
+                //   toLang: currentLang,
+                // ),
+                Text(selectedVazhippadu["vazhi"], style: styles.blackSemi18).tr(),
                 10.kH,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -64,6 +72,7 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
                         child: Text(
                           "${bookingViewmodel.noOfBookingVazhipaddu}",
                           style: styles.blackRegular15,
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
@@ -128,7 +137,11 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       color: kWhite,
-                      child:BuildTextWidget(text: "Continue",color: kBlack,toLang:currentLang,),
+                      child: BuildTextWidget(
+                        text: "Continue",
+                        color: kBlack,
+                        toLang: currentLang,
+                      ),
                       // Text("Continue", style: styles.blackRegular15),
                     ),
                     MaterialButton(
@@ -140,7 +153,11 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       color: kWhite,
-                      child: BuildTextWidget(text: "Cancel",color: kBlack,toLang:currentLang,),
+                      child: BuildTextWidget(
+                        text: "Cancel",
+                        color: kBlack,
+                        toLang: currentLang,
+                      ),
                       // Text("Cancel", style: styles.blackRegular15),
                     ),
                   ],

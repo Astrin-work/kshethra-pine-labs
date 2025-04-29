@@ -67,7 +67,7 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: () {
-                            bookingViewmodel.setAdvBookOption("star");
+                            bookingViewmodel.setAdvBookOption("star".tr());
                             showDialog(
                               context: context,
                               builder:

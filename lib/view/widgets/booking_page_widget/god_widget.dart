@@ -11,15 +11,14 @@ import '../../../view_model/home_page_viewmodel.dart';
 
 class GodWidget extends StatelessWidget {
   const GodWidget({super.key});
-     
 
   @override
   Widget build(BuildContext context) {
     final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
-     AppStyles styles = AppStyles();
+    AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return SizedBox(
-       height: 145,
+      height: 145,
       width: SizeConfig.screenWidth,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -30,7 +29,7 @@ class GodWidget extends StatelessWidget {
             child: Consumer<BookingViewmodel>(
               builder:
                   (context, bookingViewmodel, child) => Column(
-                    children: [      
+                    children: [
                       InkWell(
                         onTap: () {
                           bookingViewmodel.setGod(bList[index]);
@@ -59,7 +58,11 @@ class GodWidget extends StatelessWidget {
                       ),
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child:BuildTextWidget(text:   bList[index].god ?? "", toLang:currentLang )
+                        child:
+                        BuildTextWidget(
+                          text: bList[index].god ?? "",
+                          toLang: currentLang,
+                        ),
                         // Text(
                         //   bList[index].god ?? "",
                         //   style: styles.blackRegular15,

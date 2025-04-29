@@ -38,7 +38,7 @@ class QrScannerComponent extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       BuildTextWidget(
-                        text: "Amount ₹ $amount",
+                        text: "Amount ₹" "$amount",
                         color: kBlack,
                         size: 23,
                         fontWeight: FontWeight.w400,

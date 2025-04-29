@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
@@ -78,10 +79,17 @@ class VazhipadduWidget extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            BuildTextWidget(
-                              text:
-                                  "${bookingViewmodel.selectedGod.vazhippad![index]["vazhi"]}",
-                              toLang: currentLang,
+                            // BuildTextWidget(
+                            //   text:
+                            //       "${bookingViewmodel.selectedGod.vazhippad![index]["vazhi"]}",
+                            //   toLang: currentLang,
+                            //   textAlign: TextAlign.center,
+                            // ),
+                            Text(
+                              bookingViewmodel.selectedGod.vazhippad![index]["vazhi"] != null
+                                  ? bookingViewmodel.selectedGod.vazhippad![index]["vazhi"].toString().tr()
+                                  : "",
+                              style: styles.blackRegular15,
                               textAlign: TextAlign.center,
                             ),
                             BuildTextWidget(

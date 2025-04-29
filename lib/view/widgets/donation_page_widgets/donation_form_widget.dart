@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kshethra_mini/model/demo_model/donation_model.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
@@ -53,13 +54,20 @@ class DonationFormWidget extends StatelessWidget {
                     controller: donationViewmodel.donationPhnoController,
                     textAlign: TextAlign.center,
                     style: styles.blackRegular15,
+                    maxLength: 10,
+                    // inputFormatters: [
+                    //   FilteringTextInputFormatter.digitsOnly, // Allow only digits
+                    //   LengthLimitingTextInputFormatter(10),   // Max 10 digits
+                    // ],
                     decoration: InputDecoration(
                       hintText: "Phone".tr(),
+                      counterText: "", // Hide the character counter
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),
                   ),
+
                   25.kH,
                   GridView.builder(
                     shrinkWrap: true,
@@ -97,10 +105,11 @@ class DonationFormWidget extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    textAlign: TextAlign.center,
-                                    donations[index].donat ?? '',
-                                    style: styles.blackRegular15,
-                                  ),
+                                    donations[index].donatKey!.isNotEmpty
+                                        ? donations[index].donatKey!.tr()
+                                        : '', // if empty, show nothing
+                                  )
+
                                 ),
                               ),
                             ),

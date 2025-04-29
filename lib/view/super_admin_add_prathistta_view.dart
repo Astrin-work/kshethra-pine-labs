@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
@@ -33,7 +34,7 @@ class SuperAdminAddPrathisttaView extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            AppBarWidget(title: "Add Prathishtta"),
+            AppBarWidget(title: "Add Prathishtta".tr()),
             35.kH,
             ResponsiveLayout(
               pinelabDevice: Padding(
@@ -117,7 +118,7 @@ class AddWidget extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: styles.blackRegular15,
                     decoration: InputDecoration(
-                      hintText: "Name of prathishtta",
+                      hintText: "Name of prathishtta".tr(),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),

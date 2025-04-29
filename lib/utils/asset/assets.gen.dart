@@ -45,6 +45,8 @@ class $AssetsIconsGen {
   /// File path: assets/icons/e_hundi.png
   AssetGenImage get eHundi => const AssetGenImage('assets/icons/e_hundi.png');
 
+  AssetGenImage get view_and_edite => const AssetGenImage('assets/icons/view_and_edite.png');
+
   /// File path: assets/icons/image_icon.png
   AssetGenImage get imageIcon =>
       const AssetGenImage('assets/icons/image_icon.png');
@@ -59,6 +61,12 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/pray.png
   AssetGenImage get pray => const AssetGenImage('assets/icons/pray.png');
+
+  AssetGenImage get add_prathishtta =>
+      const AssetGenImage('assets/icons/add_prathishtta.png');
+
+  AssetGenImage get add_vazhipaddu =>
+      const AssetGenImage('assets/icons/add_vazhippadu.png');
 
   /// File path: assets/icons/pre_booking.png
   AssetGenImage get preBooking =>

@@ -11,19 +11,32 @@ class Validation{
 
     return null;
   }
+    static String? phoneValidation(String? value) {
+      final phone = value?.trim() ?? "";
+
+      RegExp regex = RegExp(r'^[6-9]\d{9}$');
+
+      if (phone.isEmpty) {
+        return "Phone number is required";
+      }
+      if (!regex.hasMatch(phone)) {
+        return "Enter a valid 10-digit Indian phone number";
+      }
+      return null;
+    }
 
 
-   static String? phoneValidation(String? value) {
-    RegExp regex = RegExp(r'^\d{10}$');
-    final phone = value ?? "";
-    if (phone.isEmpty || phone == "") {
-      return ("Phone number is required");
-    }
-    if (!regex.hasMatch(phone)) {
-      return ("Enter valid a Phone number");
-    }
-    return null;
-  }
+  //  static String? phoneValidation(String? value) {
+  //   RegExp regex = RegExp(r'^\d{10}$');
+  //   final phone = value ?? "";
+  //   if (phone.isEmpty || phone == "") {
+  //     return ("Phone number is required");
+  //   }
+  //   if (!regex.hasMatch(phone)) {
+  //     return ("Enter valid a Phone number");
+  //   }
+  //   return null;
+  // }
 
   static String? numberValidation(
     String? value,

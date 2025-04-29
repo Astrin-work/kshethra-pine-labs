@@ -1,19 +1,17 @@
-import 'package:easy_localization/easy_localization.dart';
-
 class DonationModel {
-  String? donat;
+  String? donatKey;
 
-  DonationModel({required this.donat});
+  DonationModel({required this.donatKey});
 }
 
 List<DonationModel> donations = [
-  DonationModel(donat: "general_donation_through_upi_and_net_banking".tr()),
-  DonationModel(donat: "annadhanam".tr()),
-  DonationModel(donat: "chuttuvillaku".tr()),
-  DonationModel(donat: "general_donation".tr()),
-  DonationModel(donat: "annadhanam".tr()),
-  DonationModel(donat: "chuttuvillaku".tr()),
-  DonationModel(donat: "general_donation".tr()),
-  DonationModel(donat: "annadhanam".tr()),
-  DonationModel(donat: "chuttuvillaku".tr()),
+  DonationModel(donatKey: "general_donation_through_upi_and_net_banking"),
+  DonationModel(donatKey: "annadhanam"),
+  DonationModel(donatKey: "chuttuvillaku"),
+  DonationModel(donatKey: "general_donation"),
+  DonationModel(donatKey: "annadhanam"),
+  DonationModel(donatKey: "chuttuvillaku"),
+  DonationModel(donatKey: "general_donation"),
+  DonationModel(donatKey: "annadhanam"),
+  DonationModel(donatKey: "chuttuvillaku"),
 ];

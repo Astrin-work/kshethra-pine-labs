@@ -239,7 +239,7 @@ class BookingViewmodel extends ChangeNotifier {
     _noOfBookingVazhipaddu = 1;
     int x = selectedVazhipaadu["prize"];
     _amtOfBookingVazhipaddu = 1 * x;
-    if (_selectedStar != "Star") {
+    if (_selectedStar != "Star".tr()) {
       showDialog(
         context: context,
         builder:
@@ -278,7 +278,7 @@ class BookingViewmodel extends ChangeNotifier {
   void bookingAddNewDevottee() {
     bookingNameController.clear();
     bookingPhnoController.clear();
-    _selectedStar = "Star";
+    _selectedStar = "Star".tr();
     _isExistedDevotee = false;
     notifyListeners();
   }
@@ -340,7 +340,7 @@ class BookingViewmodel extends ChangeNotifier {
         date: _selectedDate,
         repMethode: _selectedRepMethod,
         day: _selectedRepMethod == "Weekly" ? _selectedWeeklyDay : '',
-        option: advBookOption == "star" ? _selectedStar : _selectedDate,
+        option: advBookOption == "star".tr() ? _selectedStar : _selectedDate,
         vazhiPad: [
           {
             "godName": selectedGod.god ?? "",

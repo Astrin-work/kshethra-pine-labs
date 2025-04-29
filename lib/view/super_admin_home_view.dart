@@ -52,14 +52,12 @@ class SuperAdminWidget extends StatelessWidget {
                 OptionBoxWidget(
                   title: 'Add Temple',
                   onTap: () {
-                    homepageViewmodel.navigateSuperAdminAddTempleView(
-                      context,
-                    );
+                    homepageViewmodel.navigateSuperAdminAddTempleView(context);
                   },
                 ),
                 20.kH,
                 OptionBoxWidget(
-                  title: 'Add Prathishtta',
+                  title: 'Select Prathishtta',
                   onTap: () {
                     homepageViewmodel.navigateSuperAdminAddPrathisttaView(
                       context,

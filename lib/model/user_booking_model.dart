@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
+
 class UserBookingModel {
   String name = "";
-  String? star = "";
+  String? star = "".tr();
   String? date = "";
   String? phno;
   String? option;

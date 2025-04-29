@@ -57,15 +57,15 @@ class StarDialogBox extends StatelessWidget {
                         childAspectRatio: 1.85,
                         crossAxisCount: axisCount ?? 2,
                       ),
-                      itemBuilder:
-                          (context, index) => InkWell(
-                            onTap: () {
-                              bookingViewmodel.setStar(
-                                stars[index].star ?? "",
-                                context,
-                              );
-                            },
-                            child: Container(
+                      itemBuilder: (context, index) => InkWell(
+                        onTap: () {
+                          bookingViewmodel.setStar(
+                            stars[index].starKey?.tr() ?? "",  // <-- use starKey now
+                            context,
+                          );
+                        },
+
+                      child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 image: DecorationImage(
@@ -86,15 +86,17 @@ class StarDialogBox extends StatelessWidget {
                                     ),
                                   ),
                                   child: Center(
-                                    child: BuildTextWidget(
-                                      text: stars[index].star ?? "",
-                                      // toLang: currentLang,
-                                      color: kBlack,
-                                    ),
-                                    // Text(
-                                    //   stars[index].star ?? "",
-                                    //   style: styles.blackRegular13,
+                                    child:
+                                    // BuildTextWidget(
+                                    //   text: stars[index].star?.tr() ?? "",
+                                    //   // toLang: currentLang,
+                                    //   color: kBlack,
                                     // ),
+                                    Text(
+                                      stars[index].starKey!.tr(),  // no !
+                                      style: styles.blackRegular13,
+                                    ),
+
                                   ),
                                 ),
                               ),

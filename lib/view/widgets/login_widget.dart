@@ -30,7 +30,6 @@ class LoginWidget extends StatelessWidget {
                     value,
                     "Enter your Username",
                   ),
-
                   controller: authViewmodel.userNameController,
                   style: styles.whiteRegular18,
                   decoration: InputDecoration(

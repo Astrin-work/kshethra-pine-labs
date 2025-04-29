@@ -1,5 +1,6 @@
 
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,8 +10,9 @@ import 'package:kshethra_mini/utils/components/snack_bar_widget.dart';
 import 'package:kshethra_mini/view/booking_view.dart';
 import 'package:kshethra_mini/view/donation_view.dart';
 import 'package:kshethra_mini/view/e_hundi_view.dart';
-import 'package:kshethra_mini/view/home_view.dart';
+import 'package:kshethra_mini/view/home_view_admin.dart';
 import 'package:kshethra_mini/view/advance_booking.dart';
+import 'package:kshethra_mini/view/home_view_users.dart';
 import 'package:kshethra_mini/view/super_admin_add_donation_view.dart';
 import 'package:kshethra_mini/view/super_admin_add_prathistta_view.dart';
 import 'package:kshethra_mini/view/super_admin_add_temple_view.dart';
@@ -47,7 +49,7 @@ class HomePageViewmodel extends ChangeNotifier {
   String _selectedPrathishtta = "Add prathishtta";
   String get selectedPrathishtta => _selectedPrathishtta;
 
-  String _selectedTemple = "Select temple";
+  String _selectedTemple = "Select temple".tr();
   String get selectedTemple => _selectedTemple;
 
   bool _isDropdownVissible = false;
@@ -64,7 +66,7 @@ class HomePageViewmodel extends ChangeNotifier {
   void homePageNavigate(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => HomeView()),
+      MaterialPageRoute(builder: (context) => HomeViewUsers()),
     );
   }
 
@@ -115,7 +117,7 @@ class HomePageViewmodel extends ChangeNotifier {
   }
 
   String setQrAmount(String amount) {
-    String value = "upi://pay?pa=6282488785@superyes&am=$amount&cu=INR";
+    String value = "upi://pay?pa=astrinstechnologies@okaxis&am=$amount&cu=INR";
 
     return value;
   }
@@ -254,7 +256,7 @@ class HomePageViewmodel extends ChangeNotifier {
       return;
     }
 
-    if (_selectedTemple == "Select temple") {
+    if (_selectedTemple == "Select temple".tr()) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBarWidget(
           msg: "Please Select a temple",
@@ -318,7 +320,7 @@ class HomePageViewmodel extends ChangeNotifier {
       return;
     }
 
-    if (_selectedTemple == "Select temple") {
+    if (_selectedTemple == "Select temple".tr()) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBarWidget(
           msg: "Please Select a temple",
@@ -386,7 +388,7 @@ class HomePageViewmodel extends ChangeNotifier {
     addVazhippaduNameController.clear();
     addVazhippaduPrizeController.clear();
     addDonationNameController.clear();
-    _selectedTemple = "Select temple";
+    _selectedTemple = "Select temple".tr();
     _isTempleDropdownVissible = false;
     _isDropdownVissible = false;
     _selectedPrathishtta = "Add prathishtta";

@@ -1,40 +1,34 @@
-
-
-import 'package:easy_localization/easy_localization.dart';
-
 class StarModel {
-  String? star;
+  String? starKey;  // <-- rename 'star' to 'starKey' for clarity
 
-  StarModel({required this.star});
+  StarModel({required this.starKey});
 }
 
 List<StarModel> stars = [
-  StarModel(star: "aswathi".tr()),
-  StarModel(star: "bharani".tr()),
-  StarModel(star: "karthika".tr()),
-  StarModel(star: "rohini".tr()),
-  StarModel(star: "makkheeram".tr()),
-  StarModel(star: "thiruvathira".tr()),
-  StarModel(star: "ponartham".tr()),
-  StarModel(star: "pooyam".tr()),
-  StarModel(star: "aayiliam".tr()),
-  StarModel(star: "makham".tr()),
-  StarModel(star: "pooram".tr()),
-  StarModel(star: "uthram".tr()),
-  StarModel(star: "atham".tr()),
-  StarModel(star: "chithira".tr()),
-  StarModel(star: "chothi".tr()),
-  StarModel(star: "vishakam".tr()),
-  StarModel(star: "anizham".tr()),
-  StarModel(star: "thriketta".tr()),
-  StarModel(star: "moolam".tr()),
-  StarModel(star: "pooradam".tr()),
-  StarModel(star: "uthradam".tr()),
-  StarModel(star: "thiruvoonam".tr()),
-  StarModel(star: "avitam".tr()),
-  StarModel(star: "chathayam".tr()),
-  StarModel(star: "pooruruttathi".tr()),
-  StarModel(star: "revathi".tr()),
-
+  StarModel(starKey: "aswathi"),
+  StarModel(starKey: "bharani"),
+  StarModel(starKey: "karthika"),
+  StarModel(starKey: "rohini"),
+  StarModel(starKey: "makkheeram"),
+  StarModel(starKey: "thiruvathira"),
+  StarModel(starKey: "ponartham"),
+  StarModel(starKey: "pooyam"),
+  StarModel(starKey: "aayiliam"),
+  StarModel(starKey: "makham"),
+  StarModel(starKey: "pooram"),
+  StarModel(starKey: "uthram"),
+  StarModel(starKey: "atham"),
+  StarModel(starKey: "chithira"),
+  StarModel(starKey: "chothi"),
+  StarModel(starKey: "vishakam"),
+  StarModel(starKey: "anizham"),
+  StarModel(starKey: "thriketta"),
+  StarModel(starKey: "moolam"),
+  StarModel(starKey: "pooradam"),
+  StarModel(starKey: "uthradam"),
+  StarModel(starKey: "thiruvoonam"),
+  StarModel(starKey: "avitam"),
+  StarModel(starKey: "chathayam"),
+  StarModel(starKey: "pooruruttathi"),
+  StarModel(starKey: "revathi"),
 ];
-

@@ -9,8 +9,8 @@ class BuildTextWidget extends StatefulWidget {
   final int? maxLines;
   final TextAlign? textAlign;
   final String? toLang;
-  final bool? softWrap; // ✅ added
-  final TextOverflow? overflow; // ✅ added
+  final bool? softWrap;
+  final TextOverflow? overflow;
   final Function(String)? onTranslated;
 
   const BuildTextWidget({
