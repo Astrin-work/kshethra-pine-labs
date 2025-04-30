@@ -11,6 +11,7 @@ class HomeViewUsers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     SizeConfig().init(context);
     return Scaffold(
       body: SingleChildScrollView(
@@ -44,16 +45,16 @@ class HomeViewUsers extends StatelessWidget {
                               height: 20,
                               child: Row(
                                 children: [
-                                  IconButton(
-                                    iconSize: 30,
-                                    onPressed: () {
-                                      homePageViewmodel
-                                          .navigateSuperAdminHomeView(
-                                        context,
-                                      );
-                                    },
-                                    icon: Icon(Icons.settings),
-                                  ),
+                                  // IconButton(
+                                  //   iconSize: 30,
+                                  //   onPressed: () {
+                                  //     homePageViewmodel
+                                  //         .navigateSuperAdminHomeView(
+                                  //       context,
+                                  //     );
+                                  //   },
+                                  //   icon: Icon(Icons.settings),
+                                  // ),
                                   5.kW,
                                   IconButton(
                                     iconSize: 30,

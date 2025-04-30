@@ -164,7 +164,7 @@ class BookingViewmodel extends ChangeNotifier {
     BuildContext context,
     Map<String, dynamic> selectedVazhipaadu,
   ) {
-    _selectedRepMethod = "Once";
+    _selectedRepMethod = "Once".tr();
     _selectedWeeklyDay = "Sun";
     bookingRepController.text = "1";
     int x = selectedVazhipaadu["prize"];

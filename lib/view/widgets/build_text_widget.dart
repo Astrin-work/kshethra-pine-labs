@@ -22,8 +22,8 @@ class BuildTextWidget extends StatefulWidget {
     this.maxLines = 1,
     this.textAlign = TextAlign.left,
     this.toLang,
-    this.softWrap,      // ✅ added
-    this.overflow,      // ✅ added
+    this.softWrap,
+    this.overflow,
     this.onTranslated,
   }) : super(key: key);
 
@@ -92,8 +92,8 @@ class _BuildTextWidgetState extends State<BuildTextWidget> {
     return Text(
       translatedText!,
       maxLines: widget.maxLines,
-      softWrap: widget.softWrap ?? true,   // ✅ added
-      overflow: widget.overflow ?? TextOverflow.clip,  // ✅ added
+      softWrap: widget.softWrap ?? true,
+      overflow: widget.overflow ?? TextOverflow.clip,
       textAlign: widget.textAlign,
       style: TextStyle(
         color: widget.color,

@@ -14,7 +14,8 @@ class Validation{
     static String? phoneValidation(String? value) {
       final phone = value?.trim() ?? "";
 
-      RegExp regex = RegExp(r'^[6-9]\d{9}$');
+
+      RegExp regex = RegExp(r'^[6-9][0-9]{9}$');
 
       if (phone.isEmpty) {
         return "Phone number is required";
@@ -24,6 +25,7 @@ class Validation{
       }
       return null;
     }
+
 
 
   //  static String? phoneValidation(String? value) {

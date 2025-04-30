@@ -53,6 +53,7 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                       controller: bookingViewmodel.bookingPhnoController,
                       textAlign: TextAlign.center,
                       style: styles.blackRegular15,
+                      maxLength: 10,
                       decoration: InputDecoration(
                         hintText: "Phone".tr(),
                         border: OutlineInputBorder(
@@ -173,18 +174,26 @@ class AdvancedBookingConfirmForm extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         SizedBox(
-                          child:
-                          // BuildTextWidget(
-                          //   text: 'Number of Days for Repeat',
-                          //   size: 16,
-                          //   color: kBlack,
-                          //   textAlign: TextAlign.center,
-                          //   toLang:,
-                          // ),
-                          Text(
-                            "Number of Days for Repeat",
-                            style: styles.blackRegular15,
-                            textAlign: TextAlign.center,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              BuildTextWidget(
+                                text: 'Number of Days for Repeat'.tr(),
+                                size: 16,
+                                color: kBlack,
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                              ),
+
+                              // BuildTextWidget(
+                              //   text: 'for Repeat',
+                              //   size: 16,
+                              //   color: kBlack,
+                              //   textAlign: TextAlign.center,
+                              //   toLang: currentLang,
+                              // ),
+                            ],
                           ),
                         ),
                         Text(":", style: styles.blackSemi18),
@@ -247,6 +256,7 @@ class WeeklyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
     AppStyles styles = AppStyles();
     return Consumer<BookingViewmodel>(
       builder:
@@ -261,6 +271,7 @@ class WeeklyWidget extends StatelessWidget {
                       child: Row(
                         children: [
                           Text("Sun", style: styles.blackRegular13),
+                          // BuildTextWidget(text: "Sun",size: 13,color:kBlack,),
                           Checkbox(
                             value: bookingViewmodel.toggleSelectedWeeklyDay(
                               "Sun",
@@ -414,7 +425,7 @@ class RepCheckBoxWidget extends StatelessWidget {
                             // Text("Once", style: styles.blackRegular15),
                             Checkbox(
                               value: bookingViewmodel.toggleSelectedRepMethod(
-                                "Once",
+                                "Once".tr(),
                               ),
                               onChanged: (value) {
                                 bookingViewmodel.switchSelectedRepMethod(

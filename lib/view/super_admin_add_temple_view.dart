@@ -80,6 +80,7 @@ class AddTempleWidget extends StatelessWidget {
                   title: "Phone number of the temple :",
                   hint: "Phno",
                   controller: homepageViewmodel.addTemplePhno,
+                  maxLines: 10,
                 ),
                 TextFieldWidget(
                   title: "Address of the temple :",

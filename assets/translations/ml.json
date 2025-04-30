@@ -68,7 +68,7 @@
   "Durga": "ദുര്‍ഗ്ഗ",
   "Weekly": "പ്രതിവാരം",
   "Monthly": "പ്രതിമാസം",
-  "Number of Days for Repeat": "ആവർത്തനത്തിനുള്ള ദിവസങ്ങളുടെ എണ്ണം",
+  "Number of Days for Repeat": "ദിവസങ്ങൾ\nആവർത്തനത്തിനായി",
   "Address": "വിലാസം",
   "Amount": "തുക",
   "Your payment was sucessfull": "നിങ്ങളുടെ പേയ്മെന്റ് വിജയകരമായി പൂർത്തിയായി",
@@ -86,6 +86,8 @@
 "Chottanikkara Temple": "ചോറ്റാനിക്കര ക്ഷേത്രം",
 "Mahadeva Temple": "മഹാദേവ ക്ഷേത്രം",
 "Vaidyanatha Temple": "വൈദ്യനാഥ ക്ഷേത്രം",
-  "Mannarasala Sree Nagaraja Temple": "മണ്ണാറശാല ശ്രീ നാഗരാജ ക്ഷേത്രം"
+  "Mannarasala Sree Nagaraja Temple": "മണ്ണാറശാല ശ്രീ നാഗരാജ ക്ഷേത്രം",
+  "Date": "തീയതി",
+  "Once": "ഒരിക്കൽ"
 
 }
