@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
@@ -30,7 +31,7 @@ class QrScannerComponent extends StatelessWidget {
         builder:
             (context, homepageViewmodel, child) => Column(
               children: [
-                AppBarWidget(title: title),
+                AppBarWidget(title: title.tr()),
                 SizedBox(
                   height: SizeConfig.screenHeight * 0.8,
                   width: SizeConfig.screenWidth,

@@ -7,7 +7,6 @@ import 'package:kshethra_mini/utils/validation.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/god_widget.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/star_dialodbox_widget.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_widget.dart';
-import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
 

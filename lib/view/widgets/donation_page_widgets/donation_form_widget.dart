@@ -27,10 +27,10 @@ class DonationFormWidget extends StatelessWidget {
     SizeConfig().init(context);
     return Consumer<DonationViewmodel>(
       builder:
-          (context, donationViewmodel, child) => SizedBox(
+          (context,  donationViewmodel, child) => SizedBox(
             // height: SizeConfig.screenHeight * 0.8,
             child: Form(
-              key: donationViewmodel.donationFormKey,
+              key: donationViewmodel.donationFormKey,canPop: true,
               child: Column(
                 children: [
                   25.kH,
@@ -61,7 +61,7 @@ class DonationFormWidget extends StatelessWidget {
                     // ],
                     decoration: InputDecoration(
                       hintText: "Phone".tr(),
-                      counterText: "", // Hide the character counter
+                      counterText: "",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),

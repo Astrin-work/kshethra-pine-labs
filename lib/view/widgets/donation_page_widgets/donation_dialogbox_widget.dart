@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
@@ -71,11 +72,8 @@ class DonationDialogWidget extends StatelessWidget {
                         side: BorderSide(color: kDullPrimaryColor, width: 2),
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child:BuildTextWidget(
-                        text: "pay",
-                        color: kBlack,
-                        toLang: currentLang,
-                      ),
+                      child:
+                      Text("Pay".tr()),
                     ),
                     MaterialButton(
                       onPressed: () {
@@ -86,11 +84,7 @@ class DonationDialogWidget extends StatelessWidget {
                         side: BorderSide(color: kDullPrimaryColor, width: 2),
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child:BuildTextWidget(
-                        text: "Cancel",
-                        color: kBlack,
-                        toLang: currentLang,
-                      ),
+                      child:Text("Cancel".tr()),
                     ),
                   ],
                 ),

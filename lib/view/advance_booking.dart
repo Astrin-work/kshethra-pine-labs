@@ -15,7 +15,7 @@ class AdvanceBooking extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            AppBarWidget(title: "Advanced Booking".tr()),
+            AppBarWidget(title: "Advance Booking".tr()),
              ResponsiveLayout(
               pinelabDevice: Padding(
                 padding: const EdgeInsets.only(left: 15.0, right: 15),

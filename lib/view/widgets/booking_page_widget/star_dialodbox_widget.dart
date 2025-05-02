@@ -39,14 +39,14 @@ class StarDialogBox extends StatelessWidget {
               width: SizeConfig.screenWidth * 0.7,
               child: Column(
                 children: [
-                  // Text("Select your Star".tr(), style: styles.blackRegular18),
-                  BuildTextWidget(
-                    text: "Select your Star",
-                    toLang: currentLang,
-                    color: kBlack,
-                    fontWeight: FontWeight.w500,
-                    size: 16,
-                  ),
+                  Text("Select your Star".tr(), style: styles.blackRegular18),
+                  // BuildTextWidget(
+                  //   text: "Select your Star",
+                  //   toLang: currentLang,
+                  //   color: kBlack,
+                  //   fontWeight: FontWeight.w500,
+                  //   size: 16,
+                  // ),
                   15.kH,
                   Flexible(
                     child: GridView.builder(
@@ -60,7 +60,7 @@ class StarDialogBox extends StatelessWidget {
                       itemBuilder: (context, index) => InkWell(
                         onTap: () {
                           bookingViewmodel.setStar(
-                            stars[index].starKey?.tr() ?? "",  // <-- use starKey now
+                            stars[index].starKey?.tr() ?? "",
                             context,
                           );
                         },

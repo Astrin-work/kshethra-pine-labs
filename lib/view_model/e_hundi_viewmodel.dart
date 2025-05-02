@@ -6,12 +6,22 @@ import 'package:kshethra_mini/view/widgets/e_hundi_page_widgets/e_hundi_dialogbo
 
 class EHundiViewmodel extends ChangeNotifier {
   TextEditingController eHundiAmountController = TextEditingController();
+  TextEditingController eHundiNameController = TextEditingController();
 
   final eHundiKey = GlobalKey<FormState>();
+
+  void clearHundiAmount() {
+    eHundiAmountController.clear();
+    eHundiNameController.clear();
+    notifyListeners();
+  }
+
 
   void popFunction(BuildContext context) {
     Navigator.pop(context);
   }
+
+
 
   void backtoHomePage(BuildContext context, int noOfPage) {
     for (int i = 1; i <= noOfPage; i++) {
@@ -24,9 +34,6 @@ class EHundiViewmodel extends ChangeNotifier {
     return value;
   }
 
-  void clearHundiAmount() {
-    eHundiAmountController.clear();
-  }
 
   void showEhundiDonationDialog(BuildContext context) {
     showDialog(context: context, builder: (context) => EHundiDialogWidget());
@@ -50,13 +57,13 @@ class EHundiViewmodel extends ChangeNotifier {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder:
-            (context) => QrScannerComponent(
-              amount: eHundiAmountController.text.trim(),
-              noOfScreen: 3,
-              title: 'E-Hundi',
-            ),
+        builder: (context) => QrScannerComponent(
+          amount: eHundiAmountController.text.trim(),
+          noOfScreen: 3,
+          title: 'E-Hundi',
+        ),
       ),
     );
   }
 }
+

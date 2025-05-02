@@ -42,13 +42,13 @@ class HomeWidget extends StatelessWidget {
                     child: Image.asset(Assets.icons.pray.path),
                   ),
                   titleWidget: BuildTextWidget(
-                    text: 'Booking',
+                    text: 'Vazhipaddu'.tr(),
                     color: Colors.black,
                     size: 16,
                     fontWeight: FontWeight.w500,
                     maxLines: 1,
                     textAlign: TextAlign.center,
-                    toLang: currentLang,
+                    // toLang: currentLang,
                   ),
                   onTap: () {
                     homepageViewmodel.bookingPageNavigate(context);
@@ -60,13 +60,13 @@ class HomeWidget extends StatelessWidget {
                     child: Image.asset(Assets.icons.preBooking.path),
                   ),
                   titleWidget: BuildTextWidget(
-                    text: 'Advance Booking',
+                    text: 'Advance Booking'.tr(),
                     color: Colors.black,
                     size: 16,
                     fontWeight: FontWeight.w500,
-                    maxLines: 1,
+                    maxLines: 2,
                     textAlign: TextAlign.center,
-                    toLang: currentLang,
+                    // toLang: currentLang,
                   ),
                   onTap: () {
                     homepageViewmodel.preBookingPageNavigate(context);
@@ -83,13 +83,13 @@ class HomeWidget extends StatelessWidget {
                     child: Image.asset(Assets.icons.donation.path),
                   ),
                   titleWidget: BuildTextWidget(
-                    text: 'Donation',
+                    text: 'Donations'.tr(),
                     color: Colors.black,
                     size: 16,
                     fontWeight: FontWeight.w500,
                     maxLines: 1,
                     textAlign: TextAlign.center,
-                    toLang: currentLang,
+                    // toLang: currentLang,
                   ),
                   onTap: () {
                     homepageViewmodel.donationPageNavigate(context);
@@ -101,13 +101,13 @@ class HomeWidget extends StatelessWidget {
                     child: Image.asset(Assets.icons.eHundi.path),
                   ),
                   titleWidget: BuildTextWidget(
-                    text: 'E-Hundi',
+                    text: 'E-Hundi'.tr(),
                     color: Colors.black,
                     size: 16,
                     fontWeight: FontWeight.w500,
                     maxLines: 1,
                     textAlign: TextAlign.center,
-                    toLang: currentLang,
+                    // toLang: currentLang,
                   ),
                   onTap: () {
                     homepageViewmodel.eHundiPageNavigate(context);

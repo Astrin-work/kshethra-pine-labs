@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
@@ -33,8 +34,8 @@ class AppBarWidget extends StatelessWidget {
       child: Column(
         children: [
           BackButtonComponent(),
-          // Text(title, style: styles.blackRegular20),
-          BuildTextWidget(text: title, toLang: currentLang,size: 20,)
+          Text(title.tr(), style: styles.blackRegular20),
+          // BuildTextWidget(text: title, size: 20),
         ],
       ),
     );

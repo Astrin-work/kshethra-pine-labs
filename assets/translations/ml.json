@@ -2,7 +2,7 @@
   "Welcome": "സ്വാഗതം",
   "Name": "പേര്",
   "Phone": "ഫോൺ",
-  "Advanced Booking": "മുൻകൂർ ബുക്കിംഗ്",
+  "Advance Booking": "മുൻകൂർ ബുക്കിംഗ്",
   "Star": "നക്ഷത്രം",
   "aswathi": "അശ്വതി",
   "bharani": "ഭരണി",
@@ -57,7 +57,7 @@
   "general_donation_through_upi_and_net_banking": "യുപിഐയും നെറ്റ് ബാങ്കിംഗും വഴി സാധാരണ സംഭാവന",
   "annadhanam": "അന്നദാനം",
   "chuttuvillaku": "ചുറ്റുവിളക്ക്",
-  "general_donation": "സാധാരണ സംഭാവന",
+  "general_donation": "  സാധാരണ സംഭാവന",
   "shivan": "ശിവൻ",
   "Devi": "ദേവി",
   "Vishnu": "വിഷ്ണു",
@@ -88,6 +88,16 @@
 "Vaidyanatha Temple": "വൈദ്യനാഥ ക്ഷേത്രം",
   "Mannarasala Sree Nagaraja Temple": "മണ്ണാറശാല ശ്രീ നാഗരാജ ക്ഷേത്രം",
   "Date": "തീയതി",
-  "Once": "ഒരിക്കൽ"
-
+  "Once": "ഒരിക്കൽ",
+  "Booking": "ബുക്കിംഗ്",
+  "E-Hundi": "ഇ-ഹുണ്ടി",
+  "Donations": "സംഭാവന",
+  "Advanced Booking": "മുൻകൂർ ബുക്കിംഗ്",
+  "Select your Star": "നിങ്ങളുടെ നക്ഷത്രം തിരഞ്ഞെടുക്കുക",
+  "Vazhipaddu": "വഴിപാട്",
+  "Enter the Amount": "തുക നൽകുക",
+  "Enter your Name (optional)": "പേര് നൽകുക (ഓപ്ഷണൽ)",
+  "Pay": "നൽകുക",
+  "Cancel": "റദ്ദാക്കുക",
+  "Continue": "തുടരുക"
 }

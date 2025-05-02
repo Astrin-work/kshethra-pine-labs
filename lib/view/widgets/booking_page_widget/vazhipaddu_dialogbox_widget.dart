@@ -137,12 +137,7 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       color: kWhite,
-                      child: BuildTextWidget(
-                        text: "Continue",
-                        color: kBlack,
-                        toLang: currentLang,
-                      ),
-                      // Text("Continue", style: styles.blackRegular15),
+                      child:Text("Continue".tr(), style: styles.blackRegular15),
                     ),
                     MaterialButton(
                       minWidth: 101,
@@ -153,11 +148,7 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       color: kWhite,
-                      child: BuildTextWidget(
-                        text: "Cancel",
-                        color: kBlack,
-                        toLang: currentLang,
-                      ),
+                      child:Text("Cancel".tr(), style: styles.blackRegular15),
                       // Text("Cancel", style: styles.blackRegular15),
                     ),
                   ],
