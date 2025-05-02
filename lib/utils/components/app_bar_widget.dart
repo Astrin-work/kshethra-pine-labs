@@ -4,7 +4,6 @@ import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/back_button_component.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
-import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../view_model/home_page_viewmodel.dart';
