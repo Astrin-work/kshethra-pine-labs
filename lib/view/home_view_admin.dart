@@ -3,7 +3,6 @@ import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/back_button_component.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view/widgets/admin_view_widget/admin_home_widget.dart';
-import 'package:kshethra_mini/view/widgets/home_page_widgets/home_widget.dart';
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
 

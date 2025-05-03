@@ -11,8 +11,8 @@ class EHundiViewmodel extends ChangeNotifier {
   final eHundiKey = GlobalKey<FormState>();
 
   void clearHundiAmount() {
-    eHundiAmountController.clear();
-    eHundiNameController.clear();
+   eHundiAmountController.clear();
+   eHundiNameController.clear();
     notifyListeners();
   }
 

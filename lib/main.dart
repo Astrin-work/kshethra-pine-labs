@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:kshethra_mini/utils/hive/constants.dart';
-import 'package:kshethra_mini/view/login_view.dart';
+import 'package:kshethra_mini/view/language_select_view.dart';
+import 'package:kshethra_mini/view/splash_screen_view.dart';
 import 'package:kshethra_mini/view_model/auth_viewmodel.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:kshethra_mini/view_model/donation_viewmodel.dart';
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LoginView(),
+      home: const SplashScreenView(),
       debugShowCheckedModeBanner: false,
       locale: context.locale,
       supportedLocales: context.supportedLocales,

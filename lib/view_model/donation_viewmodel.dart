@@ -13,6 +13,13 @@ class DonationViewmodel extends ChangeNotifier {
 
   final donationKey = GlobalKey<FormState>();
 
+
+  void clearController(){
+    donationAmountController.clear();
+    donationNameController.clear();
+  }
+
+
   void showDonationDialog(BuildContext context) {
     bool valid = donationFormKey.currentState?.validate() ?? false;
     if (!valid) {

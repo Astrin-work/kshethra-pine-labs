@@ -12,242 +12,480 @@
 
   import '../../../view_model/home_page_viewmodel.dart';
 
-  class AdvancedBookingConfirmForm extends StatelessWidget {
+  // class AdvancedBookingConfirmForm extends StatelessWidget {
+  //   final Map<String, dynamic> selectedVazhipaadu;
+  //   const AdvancedBookingConfirmForm({
+  //     super.key,
+  //     required this.selectedVazhipaadu,
+  //   });
+  //
+  //   @override
+  //   Widget build(BuildContext context) {
+  //     final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
+  //     AppStyles styles = AppStyles();
+  //     SizeConfig().init(context);
+  //     return Consumer<BookingViewmodel>(
+  //       builder:
+  //
+  //           (context, bookingViewmodel, child) => SizedBox(
+  //             child: Padding(
+  //               padding: const EdgeInsets.only(left: 15.0, right: 15, top: 20),
+  //               child: Form(
+  //                 key: bookingViewmodel.advBookingKey,
+  //                 child: Column(
+  //                   children: [
+  //                     TextFormField(
+  //                       autofocus: true,
+  //                       validator: Validation.nameValidation,
+  //                       controller: bookingViewmodel.bookingNameController,
+  //                       textAlign: TextAlign.center,
+  //                       style: styles.blackRegular15,
+  //                       decoration: InputDecoration(
+  //                         hintText: "Name".tr(),
+  //                         border: OutlineInputBorder(
+  //                           borderRadius: BorderRadius.circular(15),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                     25.kH,
+  //                     TextFormField(
+  //                       keyboardType: TextInputType.number,
+  //                       validator: (value) => Validation.phoneValidation(value),
+  //                       controller: bookingViewmodel.bookingPhnoController,
+  //                       textAlign: TextAlign.center,
+  //                       style: styles.blackRegular15,
+  //                       maxLength: 10,
+  //                       decoration: InputDecoration(
+  //                         hintText: "Phone".tr(),
+  //                         border: OutlineInputBorder(
+  //                           borderRadius: BorderRadius.circular(15),
+  //                         ),
+  //                       ),
+  //                     ),
+  //
+  //                     25.kH,
+  //                     Row(
+  //                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //                       children: [
+  //                         InkWell(
+  //                           onTap: () {
+  //                             bookingViewmodel.setAdvBookOption("star".tr());
+  //                             showDialog(
+  //                               context: context,
+  //                               builder:
+  //                                   (context) => ResponsiveLayout(
+  //                                     pinelabDevice: StarDialogBox(),
+  //                                     mediumDevice: StarDialogBox(
+  //                                       borderRadius: 25,
+  //                                       mainAxisSpace: 30,
+  //                                       crossAxisSpace: 45,
+  //                                     ),
+  //                                     semiMediumDevice: StarDialogBox(
+  //                                       borderRadius: 25,
+  //                                       mainAxisSpace: 30,
+  //                                       crossAxisSpace: 45,
+  //                                       axisCount: 3,
+  //                                     ),
+  //                                     semiLargeDevice: StarDialogBox(
+  //                                       borderRadius: 30,
+  //                                       mainAxisSpace: 30,
+  //                                       crossAxisSpace: 45,
+  //                                       axisCount: 3,
+  //                                     ),
+  //                                     largeDevice: StarDialogBox(
+  //                                       borderRadius: 35,
+  //                                       mainAxisSpace: 30,
+  //                                       crossAxisSpace: 45,
+  //                                       axisCount: 4,
+  //                                     ),
+  //                                   ),
+  //                             );
+  //                           },
+  //                           child: Container(
+  //                             height: 55,
+  //                             width: 125,
+  //                             decoration:
+  //                                 bookingViewmodel.advBookOption == "star"
+  //                                     ? BoxDecoration(
+  //                                       color: kDullPrimaryColor,
+  //                                       borderRadius: BorderRadius.circular(15),
+  //                                     )
+  //                                     : BoxDecoration(
+  //                                       color: kScaffoldColor,
+  //                                       border: Border.all(
+  //                                         color: kBlack,
+  //                                         width: 1,
+  //                                       ),
+  //                                       borderRadius: BorderRadius.circular(15),
+  //                                     ),
+  //                             child: Center(
+  //                               child: Text(
+  //                                 bookingViewmodel.selectedStar,
+  //                                 style:
+  //                                     bookingViewmodel.advBookOption == "star"
+  //                                         ? styles.whiteSemi15
+  //                                         : styles.blackSemi15,
+  //                               ),
+  //                             ),
+  //                           ),
+  //                         ),
+  //                         InkWell(
+  //                           onTap: () {
+  //                             bookingViewmodel.setAdvBookOption("date");
+  //                             bookingViewmodel.selectBookingDate(context);
+  //                           },
+  //                           child: Container(
+  //                             height: 55,
+  //                             width: 125,
+  //                             decoration:
+  //                                 bookingViewmodel.advBookOption == "date"
+  //                                     ? BoxDecoration(
+  //                                       color: kDullPrimaryColor,
+  //                                       borderRadius: BorderRadius.circular(15),
+  //                                     )
+  //                                     : BoxDecoration(
+  //                                       color: kScaffoldColor,
+  //                                       border: Border.all(
+  //                                         color: kBlack,
+  //                                         width: 1,
+  //                                       ),
+  //                                       borderRadius: BorderRadius.circular(15),
+  //                                     ),
+  //                             child: Center(
+  //                               child: Text(
+  //                                 bookingViewmodel.selectedDate,
+  //                                 style:
+  //                                     bookingViewmodel.advBookOption == "date"
+  //                                         ? styles.whiteSemi15
+  //                                         : styles.blackSemi15,
+  //                               ),
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                     25.kH,
+  //                     RepCheckBoxWidget(),
+  //                     Visibility(
+  //                       visible: bookingViewmodel.selectedRepMethod == "Weekly",
+  //                       child: WeeklyWidget(),
+  //                     ),
+  //                     25.kH,
+  //                     Row(
+  //                       mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //                       children: [
+  //                         SizedBox(
+  //                           child: Column(
+  //                             mainAxisSize: MainAxisSize.min,
+  //                             crossAxisAlignment: CrossAxisAlignment.center,
+  //                             children: [
+  //                               BuildTextWidget(
+  //                                 text: 'Number of Days for Repeat'.tr(),
+  //                                 size: 16,
+  //                                 color: kBlack,
+  //                                 textAlign: TextAlign.center,
+  //                                 maxLines: 2,
+  //                               ),
+  //
+  //                               // BuildTextWidget(
+  //                               //   text: 'for Repeat',
+  //                               //   size: 16,
+  //                               //   color: kBlack,
+  //                               //   textAlign: TextAlign.center,
+  //                               //   toLang: currentLang,
+  //                               // ),
+  //                             ],
+  //                           ),
+  //                         ),
+  //                         Text(":", style: styles.blackSemi18),
+  //                         SizedBox(
+  //                           width: SizeConfig.screenWidth * 0.2,
+  //                           child: TextFormField(
+  //                             keyboardType: TextInputType.number,
+  //                             validator:
+  //                                 (value) => Validation.numberValidation(
+  //                                   value,
+  //                                   "Enter days",
+  //                                   "Enter valid days",
+  //                                 ),
+  //                             controller: bookingViewmodel.bookingRepController,
+  //                             onChanged: (value) {
+  //                               bookingViewmodel.bookingRepOnchange(
+  //                                 value,
+  //                                 selectedVazhipaadu,
+  //                               );
+  //                             },
+  //                             textAlign: TextAlign.center,
+  //                             style: styles.blackRegular15,
+  //                             decoration: InputDecoration(
+  //                               border: OutlineInputBorder(
+  //                                 borderRadius: BorderRadius.circular(10),
+  //                               ),
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                     25.kH,
+  //                     TextFormField(
+  //                       validator:
+  //                           (value) => Validation.emptyValidation(
+  //                             value,
+  //                             "Enter your address",
+  //                           ),
+  //                       controller: bookingViewmodel.bookingAddressController,
+  //                       maxLines: 4,
+  //                       style: styles.blackRegular15,
+  //                       decoration: InputDecoration(
+  //                         hintText: "Address".tr(),
+  //                         border: OutlineInputBorder(
+  //                           borderRadius: BorderRadius.circular(15),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //     );
+  //   }
+  // }
+  class AdvancedBookingConfirmForm extends StatefulWidget {
     final Map<String, dynamic> selectedVazhipaadu;
+
     const AdvancedBookingConfirmForm({
       super.key,
       required this.selectedVazhipaadu,
     });
 
     @override
+    State<AdvancedBookingConfirmForm> createState() =>
+        _AdvancedBookingConfirmFormState();
+  }
+
+  class _AdvancedBookingConfirmFormState extends State<AdvancedBookingConfirmForm> {
+    final _formKey = GlobalKey<FormState>();
+
+    final TextEditingController _nameController = TextEditingController();
+    final TextEditingController _phoneController = TextEditingController();
+    final TextEditingController _repDaysController = TextEditingController();
+    final TextEditingController _addressController = TextEditingController();
+
+    @override
+    void dispose() {
+      _nameController.dispose();
+      _phoneController.dispose();
+      _repDaysController.dispose();
+      _addressController.dispose();
+      super.dispose();
+    }
+
+    @override
     Widget build(BuildContext context) {
-      final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
       AppStyles styles = AppStyles();
       SizeConfig().init(context);
+
       return Consumer<BookingViewmodel>(
-        builder:
-
-            (context, bookingViewmodel, child) => SizedBox(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15, top: 20),
-                child: Form(
-                  key: bookingViewmodel.advBookingKey,
-                  child: Column(
+        builder: (context, bookingViewmodel, child) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 15.0, right: 15, top: 20),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    autofocus: true,
+                    validator: Validation.nameValidation,
+                    controller: _nameController,
+                    textAlign: TextAlign.center,
+                    style: styles.blackRegular15,
+                    decoration: InputDecoration(
+                      hintText: "Name".tr(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                  ),
+                  25.kH,
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    validator: Validation.phoneValidation,
+                    controller: _phoneController,
+                    textAlign: TextAlign.center,
+                    style: styles.blackRegular15,
+                    maxLength: 10,
+                    decoration: InputDecoration(
+                      hintText: "Phone".tr(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                  ),
+                  25.kH,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      TextFormField(
-                        autofocus: true,
-                        validator: Validation.nameValidation,
-                        controller: bookingViewmodel.bookingNameController,
-                        textAlign: TextAlign.center,
-                        style: styles.blackRegular15,
-                        decoration: InputDecoration(
-                          hintText: "Name".tr(),
-                          border: OutlineInputBorder(
+                      InkWell(
+                        onTap: () {
+                          bookingViewmodel.setAdvBookOption("star".tr());
+                          showDialog(
+                            context: context,
+                            builder: (context) => ResponsiveLayout(
+                              pinelabDevice: StarDialogBox(),
+                              mediumDevice: StarDialogBox(
+                                borderRadius: 25,
+                                mainAxisSpace: 30,
+                                crossAxisSpace: 45,
+                              ),
+                              semiMediumDevice: StarDialogBox(
+                                borderRadius: 25,
+                                mainAxisSpace: 30,
+                                crossAxisSpace: 45,
+                                axisCount: 3,
+                              ),
+                              semiLargeDevice: StarDialogBox(
+                                borderRadius: 30,
+                                mainAxisSpace: 30,
+                                crossAxisSpace: 45,
+                                axisCount: 3,
+                              ),
+                              largeDevice: StarDialogBox(
+                                borderRadius: 35,
+                                mainAxisSpace: 30,
+                                crossAxisSpace: 45,
+                                axisCount: 4,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          height: 55,
+                          width: 125,
+                          decoration: bookingViewmodel.advBookOption == "star"
+                              ? BoxDecoration(
+                            color: kDullPrimaryColor,
                             borderRadius: BorderRadius.circular(15),
+                          )
+                              : BoxDecoration(
+                            color: kScaffoldColor,
+                            border: Border.all(color: kBlack, width: 1),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Center(
+                            child: Text(
+                              bookingViewmodel.selectedStar,
+                              style: bookingViewmodel.advBookOption == "star"
+                                  ? styles.whiteSemi15
+                                  : styles.blackSemi15,
+                            ),
                           ),
                         ),
                       ),
-                      25.kH,
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        validator: (value) => Validation.phoneValidation(value),
-                        controller: bookingViewmodel.bookingPhnoController,
-                        textAlign: TextAlign.center,
-                        style: styles.blackRegular15,
-                        maxLength: 10,
-                        decoration: InputDecoration(
-                          hintText: "Phone".tr(),
-                          border: OutlineInputBorder(
+                      InkWell(
+                        onTap: () {
+                          bookingViewmodel.setAdvBookOption("date");
+                          bookingViewmodel.selectBookingDate(context);
+                        },
+                        child: Container(
+                          height: 55,
+                          width: 125,
+                          decoration: bookingViewmodel.advBookOption == "date"
+                              ? BoxDecoration(
+                            color: kDullPrimaryColor,
+                            borderRadius: BorderRadius.circular(15),
+                          )
+                              : BoxDecoration(
+                            color: kScaffoldColor,
+                            border: Border.all(color: kBlack, width: 1),
                             borderRadius: BorderRadius.circular(15),
                           ),
-                        ),
-                      ),
-
-                      25.kH,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              bookingViewmodel.setAdvBookOption("star".tr());
-                              showDialog(
-                                context: context,
-                                builder:
-                                    (context) => ResponsiveLayout(
-                                      pinelabDevice: StarDialogBox(),
-                                      mediumDevice: StarDialogBox(
-                                        borderRadius: 25,
-                                        mainAxisSpace: 30,
-                                        crossAxisSpace: 45,
-                                      ),
-                                      semiMediumDevice: StarDialogBox(
-                                        borderRadius: 25,
-                                        mainAxisSpace: 30,
-                                        crossAxisSpace: 45,
-                                        axisCount: 3,
-                                      ),
-                                      semiLargeDevice: StarDialogBox(
-                                        borderRadius: 30,
-                                        mainAxisSpace: 30,
-                                        crossAxisSpace: 45,
-                                        axisCount: 3,
-                                      ),
-                                      largeDevice: StarDialogBox(
-                                        borderRadius: 35,
-                                        mainAxisSpace: 30,
-                                        crossAxisSpace: 45,
-                                        axisCount: 4,
-                                      ),
-                                    ),
-                              );
-                            },
-                            child: Container(
-                              height: 55,
-                              width: 125,
-                              decoration:
-                                  bookingViewmodel.advBookOption == "star"
-                                      ? BoxDecoration(
-                                        color: kDullPrimaryColor,
-                                        borderRadius: BorderRadius.circular(15),
-                                      )
-                                      : BoxDecoration(
-                                        color: kScaffoldColor,
-                                        border: Border.all(
-                                          color: kBlack,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                              child: Center(
-                                child: Text(
-                                  bookingViewmodel.selectedStar,
-                                  style:
-                                      bookingViewmodel.advBookOption == "star"
-                                          ? styles.whiteSemi15
-                                          : styles.blackSemi15,
-                                ),
-                              ),
+                          child: Center(
+                            child: Text(
+                              bookingViewmodel.selectedDate,
+                              style: bookingViewmodel.advBookOption == "date"
+                                  ? styles.whiteSemi15
+                                  : styles.blackSemi15,
                             ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              bookingViewmodel.setAdvBookOption("date");
-                              bookingViewmodel.selectBookingDate(context);
-                            },
-                            child: Container(
-                              height: 55,
-                              width: 125,
-                              decoration:
-                                  bookingViewmodel.advBookOption == "date"
-                                      ? BoxDecoration(
-                                        color: kDullPrimaryColor,
-                                        borderRadius: BorderRadius.circular(15),
-                                      )
-                                      : BoxDecoration(
-                                        color: kScaffoldColor,
-                                        border: Border.all(
-                                          color: kBlack,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                              child: Center(
-                                child: Text(
-                                  bookingViewmodel.selectedDate,
-                                  style:
-                                      bookingViewmodel.advBookOption == "date"
-                                          ? styles.whiteSemi15
-                                          : styles.blackSemi15,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      25.kH,
-                      RepCheckBoxWidget(),
-                      Visibility(
-                        visible: bookingViewmodel.selectedRepMethod == "Weekly",
-                        child: WeeklyWidget(),
-                      ),
-                      25.kH,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          SizedBox(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                BuildTextWidget(
-                                  text: 'Number of Days for Repeat'.tr(),
-                                  size: 16,
-                                  color: kBlack,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                ),
-
-                                // BuildTextWidget(
-                                //   text: 'for Repeat',
-                                //   size: 16,
-                                //   color: kBlack,
-                                //   textAlign: TextAlign.center,
-                                //   toLang: currentLang,
-                                // ),
-                              ],
-                            ),
-                          ),
-                          Text(":", style: styles.blackSemi18),
-                          SizedBox(
-                            width: SizeConfig.screenWidth * 0.2,
-                            child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              validator:
-                                  (value) => Validation.numberValidation(
-                                    value,
-                                    "Enter days",
-                                    "Enter valid days",
-                                  ),
-                              controller: bookingViewmodel.bookingRepController,
-                              onChanged: (value) {
-                                bookingViewmodel.bookingRepOnchange(
-                                  value,
-                                  selectedVazhipaadu,
-                                );
-                              },
-                              textAlign: TextAlign.center,
-                              style: styles.blackRegular15,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      25.kH,
-                      TextFormField(
-                        validator:
-                            (value) => Validation.emptyValidation(
-                              value,
-                              "Enter your address",
-                            ),
-                        controller: bookingViewmodel.bookingAddressController,
-                        maxLines: 4,
-                        style: styles.blackRegular15,
-                        decoration: InputDecoration(
-                          hintText: "Address".tr(),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
                           ),
                         ),
                       ),
                     ],
                   ),
-                ),
+                  25.kH,
+                  RepCheckBoxWidget(),
+                  Visibility(
+                    visible: bookingViewmodel.selectedRepMethod == "Weekly",
+                    child: WeeklyWidget(),
+                  ),
+                  25.kH,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            BuildTextWidget(
+                              text: 'Number of Days for Repeat'.tr(),
+                              size: 16,
+                              color: kBlack,
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(":", style: styles.blackSemi18),
+                      SizedBox(
+                        width: SizeConfig.screenWidth * 0.2,
+                        child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          validator: (value) => Validation.numberValidation(
+                            value,
+                            "Enter days",
+                            "Enter valid days",
+                          ),
+                          controller: _repDaysController,
+                          onChanged: (value) {
+                            bookingViewmodel.bookingRepOnchange(
+                              value,
+                              widget.selectedVazhipaadu,
+                            );
+                          },
+                          textAlign: TextAlign.center,
+                          style: styles.blackRegular15,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  25.kH,
+                  TextFormField(
+                    validator: (value) => Validation.emptyValidation(
+                      value,
+                      "Enter your address",
+                    ),
+                    controller: _addressController,
+                    maxLines: 4,
+                    style: styles.blackRegular15,
+                    decoration: InputDecoration(
+                      hintText: "Address".tr(),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
+          );
+        },
       );
     }
   }
