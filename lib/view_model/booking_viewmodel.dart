@@ -81,6 +81,15 @@ class BookingViewmodel extends ChangeNotifier {
     bookingPhnoController.clear();
   }
 
+
+  void clearBookingControllers() {
+    bookingNameController.clear();
+    bookingPhnoController.clear();
+    bookingRepController.clear();
+    bookingAddressController.clear();
+  }
+
+
   void popFunction(BuildContext context) {
     Navigator.pop(context);
   }
@@ -124,11 +133,12 @@ class BookingViewmodel extends ChangeNotifier {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AdvanceBookingPreviewView()),
+
     );
   }
 
   void setAdvBookOption(String value) {
-    value == "date" ? _selectedStar = "Star".tr() : _selectedDate = "Date".tr();
+    value == "date".tr() ? _selectedStar = "Star".tr() : _selectedDate = "Date".tr();
     _advBookOption = value;
     notifyListeners();
   }
@@ -161,10 +171,10 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void navigateAdvancedBookingConfirm(
-    BuildContext context,
-    Map<String, dynamic> selectedVazhipaadu,
-  ) {
-    _selectedRepMethod = "Once".tr();
+      BuildContext context,
+      Map<String, dynamic> selectedVazhipaadu,
+      ) {
+    _selectedRepMethod = "Once";
     _selectedWeeklyDay = "Sun";
     bookingRepController.text = "1";
     int x = selectedVazhipaadu["prize"];
@@ -175,16 +185,16 @@ class BookingViewmodel extends ChangeNotifier {
       MaterialPageRoute(
         builder:
             (context) => AdvancedBookingConfirmView(
-              selectedVazhipaadu: selectedVazhipaadu,
-            ),
+          selectedVazhipaadu: selectedVazhipaadu,
+        ),
       ),
     );
   }
 
   void bookingRepOnchange(
-    String value,
-    Map<String, dynamic> selectedVazhipaadu,
-  ) {
+      String value,
+      Map<String, dynamic> selectedVazhipaadu,
+      ) {
     bool valid = advBookingKey.currentState?.validate() ?? false;
     if (!valid) {
       return;
@@ -201,9 +211,9 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void advBookingAddVazhipadu(
-    Map<String, dynamic> selectedVazhipaadu,
-    BuildContext context,
-  ) {
+      Map<String, dynamic> selectedVazhipaadu,
+      BuildContext context,
+      ) {
     bool valid = advBookingKey.currentState?.validate() ?? false;
     if (!valid) {
       return;
@@ -230,9 +240,9 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void showVazhipadduDialogBox(
-    BuildContext context,
-    Map<String, dynamic> selectedVazhipaadu,
-  ) {
+      BuildContext context,
+      Map<String, dynamic> selectedVazhipaadu,
+      ) {
     bool valid = bookingKey.currentState?.validate() ?? false;
     if (!valid) return;
 
@@ -244,8 +254,8 @@ class BookingViewmodel extends ChangeNotifier {
         context: context,
         builder:
             (context) => VazhipadduDialogBoxWidget(
-              selectedVazhippadu: selectedVazhipaadu,
-            ),
+          selectedVazhippadu: selectedVazhipaadu,
+        ),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -270,7 +280,7 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void setStar(String star, BuildContext context) {
-    _selectedStar = star;
+    _selectedStar = star.tr();
     popFunction(context);
     notifyListeners();
   }
@@ -284,13 +294,13 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void setVazhipaduBookingList(
-    Map<String, dynamic> selectedVazhipaadu,
-    BuildContext context,
-  ) {
+      Map<String, dynamic> selectedVazhipaadu,
+      BuildContext context,
+      ) {
     _vazhipaduBookingList.add(
       UserBookingModel(
         name: bookingNameController.text.trim(),
-        star: _selectedStar,
+        star: _selectedStar.tr(),
         vazhiPad: [
           {
             "godName": selectedGod.god ?? "",
@@ -311,9 +321,9 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void setVazhipaduAdvBookingList(
-    Map<String, dynamic> selectedVazhipaadu,
-    BuildContext context,
-  ) {
+      Map<String, dynamic> selectedVazhipaadu,
+      BuildContext context,
+      ) {
     bool valid = advBookingKey.currentState?.validate() ?? false;
     if (!valid) {
       return;
@@ -331,12 +341,12 @@ class BookingViewmodel extends ChangeNotifier {
 
     _advBookingAmt =
         selectedVazhipaadu["prize"] *
-        int.parse(bookingRepController.text.trim());
+            int.parse(bookingRepController.text.trim());
     _vazhipaduBookingList.add(
       UserBookingModel(
         name: bookingNameController.text.trim(),
         phno: bookingPhnoController.text.trim(),
-        star: _selectedStar,
+        star: _selectedStar.tr(),
         date: _selectedDate,
         repMethode: _selectedRepMethod,
         day: _selectedRepMethod == "Weekly" ? _selectedWeeklyDay : '',
@@ -371,9 +381,9 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void addVazhipaddToExisting(
-    Map<String, dynamic> selectedVazhipaadu,
-    BuildContext context,
-  ) {
+      Map<String, dynamic> selectedVazhipaadu,
+      BuildContext context,
+      ) {
     _vazhipaduBookingList.last.vazhiPad.add({
       "godName": selectedGod.god ?? "",
       "vazhipadu": selectedVazhipaadu["vazhi"],
@@ -395,7 +405,7 @@ class BookingViewmodel extends ChangeNotifier {
 
   void vazhipaduDelete(int indexOfVazhipad, int indexOfPooja) {
     int amt =
-        _vazhipaduBookingList[indexOfVazhipad].vazhiPad[indexOfPooja]["tPrize"];
+    _vazhipaduBookingList[indexOfVazhipad].vazhiPad[indexOfPooja]["tPrize"];
     log(amt.toString());
     _totalVazhipaduAmt -= amt;
     _vazhipaduBookingList[indexOfVazhipad].vazhiPad.removeAt(indexOfPooja);
@@ -409,7 +419,7 @@ class BookingViewmodel extends ChangeNotifier {
 
   void advBookingDeleteVazhipadd(int indexOfVazhipad, int indexOfPooja) {
     int amt =
-        _vazhipaduBookingList[indexOfVazhipad].vazhiPad[indexOfPooja]["tPrize"];
+    _vazhipaduBookingList[indexOfVazhipad].vazhiPad[indexOfPooja]["tPrize"];
     vazhipaduDelete(indexOfVazhipad, indexOfPooja);
 
     _totalAdvBookingAmt -= amt;
@@ -417,11 +427,11 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void bookingPreviewSecondFloatButton(
-    BuildContext context,
-    int? amount,
-    int noOfScreens,
-    String title,
-  ) {
+      BuildContext context,
+      int? amount,
+      int noOfScreens,
+      String title,
+      ) {
     if (totalVazhipaduAmt == 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBarWidget(
@@ -436,10 +446,10 @@ class BookingViewmodel extends ChangeNotifier {
       MaterialPageRoute(
         builder:
             (context) => QrScannerComponent(
-              amount: amount != null ? "$amount" : "$totalVazhipaduAmt",
-              noOfScreen: noOfScreens,
-              title: title,
-            ),
+          amount: amount != null ? "$amount" : "$totalVazhipaduAmt",
+          noOfScreen: noOfScreens,
+          title: title,
+        ),
       ),
     );
     notifyListeners();
@@ -451,12 +461,9 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   bool toggleSelectedRepMethod(String value) {
-    if (_selectedRepMethod == value) {
-      return true;
-    } else {
-      return false;
-    }
+    return _selectedRepMethod == value;
   }
+
 
   void switchSelectedWeeklyDay(String value) {
     _selectedWeeklyDay = value;

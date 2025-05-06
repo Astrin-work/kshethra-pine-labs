@@ -1,5 +1,5 @@
 class Validation{
-    static String? nameValidation(String? value) {
+  static String? nameValidation(String? value) {
     RegExp regex = RegExp(r'^[a-zA-Z\s]+$');
     final name = value ?? "";
     if (name.isEmpty || name == "") {
@@ -11,40 +11,25 @@ class Validation{
 
     return null;
   }
-    static String? phoneValidation(String? value) {
-      final phone = value?.trim() ?? "";
 
 
-      RegExp regex = RegExp(r'^[6-9][0-9]{9}$');
-
-      if (phone.isEmpty) {
-        return "Phone number is required";
-      }
-      if (!regex.hasMatch(phone)) {
-        return "Enter a valid 10-digit Indian phone number";
-      }
-      return null;
+  static String? phoneValidation(String? value) {
+    RegExp regex = RegExp(r'^\d{10}$');
+    final phone = value ?? "";
+    if (phone.isEmpty || phone == "") {
+      return ("Phone number is required");
     }
-
-
-
-  //  static String? phoneValidation(String? value) {
-  //   RegExp regex = RegExp(r'^\d{10}$');
-  //   final phone = value ?? "";
-  //   if (phone.isEmpty || phone == "") {
-  //     return ("Phone number is required");
-  //   }
-  //   if (!regex.hasMatch(phone)) {
-  //     return ("Enter valid a Phone number");
-  //   }
-  //   return null;
-  // }
+    if (!regex.hasMatch(phone)) {
+      return ("Enter valid a Phone number");
+    }
+    return null;
+  }
 
   static String? numberValidation(
-    String? value,
-    String nullMsg,
-    String invldMsg,
-  ) {
+      String? value,
+      String nullMsg,
+      String invldMsg,
+      ) {
     RegExp regex = RegExp(r'[0-9]');
 
     final age = value ?? "";
@@ -58,7 +43,7 @@ class Validation{
   }
 
 
-    static String? emptyValidation(String? value, String msg) {
+  static String? emptyValidation(String? value, String msg) {
     final adress = value ?? "";
     if (adress.isEmpty || adress == "") {
       return (msg);

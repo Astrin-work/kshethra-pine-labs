@@ -127,10 +127,10 @@ class HomePageViewmodel extends ChangeNotifier {
       context: context,
       builder:
           (context) => DialogBoxWidget(
-            title: 'Do you want to Logout ?',
-            fButton: 'Logout',
+            title: 'Do you want to Logout?'.tr(),
+            fButton: 'Logout'.tr(),
             fOnTap: () {},
-            sButton: 'Cancel',
+            sButton: 'Cancel'.tr(),
             sOnTap: () => popFunction(context),
           ),
     );

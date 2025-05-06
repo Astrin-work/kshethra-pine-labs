@@ -99,5 +99,11 @@
   "Enter your Name (optional)": "പേര് നൽകുക (ഓപ്ഷണൽ)",
   "Pay": "നൽകുക",
   "Cancel": "റദ്ദാക്കുക",
-  "Continue": "തുടരുക"
+  "Continue": "തുടരുക",
+  "Daily": "ദിവസേന",
+  "Do you want to Logout?": "നിങ്ങൾക്ക് ലോഗ് ഔട്ട് ചെയ്യണോ?",
+  "Logout": "ലോഗ്ഔട്ട് ചെയ്യുക",
+  "Enter the amount to Donate": "സംഭാവന നൽകേണ്ട തുക നൽകുക"
+
+
 }

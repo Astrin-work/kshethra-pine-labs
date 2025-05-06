@@ -87,5 +87,9 @@
   "Select your Star": "अपना नक्षत्र चुनें",
   "Vazhipaddu": "वज़िपाडु",
   "Enter the Amount": "राशि दर्ज करें",
-  "Enter your Name (optional)": "अपना नाम दर्ज करें (वैकल्पिक)"
+  "Enter your Name (optional)": "अपना नाम दर्ज करें (वैकल्पिक)",
+  "Daily": "दैनिक",
+  "Do you want to Logout ?": "क्या आप लॉगआउट करना चाहते हैं?",
+  "Logout ": "लॉग आउट",
+  "Enter the amount to Donate": "दान करने के लिए राशि दर्ज करें"
 }

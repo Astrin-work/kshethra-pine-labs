@@ -26,57 +26,57 @@ class BookingFloatButtonWidget extends StatelessWidget {
     return Consumer<BookingViewmodel>(
       builder:
           (context, bookingViewmodel, child) => Padding(
-            padding: const EdgeInsets.only(left: 35.0, right: 5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: payOnTap,
-                  child: Container(
-                    height: height ?? SizeConfig.screenWidth * 0.135,
-                    width: width ?? SizeConfig.screenWidth * 0.7,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      image: DecorationImage(
-                        image: AssetImage(Assets.images.homeBackground.path),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "PAY ₹${bookingViewmodel.totalVazhipaduAmt}",
-                        style: styles.whiteRegular20,
-                      ),
-                    ),
+        padding: const EdgeInsets.only(left: 35.0, right: 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+              onTap: payOnTap,
+              child: Container(
+                height: height ?? SizeConfig.screenWidth * 0.135,
+                width: width ?? SizeConfig.screenWidth * 0.7,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  image: DecorationImage(
+                    image: AssetImage(Assets.images.homeBackground.path),
+                    fit: BoxFit.fill,
                   ),
                 ),
-                InkWell(
-                  onTap: addOnTap ?? bookingViewmodel.bookingAddNewDevottee,
-                  child: Container(
-                    height: height ?? SizeConfig.screenWidth * 0.135,
-                    width: width ?? SizeConfig.screenWidth * 0.15,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      image: DecorationImage(
-                        image: AssetImage(Assets.images.homeBackground.path),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: kWhite,
-                        ),
-                        child: Icon(Icons.person_add, color: kDullPrimaryColor),
-                      ),
-                    ),
+                child: Center(
+                  child: Text(
+                    "PAY ₹${bookingViewmodel.totalVazhipaduAmt}",
+                    style: styles.whiteRegular20,
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
+            InkWell(
+              onTap: addOnTap ?? bookingViewmodel.bookingAddNewDevottee,
+              child: Container(
+                height: height ?? SizeConfig.screenWidth * 0.135,
+                width: width ?? SizeConfig.screenWidth * 0.15,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  image: DecorationImage(
+                    image: AssetImage(Assets.images.homeBackground.path),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: kWhite,
+                    ),
+                    child: Icon(Icons.person_add, color: kDullPrimaryColor),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

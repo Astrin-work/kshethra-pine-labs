@@ -86,15 +86,22 @@ class VazhipadduWidget extends StatelessWidget {
                             //   textAlign: TextAlign.center,
                             // ),
                             Text(
-                              bookingViewmodel.selectedGod.vazhippad![index]["vazhi"] != null
-                                  ? bookingViewmodel.selectedGod.vazhippad![index]["vazhi"].toString().tr()
+                              bookingViewmodel
+                                          .selectedGod
+                                          .vazhippad![index]["vazhi"] !=
+                                      null
+                                  ? bookingViewmodel
+                                      .selectedGod
+                                      .vazhippad![index]["vazhi"]
+                                      .toString()
+                                      .tr()
                                   : "",
                               style: styles.blackRegular15,
                               textAlign: TextAlign.center,
                             ),
                             BuildTextWidget(
                               text:
-                              "${bookingViewmodel.selectedGod.vazhippad![index]["prize"]}",
+                                  "${bookingViewmodel.selectedGod.vazhippad![index]["prize"]}",
                               toLang: currentLang,
                               textAlign: TextAlign.center,
                             ),

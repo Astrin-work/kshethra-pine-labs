@@ -85,5 +85,9 @@
   "Select your Star": "ನಿಮ್ಮ ನಕ್ಷತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
   "Vazhipaddu": "ವಜಿಪಾಡು",
   "Enter the Amount": "ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ",
-  "Enter your Name (optional)": "ನಿಮ್ಮ ಹೆಸರು ನಮೂದಿಸಿ (ಐಚ್ಛಿಕ)"
+  "Enter your Name (optional)": "ನಿಮ್ಮ ಹೆಸರು ನಮೂದಿಸಿ (ಐಚ್ಛಿಕ)",
+  "Daily": "ದೈನಂದಿನ",
+  "Do you want to Logout ?": "ನೀವು ಲಾಗ್ ಔಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರಾ?",
+  "Logout ": "ಲಾಗ್ಔಟ್",
+  "Enter the amount to Donate": "ದಾನದ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ"
 }

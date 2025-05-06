@@ -85,5 +85,9 @@
   "Select your Star": "உங்கள் நட்சத்திரத்தை தேர்வு செய்யவும்",
   "Vazhipaddu": "வழிபாடு",
   "Enter the Amount": "தொகையை உள்ளிடவும்",
-  "Enter your Name (optional)": "உங்கள் பெயரை உள்ளிடவும் (விருப்பத்தேர்வு)"
+  "Enter your Name (optional)": "உங்கள் பெயரை உள்ளிடவும் (விருப்பத்தேர்வு)",
+  "Daily": "தினசரி",
+  "Do you want to Logout ?": "நீங்கள் வெளியேற விரும்புகிறீர்களா?",
+  "Logout": "வெளியேறு",
+  "Enter the amount to Donate": "நன்கு தொகையை உள்ளிடவும்"
 }
