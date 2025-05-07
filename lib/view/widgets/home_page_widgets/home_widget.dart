@@ -17,7 +17,7 @@ class HomeWidget extends StatelessWidget {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
 
-    final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
+    // final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
 
     return Consumer<HomePageViewmodel>(
       builder: (context, homepageViewmodel, child) => SizedBox(
