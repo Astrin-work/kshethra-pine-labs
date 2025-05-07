@@ -49,6 +49,7 @@ class _AdvancedBookingConfirmFormState
           (context, bookingViewmodel, child) => Padding(
             padding: const EdgeInsets.only(left: 15.0, right: 15, top: 20),
             child: Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               key: bookingViewmodel.advBookingKey,
               child: Column(
                 children: [
@@ -182,15 +183,7 @@ class _AdvancedBookingConfirmFormState
                     child: const WeeklyWidget(),
                   ),
                   25.kH,
-                  if (bookingViewmodel.selectedRepMethod.contains(
-                        "Weekly".tr(),
-                      ) ||
-                      bookingViewmodel.selectedRepMethod.contains(
-                        "Daily".tr(),
-                      ) ||
-                      bookingViewmodel.selectedRepMethod.contains(
-                        "Monthly".tr(),
-                      ))
+                  // if (bookingViewmodel.selectedRepMethod != "Once")
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -204,12 +197,11 @@ class _AdvancedBookingConfirmFormState
                           width: SizeConfig.screenWidth * 0.2,
                           child: TextFormField(
                             keyboardType: TextInputType.number,
-                            validator:
-                                (value) => Validation.numberValidation(
-                                  value,
-                                  "Enter days",
-                                  "Enter valid days",
-                                ),
+                            validator: (value) => Validation.numberValidation(
+                              value,
+                              "Count",
+                              "Enter valid days",
+                            ),
                             controller: _repDaysController,
                             onChanged: (value) {
                               bookingViewmodel.bookingRepOnchange(
@@ -228,7 +220,6 @@ class _AdvancedBookingConfirmFormState
                         ),
                       ],
                     ),
-
                   25.kH,
                   TextFormField(
                     validator:

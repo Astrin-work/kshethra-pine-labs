@@ -7,12 +7,15 @@ import 'package:kshethra_mini/view/widgets/e_hundi_page_widgets/e_hundi_dialogbo
 class EHundiViewmodel extends ChangeNotifier {
   TextEditingController eHundiAmountController = TextEditingController();
   TextEditingController eHundiNameController = TextEditingController();
+  final TextEditingController eHundiPhoneController = TextEditingController();
+
 
   final eHundiKey = GlobalKey<FormState>();
 
   void clearHundiAmount() {
    eHundiAmountController.clear();
    eHundiNameController.clear();
+   eHundiPhoneController.clear();
     notifyListeners();
   }
 

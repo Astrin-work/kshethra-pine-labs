@@ -96,6 +96,7 @@ class PreViewWidget extends StatelessWidget {
                             itemBuilder: (context, inde) {
                               final poojaList = vazhipaduList[index].vazhiPad;
                               return Padding(
+
                                 padding: const EdgeInsets.only(
                                   top: 2.0,
                                   bottom: 2,
@@ -110,16 +111,16 @@ class PreViewWidget extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         BuildTextWidget(
-                                          text: poojaList[inde]["vazhipadu"],
+                                          text: poojaList[inde]["vazhipadu"].toString().tr(),
                                           size: 14,
                                           color: kBlack,
-                                          toLang: currentLang,
+                                          // toLang: currentLang,
                                         ),
                                         BuildTextWidget(
-                                          text: poojaList[inde]["godName"],
+                                          text: poojaList[inde]["godName"].toString().tr(),
                                           size: 14,
                                           color: kBlack,
-                                          toLang: currentLang,
+                                          // toLang: currentLang,
                                         ),
                                         // Text(poojaList[inde]["vazhipadu"]),
                                         // Text(poojaList[inde]["godName"]),
@@ -151,6 +152,13 @@ class PreViewWidget extends StatelessWidget {
                                                 );
                                       },
                                       icon: Icon(Icons.delete),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.add),
+                                      onPressed:
+                                          () => BookingViewmodel().popFunction(
+                                            context,
+                                          ),
                                     ),
                                   ],
                                 ),

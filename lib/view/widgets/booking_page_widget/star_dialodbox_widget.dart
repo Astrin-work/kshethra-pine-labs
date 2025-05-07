@@ -92,10 +92,9 @@ class StarDialogBox extends StatelessWidget {
                                     //   color: kBlack,
                                     // ),
                                     Text(
-                                      stars[index].starKey!.tr(),  // no !
+                                      stars[index].starKey!.toString().tr(),
                                       style: styles.blackRegular13,
                                     ),
-
                                   ),
                                 ),
                               ),

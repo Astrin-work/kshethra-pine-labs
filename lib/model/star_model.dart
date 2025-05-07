@@ -30,5 +30,6 @@ List<StarModel> stars = [
   StarModel(starKey: "avitam"),
   StarModel(starKey: "chathayam"),
   StarModel(starKey: "pooruruttathi"),
+  StarModel(starKey: "Uthrattati"),
   StarModel(starKey: "revathi"),
 ];

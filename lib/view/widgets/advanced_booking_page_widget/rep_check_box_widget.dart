@@ -16,99 +16,99 @@ class RepCheckBoxWidget extends StatelessWidget {
     return Consumer<BookingViewmodel>(
       builder:
           (context, bookingViewmodel, child) => SizedBox(
-        // color: kGreen,
-        width: 250,
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+            width: 250,
+            child: Column(
               children: [
-                SizedBox(
-                  child: Row(
-                    children: [
-                      Text("Once".tr(), style: styles.blackRegular15),
-                      Checkbox(
-                        value: bookingViewmodel.toggleSelectedRepMethod(
-                          "Once".tr(),
-                        ),
-                        onChanged: (value) {
-                          bookingViewmodel.switchSelectedRepMethod(
-                            "Once".tr(),
-                          );
-                        },
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          Text("Once".tr(), style: styles.blackRegular15),
+                          Checkbox(
+                            value: bookingViewmodel.toggleSelectedRepMethod(
+                              "Once",
+                            ),
+                            onChanged: (value) {
+                              bookingViewmodel.switchSelectedRepMethod(
+                                "Once",
+                              );
+                            },
 
-                        activeColor: kDullPrimaryColor,
+                            activeColor: kDullPrimaryColor,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          Text("Weekly".tr(), style: styles.blackRegular15),
+                          Checkbox(
+                            value: bookingViewmodel.toggleSelectedRepMethod(
+                              "Weekly",
+                            ),
+                            onChanged: (value) {
+                              bookingViewmodel.switchSelectedRepMethod(
+                                "Weekly",
+                              );
+                            },
+
+                            activeColor: kDullPrimaryColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  child: Row(
-                    children: [
-                      Text("Weekly".tr(), style: styles.blackRegular15),
-                      Checkbox(
-                        value: bookingViewmodel.toggleSelectedRepMethod(
-                          "Weekly".tr(),
-                        ),
-                        onChanged: (value) {
-                          bookingViewmodel.switchSelectedRepMethod(
-                            "Weekly".tr(),
-                          );
-                        },
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          Text("Daily".tr(), style: styles.blackRegular15),
+                          Checkbox(
+                            value: bookingViewmodel.toggleSelectedRepMethod(
+                              "Daily",
+                            ),
+                            onChanged: (value) {
+                              bookingViewmodel.switchSelectedRepMethod(
+                                "Daily",
+                              );
+                            },
 
-                        activeColor: kDullPrimaryColor,
+                            activeColor: kDullPrimaryColor,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          Text("Monthly".tr(), style: styles.blackRegular15),
+                          Checkbox(
+                            value: bookingViewmodel.toggleSelectedRepMethod(
+                              "Monthly",
+                            ),
+                            onChanged: (value) {
+                              bookingViewmodel.switchSelectedRepMethod(
+                                "Monthly",
+                              );
+                            },
+
+                            activeColor: kDullPrimaryColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  child: Row(
-                    children: [
-                      Text("Daily".tr(), style: styles.blackRegular15),
-                      Checkbox(
-                        value: bookingViewmodel.toggleSelectedRepMethod(
-                          "Daily".tr(),
-                        ),
-                        onChanged: (value) {
-                          bookingViewmodel.switchSelectedRepMethod(
-                            "Daily".tr(),
-                          );
-                        },
-
-                        activeColor: kDullPrimaryColor,
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  child: Row(
-                    children: [
-                      Text("Monthly".tr(), style: styles.blackRegular15),
-                      Checkbox(
-                        value: bookingViewmodel.toggleSelectedRepMethod(
-                          "Monthly".tr(),
-                        ),
-                        onChanged: (value) {
-                          bookingViewmodel.switchSelectedRepMethod(
-                            "Monthly".tr(),
-                          );
-                        },
-
-                        activeColor: kDullPrimaryColor,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+          ),
     );
   }
 }

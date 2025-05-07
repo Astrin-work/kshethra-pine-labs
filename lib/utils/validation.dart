@@ -14,16 +14,25 @@ class Validation{
 
 
   static String? phoneValidation(String? value) {
-    RegExp regex = RegExp(r'^\d{10}$');
-    final phone = value ?? "";
-    if (phone.isEmpty || phone == "") {
-      return ("Phone number is required");
+    final phone = value?.trim() ?? "";
+
+    if (phone.isEmpty) {
+      return "Phone number is required";
     }
-    if (!regex.hasMatch(phone)) {
-      return ("Enter valid a Phone number");
+    final cleanedPhone = phone.replaceAll(RegExp(r'^(\+91|91|0)'), '');
+
+    if (!RegExp(r'^[6-9]\d{9}$').hasMatch(cleanedPhone)) {
+      return "Enter a valid  phone number";
     }
+
+    if (RegExp(r'^(\d)\1{9}$').hasMatch(cleanedPhone)) {
+      return "Phone number cannot have all digits the same";
+    }
+
     return null;
   }
+
+
 
   static String? numberValidation(
       String? value,

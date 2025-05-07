@@ -42,11 +42,11 @@ class HomeWidget extends StatelessWidget {
                     child: Image.asset(Assets.icons.pray.path),
                   ),
                   titleWidget: BuildTextWidget(
-                    text: 'Vazhipaddu'.tr(),
+                    text: 'Vazhipaddu Booking'.tr(),
                     color: Colors.black,
                     size: 16,
                     fontWeight: FontWeight.w500,
-                    maxLines: 1,
+                    maxLines: 2,
                     textAlign: TextAlign.center,
                     // toLang: currentLang,
                   ),
@@ -101,7 +101,7 @@ class HomeWidget extends StatelessWidget {
                     child: Image.asset(Assets.icons.eHundi.path),
                   ),
                   titleWidget: BuildTextWidget(
-                    text: 'E-Hundi'.tr(),
+                    text: 'E- Bhandaram'.tr(),
                     color: Colors.black,
                     size: 16,
                     fontWeight: FontWeight.w500,
