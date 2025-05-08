@@ -54,10 +54,8 @@ class VazhipadduWidget extends StatelessWidget {
                           );
                         }
                         : () {
-                          bookingViewmodel.navigateAdvancedBookingConfirm(
-                            context,
-                            bookingViewmodel.selectedGod.vazhippad![index],
-                          );
+                          bookingViewmodel.showVazhipadduDialogBox(
+                          context,bookingViewmodel.selectedGod.vazhippad![index]);
                         },
                 child: Container(
                   decoration: BoxDecoration(

@@ -46,7 +46,8 @@ dependencies:
   shared_preferences: ^2.5.3
   path_provider: ^2.1.5
   shimmer: ^3.0.0
-#  flutter_secure_storage: ^4.2.1
+  flutter_secure_storage: ^9.2.4
+
 #  google_cloud_translation: ^0.0.4
 
 
