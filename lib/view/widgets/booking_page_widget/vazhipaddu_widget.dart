@@ -45,18 +45,23 @@ class VazhipadduWidget extends StatelessWidget {
             ),
             itemBuilder: (context, index) {
               return InkWell(
-                onTap:
-                    screeName == "bookingPage"
-                        ? () {
-                          bookingViewmodel.showVazhipadduDialogBox(
-                            context,
-                            bookingViewmodel.selectedGod.vazhippad![index],
-                          );
-                        }
-                        : () {
-                          bookingViewmodel.showVazhipadduDialogBox(
-                          context,bookingViewmodel.selectedGod.vazhippad![index]);
-                        },
+                onTap: () {
+                  if (screeName == "bookingPage") {
+                    print('------pressed1--------');
+                    bookingViewmodel.showVazhipadduDialogBox(
+                      context,
+                      bookingViewmodel.selectedGod.vazhippad![index],
+                    );
+                  } else {
+                    print('------pressed2--------');
+                    bookingViewmodel.showAdvancedVazhipadduDialogBox(
+                      context,
+                      bookingViewmodel.selectedGod.vazhippad![index],
+                    );
+                  }
+                },
+
+
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),

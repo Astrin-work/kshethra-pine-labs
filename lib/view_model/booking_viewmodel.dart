@@ -11,6 +11,8 @@ import 'package:kshethra_mini/view/advanced_booking_confirm_view.dart';
 import 'package:kshethra_mini/view/booking_preview_view.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_dialogbox_widget.dart';
 
+import '../view/widgets/advanced_booking_page_widget/advanced_vazhipaddu_dialog_BoxWidget.dart';
+
 class BookingViewmodel extends ChangeNotifier {
   bool _isExistedDevotee = false;
   bool get isExistedDevotee => _isExistedDevotee;
@@ -172,6 +174,7 @@ class BookingViewmodel extends ChangeNotifier {
   void navigateAdvancedBookingConfirm(
       BuildContext context,
       Map<String, dynamic> selectedVazhipaadu,
+      BookingViewmodel bookingViewmodel,
       ) {
     _selectedRepMethod = "Once";
     _selectedWeeklyDay = "Sun";
@@ -248,7 +251,7 @@ class BookingViewmodel extends ChangeNotifier {
     _noOfBookingVazhipaddu = 1;
     int x = selectedVazhipaadu["prize"];
     _amtOfBookingVazhipaddu = 1 * x;
-    if (_selectedStar != "Star".tr()) {
+    if (_selectedStar != "Star") {
       showDialog(
         context: context,
         builder:
@@ -263,6 +266,37 @@ class BookingViewmodel extends ChangeNotifier {
     }
     notifyListeners();
   }
+  void showAdvancedVazhipadduDialogBox(
+      BuildContext context,
+      Map<String, dynamic> selectedVazhipadu,
+      ) {
+
+    _noOfBookingVazhipaddu = 1;
+    _amtOfBookingVazhipaddu = selectedVazhipadu["prize"];
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AdvancedVazhipadduDialogBoxwidget(
+          selectedVazhippadu: selectedVazhipadu,
+
+        );
+      },
+    );
+
+
+    notifyListeners();
+  }
+
+
+
+  void _resetDialogState() {
+
+    _noOfBookingVazhipaddu = 1;
+    _amtOfBookingVazhipaddu = 0;
+  }
+
+
 
   void addNoOfBookingVazhipaddu(int ammount) {
     _noOfBookingVazhipaddu++;
@@ -323,12 +357,14 @@ class BookingViewmodel extends ChangeNotifier {
       Map<String, dynamic> selectedVazhipaadu,
       BuildContext context,
       ) {
+    // Validate the form
     bool valid = advBookingKey.currentState?.validate() ?? false;
     if (!valid) {
       return;
     }
 
-    if (_advBookOption == "") {
+    // Check if the user selected an option for "Star" or "Date"
+    if (_advBookOption.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBarWidget(
           msg: "Select one option from Star or Date",
@@ -338,9 +374,24 @@ class BookingViewmodel extends ChangeNotifier {
       return;
     }
 
-    _advBookingAmt =
-        selectedVazhipaadu["prize"] *
-            int.parse(bookingRepController.text.trim());
+    // Safely parse the repetitions input, defaulting to 0 if invalid
+    int repetitions = int.tryParse(bookingRepController.text.trim()) ?? 0;
+
+    // If the repetitions value is 0, show an error message
+    if (repetitions == 0 && bookingRepController.text.trim().isNotEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBarWidget(
+          msg: "Please enter a valid number for repetitions",
+          color: kGrey,
+        ).build(context),
+      );
+      return;
+    }
+
+    // Calculate the advanced booking amount
+    _advBookingAmt = selectedVazhipaadu["prize"] * repetitions;
+
+    // Add the new booking to the booking list
     _vazhipaduBookingList.add(
       UserBookingModel(
         name: bookingNameController.text.trim(),
@@ -349,12 +400,12 @@ class BookingViewmodel extends ChangeNotifier {
         date: _selectedDate,
         repMethode: _selectedRepMethod,
         day: _selectedRepMethod == "Weekly" ? _selectedWeeklyDay : '',
-        option: advBookOption == "star".tr() ? _selectedStar : _selectedDate,
+        option: _advBookOption == "star".tr() ? _selectedStar : _selectedDate,
         vazhiPad: [
           {
             "godName": selectedGod.god ?? "",
-            "vazhipadu": selectedVazhipaadu["vazhi"],
-            "prize": selectedVazhipaadu["prize"],
+            "vazhipadu": selectedVazhipaadu["vazhi"] ?? "",
+            "prize": selectedVazhipaadu["prize"] ?? 0,
             "rep": bookingRepController.text.trim(),
             "tPrize": _advBookingAmt,
           },
@@ -362,13 +413,20 @@ class BookingViewmodel extends ChangeNotifier {
       ),
     );
 
+    // Update the total amount
     _totalAdvBookingAmt += _advBookingAmt;
-    // _totalVazhipaduAmt = _advBookingSavedAmt;
+
+    // Log the total advanced booking amount for debugging
     log(_totalAdvBookingAmt.toString(), name: "adv booking");
+
+    // Pop the current page and navigate to the advanced booking preview
     popFunction(context);
     naviagteAdvBookingPreview(context);
+
+    // Notify listeners to update the UI
     notifyListeners();
   }
+
 
   int calculateBookingTotalAmt() {
     UserBookingModel value = _vazhipaduBookingList.last;

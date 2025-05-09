@@ -4,7 +4,7 @@ import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view_model/auth_viewmodel.dart';
 
 class SplashScreenView extends StatelessWidget {
-  const SplashScreenView({super.key});
+  const   SplashScreenView({super.key});
 
   @override
   Widget build(BuildContext context) {

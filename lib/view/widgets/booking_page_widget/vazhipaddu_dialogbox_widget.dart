@@ -6,6 +6,7 @@ import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
 
+import '../../../view_model/home_page_viewmodel.dart';
 
 class VazhipadduDialogBoxWidget extends StatelessWidget {
   final Map<String, dynamic> selectedVazhippadu;
@@ -16,7 +17,7 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return AlertDialog(

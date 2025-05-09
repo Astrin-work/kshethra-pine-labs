@@ -18,7 +18,7 @@ class _ButtonState extends State<Button> {
   final printDataJson = jsonEncode( {
     "Header": {
       "ApplicationId": "f0d097be4df3441196d1e37cb2c98875",
-      "UserId": "admin",
+      "UserId": "123456",
       "MethodId": "1002",
       "VersionNo": "1.0",
     },

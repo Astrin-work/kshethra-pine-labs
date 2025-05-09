@@ -53,7 +53,7 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/kshethra_logo.png
   AssetGenImage get kshethraLogo =>
-      const AssetGenImage('assets/icons/Kshetra_Logo_Transparent.png');
+      const AssetGenImage('assets/icons/Kshetra_Logo_NoseRing_Enhanced.png');
 
   /// File path: assets/icons/plus_icon.png
   AssetGenImage get plusIcon =>
