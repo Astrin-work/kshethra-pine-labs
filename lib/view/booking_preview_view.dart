@@ -10,7 +10,7 @@ import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-import '../view_model/home_page_viewmodel.dart';
+
 
 class BookingPreviewView extends StatelessWidget {
   final String page;

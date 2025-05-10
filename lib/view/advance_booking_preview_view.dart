@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import '../utils/app_color.dart';
 import '../utils/app_styles.dart';
 import '../utils/components/size_config.dart';
-import '../view_model/home_page_viewmodel.dart';
+
 
 class AdvanceBookingPreviewView extends StatelessWidget {
   final int totalAmount; // ✅ Store the amount
