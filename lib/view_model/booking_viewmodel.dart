@@ -130,13 +130,26 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void naviagteAdvBookingPreview(BuildContext context) {
-    //  _totalVazhipaduAmt = _advBookingSavedAmt;
+    // Ensure _totalVazhipaduAmt is calculated correctly based on bookings.
+    _totalVazhipaduAmt = _advBookingSavedAmt + _totalAdvBookingAmt;  // Sum of saved amount and current total
+
+    // If total amount is zero, show the payment denied message.
+    if (_totalVazhipaduAmt == 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBarWidget(
+          msg: "Payment request denied!",
+          color: kRed,
+        ).build(context),
+      );
+      return;
+    }
+
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AdvanceBookingPreviewView()),
-
     );
   }
+
 
   void setAdvBookOption(String value) {
     value == "date".tr() ? _selectedStar = "Star".tr() : _selectedDate = "Date".tr();
@@ -179,19 +192,26 @@ class BookingViewmodel extends ChangeNotifier {
     _selectedRepMethod = "Once";
     _selectedWeeklyDay = "Sun";
     bookingRepController.text = "1";
-    int x = selectedVazhipaadu["prize"];
 
-    _totalVazhipaduAmt = _advBookingSavedAmt + (1 * x);
+    // Get unit price
+    int unitPrice = selectedVazhipaadu["prize"] ?? 0;
+
+    // Use actual quantity
+    int quantity = bookingViewmodel.noOfBookingVazhipaddu;
+
+    // Calculate total correctly
+    _totalVazhipaduAmt = _advBookingSavedAmt + (quantity * unitPrice);
+
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder:
-            (context) => AdvancedBookingConfirmView(
+        builder: (context) => AdvancedBookingConfirmView(
           selectedVazhipaadu: selectedVazhipaadu,
         ),
       ),
     );
   }
+
 
   void bookingRepOnchange(
       String value,
@@ -388,10 +408,8 @@ class BookingViewmodel extends ChangeNotifier {
       return;
     }
 
-    // Calculate the advanced booking amount
     _advBookingAmt = selectedVazhipaadu["prize"] * repetitions;
 
-    // Add the new booking to the booking list
     _vazhipaduBookingList.add(
       UserBookingModel(
         name: bookingNameController.text.trim(),

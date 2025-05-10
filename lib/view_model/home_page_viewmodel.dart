@@ -114,6 +114,14 @@ class HomePageViewmodel extends ChangeNotifier {
       popFunction(context);
     }
   }
+  void backtoHomePageView(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => HomeViewUsers()), // Replace with your actual home view
+          (Route<dynamic> route) => false,
+    );
+  }
+
 
   String setQrAmount(String amount) {
     String value = "upi://pay?pa=astrinstechnologies@okaxis&am=$amount&cu=INR";

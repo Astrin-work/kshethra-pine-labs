@@ -58,7 +58,7 @@ class PaymentCompleteScreen extends StatelessWidget {
                         //   MaterialPageRoute(builder: (context) => HomeView()),
                         //   (Route<dynamic> route) => false,
                         // );
-                        homepageViewmodel.backtoHomePage(context, noOfScreen);
+                        homepageViewmodel.backtoHomePageView(context);
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
