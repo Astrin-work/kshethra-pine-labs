@@ -130,10 +130,8 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void naviagteAdvBookingPreview(BuildContext context) {
-    // Ensure _totalVazhipaduAmt is calculated correctly based on bookings.
-    _totalVazhipaduAmt = _advBookingSavedAmt + _totalAdvBookingAmt;  // Sum of saved amount and current total
-
-    // If total amount is zero, show the payment denied message.
+    // _totalVazhipaduAmt = _advBookingSavedAmt + _totalAdvBookingAmt;
+      print(_totalVazhipaduAmt);
     if (_totalVazhipaduAmt == 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBarWidget(
@@ -146,9 +144,18 @@ class BookingViewmodel extends ChangeNotifier {
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AdvanceBookingPreviewView()),
+      MaterialPageRoute(
+        builder: (context) => AdvanceBookingPreviewView(
+          totalAmount: _totalVazhipaduAmt,
+        ),
+      ),
     );
+    print("------------tottalAmount------------");
+    print(_totalVazhipaduAmt);
+    notifyListeners();
+
   }
+
 
 
   void setAdvBookOption(String value) {
@@ -193,13 +200,11 @@ class BookingViewmodel extends ChangeNotifier {
     _selectedWeeklyDay = "Sun";
     bookingRepController.text = "1";
 
-    // Get unit price
-    int unitPrice = selectedVazhipaadu["prize"] ?? 0;
 
-    // Use actual quantity
+    int unitPrice = selectedVazhipaadu["prize"] ?? 0;
     int quantity = bookingViewmodel.noOfBookingVazhipaddu;
 
-    // Calculate total correctly
+
     _totalVazhipaduAmt = _advBookingSavedAmt + (quantity * unitPrice);
 
     Navigator.push(
@@ -207,9 +212,13 @@ class BookingViewmodel extends ChangeNotifier {
       MaterialPageRoute(
         builder: (context) => AdvancedBookingConfirmView(
           selectedVazhipaadu: selectedVazhipaadu,
+          totalAmount: _totalVazhipaduAmt,
         ),
       ),
     );
+    print("-----------amount------------");
+    print(_totalVazhipaduAmt);
+
   }
 
 

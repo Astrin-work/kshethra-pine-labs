@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/utils/components/responsive_layout.dart';
@@ -10,17 +9,19 @@ import 'package:provider/provider.dart';
 
 class AdvancedBookingConfirmView extends StatelessWidget {
   final Map<String, dynamic> selectedVazhipaadu;
+  final int totalAmount;
+
   const AdvancedBookingConfirmView({
     super.key,
     required this.selectedVazhipaadu,
+    required this.totalAmount,
   });
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Consumer<BookingViewmodel>(
-      builder:
-          (context, bookingViewmodel, child) => Scaffold(
+      builder: (context, bookingViewmodel, child) => Scaffold(
         floatingActionButton: ResponsiveLayout(
           pinelabDevice: BookingFloatButtonWidget(
             payOnTap: () {
@@ -40,7 +41,6 @@ class AdvancedBookingConfirmView extends StatelessWidget {
             height: 65,
             payOnTap: () {
               bookingViewmodel.popFunction(context);
-
               bookingViewmodel.setVazhipaduAdvBookingList(
                 selectedVazhipaadu,
                 context,
@@ -60,7 +60,6 @@ class AdvancedBookingConfirmView extends StatelessWidget {
             height: 75,
             payOnTap: () {
               bookingViewmodel.popFunction(context);
-
               bookingViewmodel.setVazhipaduAdvBookingList(
                 selectedVazhipaadu,
                 context,
@@ -84,33 +83,30 @@ class AdvancedBookingConfirmView extends StatelessWidget {
 
               ResponsiveLayout(
                 pinelabDevice: Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: AdvancedBookingConfirmForm(
                     selectedVazhipaadu: selectedVazhipaadu,
                   ),
                 ),
                 mediumDevice: Padding(
-                  padding: EdgeInsets.only(
-                    left: SizeConfig.screenWidth * 0.125,
-                    right: SizeConfig.screenWidth * 0.125,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.screenWidth * 0.125,
                   ),
                   child: AdvancedBookingConfirmForm(
                     selectedVazhipaadu: selectedVazhipaadu,
                   ),
                 ),
                 semiMediumDevice: Padding(
-                  padding: EdgeInsets.only(
-                    left: SizeConfig.screenWidth * 0.125,
-                    right: SizeConfig.screenWidth * 0.125,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.screenWidth * 0.125,
                   ),
                   child: AdvancedBookingConfirmForm(
                     selectedVazhipaadu: selectedVazhipaadu,
                   ),
                 ),
                 largeDevice: Padding(
-                  padding: EdgeInsets.only(
-                    left: SizeConfig.screenWidth * 0.125,
-                    right: SizeConfig.screenWidth * 0.125,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.screenWidth * 0.125,
                   ),
                   child: AdvancedBookingConfirmForm(
                     selectedVazhipaadu: selectedVazhipaadu,

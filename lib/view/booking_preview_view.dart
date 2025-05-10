@@ -47,7 +47,7 @@ class BookingPreviewView extends StatelessWidget {
 
 class PreViewWidget extends StatelessWidget {
   final String page;
-  const PreViewWidget({super.key, required this.page});
+  const PreViewWidget({super.key, required this.page, });
 
   @override
   Widget build(BuildContext context) {
