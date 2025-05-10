@@ -310,7 +310,7 @@ class BookingViewmodel extends ChangeNotifier {
 
 
 
-  void _resetDialogState() {
+  void resetDialogState() {
 
     _noOfBookingVazhipaddu = 1;
     _amtOfBookingVazhipaddu = 0;
