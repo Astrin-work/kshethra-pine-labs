@@ -204,11 +204,9 @@ class _AdvancedBookingConfirmFormState
                             ),
                             controller: _repDaysController,
                             onChanged: (value) {
-                              bookingViewmodel.bookingRepOnchange(
-                                value,
-                                widget.selectedVazhipaadu,
-                              );
+                              bookingViewmodel.bookingRepOnchange(value, widget.selectedVazhipaadu);
                             },
+
                             textAlign: TextAlign.center,
                             style: styles.blackRegular15,
                             decoration: InputDecoration(
