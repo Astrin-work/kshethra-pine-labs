@@ -11,21 +11,17 @@ import '../utils/app_color.dart';
 import '../utils/app_styles.dart';
 import '../utils/components/size_config.dart';
 
+class AdvancedBookingPreviewView extends StatelessWidget {
+  final int totalAmount;
 
-class AdvanceBookingPreviewView extends StatelessWidget {
-  final int totalAmount; // ✅ Store the amount
-
-  const AdvanceBookingPreviewView({
-    super.key,
-    required this.totalAmount,
-  });
+  const AdvancedBookingPreviewView({super.key, required this.totalAmount});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: ResponsiveLayout(
         pinelabDevice: FloatButtonWidget(
-          amount: totalAmount, // ✅ Use passed amount
+          amount: totalAmount,
           title: 'Advanced Booking',
           noOfScreens: 4,
         ),
@@ -36,19 +32,16 @@ class AdvanceBookingPreviewView extends StatelessWidget {
           noOfScreens: 4,
         ),
         largeDevice: FloatButtonWidget(
+          height: 75,
           amount: totalAmount,
           title: 'Advanced Booking',
           noOfScreens: 4,
-          height: 75,
         ),
       ),
       body: Column(
         children: [
           AppBarWidget(title: "Advanced Booking"),
-          AdvPreViewWidget(
-            page: 'advanced booking',
-            totalAmount: totalAmount, // ✅ Pass to preview widget if needed
-          ),
+          AdvPreViewWidget(page: 'advanced booking', totalAmount: totalAmount),
         ],
       ),
     );
@@ -98,13 +91,10 @@ class AdvPreViewWidget extends StatelessWidget {
                                 vazhipaduList[index].name,
                                 style: styles.blackRegular15,
                               ),
-                              page == "booking"
-                                  ? Text(
-                                vazhipaduList[index].star ?? "",
-                                style: styles.blackRegular13,
-                              )
-                                  : Text(
-                                vazhipaduList[index].option ?? "",
+                              Text(
+                                page == "booking"
+                                    ? vazhipaduList[index].star ?? ""
+                                    : vazhipaduList[index].option ?? "",
                                 style: styles.blackRegular13,
                               ),
                               Container(
@@ -136,7 +126,17 @@ class AdvPreViewWidget extends StatelessWidget {
                                             ],
                                           ),
                                           Spacer(),
-                                          Text("(${poojaList[inde]["rep"]})"),
+                                          Text(
+                                            "(${bookingViewmodel.noOfBookingVazhipaddu} Day${bookingViewmodel.noOfBookingVazhipaddu == 1 ? '' : 's'})",
+                                            style: styles.blackRegular13,
+
+                                          ),
+                                          25.kW,
+                                          Text(
+                                            "${"*"}",
+                                            style: styles.blackRegular15,
+
+                                          ),
                                           25.kW,
                                           SizedBox(
                                             width: 60,
@@ -146,15 +146,19 @@ class AdvPreViewWidget extends StatelessWidget {
                                           IconButton(
                                             color: kRed,
                                             onPressed: () {
-                                              page == "booking"
-                                                  ? bookingViewmodel.vazhipaduDelete(index, inde)
-                                                  : bookingViewmodel.advBookingDeleteVazhipadd(index, inde);
+                                              if (page == "booking") {
+                                                bookingViewmodel.vazhipaduDelete(index, inde);
+                                              } else {
+                                                bookingViewmodel.advBookingDeleteVazhipadd(index, inde);
+                                              }
                                             },
                                             icon: Icon(Icons.delete),
                                           ),
                                           IconButton(
                                             icon: Icon(Icons.add),
-                                            onPressed: () => BookingViewmodel().popFunction(context),
+                                            onPressed: () {
+                                              bookingViewmodel.popFunction(context);
+                                            },
                                           ),
                                         ],
                                       ),
@@ -177,3 +181,4 @@ class AdvPreViewWidget extends StatelessWidget {
     );
   }
 }
+
