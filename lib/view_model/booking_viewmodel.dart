@@ -145,13 +145,10 @@ class BookingViewmodel extends ChangeNotifier {
       return;
     }
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) =>
-            AdvancedBookingPreviewView(totalAmount: _totalVazhipaduAmt),
-      ),
-    );
+    Navigator.pushReplacement(context,   MaterialPageRoute(
+      builder: (context) =>
+          AdvancedBookingPreviewView(totalAmount: _totalVazhipaduAmt),
+    ),);
 
     print("------------totalAmount------------");
     print(_totalVazhipaduAmt);
@@ -160,13 +157,18 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
 
+  // void setAdvBookOption(String value) {
+  //   value == "date".tr()
+  //       ? _selectedStar = "Star".tr()
+  //       : _selectedDate = "Date".tr();
+  //   _advBookOption = value;
+  //   notifyListeners();
+  // }
   void setAdvBookOption(String value) {
-    value == "date".tr()
-        ? _selectedStar = "Star".tr()
-        : _selectedDate = "Date".tr();
     _advBookOption = value;
     notifyListeners();
   }
+
 
   void selectBookingDate(BuildContext context) async {
     DateTime? value = await showDatePicker(
@@ -245,6 +247,7 @@ class BookingViewmodel extends ChangeNotifier {
       String value,
       Map<String, dynamic> selectedVazhipaadu,
       ) {
+
     if (value.trim().isEmpty) {
       _totalVazhipaduAmt = _advBookingSavedAmt;
       notifyListeners();
@@ -252,18 +255,26 @@ class BookingViewmodel extends ChangeNotifier {
     }
 
     int? repCount = int.tryParse(value.trim());
+
     if (repCount == null || repCount <= 0) {
       _totalVazhipaduAmt = _advBookingSavedAmt;
       notifyListeners();
       return;
     }
+
     print("Number of repeat days: $repCount");
 
     int unitPrice = selectedVazhipaadu["prize"] ?? 0;
     _totalVazhipaduAmt = _advBookingSavedAmt + (repCount * unitPrice);
-
+    double postalChargeRate = 5.0;
+    if (repCount > 0) {
+      double postalCharge = repCount * postalChargeRate;
+      print("Postal charge: $postalCharge");
+    }
     notifyListeners();
   }
+
+
 
 
 

@@ -102,54 +102,74 @@ class AdvPreViewWidget extends StatelessWidget {
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
-                                  itemCount: vazhipaduList[index].vazhiPad.length,
+                                  itemCount:
+                                      vazhipaduList[index].vazhiPad.length,
                                   itemBuilder: (context, inde) {
-                                    final poojaList = vazhipaduList[index].vazhiPad;
+                                    final poojaList =
+                                        vazhipaduList[index].vazhiPad;
                                     return Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0),
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 2.0,
+                                        horizontal: 5.0,
+                                      ),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
                                           Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               BuildTextWidget(
-                                                text: poojaList[inde]["vazhipadu"].toString().tr(),
+                                                text:
+                                                    poojaList[inde]["vazhipadu"]
+                                                        .toString()
+                                                        .tr(),
                                                 size: 14,
                                                 color: kBlack,
                                               ),
                                               BuildTextWidget(
-                                                text: poojaList[inde]["godName"].toString().tr(),
+                                                text:
+                                                    poojaList[inde]["godName"]
+                                                        .toString()
+                                                        .tr(),
                                                 size: 14,
                                                 color: kBlack,
                                               ),
                                             ],
                                           ),
-                                          Spacer(),
                                           Text(
-                                            "(${bookingViewmodel.noOfBookingVazhipaddu} Day${bookingViewmodel.noOfBookingVazhipaddu == 1 ? '' : 's'})",
+                                            "(${bookingViewmodel.noOfBookingVazhipaddu} Day${bookingViewmodel.noOfBookingVazhipaddu == 1 ? '' : 's'}",
                                             style: styles.blackRegular13,
 
                                           ),
-                                          25.kW,
+                                          15.kW,
                                           Text(
                                             "${"*"}",
                                             style: styles.blackRegular15,
-
-                                          ),
-                                          25.kW,
-                                          SizedBox(
-                                            width: 60,
-                                            child: Text("₹ ${poojaList[inde]["tPrize"]}"),
                                           ),
                                           10.kW,
+                                          SizedBox(
+                                            width: 50,
+                                            child: Text(
+                                              "₹ ${poojaList[inde]["tPrize"]})",
+                                            ),
+                                          ),
                                           IconButton(
                                             color: kRed,
                                             onPressed: () {
                                               if (page == "booking") {
-                                                bookingViewmodel.vazhipaduDelete(index, inde);
+                                                bookingViewmodel
+                                                    .vazhipaduDelete(
+                                                      index,
+                                                      inde,
+                                                    );
                                               } else {
-                                                bookingViewmodel.advBookingDeleteVazhipadd(index, inde);
+                                                bookingViewmodel
+                                                    .advBookingDeleteVazhipadd(
+                                                      index,
+                                                      inde,
+                                                    );
                                               }
                                             },
                                             icon: Icon(Icons.delete),
@@ -157,7 +177,9 @@ class AdvPreViewWidget extends StatelessWidget {
                                           IconButton(
                                             icon: Icon(Icons.add),
                                             onPressed: () {
-                                              bookingViewmodel.popFunction(context);
+                                              bookingViewmodel.popFunction(
+                                                context,
+                                              );
                                             },
                                           ),
                                         ],
@@ -181,4 +203,3 @@ class AdvPreViewWidget extends StatelessWidget {
     );
   }
 }
-

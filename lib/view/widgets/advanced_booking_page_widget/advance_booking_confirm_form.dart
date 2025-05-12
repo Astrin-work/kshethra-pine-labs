@@ -40,6 +40,11 @@ class _AdvancedBookingConfirmFormState
     super.dispose();
   }
 
+  bool _prasadamSelected = false;
+  String _postalOption = '';
+  double _postalAmount = 0.0;
+
+  final Map<String, double> postalRates = {"Postal": 5.0, "Speed Postal": 45.0};
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
@@ -123,7 +128,7 @@ class _AdvancedBookingConfirmFormState
                           height: 55,
                           width: 125,
                           decoration:
-                              bookingViewmodel.advBookOption == "star"
+                              bookingViewmodel.selectedStar.isNotEmpty
                                   ? BoxDecoration(
                                     color: kDullPrimaryColor,
                                     borderRadius: BorderRadius.circular(15),
@@ -135,9 +140,11 @@ class _AdvancedBookingConfirmFormState
                                   ),
                           child: Center(
                             child: Text(
-                              bookingViewmodel.selectedStar,
+                              bookingViewmodel.selectedStar.isNotEmpty
+                                  ? bookingViewmodel.selectedStar
+                                  : "Star",
                               style:
-                                  bookingViewmodel.advBookOption == "star"
+                                  bookingViewmodel.selectedStar.isNotEmpty
                                       ? styles.whiteSemi15
                                       : styles.blackSemi15,
                             ),
@@ -153,7 +160,7 @@ class _AdvancedBookingConfirmFormState
                           height: 55,
                           width: 125,
                           decoration:
-                              bookingViewmodel.advBookOption == "date".tr()
+                              bookingViewmodel.selectedDate.isNotEmpty
                                   ? BoxDecoration(
                                     color: kDullPrimaryColor,
                                     borderRadius: BorderRadius.circular(15),
@@ -165,9 +172,11 @@ class _AdvancedBookingConfirmFormState
                                   ),
                           child: Center(
                             child: Text(
-                              bookingViewmodel.selectedDate,
+                              bookingViewmodel.selectedDate.isNotEmpty
+                                  ? bookingViewmodel.selectedDate
+                                  : "Date",
                               style:
-                                  bookingViewmodel.advBookOption == "date".tr()
+                                  bookingViewmodel.selectedDate.isNotEmpty
                                       ? styles.whiteSemi15
                                       : styles.blackSemi15,
                             ),
@@ -176,6 +185,7 @@ class _AdvancedBookingConfirmFormState
                       ),
                     ],
                   ),
+
                   25.kH,
                   const RepCheckBoxWidget(),
                   Visibility(
@@ -183,42 +193,104 @@ class _AdvancedBookingConfirmFormState
                     child: const WeeklyWidget(),
                   ),
                   25.kH,
-                  // if (bookingViewmodel.selectedRepMethod != "Once")
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Number of Days for Repeat".tr(),
-                          style: styles.blackRegular15,
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(":", style: styles.blackSemi18),
-                        SizedBox(
-                          width: SizeConfig.screenWidth * 0.2,
-                          child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            validator: (value) => Validation.numberValidation(
-                              value,
-                              "Count",
-                              "Enter valid days",
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              "Number of Days for Repeat".tr(),
+                              style: styles.blackRegular15,
+                              textAlign: TextAlign.center,
                             ),
-                            controller: _repDaysController,
-                            onChanged: (value) {
-                              bookingViewmodel.bookingRepOnchange(value, widget.selectedVazhipaadu);
-                            },
-
-                            textAlign: TextAlign.center,
-                            style: styles.blackRegular15,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
+                            Text(":", style: styles.blackSemi18),
+                            SizedBox(
+                              width: SizeConfig.screenWidth * 0.2,
+                              child: TextFormField(
+                                keyboardType: TextInputType.number,
+                                validator:
+                                    (value) => Validation.numberValidation(
+                                      value,
+                                      "Count",
+                                      "Enter valid days",
+                                    ),
+                                controller: _repDaysController,
+                                onChanged: (value) {
+                                  bookingViewmodel.bookingRepOnchange(
+                                    value,
+                                    widget.selectedVazhipaadu,
+                                  );
+                                },
+                                textAlign: TextAlign.center,
+                                style: styles.blackRegular15,
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
+                        15.kH,
+                        CheckboxListTile(
+                          contentPadding: EdgeInsets.zero,
+                          title: Text(
+                            "Prasadam".tr(),
+                            style: styles.blackRegular15,
+                          ),
+                          value: _prasadamSelected,
+                          onChanged: (value) {
+                            setState(() {
+                              _prasadamSelected = value!;
+                              if (!_prasadamSelected) {
+                                _postalOption = '';
+                                _postalAmount = 0.0;
+                              }
+                            });
+                          },
+                        ),
+                        15.kH,
+                        if (_prasadamSelected)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Select Postal Option".tr(),
+                                style: styles.blackRegular15,
+                              ),
+                              20.kH,
+                              for (var option in postalRates.keys)
+                                RadioListTile<String>(
+                                  value: option,
+                                  groupValue: _postalOption,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _postalOption = value!;
+                                      _postalAmount = postalRates[value]!;
+                                      print("---------postal amount------");
+                                      print(_postalAmount);
+
+                                    });
+                                  },
+                                  title: Text(option),
+                                  activeColor: kPrimaryColor,
+                                  contentPadding: EdgeInsets.zero,
+                                ),
+                              10.kH,
+                              Text(
+                                "Postal Charge: ₹$_postalAmount",
+                                style: styles.blackRegular15,
+                              ),
+                              10.kH,
+                            ],
+                          ),
                       ],
                     ),
-                  25.kH,
+                  ),
                   TextFormField(
                     validator:
                         (value) => Validation.emptyValidation(
