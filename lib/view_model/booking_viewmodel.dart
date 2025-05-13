@@ -261,6 +261,7 @@ class BookingViewmodel extends ChangeNotifier {
 
     int baseAmount = unitPrice * quantity;
 
+
     _totalVazhipaduAmt = (baseAmount * repCount) + _advBookingSavedAmt;
 
     print("----------------------Total Calculation-------------------");
@@ -270,7 +271,6 @@ class BookingViewmodel extends ChangeNotifier {
     print("Repeat Count: $repCount");
     print("Base Amount (Unit x Quantity): ₹$baseAmount");
     print("Total Vazhipadu Amount: ₹$_totalVazhipaduAmt");
-
     notifyListeners();
   }
 

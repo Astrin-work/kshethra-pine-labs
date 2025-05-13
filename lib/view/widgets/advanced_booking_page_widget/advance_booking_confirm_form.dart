@@ -274,66 +274,46 @@ class _AdvancedBookingConfirmFormState
                               SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
-                                  children:
-                                      postalRates.keys.map((option) {
-                                        return Row(
-                                          children: [
-                                            Radio<String>(
-                                              value: option,
-                                              groupValue: _postalOption,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  _postalOption = value!;
-                                                  _postalAmount =
-                                                      postalRates[value]!;
-                                                  print(
-                                                    "Postal amount: $_postalAmount",
-                                                  );
-                                                });
-                                              },
-                                              activeColor: kPrimaryColor,
+                                  children: postalRates.keys.map((option) {
+                                    final isSelected = _postalOption == option;
+                                    final chargeAmount = postalRates[option]!;
+                                    return Row(
+                                      children: [
+                                        Radio<String>(
+                                          value: option,
+                                          groupValue: _postalOption,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              _postalOption = value!;
+                                              _postalAmount = postalRates[value]!;
+                                              print("Postal amount: $_postalAmount");
+                                            });
+                                          },
+                                          activeColor: kPrimaryColor,
+                                        ),
+                                        Text(
+                                          option,
+                                          style: styles.blackRegular15,
+                                        ),
+                                        if (isSelected)
+                                          Container(
+                                            margin: EdgeInsets.only(left: 8),
+                                            padding:
+                                            EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[200],
+                                              borderRadius: BorderRadius.circular(6),
+                                              border: Border.all(color: Colors.grey.shade400),
                                             ),
-                                            Text(
-                                              option,
-                                              style: styles.blackRegular15,
+                                            child: Text(
+                                              "₹${_totalCharge.toStringAsFixed(2)}",
+                                              style: styles.blackRegular13,
                                             ),
-                                            SizedBox(width: 20),
-                                          ],
-                                        );
-                                      }).toList(),
-                                ),
-                              ),
-                              10.kH,
-
-                              Text(
-                                "Postal Charge: ₹$_postalAmount",
-                                style: styles.blackRegular15,
-                              ),
-                              10.kH,
-                              Container(
-                                width: double.infinity,
-                                padding: EdgeInsets.all(12),
-                                margin: EdgeInsets.only(top: 10),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: Colors.grey.shade400,
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Total Charge".tr(),
-                                      style: styles.blackSemi18,
-                                    ),
-                                    Text(
-                                      "₹${_totalCharge.toStringAsFixed(2)}",
-                                      style: styles.blackSemi18,
-                                    ),
-                                  ],
+                                          ),
+                                        SizedBox(width: 20),
+                                      ],
+                                    );
+                                  }).toList(),
                                 ),
                               ),
                               10.kH,
