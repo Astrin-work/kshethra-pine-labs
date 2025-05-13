@@ -141,7 +141,6 @@ class AdvPreViewWidget extends StatelessWidget {
                                           Text(
                                             "(${bookingViewmodel.noOfBookingVazhipaddu} Day${bookingViewmodel.noOfBookingVazhipaddu == 1 ? '' : 's'}",
                                             style: styles.blackRegular13,
-
                                           ),
                                           15.kW,
                                           Text(

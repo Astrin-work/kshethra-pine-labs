@@ -38,7 +38,6 @@ class BookingViewmodel extends ChangeNotifier {
   int _amtOfBookingVazhipaddu = 0;
   int get amtOfBookingVazhipaddu => _amtOfBookingVazhipaddu;
 
-
   BookingModel _selectedGod = bList[0];
   BookingModel get selectedGod => _selectedGod;
 
@@ -129,11 +128,9 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void naviagteAdvBookingPreview(BuildContext context) {
-
     _totalAdvBookingAmt = _advBookingSavedAmt + _totalAdvBookingAmt;
 
     print(_totalVazhipaduAmt);
-
 
     if (_totalVazhipaduAmt == 0) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -145,17 +142,20 @@ class BookingViewmodel extends ChangeNotifier {
       return;
     }
 
-    Navigator.pushReplacement(context,   MaterialPageRoute(
-      builder: (context) =>
-          AdvancedBookingPreviewView(totalAmount: _totalVazhipaduAmt),
-    ),);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder:
+            (context) =>
+                AdvancedBookingPreviewView(totalAmount: _totalVazhipaduAmt),
+      ),
+    );
 
     print("------------totalAmount------------");
     print(_totalVazhipaduAmt);
 
     notifyListeners();
   }
-
 
   // void setAdvBookOption(String value) {
   //   value == "date".tr()
@@ -168,7 +168,6 @@ class BookingViewmodel extends ChangeNotifier {
     _advBookOption = value;
     notifyListeners();
   }
-
 
   void selectBookingDate(BuildContext context) async {
     DateTime? value = await showDatePicker(
@@ -247,7 +246,6 @@ class BookingViewmodel extends ChangeNotifier {
       String value,
       Map<String, dynamic> selectedVazhipaadu,
       ) {
-
     if (value.trim().isEmpty) {
       _totalVazhipaduAmt = _advBookingSavedAmt;
       notifyListeners();
@@ -263,9 +261,19 @@ class BookingViewmodel extends ChangeNotifier {
     }
 
     print("Number of repeat days: $repCount");
-
     int unitPrice = selectedVazhipaadu["prize"] ?? 0;
-    _totalVazhipaduAmt = _advBookingSavedAmt + (repCount * unitPrice);
+    int totalPerDay = _advBookingSavedAmt + unitPrice;
+    _totalVazhipaduAmt = totalPerDay * repCount;
+    print("----------------------Total-------------------");
+    print("Unit Price: $unitPrice");
+    print("Advance Saved Amount: $_advBookingSavedAmt");
+    print("Repeat Count: $repCount");
+    print("Total Per Day: $totalPerDay");
+    print("Total Vazhipadu Amount: $_totalVazhipaduAmt");
+    int finalAmount=(_totalVazhipaduAmt*repCount);
+    print("tottal:$finalAmount");
+    _totalVazhipaduAmt=finalAmount;
+    print(_totalVazhipaduAmt);
     double postalChargeRate = 5.0;
     if (repCount > 0) {
       double postalCharge = repCount * postalChargeRate;
@@ -273,9 +281,6 @@ class BookingViewmodel extends ChangeNotifier {
     }
     notifyListeners();
   }
-
-
-
 
 
   void advBookingAddVazhipadu(

@@ -19,7 +19,7 @@ class AuthViewmodel extends ChangeNotifier {
   void navigateHomeOrLogin(BuildContext context) {
     Future.delayed(Duration(seconds: 3)).then(
       (_) => Navigator.pushReplacement(
-        // ignore: use_build_context_synchronously
+
         context,
         MaterialPageRoute(builder: (context) => LoginView()),
       ),

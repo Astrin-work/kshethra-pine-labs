@@ -40,11 +40,18 @@ class _AdvancedBookingConfirmFormState
     super.dispose();
   }
 
+  int get _repeatDays {
+    final text = _repDaysController.text;
+    return int.tryParse(text) ?? 0;
+  }
+
+  double get _totalCharge => _repeatDays * _postalAmount;
+
   bool _prasadamSelected = false;
   String _postalOption = '';
   double _postalAmount = 0.0;
 
-  final Map<String, double> postalRates = {"Postal": 5.0, "Speed Postal": 45.0};
+  final Map<String, double> postalRates = {"Post": 5.0, "Speed Post": 45.0};
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
@@ -224,6 +231,7 @@ class _AdvancedBookingConfirmFormState
                                     widget.selectedVazhipaadu,
                                   );
                                 },
+
                                 textAlign: TextAlign.center,
                                 style: styles.blackRegular15,
                                 decoration: InputDecoration(
@@ -259,31 +267,74 @@ class _AdvancedBookingConfirmFormState
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Select Postal Option".tr(),
+                                "Select Post Option".tr(),
                                 style: styles.blackRegular15,
                               ),
                               20.kH,
-                              for (var option in postalRates.keys)
-                                RadioListTile<String>(
-                                  value: option,
-                                  groupValue: _postalOption,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _postalOption = value!;
-                                      _postalAmount = postalRates[value]!;
-                                      print("---------postal amount------");
-                                      print(_postalAmount);
-
-                                    });
-                                  },
-                                  title: Text(option),
-                                  activeColor: kPrimaryColor,
-                                  contentPadding: EdgeInsets.zero,
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children:
+                                      postalRates.keys.map((option) {
+                                        return Row(
+                                          children: [
+                                            Radio<String>(
+                                              value: option,
+                                              groupValue: _postalOption,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _postalOption = value!;
+                                                  _postalAmount =
+                                                      postalRates[value]!;
+                                                  print(
+                                                    "Postal amount: $_postalAmount",
+                                                  );
+                                                });
+                                              },
+                                              activeColor: kPrimaryColor,
+                                            ),
+                                            Text(
+                                              option,
+                                              style: styles.blackRegular15,
+                                            ),
+                                            SizedBox(width: 20),
+                                          ],
+                                        );
+                                      }).toList(),
                                 ),
+                              ),
                               10.kH,
+
                               Text(
                                 "Postal Charge: ₹$_postalAmount",
                                 style: styles.blackRegular15,
+                              ),
+                              10.kH,
+                              Container(
+                                width: double.infinity,
+                                padding: EdgeInsets.all(12),
+                                margin: EdgeInsets.only(top: 10),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: Colors.grey.shade400,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Total Charge".tr(),
+                                      style: styles.blackSemi18,
+                                    ),
+                                    Text(
+                                      "₹${_totalCharge.toStringAsFixed(2)}",
+                                      style: styles.blackSemi18,
+                                    ),
+                                  ],
+                                ),
                               ),
                               10.kH,
                             ],
