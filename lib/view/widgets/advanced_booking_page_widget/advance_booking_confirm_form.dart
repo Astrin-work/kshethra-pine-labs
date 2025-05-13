@@ -276,7 +276,6 @@ class _AdvancedBookingConfirmFormState
                                 child: Row(
                                   children: postalRates.keys.map((option) {
                                     final isSelected = _postalOption == option;
-                                    final chargeAmount = postalRates[option]!;
                                     return Row(
                                       children: [
                                         Radio<String>(
