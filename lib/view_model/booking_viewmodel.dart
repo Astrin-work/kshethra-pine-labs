@@ -44,6 +44,7 @@ class BookingViewmodel extends ChangeNotifier {
   final bookingKey = GlobalKey<FormState>();
   final advBookingKey = GlobalKey<FormState>();
 
+
   TextEditingController bookingNameController = TextEditingController();
 
   TextEditingController bookingPhnoController = TextEditingController();
@@ -67,6 +68,51 @@ class BookingViewmodel extends ChangeNotifier {
   String _selectedDate = "Date".tr();
   String get selectedDate => _selectedDate;
 
+
+  String _postalOption = '';
+  String get postalOption => _postalOption;
+
+
+
+  double _postalAmount = 0.0;
+  double get postalAmount => _postalAmount;
+
+
+  Map<String, double> postalRates = {
+    'Post': 5.0,
+    'Speed Post': 45.0,
+  };
+
+
+  double _totalAmount = 0.0;
+  double get totalAmount => _totalAmount;
+
+
+  void setPostalOption(String option) {
+    _postalOption = option;
+    _postalAmount = postalRates[option] ?? 0.0;
+    _updateTotalAmount();
+    notifyListeners();
+  }
+
+  void _updateTotalAmount() {
+    // Calculate the total amount (vazhipadu amount + postal amount)
+    _totalAmount = _totalVazhipaduAmt + _postalAmount;
+    print("Updated Total Amount: $_totalAmount");
+  }
+
+  void resetPostalOption() {
+    _postalOption = '';
+    _postalAmount = 0.0;
+    _updateTotalAmount();
+    notifyListeners();
+  }
+
+  void onPostalOptionChanged(String option) {
+    setPostalOption(option);
+  }
+
+
   void setBookingPage() {
     _advBookOption = "";
     _advBookingSavedAmt = 0;
@@ -81,6 +127,8 @@ class BookingViewmodel extends ChangeNotifier {
     _totalVazhipaduAmt = 0;
     bookingPhnoController.clear();
   }
+
+
 
   void clearBookingControllers() {
     bookingNameController.clear();
@@ -242,9 +290,18 @@ class BookingViewmodel extends ChangeNotifier {
   //   }
   //   notifyListeners();
   // }
+
+  void setTotalAmount(double amount) {
+    _totalAmount = amount;
+    print("Updated Total Amount: $_totalAmount");
+    notifyListeners();
+  }
+
+
   void bookingRepOnchange(
       String value,
       Map<String, dynamic> selectedVazhipaadu,
+      Map<String, double> postalRates,
       ) {
     int? repCount = int.tryParse(value.trim());
 
@@ -270,7 +327,9 @@ class BookingViewmodel extends ChangeNotifier {
     print("Advance Saved Amount: ₹$_advBookingSavedAmt");
     print("Repeat Count: $repCount");
     print("Base Amount (Unit x Quantity): ₹$baseAmount");
-    print("Total Vazhipadu Amount: ₹$_totalVazhipaduAmt");
+    print("Total Vazhipadu Amount: ₹$_totalVazhipaduAmt + ₹$_totalAmount");
+    print("postalRates:$postalRates");
+    print("Updated Total Amount: $_totalAmount");
     notifyListeners();
   }
 

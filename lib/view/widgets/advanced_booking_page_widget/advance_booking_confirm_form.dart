@@ -50,8 +50,9 @@ class _AdvancedBookingConfirmFormState
   bool _prasadamSelected = false;
   String _postalOption = '';
   double _postalAmount = 0.0;
+  double _TottalAmount=0.0;
 
-  final Map<String, double> postalRates = {"Post": 5.0, "Speed Post": 45.0};
+  final Map<String, double> postalRates = {"Postal": 5.0, "Speed Post": 45.0};
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
@@ -229,7 +230,10 @@ class _AdvancedBookingConfirmFormState
                                   bookingViewmodel.bookingRepOnchange(
                                     value,
                                     widget.selectedVazhipaadu,
+                                      postalRates,
                                   );
+                                   print('--------------amount-------------');
+                                  print(_TottalAmount);
                                 },
 
                                 textAlign: TextAlign.center,
@@ -255,69 +259,75 @@ class _AdvancedBookingConfirmFormState
                             setState(() {
                               _prasadamSelected = value!;
                               if (!_prasadamSelected) {
-                                _postalOption = '';
-                                _postalAmount = 0.0;
+                                _postalOption = '';  // Reset postal option if prasadam is deselected
+                                _postalAmount = 0.0;  // Reset postal amount
+                                _TottalAmount = bookingViewmodel.totalVazhipaduAmt.toDouble(); // Recalculate total without postal charge
                               }
                             });
                           },
                         ),
-                        15.kH,
-                        if (_prasadamSelected)
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Select Post Option".tr(),
-                                style: styles.blackRegular15,
-                              ),
-                              20.kH,
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: postalRates.keys.map((option) {
-                                    final isSelected = _postalOption == option;
-                                    return Row(
-                                      children: [
-                                        Radio<String>(
-                                          value: option,
-                                          groupValue: _postalOption,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              _postalOption = value!;
-                                              _postalAmount = postalRates[value]!;
-                                              print("Postal amount: $_postalAmount");
-                                            });
-                                          },
-                                          activeColor: kPrimaryColor,
-                                        ),
-                                        Text(
-                                          option,
-                                          style: styles.blackRegular15,
-                                        ),
-                                        if (isSelected)
-                                          Container(
-                                            margin: EdgeInsets.only(left: 8),
-                                            padding:
-                                            EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                            decoration: BoxDecoration(
-                                              color: Colors.grey[200],
-                                              borderRadius: BorderRadius.circular(6),
-                                              border: Border.all(color: Colors.grey.shade400),
-                                            ),
-                                            child: Text(
-                                              "₹${_totalCharge.toStringAsFixed(2)}",
-                                              style: styles.blackRegular13,
-                                            ),
-                                          ),
-                                        SizedBox(width: 20),
-                                      ],
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                              10.kH,
-                            ],
+
+                        15.kH, // Spacing
+
+                        if (_prasadamSelected) ...[
+                          // Show postal options only if prasadam is selected
+                          Text(
+                            "Select Postal Option".tr(),
+                            style: styles.blackRegular15,
                           ),
+                          20.kH,
+
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: postalRates.keys.map((option) {
+                                final isSelected = _postalOption == option;
+                                return Row(
+                                  children: [
+                                    Radio<String>(
+                                      value: option,
+                                      groupValue: _postalOption,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _postalOption = value!;
+                                          _postalAmount = postalRates[value]!;
+
+                                          // Calculate total amount
+                                          _TottalAmount = bookingViewmodel.totalVazhipaduAmt + _totalCharge ;
+
+                                          // Update the ViewModel with the new total amount
+                                          bookingViewmodel.setTotalAmount(_TottalAmount);
+                                        });
+                                      },
+                                      activeColor: kPrimaryColor,
+                                    ),
+                                    Text(
+                                      option,
+                                      style: styles.blackRegular15,
+                                    ),
+                                    if (isSelected)
+                                      Container(
+                                        margin: EdgeInsets.only(left: 8),
+                                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[200],
+                                          borderRadius: BorderRadius.circular(6),
+                                          border: Border.all(color: Colors.grey.shade400),
+                                        ),
+                                        child: Text(
+                                          "₹${_postalAmount.toStringAsFixed(2)}",
+                                          style: styles.blackRegular13,
+                                        ),
+                                      ),
+                                    SizedBox(width: 20),
+                                  ],
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          10.kH, // Additional spacing if needed
+                        ],
+
                       ],
                     ),
                   ),
