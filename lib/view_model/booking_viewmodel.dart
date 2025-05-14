@@ -38,6 +38,10 @@ class BookingViewmodel extends ChangeNotifier {
   int _amtOfBookingVazhipaddu = 0;
   int get amtOfBookingVazhipaddu => _amtOfBookingVazhipaddu;
 
+
+
+
+
   BookingModel _selectedGod = bList[0];
   BookingModel get selectedGod => _selectedGod;
 
@@ -291,17 +295,18 @@ class BookingViewmodel extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void setTotalAmount(double amount) {
-    _totalAmount = amount;
-    print("Updated Total Amount: $_totalAmount");
-    notifyListeners();
-  }
+  // void setTotalAmount(double amount) {
+  //   _totalAmount = amount;
+  //   print("Updated Total Amount: $_totalAmount");
+  //   notifyListeners();
+  // }
 
 
   void bookingRepOnchange(
       String value,
       Map<String, dynamic> selectedVazhipaadu,
       Map<String, double> postalRates,
+      double amount
       ) {
     int? repCount = int.tryParse(value.trim());
 
@@ -320,14 +325,15 @@ class BookingViewmodel extends ChangeNotifier {
 
 
     _totalVazhipaduAmt = (baseAmount * repCount) + _advBookingSavedAmt;
-
+    print(baseAmount);
+    print("amount:$amount");
     print("----------------------Total Calculation-------------------");
     print("Selected Unit Price: ₹$unitPrice");
     print("Quantity: $quantity");
     print("Advance Saved Amount: ₹$_advBookingSavedAmt");
     print("Repeat Count: $repCount");
     print("Base Amount (Unit x Quantity): ₹$baseAmount");
-    print("Total Vazhipadu Amount: ₹$_totalVazhipaduAmt + ₹$_totalAmount");
+    print("Total Vazhipadu Amount: ₹$_totalVazhipaduAmt + ₹$amount");
     print("postalRates:$postalRates");
     print("Updated Total Amount: $_totalAmount");
     notifyListeners();
