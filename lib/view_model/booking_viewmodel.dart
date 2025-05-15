@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/model/demo_model/booking_model.dart';
 import 'package:kshethra_mini/model/user_booking_model.dart';
@@ -81,7 +82,7 @@ class BookingViewmodel extends ChangeNotifier {
 
   set repeatDays(int value) {
     _repeatDays = value;
-    // _updatePostalAmount();
+    _updatePostalAmount();
     _recalculateTotalAmount();
     notifyListeners();
   }
@@ -98,16 +99,21 @@ class BookingViewmodel extends ChangeNotifier {
   void _updatePostalAmount() {
     if (_postalOption == 'Postal') {
       _postalAmount = 5 * _repeatDays.toDouble();
+      print("-------days--------------");
+      print(_repeatDays);
     } else if (_postalOption == 'Speed Post') {
       _postalAmount = 45 * _repeatDays.toDouble();
+      print("-------days--------------");
+      print(_repeatDays);
     } else {
       _postalAmount = 0.0;
     }
+    notifyListeners();
   }
 
 
   void selectPostalOption(String option) {
-    // Reset previous postal charge if already added
+
     if (_isPostalAdded) {
       _totalVazhipaduAmt -= _postalAmount.toInt();
       _isPostalAdded = false;
@@ -118,14 +124,14 @@ class BookingViewmodel extends ChangeNotifier {
     if (_postalOption.isEmpty) {
       _postalAmount = 0.0;
     } else {
-      _updatePostalAmount(); // Updates _postalAmount = ratePerDay * _repeatDays
+      _updatePostalAmount();
 
-      // Add postal charge only once
+
       _totalVazhipaduAmt += _postalAmount.toInt();
       _isPostalAdded = true;
     }
 
-    _recalculateTotalAmount(); // _totalAmount = _totalVazhipaduAmt + _postalAmount
+    _recalculateTotalAmount();
 
     print("Selected postal option: $_postalOption");
     print("Postal charge: ₹$_postalAmount");
