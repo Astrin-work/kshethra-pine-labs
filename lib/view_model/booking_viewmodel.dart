@@ -16,7 +16,7 @@ import '../view/widgets/advanced_booking_page_widget/advanced_vazhipaddu_dialog_
 class BookingViewmodel extends ChangeNotifier {
   bool _isExistedDevotee = false;
   bool get isExistedDevotee => _isExistedDevotee;
-
+  bool _isPostalAdded = false;
   List<UserBookingModel> _vazhipaduBookingList = [];
   List<UserBookingModel> get vazhipaduBookingList => _vazhipaduBookingList;
 
@@ -107,20 +107,25 @@ class BookingViewmodel extends ChangeNotifier {
 
 
   void selectPostalOption(String option) {
-    _postalOption = option;
+    // Reset previous postal charge if already added
+    if (_isPostalAdded) {
+      _totalVazhipaduAmt -= _postalAmount.toInt();
+      _isPostalAdded = false;
+    }
 
+    _postalOption = option;
 
     if (_postalOption.isEmpty) {
       _postalAmount = 0.0;
     } else {
       _updatePostalAmount(); // Updates _postalAmount = ratePerDay * _repeatDays
+
+      // Add postal charge only once
+      _totalVazhipaduAmt += _postalAmount.toInt();
+      _isPostalAdded = true;
     }
 
     _recalculateTotalAmount(); // _totalAmount = _totalVazhipaduAmt + _postalAmount
-
-    _totalVazhipaduAmt += _postalAmount.toInt();
-    print( _totalVazhipaduAmt += _postalAmount.toInt());
-
 
     print("Selected postal option: $_postalOption");
     print("Postal charge: ₹$_postalAmount");
