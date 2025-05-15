@@ -76,44 +76,69 @@ class BookingViewmodel extends ChangeNotifier {
   String _postalOption = '';
   String get postalOption => _postalOption;
 
+  int _repeatDays = 1;
+  int get repeatDays => _repeatDays;
 
+  set repeatDays(int value) {
+    _repeatDays = value;
+    // _updatePostalAmount();
+    _recalculateTotalAmount();
+    notifyListeners();
+  }
 
   double _postalAmount = 0.0;
   double get postalAmount => _postalAmount;
-
-
-  Map<String, double> postalRates = {
-    'Post': 5.0,
-    'Speed Post': 45.0,
-  };
 
 
   double _totalAmount = 0.0;
   double get totalAmount => _totalAmount;
 
 
-  void setPostalOption(String option) {
+
+  void _updatePostalAmount() {
+    if (_postalOption == 'Postal') {
+      _postalAmount = 5 * _repeatDays.toDouble();
+    } else if (_postalOption == 'Speed Post') {
+      _postalAmount = 45 * _repeatDays.toDouble();
+    } else {
+      _postalAmount = 0.0;
+    }
+  }
+
+
+  void selectPostalOption(String option) {
     _postalOption = option;
-    _postalAmount = postalRates[option] ?? 0.0;
-    _updateTotalAmount();
+
+
+    if (_postalOption.isEmpty) {
+      _postalAmount = 0.0;
+    } else {
+      _updatePostalAmount(); // Updates _postalAmount = ratePerDay * _repeatDays
+    }
+
+    _recalculateTotalAmount(); // _totalAmount = _totalVazhipaduAmt + _postalAmount
+
+    _totalVazhipaduAmt += _postalAmount.toInt();
+    print( _totalVazhipaduAmt += _postalAmount.toInt());
+
+
+    print("Selected postal option: $_postalOption");
+    print("Postal charge: ₹$_postalAmount");
+    print("Repeat days: $_repeatDays");
+    print("Total vazhipaadu amount: ₹$_totalVazhipaduAmt");
+    print("Grand total: ₹$_totalAmount");
+
     notifyListeners();
   }
 
-  void _updateTotalAmount() {
-    // Calculate the total amount (vazhipadu amount + postal amount)
+
+
+
+
+
+
+  void _recalculateTotalAmount() {
     _totalAmount = _totalVazhipaduAmt + _postalAmount;
-    print("Updated Total Amount: $_totalAmount");
-  }
-
-  void resetPostalOption() {
-    _postalOption = '';
-    _postalAmount = 0.0;
-    _updateTotalAmount();
-    notifyListeners();
-  }
-
-  void onPostalOptionChanged(String option) {
-    setPostalOption(option);
   }
 
 
@@ -131,8 +156,6 @@ class BookingViewmodel extends ChangeNotifier {
     _totalVazhipaduAmt = 0;
     bookingPhnoController.clear();
   }
-
-
 
   void clearBookingControllers() {
     bookingNameController.clear();
@@ -276,30 +299,6 @@ class BookingViewmodel extends ChangeNotifier {
     print(_totalVazhipaduAmt);
   }
 
-  // void bookingRepOnchange(
-  //   String value,
-  //   Map<String, dynamic> selectedVazhipaadu,
-  // ) {
-  //   bool valid = advBookingKey.currentState?.validate() ?? false;
-  //   if (!valid) {
-  //     return;
-  //   }
-  //   int x = selectedVazhipaadu["prize"];
-  //
-  //   if (value.trim() != "") {
-  //     int rep = int.parse(value.trim());
-  //     _totalVazhipaduAmt = _advBookingSavedAmt + (rep * x);
-  //   } else {
-  //     _totalVazhipaduAmt = _advBookingSavedAmt;
-  //   }
-  //   notifyListeners();
-  // }
-
-  // void setTotalAmount(double amount) {
-  //   _totalAmount = amount;
-  //   print("Updated Total Amount: $_totalAmount");
-  //   notifyListeners();
-  // }
 
 
   void bookingRepOnchange(
@@ -338,6 +337,7 @@ class BookingViewmodel extends ChangeNotifier {
     print("Updated Total Amount: $_totalAmount");
     notifyListeners();
   }
+
 
 
 
