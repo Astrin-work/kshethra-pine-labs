@@ -6,15 +6,19 @@ import 'package:kshethra_mini/view/widgets/booking_page_widget/float_button_widg
 import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
-
 import '../utils/app_color.dart';
 import '../utils/app_styles.dart';
 import '../utils/components/size_config.dart';
 
 class AdvancedBookingPreviewView extends StatelessWidget {
   final int totalAmount;
+  final String selectedRepMethod;
 
-  const AdvancedBookingPreviewView({super.key, required this.totalAmount});
+  const AdvancedBookingPreviewView({
+    super.key,
+    required this.totalAmount,
+    required this.selectedRepMethod,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,32 +45,38 @@ class AdvancedBookingPreviewView extends StatelessWidget {
       body: Column(
         children: [
           AppBarWidget(title: "Advanced Booking"),
-          AdvPreViewWidget(page: 'advanced booking', totalAmount: totalAmount),
+          // 👇 Pass it here
+          AdvPreViewWidget(
+            page: 'advanced booking',
+            totalAmount: totalAmount,
+            selectedRepMethod: selectedRepMethod,
+          ),
         ],
       ),
     );
   }
 }
 
+
 class AdvPreViewWidget extends StatelessWidget {
   final String page;
   final int totalAmount;
+  final String selectedRepMethod;
 
   const AdvPreViewWidget({
     super.key,
     required this.page,
     required this.totalAmount,
+    required this.selectedRepMethod,
   });
 
   @override
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
-
     return Consumer<BookingViewmodel>(
       builder: (context, bookingViewmodel, child) {
         final vazhipaduList = bookingViewmodel.vazhipaduBookingList;
-
         return SizedBox(
           height: SizeConfig.screenHeight * 0.8,
           width: SizeConfig.screenWidth,
@@ -103,8 +113,8 @@ class AdvPreViewWidget extends StatelessWidget {
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   itemCount:
-                                      vazhipaduList[index].vazhiPad.length,
-                                  itemBuilder: (context, inde) {
+                                  vazhipaduList[index].vazhiPad.length,
+                                  itemBuilder: (context, poojaIndex) {
                                     final poojaList =
                                         vazhipaduList[index].vazhiPad;
                                     return Padding(
@@ -114,61 +124,51 @@ class AdvPreViewWidget extends StatelessWidget {
                                       ),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                        MainAxisAlignment.start,
                                         children: [
                                           Column(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                             children: [
                                               BuildTextWidget(
-                                                text:
-                                                    poojaList[inde]["vazhipadu"]
-                                                        .toString()
-                                                        .tr(),
+                                                text: poojaList[poojaIndex]
+                                                ["vazhipadu"]
+                                                    .toString()
+                                                    .tr(),
                                                 size: 14,
                                                 color: kBlack,
                                               ),
                                               BuildTextWidget(
-                                                text:
-                                                    poojaList[inde]["godName"]
-                                                        .toString()
-                                                        .tr(),
+                                                text: poojaList[poojaIndex]
+                                                ["godName"]
+                                                    .toString()
+                                                    .tr(),
                                                 size: 14,
                                                 color: kBlack,
                                               ),
+
                                             ],
-                                          ),
-                                          Text(
-                                            "(${bookingViewmodel.noOfBookingVazhipaddu} Day${bookingViewmodel.noOfBookingVazhipaddu == 1 ? '' : 's'}",
-                                            style: styles.blackRegular13,
-                                          ),
-                                          15.kW,
-                                          Text(
-                                            "${"*"}",
-                                            style: styles.blackRegular15,
                                           ),
                                           10.kW,
                                           SizedBox(
                                             width: 50,
                                             child: Text(
-                                              "₹ ${poojaList[inde]["tPrize"]})",
+                                              "₹ ${poojaList[poojaIndex]["tPrize"]}",
                                             ),
                                           ),
                                           IconButton(
                                             color: kRed,
                                             onPressed: () {
                                               if (page == "booking") {
-                                                bookingViewmodel
-                                                    .vazhipaduDelete(
-                                                      index,
-                                                      inde,
-                                                    );
+                                                bookingViewmodel.vazhipaduDelete(
+                                                  index,
+                                                  poojaIndex,
+                                                );
                                               } else {
-                                                bookingViewmodel
-                                                    .advBookingDeleteVazhipadd(
-                                                      index,
-                                                      inde,
-                                                    );
+                                                bookingViewmodel.advBookingDeleteVazhipadd(
+                                                  index,
+                                                  poojaIndex,
+                                                );
                                               }
                                             },
                                             icon: Icon(Icons.delete),
@@ -180,6 +180,11 @@ class AdvPreViewWidget extends StatelessWidget {
                                                 context,
                                               );
                                             },
+                                          ),
+                                          BuildTextWidget(
+                                            text: " $selectedRepMethod",
+                                            size: 14,
+                                            color: kBlack,
                                           ),
                                         ],
                                       ),
@@ -202,3 +207,4 @@ class AdvPreViewWidget extends StatelessWidget {
     );
   }
 }
+

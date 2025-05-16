@@ -26,10 +26,10 @@ class AdvancedBookingConfirmForm extends StatefulWidget {
 
 class _AdvancedBookingConfirmFormState
     extends State<AdvancedBookingConfirmForm> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _repDaysController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController(text: "Anurag");
+  final TextEditingController _phoneController = TextEditingController(text: "7510431565");
+  final TextEditingController _repDaysController = TextEditingController(text: "2");
+  final TextEditingController _addressController = TextEditingController(text: "asdf");
 
   @override
   void dispose() {
@@ -39,17 +39,13 @@ class _AdvancedBookingConfirmFormState
     _addressController.dispose();
     super.dispose();
   }
-
-  int get _repeatDays {
-    final text = _repDaysController.text;
-    return int.tryParse(text) ?? 0;
-  }
-
-  double get _totalCharge => _repeatDays * _postalAmount;
-
-  bool _prasadamSelected = false;
-  String _postalOption = '';
-  double _postalAmount = 0.0;
+  //
+  // int get _repeatDays {
+  //   final text = _repDaysController.text;
+  //   return int.tryParse(text) ?? 0;
+  // }
+  //
+  // double _postalAmount = 0.0;
   double _TottalAmount=0.0;
 
   final Map<String, double> postalRates = {"Postal": 5.0, "Speed Post": 45.0};
@@ -193,7 +189,6 @@ class _AdvancedBookingConfirmFormState
                   ),
                 ],
               ),
-
               25.kH,
               const RepCheckBoxWidget(),
               Visibility(
@@ -231,7 +226,7 @@ class _AdvancedBookingConfirmFormState
                                   value,
                                   widget.selectedVazhipaadu,
                                   postalRates,
-                                  _TottalAmount
+                                  _TottalAmount,
                               );
                               print(postalRates);
                             },
@@ -254,19 +249,13 @@ class _AdvancedBookingConfirmFormState
                         "Prasadam".tr(),
                         style: styles.blackRegular15,
                       ),
-                      value: _prasadamSelected,
+                      value: bookingViewmodel.prasadamSelected,
                       onChanged: (value) {
-                        setState(() {
-                          _prasadamSelected = value!;
-                          if (!_prasadamSelected) {
-                            _postalOption = '';
-                            _postalAmount = 0.0;
-                          }
-                        });
+                        bookingViewmodel.togglePrasadam(value!);
                       },
                     ),
                     15.kH,
-                    if (_prasadamSelected)
+                    if (bookingViewmodel.prasadamSelected)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -276,56 +265,54 @@ class _AdvancedBookingConfirmFormState
                           ),
                           20.kH,
                           SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: postalRates.keys.map((option) {
-                                  final isSelected = _postalOption == option;
-                                  return
-                                    Row(
-                                      children: [
-                                        Radio<String>(
-                                          value: option,
-                                          groupValue: bookingViewmodel.postalOption,
-                                          onChanged: (value) {
-                                            if (value != null) {
-                                              bookingViewmodel.selectPostalOption(value);
-                                            }
-                                          },
-                                          activeColor: kPrimaryColor,
-                                        ),
-                                        Text(
-                                          option,
-                                          style: styles.blackRegular15,
-                                        ),
-                                        if (isSelected)
-                                          Container(
-                                            margin: EdgeInsets.only(left: 8),
-                                            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                            decoration: BoxDecoration(
-                                              color: Colors.grey[200],
-                                              borderRadius: BorderRadius.circular(6),
-                                              border: Border.all(color: Colors.grey.shade400),
-                                            ),
-                                            child: Text(
-                                              "₹${_totalCharge.toStringAsFixed(2)}",
-                                              style: styles.blackRegular13,
-                                            ),
-                                          ),
-                                        SizedBox(width: 20),
-                                      ],
-                                    );
-                                }).toList(),
-                              )
-                          ),
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: postalRates.keys.map((option) {
+                                final isSelected = bookingViewmodel.postalOption == option;
+                                final totalCharge = bookingViewmodel.postalAmount;
 
+                                return Row(
+                                  children: [
+                                    Radio<String>(
+                                      value: option,
+                                      groupValue: bookingViewmodel.postalOption,
+                                      onChanged: (value) {
+                                        if (value != null) {
+                                          bookingViewmodel.selectPostalOption(value);
+                                        }
+                                      },
+                                      activeColor: kPrimaryColor,
+                                    ),
+                                    Text(
+                                      option,
+                                      style: styles.blackRegular15,
+                                    ),
+                                    if (isSelected)
+                                      Container(
+                                        margin: EdgeInsets.only(left: 8),
+                                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[200],
+                                          borderRadius: BorderRadius.circular(6),
+                                          border: Border.all(color: Colors.grey.shade400),
+                                        ),
+                                        child: Text(
+                                          "₹${totalCharge.toStringAsFixed(2)}",
+                                          style: styles.blackRegular13,
+                                        ),
+                                      ),
+                                    SizedBox(width: 20),
+                                  ],
+                                );
+                              }).toList(),
+                            ),
+                          ),
                           10.kH,
                         ],
                       ),
                   ],
                 ),
               ),
-
-
               TextFormField(
                 validator:
                     (value) => Validation.emptyValidation(
@@ -349,3 +336,7 @@ class _AdvancedBookingConfirmFormState
     );
   }
 }
+
+
+
+

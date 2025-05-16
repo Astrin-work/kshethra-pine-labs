@@ -14,7 +14,8 @@ import 'package:provider/provider.dart';
 
 class BookingPreviewView extends StatelessWidget {
   final String page;
-  const BookingPreviewView({super.key, required this.page});
+  const BookingPreviewView({super.key, required this.page, required
+  String selectedRepMethod});
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +75,7 @@ class PreViewWidget extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          vazhipaduList[index].name,
+                          vazhipaduList[index].name.toString(),
                           style: styles.blackRegular15,
                         ),
                         page == "booking"

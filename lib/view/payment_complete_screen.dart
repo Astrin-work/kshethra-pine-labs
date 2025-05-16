@@ -33,6 +33,7 @@ class PaymentCompleteScreen extends StatelessWidget {
                   children: [
                     12.kH,
                     // Text("Amount : ₹ $amount", style: styles.blackRegular22),
+
                     BuildTextWidget(
                       text: "Amount ₹ $amount",
                       color: kBlack,

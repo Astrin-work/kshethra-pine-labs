@@ -11,13 +11,18 @@ import 'package:kshethra_mini/view/advance_booking_preview_view.dart';
 import 'package:kshethra_mini/view/advanced_booking_confirm_view.dart';
 import 'package:kshethra_mini/view/booking_preview_view.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_dialogbox_widget.dart';
+import 'package:kshethra_mini/utils/components/choose_payment_method_Widget.dart';
 
 import '../view/widgets/advanced_booking_page_widget/advanced_vazhipaddu_dialog_BoxWidget.dart';
+import '../view/widgets/payment_method_screen.dart';
 
 class BookingViewmodel extends ChangeNotifier {
   bool _isExistedDevotee = false;
   bool get isExistedDevotee => _isExistedDevotee;
   bool _isPostalAdded = false;
+  bool _prasadamSelected = false;
+  bool get prasadamSelected => _prasadamSelected;
+  String _selectedMethod = 'Cash';
   List<UserBookingModel> _vazhipaduBookingList = [];
   List<UserBookingModel> get vazhipaduBookingList => _vazhipaduBookingList;
 
@@ -96,7 +101,6 @@ class BookingViewmodel extends ChangeNotifier {
   double get totalAmount => _totalAmount;
 
 
-
   void _updatePostalAmount() {
     if (_postalOption == 'Postal') {
       _postalAmount = 5.0 * _repeatDays;
@@ -107,9 +111,29 @@ class BookingViewmodel extends ChangeNotifier {
     }
   }
 
+  void togglePrasadam(bool value) {
+    _prasadamSelected = value;
+    if (!_prasadamSelected) {
+      _postalOption = '';
+      _postalAmount = 0.0;
+
+      if (_isPostalAdded) {
+        _totalVazhipaduAmt -= _postalAmount.toInt();
+        _isPostalAdded = false;
+      }
+    }
+    notifyListeners();
+  }
+
+  void updateRepeatDays(int days) {
+    _repeatDays = days;
+    notifyListeners();
+  }
+
+
 
   void selectPostalOption(String option) {
-    // Remove old postal charge if previously added
+
     if (_isPostalAdded) {
       _totalVazhipaduAmt -= _postalAmount.toInt();
       _isPostalAdded = false;
@@ -125,7 +149,7 @@ class BookingViewmodel extends ChangeNotifier {
       _isPostalAdded = true;
     }
 
-    _recalculateTotalAmount(); // Optional: for any grand total logic
+    _recalculateTotalAmount();
 
     print("Selected Postal Option: $_postalOption");
     print("Repeat Days: $_repeatDays");
@@ -136,11 +160,9 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
 
-
   void _recalculateTotalAmount() {
     _totalAmount = _totalVazhipaduAmt + _postalAmount;
   }
-
 
   void setBookingPage() {
     _advBookOption = "";
@@ -179,16 +201,45 @@ class BookingViewmodel extends ChangeNotifier {
     }
   }
 
+  // void navigateBookingPreviewView(BuildContext context) {
+  //   if (_totalVazhipaduAmt != 0) {
+  //     _selectedGod = bList[0];
+  //     _selectedStar = "Star".tr();
+  //     bookingNameController.clear();
+  //     _isExistedDevotee = false;
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => BookingPreviewView(page: 'booking',),
+  //
+  //       ),
+  //     );
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBarWidget(
+  //         msg: "Please select a Vazhippadu",
+  //         color: kGrey,
+  //       ).build(context),
+  //     );
+  //   }
+  //   notifyListeners();
+  // }
+
+
   void navigateBookingPreviewView(BuildContext context) {
     if (_totalVazhipaduAmt != 0) {
       _selectedGod = bList[0];
       _selectedStar = "Star".tr();
       bookingNameController.clear();
       _isExistedDevotee = false;
+
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => BookingPreviewView(page: 'booking'),
+          builder: (context) => BookingPreviewView(
+            page: 'booking',
+            selectedRepMethod: selectedRepMethod, // 👈 from ViewModel
+          ),
         ),
       );
     } else {
@@ -199,13 +250,13 @@ class BookingViewmodel extends ChangeNotifier {
         ).build(context),
       );
     }
+
     notifyListeners();
   }
 
+
   void naviagteAdvBookingPreview(BuildContext context) {
     _totalAdvBookingAmt = _advBookingSavedAmt + _totalAdvBookingAmt;
-
-    print(_totalVazhipaduAmt);
 
     if (_totalVazhipaduAmt == 0) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -220,9 +271,10 @@ class BookingViewmodel extends ChangeNotifier {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder:
-            (context) =>
-            AdvancedBookingPreviewView(totalAmount: _totalVazhipaduAmt),
+        builder: (context) => AdvancedBookingPreviewView(
+          totalAmount: _totalVazhipaduAmt,
+          selectedRepMethod: selectedRepMethod, // 👈 Add this
+        ),
       ),
     );
 
@@ -231,6 +283,7 @@ class BookingViewmodel extends ChangeNotifier {
 
     notifyListeners();
   }
+
 
   // void setAdvBookOption(String value) {
   //   value == "date".tr()
@@ -293,6 +346,7 @@ class BookingViewmodel extends ChangeNotifier {
             (context) => AdvancedBookingConfirmView(
           selectedVazhipaadu: selectedVazhipaadu,
           totalAmount: _totalVazhipaduAmt,
+
         ),
       ),
     );
@@ -333,9 +387,8 @@ class BookingViewmodel extends ChangeNotifier {
     print("Base Amount: ₹$baseAmount");
     print("Total Vazhipaadu Amount (without postal): ₹$_totalVazhipaduAmt");
 
-    // Now re-add postal amount if postal is already selected
     if (_postalOption.isNotEmpty) {
-      _updatePostalAmount(); // this sets _postalAmount using _repeatDays
+      _updatePostalAmount();
       _totalVazhipaduAmt += _postalAmount.toInt();
       _isPostalAdded = true;
     }
@@ -626,28 +679,56 @@ class BookingViewmodel extends ChangeNotifier {
       );
       return;
     }
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder:
+    //         (context) => QrScannerComponent(
+    //       amount: amount != null ? "$amount" : "$totalVazhipaduAmt",
+    //       noOfScreen: noOfScreens,
+    //       title: title,
+    //     ),
+    //   ),
+    // );
+    Navigator.push(context,
+      MaterialPageRoute(
+        builder: (context) =>PaymentMethodScreen()));
+    notifyListeners();
+  }
+  void navigateToQrScanner({
+    required BuildContext context,
+    required String amount,
+    required int noOfScreens,
+    required String title,
+  }) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder:
-            (context) => QrScannerComponent(
+        builder: (context) => QrScannerComponent(
           amount: amount != null ? "$amount" : "$totalVazhipaduAmt",
           noOfScreen: noOfScreens,
           title: title,
         ),
       ),
     );
-    notifyListeners();
   }
 
-  void switchSelectedRepMethod(String value) {
-    _selectedRepMethod = value;
+
+
+  // void switchSelectedRepMethod(String value) {
+  //   _selectedRepMethod = value;
+  //   notifyListeners();
+  // }
+  void switchSelectedRepMethod(String method) {
+    _selectedRepMethod = method;
     notifyListeners();
   }
-
-  bool toggleSelectedRepMethod(String value) {
-    return _selectedRepMethod == value;
+  bool toggleSelectedRepMethod(String method) {
+    return _selectedRepMethod == method;
   }
+  // bool toggleSelectedRepMethod(String value) {
+  //   return _selectedRepMethod == value;
+  // }
 
   void switchSelectedWeeklyDay(String value) {
     _selectedWeeklyDay = value;
@@ -662,3 +743,5 @@ class BookingViewmodel extends ChangeNotifier {
     }
   }
 }
+
+
