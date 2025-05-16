@@ -80,6 +80,7 @@ class BookingViewmodel extends ChangeNotifier {
   int _repeatDays = 1;
   int get repeatDays => _repeatDays;
 
+
   set repeatDays(int value) {
     _repeatDays = value;
     _updatePostalAmount();
@@ -98,22 +99,17 @@ class BookingViewmodel extends ChangeNotifier {
 
   void _updatePostalAmount() {
     if (_postalOption == 'Postal') {
-      _postalAmount = 5 * _repeatDays.toDouble();
-      print("-------days--------------");
-      print(_repeatDays);
+      _postalAmount = 5.0 * _repeatDays;
     } else if (_postalOption == 'Speed Post') {
-      _postalAmount = 45 * _repeatDays.toDouble();
-      print("-------days--------------");
-      print(_repeatDays);
+      _postalAmount = 45.0 * _repeatDays;
     } else {
       _postalAmount = 0.0;
     }
-    notifyListeners();
   }
 
 
   void selectPostalOption(String option) {
-
+    // Remove old postal charge if previously added
     if (_isPostalAdded) {
       _totalVazhipaduAmt -= _postalAmount.toInt();
       _isPostalAdded = false;
@@ -125,26 +121,19 @@ class BookingViewmodel extends ChangeNotifier {
       _postalAmount = 0.0;
     } else {
       _updatePostalAmount();
-
-
       _totalVazhipaduAmt += _postalAmount.toInt();
       _isPostalAdded = true;
     }
 
-    _recalculateTotalAmount();
+    _recalculateTotalAmount(); // Optional: for any grand total logic
 
-    print("Selected postal option: $_postalOption");
-    print("Postal charge: ₹$_postalAmount");
-    print("Repeat days: $_repeatDays");
-    print("Total vazhipaadu amount: ₹$_totalVazhipaduAmt");
-    print("Grand total: ₹$_totalAmount");
+    print("Selected Postal Option: $_postalOption");
+    print("Repeat Days: $_repeatDays");
+    print("Postal Amount: ₹$_postalAmount");
+    print("Total Vazhipaadu Amount (with postal): ₹$_totalVazhipaduAmt");
 
     notifyListeners();
   }
-
-
-
-
 
 
 
@@ -250,6 +239,7 @@ class BookingViewmodel extends ChangeNotifier {
   //   _advBookOption = value;
   //   notifyListeners();
   // }
+
   void setAdvBookOption(String value) {
     _advBookOption = value;
     notifyListeners();
@@ -316,38 +306,46 @@ class BookingViewmodel extends ChangeNotifier {
       String value,
       Map<String, dynamic> selectedVazhipaadu,
       Map<String, double> postalRates,
-      double amount
+      double amount,
       ) {
     int? repCount = int.tryParse(value.trim());
 
     if (repCount == null || repCount <= 0) {
+      _repeatDays = 1;
       _totalVazhipaduAmt = _advBookingSavedAmt;
       notifyListeners();
       return;
     }
 
-    print("Number of repeat days: $repCount");
+    _repeatDays = repCount;
+    print("Number of repeat days: $_repeatDays");
 
     int unitPrice = selectedVazhipaadu["prize"] ?? 0;
     int quantity = noOfBookingVazhipaddu;
-
     int baseAmount = unitPrice * quantity;
 
+    _totalVazhipaduAmt = baseAmount * _repeatDays;
 
-    _totalVazhipaduAmt = (baseAmount * repCount) + _advBookingSavedAmt;
-    print(baseAmount);
-    print("amount:$amount");
-    print("----------------------Total Calculation-------------------");
-    print("Selected Unit Price: ₹$unitPrice");
+    print("---------------------- Total Calculation -------------------");
+    print("Unit Price: ₹$unitPrice");
     print("Quantity: $quantity");
-    print("Advance Saved Amount: ₹$_advBookingSavedAmt");
-    print("Repeat Count: $repCount");
-    print("Base Amount (Unit x Quantity): ₹$baseAmount");
-    print("Total Vazhipadu Amount: ₹$_totalVazhipaduAmt + ₹$amount");
-    print("postalRates:$postalRates");
-    print("Updated Total Amount: $_totalAmount");
+    print("Repeat Days: $_repeatDays");
+    print("Base Amount: ₹$baseAmount");
+    print("Total Vazhipaadu Amount (without postal): ₹$_totalVazhipaduAmt");
+
+    // Now re-add postal amount if postal is already selected
+    if (_postalOption.isNotEmpty) {
+      _updatePostalAmount(); // this sets _postalAmount using _repeatDays
+      _totalVazhipaduAmt += _postalAmount.toInt();
+      _isPostalAdded = true;
+    }
+
+    print("Total Postal Amount: ₹$_postalAmount");
+    print("Final Total Vazhipaadu Amount (with postal): ₹$_totalVazhipaduAmt");
+
     notifyListeners();
   }
+
 
 
 
@@ -490,13 +488,13 @@ class BookingViewmodel extends ChangeNotifier {
       Map<String, dynamic> selectedVazhipaadu,
       BuildContext context,
       ) {
-    // Validate the form
+
     bool valid = advBookingKey.currentState?.validate() ?? false;
     if (!valid) {
       return;
     }
 
-    // Check if the user selected an option for "Star" or "Date"
+
     if (_advBookOption.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBarWidget(
@@ -507,10 +505,10 @@ class BookingViewmodel extends ChangeNotifier {
       return;
     }
 
-    // Safely parse the repetitions input, defaulting to 0 if invalid
+
     int repetitions = int.tryParse(bookingRepController.text.trim()) ?? 0;
 
-    // If the repetitions value is 0, show an error message
+
     if (repetitions == 0 && bookingRepController.text.trim().isNotEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBarWidget(
@@ -544,17 +542,17 @@ class BookingViewmodel extends ChangeNotifier {
       ),
     );
 
-    // Update the total amount
+
     _totalAdvBookingAmt += _advBookingAmt;
 
-    // Log the total advanced booking amount for debugging
+
     log(_totalAdvBookingAmt.toString(), name: "adv booking");
 
-    // Pop the current page and navigate to the advanced booking preview
+
     popFunction(context);
     naviagteAdvBookingPreview(context);
 
-    // Notify listeners to update the UI
+
     notifyListeners();
   }
 
