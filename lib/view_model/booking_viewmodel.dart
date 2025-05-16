@@ -11,7 +11,6 @@ import 'package:kshethra_mini/view/advance_booking_preview_view.dart';
 import 'package:kshethra_mini/view/advanced_booking_confirm_view.dart';
 import 'package:kshethra_mini/view/booking_preview_view.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_dialogbox_widget.dart';
-import 'package:kshethra_mini/utils/components/choose_payment_method_Widget.dart';
 
 import '../view/widgets/advanced_booking_page_widget/advanced_vazhipaddu_dialog_BoxWidget.dart';
 import '../view/widgets/payment_method_screen.dart';
@@ -22,7 +21,7 @@ class BookingViewmodel extends ChangeNotifier {
   bool _isPostalAdded = false;
   bool _prasadamSelected = false;
   bool get prasadamSelected => _prasadamSelected;
-  String _selectedMethod = 'Cash';
+
   List<UserBookingModel> _vazhipaduBookingList = [];
   List<UserBookingModel> get vazhipaduBookingList => _vazhipaduBookingList;
 
