@@ -23,13 +23,12 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Get BookingViewmodel instance via Provider
     final bookingViewmodel = Provider.of<BookingViewmodel>(context, listen: false);
 
     return Scaffold(
       body: Column(
         children: [
-          const AppBarWidget(title: "Advanced Booking"),
+          const AppBarWidget(title: "Select Payment Method"),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -44,16 +43,24 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
       floatingActionButton: BookingFloatButtonWidget(
         height: 60,
         payOnTap: () {
-          print('tapped');
-
-          bookingViewmodel.navigateToQrScanner(
-            context: context,
-            amount: "",         // replace with actual amount
-            noOfScreens: 1,     // replace with actual number of screens
-            title: "",          // replace with actual title
-          );
+          switch (_selectedMethod) {
+            case 'UPI':
+              bookingViewmodel.navigateToQrScanner(context);
+              break;
+            case 'Cash':
+              bookingViewmodel.navigateToCashPayment(context);
+              break;
+            case 'Card':
+              bookingViewmodel.navigateCardScreen(context);
+              break;
+             default:
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Unsupported payment method')),
+              );
+          }
         },
       ),
+
     );
   }
 }

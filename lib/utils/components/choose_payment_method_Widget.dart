@@ -36,7 +36,7 @@ class ChoosePaymentMethodWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   color:
                       isSelected
-                          ? kDullPrimaryColor
+                          ? kDullPrimaryColor.withOpacity(0.2)
                           : Colors.white,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(

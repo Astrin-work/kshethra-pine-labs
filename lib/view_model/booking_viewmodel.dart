@@ -10,6 +10,8 @@ import 'package:kshethra_mini/utils/components/snack_bar_widget.dart';
 import 'package:kshethra_mini/view/advance_booking_preview_view.dart';
 import 'package:kshethra_mini/view/advanced_booking_confirm_view.dart';
 import 'package:kshethra_mini/view/booking_preview_view.dart';
+import 'package:kshethra_mini/view/card_payment_screen.dart';
+import 'package:kshethra_mini/view/cash_payment.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_dialogbox_widget.dart';
 
 import '../view/widgets/advanced_booking_page_widget/advanced_vazhipaddu_dialog_BoxWidget.dart';
@@ -694,25 +696,33 @@ class BookingViewmodel extends ChangeNotifier {
         builder: (context) =>PaymentMethodScreen()));
     notifyListeners();
   }
-  void navigateToQrScanner({
-    required BuildContext context,
-    required String amount,
-    required int noOfScreens,
-    required String title,
-  }) {
+  void navigateToQrScanner(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => QrScannerComponent(
-          amount: amount != null ? "$amount" : "$totalVazhipaduAmt",
-          noOfScreen: noOfScreens,
-          title: title,
+          amount: "$totalVazhipaduAmt",
+          noOfScreen: 1,
+          title: "QR Scanner",
         ),
       ),
     );
   }
 
+  void navigateToCashPayment(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CashPayment(
+          amount:totalVazhipaduAmt
+        ),
+      ),
+    );
+  }
 
+void navigateCardScreen(context){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => CardPaymentScreen(),));
+}
 
   // void switchSelectedRepMethod(String value) {
   //   _selectedRepMethod = value;

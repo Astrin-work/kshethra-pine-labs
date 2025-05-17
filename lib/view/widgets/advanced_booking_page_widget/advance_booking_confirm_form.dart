@@ -30,6 +30,7 @@ class _AdvancedBookingConfirmFormState
   final TextEditingController _phoneController = TextEditingController(text: "7510431565");
   final TextEditingController _repDaysController = TextEditingController(text: "2");
   final TextEditingController _addressController = TextEditingController(text: "asdf");
+  final TextEditingController _pinCodeController = TextEditingController(text: "asdf");
 
   @override
   void dispose() {
@@ -37,15 +38,9 @@ class _AdvancedBookingConfirmFormState
     _phoneController.dispose();
     _repDaysController.dispose();
     _addressController.dispose();
+    _pinCodeController.dispose();
     super.dispose();
   }
-  //
-  // int get _repeatDays {
-  //   final text = _repDaysController.text;
-  //   return int.tryParse(text) ?? 0;
-  // }
-  //
-  // double _postalAmount = 0.0;
   double _TottalAmount=0.0;
 
   final Map<String, double> postalRates = {"Postal": 5.0, "Speed Post": 45.0};
@@ -324,6 +319,25 @@ class _AdvancedBookingConfirmFormState
                 style: styles.blackRegular15,
                 decoration: InputDecoration(
                   hintText: "Address".tr(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10,),
+              TextFormField(
+                validator:
+                    (value) => Validation.emptyValidation(
+                  value,
+                  "Enter your Pincode",
+                ),
+              maxLength: 6,
+                keyboardType: TextInputType.number,
+                controller: _pinCodeController,
+                maxLines: 1,
+                style: styles.blackRegular15,
+                decoration: InputDecoration(
+                  hintText: "Pincode".tr(),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
