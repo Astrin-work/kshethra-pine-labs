@@ -8,7 +8,6 @@ import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-import '../../../view_model/home_page_viewmodel.dart';
 
 class StarDialogBox extends StatelessWidget {
   final double? mainAxisSpace;

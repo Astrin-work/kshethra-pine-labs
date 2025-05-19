@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import '../utils/app_styles.dart';
 import '../utils/components/app_bar_widget.dart';
 
 class CardPaymentScreen extends StatelessWidget {

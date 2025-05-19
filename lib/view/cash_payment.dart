@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/view/payment_complete_screen.dart';
 import 'package:kshethra_mini/view/widgets/advanced_booking_page_widget/confirm_button_widget.dart';
-import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 
 import '../utils/app_color.dart';
 import '../utils/app_styles.dart';
