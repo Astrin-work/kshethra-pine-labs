@@ -13,6 +13,7 @@ import 'package:kshethra_mini/view/booking_preview_view.dart';
 import 'package:kshethra_mini/view/card_payment_screen.dart';
 import 'package:kshethra_mini/view/cash_payment.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_dialogbox_widget.dart';
+import 'package:provider/provider.dart';
 
 import '../view/widgets/advanced_booking_page_widget/advanced_vazhipaddu_dialog_BoxWidget.dart';
 import '../view/widgets/payment_method_screen.dart';
@@ -54,7 +55,7 @@ class BookingViewmodel extends ChangeNotifier {
 
   final bookingKey = GlobalKey<FormState>();
   final advBookingKey = GlobalKey<FormState>();
-
+  final Set<String> _selectedWeeklyDays = {};
 
   TextEditingController bookingNameController = TextEditingController();
 
@@ -160,7 +161,6 @@ class BookingViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-
   void _recalculateTotalAmount() {
     _totalAmount = _totalVazhipaduAmt + _postalAmount;
   }
@@ -239,7 +239,7 @@ class BookingViewmodel extends ChangeNotifier {
         MaterialPageRoute(
           builder: (context) => BookingPreviewView(
             page: 'booking',
-            selectedRepMethod: selectedRepMethod, // 👈 from ViewModel
+            selectedRepMethod: selectedRepMethod,
           ),
         ),
       );
@@ -274,7 +274,8 @@ class BookingViewmodel extends ChangeNotifier {
       MaterialPageRoute(
         builder: (context) => AdvancedBookingPreviewView(
           totalAmount: _totalVazhipaduAmt,
-          selectedRepMethod: selectedRepMethod, // 👈 Add this
+          selectedRepMethod: selectedRepMethod,
+          selectedDays: context.read<BookingViewmodel>().selectedWeeklyDays,
         ),
       ),
     );
@@ -401,9 +402,6 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
 
-
-
-
   void advBookingAddVazhipadu(
       Map<String, dynamic> selectedVazhipaadu,
       BuildContext context,
@@ -521,6 +519,7 @@ class BookingViewmodel extends ChangeNotifier {
         star: _selectedStar.tr(),
         vazhiPad: [
           {
+            "name ":bookingNameController.text,
             "godName": selectedGod.god ?? "",
             "vazhipadu": selectedVazhipaadu["vazhi"],
             "prize": selectedVazhipaadu["prize"],
@@ -660,8 +659,9 @@ class BookingViewmodel extends ChangeNotifier {
     int amt =
     _vazhipaduBookingList[indexOfVazhipad].vazhiPad[indexOfPooja]["tPrize"];
     vazhipaduDelete(indexOfVazhipad, indexOfPooja);
-
     _totalAdvBookingAmt -= amt;
+    print("-------------Deleted------------");
+    print(amt);
     notifyListeners();
   }
 
@@ -739,18 +739,20 @@ void navigateCardScreen(context){
   //   return _selectedRepMethod == value;
   // }
 
-  void switchSelectedWeeklyDay(String value) {
-    _selectedWeeklyDay = value;
+  void switchSelectedWeeklyDay(String day) {
+    if (_selectedWeeklyDays.contains(day)) {
+      _selectedWeeklyDays.remove(day);
+    } else {
+      _selectedWeeklyDays.add(day);
+    }
     notifyListeners();
   }
 
-  bool toggleSelectedWeeklyDay(String value) {
-    if (_selectedWeeklyDay == value) {
-      return true;
-    } else {
-      return false;
-    }
+  bool toggleSelectedWeeklyDay(String day) {
+    return _selectedWeeklyDays.contains(day);
   }
+  List<String> get selectedWeeklyDays => _selectedWeeklyDays.toList();
+
 }
 
 

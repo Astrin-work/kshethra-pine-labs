@@ -13,11 +13,13 @@ import '../utils/components/size_config.dart';
 class AdvancedBookingPreviewView extends StatelessWidget {
   final int totalAmount;
   final String selectedRepMethod;
+  final List<String> selectedDays;
 
   const AdvancedBookingPreviewView({
     super.key,
     required this.totalAmount,
     required this.selectedRepMethod,
+    required this.selectedDays,
   });
 
   @override
@@ -45,11 +47,11 @@ class AdvancedBookingPreviewView extends StatelessWidget {
       body: Column(
         children: [
           AppBarWidget(title: "Advanced Booking"),
-          // 👇 Pass it here
           AdvPreViewWidget(
             page: 'advanced booking',
             totalAmount: totalAmount,
             selectedRepMethod: selectedRepMethod,
+            selectedDays: selectedDays,
           ),
         ],
       ),
@@ -57,26 +59,29 @@ class AdvancedBookingPreviewView extends StatelessWidget {
   }
 }
 
-
 class AdvPreViewWidget extends StatelessWidget {
   final String page;
   final int totalAmount;
   final String selectedRepMethod;
+  final List<String> selectedDays;
 
   const AdvPreViewWidget({
     super.key,
     required this.page,
     required this.totalAmount,
     required this.selectedRepMethod,
+    required this.selectedDays,
   });
 
   @override
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
+
     return Consumer<BookingViewmodel>(
       builder: (context, bookingViewmodel, child) {
         final vazhipaduList = bookingViewmodel.vazhipaduBookingList;
+
         return SizedBox(
           height: SizeConfig.screenHeight * 0.8,
           width: SizeConfig.screenWidth,
@@ -88,17 +93,24 @@ class AdvPreViewWidget extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: vazhipaduList.length,
                     itemBuilder: (context, index) {
+                      final poojaList = vazhipaduList[index].vazhiPad;
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: Container(
+                          padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
                             color: kLightPrimaryColor,
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                vazhipaduList[index].name,
+                                vazhipaduList[index].name.toString(),
+                                style: styles.blackRegular15,
+                              ),
+                              Text(
+                                vazhipaduList[index].star.toString(),
                                 style: styles.blackRegular15,
                               ),
                               Text(
@@ -107,87 +119,120 @@ class AdvPreViewWidget extends StatelessWidget {
                                     : vazhipaduList[index].option ?? "",
                                 style: styles.blackRegular13,
                               ),
+                              const SizedBox(height: 8),
                               Container(
-                                color: kWhite,
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: kWhite,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                                 child: ListView.builder(
                                   shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount:
-                                  vazhipaduList[index].vazhiPad.length,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: poojaList.length,
                                   itemBuilder: (context, poojaIndex) {
-                                    final poojaList =
-                                        vazhipaduList[index].vazhiPad;
+                                    final item = poojaList[poojaIndex];
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
-                                        vertical: 2.0,
-                                        horizontal: 5.0,
+                                        vertical: 6.0,
                                       ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                      child:Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                          Row(
                                             children: [
-                                              BuildTextWidget(
-                                                text: poojaList[poojaIndex]
-                                                ["vazhipadu"]
-                                                    .toString()
-                                                    .tr(),
-                                                size: 14,
-                                                color: kBlack,
-                                              ),
-                                              BuildTextWidget(
-                                                text: poojaList[poojaIndex]
-                                                ["godName"]
-                                                    .toString()
-                                                    .tr(),
-                                                size: 14,
-                                                color: kBlack,
-                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
 
+                                                    BuildTextWidget(
+                                                      text: item["vazhipadu"].toString().tr(),
+                                                      size: 14,
+                                                      color: kBlack,
+                                                    ),
+                                                    BuildTextWidget(
+                                                      text: item["godName"].toString().tr(),
+                                                      size: 14,
+                                                      color: kBlack,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Text(
+                                                "₹ ${item["tPrize"]}",
+                                                style: styles.blackRegular13,
+                                              ),
+                                              const SizedBox(width: 10),
+                                              IconButton(
+                                                icon: const Icon(Icons.delete, color: kRed),
+                                                onPressed: () {
+                                                  if (page == "booking") {
+                                                    bookingViewmodel.vazhipaduDelete(index, poojaIndex);
+                                                  } else {
+                                                    bookingViewmodel.advBookingDeleteVazhipadd(index, poojaIndex);
+                                                  }
+                                                },
+                                              ),
+                                              IconButton(
+                                                icon: Icon(Icons.add),
+                                                onPressed:
+                                                    () => BookingViewmodel().popFunction(
+                                                  context,
+                                                ),
+                                              ),
                                             ],
                                           ),
-                                          10.kW,
-                                          SizedBox(
-                                            width: 50,
-                                            child: Text(
-                                              "₹ ${poojaList[poojaIndex]["tPrize"]}",
+                                           SizedBox(height: 6),
+                                          Row(
+                                            children: [
+                                              BuildTextWidget(
+                                                text: "Repeat Method: $selectedRepMethod",
+                                                size: 14,
+                                                color: kBlack,
+                                              ),
+                                              const SizedBox(width: 10),
+                                              if (selectedRepMethod != "Once")
+                                                Text(
+                                                  "${bookingViewmodel.repeatDays} times",
+                                                  style: TextStyle(fontSize: 14, color: kBlack),
+                                                ),
+                                            ],
+                                          ),
+
+                                          const SizedBox(height: 6),
+                                          Row(
+                                            children: [
+                                              BuildTextWidget(
+                                                text: "Total Postal Charges: ₹${bookingViewmodel.postalAmount}",
+                                                size: 14,
+                                                color: kBlack,
+                                              ),
+                                            ],
+                                          ),
+
+                                          if (selectedRepMethod != "Once" && selectedDays.isNotEmpty)
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 6),
+                                              child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Wrap(
+                                                  spacing: 8.0,
+                                                  children: selectedDays
+                                                      .map(
+                                                        (day) => Chip(
+                                                      label: Text(day),
+                                                      backgroundColor: kLightPrimaryColor.withOpacity(0.8),
+                                                    ),
+                                                  )
+                                                      .toList(),
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                          IconButton(
-                                            color: kRed,
-                                            onPressed: () {
-                                              if (page == "booking") {
-                                                bookingViewmodel.vazhipaduDelete(
-                                                  index,
-                                                  poojaIndex,
-                                                );
-                                              } else {
-                                                bookingViewmodel.advBookingDeleteVazhipadd(
-                                                  index,
-                                                  poojaIndex,
-                                                );
-                                              }
-                                            },
-                                            icon: Icon(Icons.delete),
-                                          ),
-                                          IconButton(
-                                            icon: Icon(Icons.add),
-                                            onPressed: () {
-                                              bookingViewmodel.popFunction(
-                                                context,
-                                              );
-                                            },
-                                          ),
-                                          BuildTextWidget(
-                                            text: " $selectedRepMethod",
-                                            size: 14,
-                                            color: kBlack,
-                                          ),
                                         ],
                                       ),
+
                                     );
                                   },
                                 ),
@@ -207,4 +252,3 @@ class AdvPreViewWidget extends StatelessWidget {
     );
   }
 }
-

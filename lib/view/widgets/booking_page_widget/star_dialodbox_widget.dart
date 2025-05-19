@@ -1,4 +1,3 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/model/star_model.dart';
@@ -56,15 +55,16 @@ class StarDialogBox extends StatelessWidget {
                         childAspectRatio: 1.85,
                         crossAxisCount: axisCount ?? 2,
                       ),
-                      itemBuilder: (context, index) => InkWell(
-                        onTap: () {
-                          bookingViewmodel.setStar(
-                            stars[index].starKey?.tr() ?? "",
-                            context,
-                          );
-                        },
+                      itemBuilder:
+                          (context, index) => InkWell(
+                            onTap: () {
+                              bookingViewmodel.setStar(
+                                stars[index].starKey?.tr() ?? "",
+                                context,
+                              );
+                            },
 
-                      child: Container(
+                            child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 image: DecorationImage(
