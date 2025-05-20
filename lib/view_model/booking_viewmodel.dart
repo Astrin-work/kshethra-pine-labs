@@ -46,7 +46,6 @@ class BookingViewmodel extends ChangeNotifier {
   int _amtOfBookingVazhipaddu = 0;
   int get amtOfBookingVazhipaddu => _amtOfBookingVazhipaddu;
 
-  double? _firstTotalSelectedAmt;
 
 
 
