@@ -61,7 +61,6 @@ class VazhipadduWidget extends StatelessWidget {
                   }
                 },
 
-
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),

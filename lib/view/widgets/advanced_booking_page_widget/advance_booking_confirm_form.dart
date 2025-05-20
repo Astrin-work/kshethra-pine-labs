@@ -27,19 +27,19 @@ class AdvancedBookingConfirmForm extends StatefulWidget {
 class _AdvancedBookingConfirmFormState
     extends State<AdvancedBookingConfirmForm> {
   final TextEditingController _nameController = TextEditingController(
-    text: "Anurag",
+    text: "",
   );
   final TextEditingController _phoneController = TextEditingController(
-    text: "7510431565",
+    text: "",
   );
   final TextEditingController _repDaysController = TextEditingController(
-    text: "1",
+    text: "",
   );
   final TextEditingController _addressController = TextEditingController(
-    text: "mannam chira",
+    text: "",
   );
   final TextEditingController _pinCodeController = TextEditingController(
-    text: "670731",
+    text: "",
   );
 
   @override
@@ -351,24 +351,26 @@ class _AdvancedBookingConfirmFormState
                     ),
                   ),
                   SizedBox(height: 10),
-                  TextFormField(
-                    validator:
-                        (value) => Validation.emptyValidation(
-                          value,
-                          "Enter your Pincode",
+                  if (bookingViewmodel.prasadamSelected) ...[
+
+                    SizedBox(height: 10),
+                    TextFormField(
+                      validator: (value) =>
+                          Validation.emptyValidation(value, "Enter your Pincode"),
+                      maxLength: 6,
+                      keyboardType: TextInputType.number,
+                      controller: _pinCodeController,
+                      maxLines: 1,
+                      style: styles.blackRegular15,
+                      decoration: InputDecoration(
+                        hintText: "Pincode".tr(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                    maxLength: 6,
-                    keyboardType: TextInputType.number,
-                    controller: _pinCodeController,
-                    maxLines: 1,
-                    style: styles.blackRegular15,
-                    decoration: InputDecoration(
-                      hintText: "Pincode".tr(),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
                       ),
                     ),
-                  ),
+                  ]
+
                 ],
               ),
             ),
@@ -376,3 +378,9 @@ class _AdvancedBookingConfirmFormState
     );
   }
 }
+
+
+
+
+
+
