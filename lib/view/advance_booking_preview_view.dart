@@ -11,45 +11,47 @@ import '../utils/app_styles.dart';
 import '../utils/components/size_config.dart';
 
 class AdvancedBookingPreviewView extends StatelessWidget {
-  final int totalAmount;
   final String selectedRepMethod;
   final List<String> selectedDays;
 
   const AdvancedBookingPreviewView({
     super.key,
-    required this.totalAmount,
     required this.selectedRepMethod,
     required this.selectedDays,
+    required int totalAmount,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: ResponsiveLayout(
-        pinelabDevice: FloatButtonWidget(
-          amount: totalAmount,
-          title: 'Advanced Booking',
-          noOfScreens: 4,
-        ),
-        mediumDevice: FloatButtonWidget(
-          height: 65,
-          amount: totalAmount,
-          title: 'Advanced Booking',
-          noOfScreens: 4,
-        ),
-        largeDevice: FloatButtonWidget(
-          height: 75,
-          amount: totalAmount,
-          title: 'Advanced Booking',
-          noOfScreens: 4,
-        ),
+      floatingActionButton: Consumer<BookingViewmodel>(
+        builder: (context, bookingViewmodel, _) {
+          return ResponsiveLayout(
+            pinelabDevice: FloatButtonWidget(
+              amount: bookingViewmodel.totalAdvBookingAmt,
+              title: 'Advanced Booking',
+              noOfScreens: 4,
+            ),
+            mediumDevice: FloatButtonWidget(
+              height: 65,
+              amount: bookingViewmodel.totalAdvBookingAmt,
+              title: 'Advanced Booking',
+              noOfScreens: 4,
+            ),
+            largeDevice: FloatButtonWidget(
+              height: 75,
+              amount: bookingViewmodel.totalAdvBookingAmt,
+              title: 'Advanced Booking',
+              noOfScreens: 4,
+            ),
+          );
+        },
       ),
       body: Column(
         children: [
           AppBarWidget(title: "Advanced Booking"),
           AdvPreViewWidget(
             page: 'advanced booking',
-            totalAmount: totalAmount,
             selectedRepMethod: selectedRepMethod,
             selectedDays: selectedDays,
           ),
@@ -61,14 +63,12 @@ class AdvancedBookingPreviewView extends StatelessWidget {
 
 class AdvPreViewWidget extends StatelessWidget {
   final String page;
-  final int totalAmount;
   final String selectedRepMethod;
   final List<String> selectedDays;
 
   const AdvPreViewWidget({
     super.key,
     required this.page,
-    required this.totalAmount,
     required this.selectedRepMethod,
     required this.selectedDays,
   });
@@ -119,7 +119,6 @@ class AdvPreViewWidget extends StatelessWidget {
                                     : vazhipaduList[index].option ?? "",
                                 style: styles.blackRegular13,
                               ),
-                              // const SizedBox(height: 8),
                               SizedBox(
                                 height: 130,
                                 child: Container(
@@ -131,35 +130,27 @@ class AdvPreViewWidget extends StatelessWidget {
                                   ),
                                   child: ListView.builder(
                                     shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
+                                    physics: const NeverScrollableScrollPhysics(),
                                     itemCount: poojaList.length,
                                     itemBuilder: (context, poojaIndex) {
                                       final item = poojaList[poojaIndex];
                                       return Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Row(
                                             children: [
                                               Expanded(
                                                 child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     BuildTextWidget(
-                                                      text:
-                                                          item["vazhipadu"]
-                                                              .toString()
-                                                              .tr(),
+                                                      text: item["vazhipadu"].toString().tr(),
                                                       size: 14,
                                                       color: kBlack,
                                                     ),
                                                     BuildTextWidget(
-                                                      text:
-                                                          item["godName"]
-                                                              .toString()
-                                                              .tr(),
+                                                      text: item["godName"].toString().tr(),
                                                       size: 14,
                                                       color: kBlack,
                                                     ),
@@ -170,7 +161,6 @@ class AdvPreViewWidget extends StatelessWidget {
                                                 "₹ ${item["tPrize"]}",
                                                 style: styles.blackRegular13,
                                               ),
-
                                               SizedBox(width: 10),
                                               IconButton(
                                                 icon: const Icon(
@@ -179,36 +169,25 @@ class AdvPreViewWidget extends StatelessWidget {
                                                 ),
                                                 onPressed: () {
                                                   if (page == "booking") {
-                                                    bookingViewmodel
-                                                        .vazhipaduDelete(
-                                                          index,
-                                                          poojaIndex,
-                                                        );
+                                                    bookingViewmodel.vazhipaduDelete(index, poojaIndex);
                                                   } else {
-                                                    bookingViewmodel
-                                                        .advBookingDeleteVazhipadd(
-                                                          index,
-                                                          poojaIndex,
-                                                        );
+                                                    bookingViewmodel.advBookingDeleteVazhipadd(index, poojaIndex);
                                                   }
                                                 },
                                               ),
                                               IconButton(
-                                                icon: Icon(Icons.add),
+                                                icon: const Icon(Icons.add),
                                                 onPressed: () {
-                                                  bookingViewmodel.popFunction(
-                                                    context,
-                                                  );
+                                                  bookingViewmodel.popFunction(context);
                                                 },
                                               ),
                                             ],
                                           ),
-                                          SizedBox(height: 6),
+                                          const SizedBox(height: 6),
                                           Row(
                                             children: [
                                               BuildTextWidget(
-                                                text:
-                                                    "Repeat Method: $selectedRepMethod",
+                                                text: "Repeat Method: $selectedRepMethod",
                                                 size: 14,
                                                 color: kBlack,
                                               ),
@@ -216,49 +195,33 @@ class AdvPreViewWidget extends StatelessWidget {
                                               if (selectedRepMethod != "Once")
                                                 Text(
                                                   "${bookingViewmodel.repeatDays} times",
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    color: kBlack,
-                                                  ),
+                                                  style: TextStyle(fontSize: 14, color: kBlack),
                                                 ),
                                             ],
                                           ),
-
                                           const SizedBox(height: 6),
                                           Row(
                                             children: [
                                               BuildTextWidget(
-                                                text:
-                                                    "Total Postal Charges: ₹${bookingViewmodel.postalAmount}",
+                                                text: "Total Postal Charges: ₹${bookingViewmodel.postalAmount}",
                                                 size: 14,
                                                 color: kBlack,
                                               ),
                                             ],
                                           ),
-
-                                          if (selectedRepMethod != "Once" &&
-                                              selectedDays.isNotEmpty)
+                                          if (selectedRepMethod != "Once" && selectedDays.isNotEmpty)
                                             Padding(
-                                              padding: const EdgeInsets.only(
-                                                top: 6,
-                                              ),
+                                              padding: const EdgeInsets.only(top: 6),
                                               child: Align(
                                                 alignment: Alignment.centerLeft,
                                                 child: Wrap(
                                                   spacing: 8.0,
-                                                  children:
-                                                      selectedDays
-                                                          .map(
-                                                            (day) => Chip(
-                                                              label: Text(day),
-                                                              backgroundColor:
-                                                                  kLightPrimaryColor
-                                                                      .withOpacity(
-                                                                        0.8,
-                                                                      ),
-                                                            ),
-                                                          )
-                                                          .toList(),
+                                                  children: selectedDays
+                                                      .map((day) => Chip(
+                                                    label: Text(day),
+                                                    backgroundColor: kLightPrimaryColor.withOpacity(0.8),
+                                                  ))
+                                                      .toList(),
                                                 ),
                                               ),
                                             ),
@@ -283,3 +246,18 @@ class AdvPreViewWidget extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

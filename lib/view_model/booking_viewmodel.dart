@@ -24,7 +24,6 @@ class BookingViewmodel extends ChangeNotifier {
   bool _isPostalAdded = false;
   bool _prasadamSelected = false;
   bool get prasadamSelected => _prasadamSelected;
-
   List<UserBookingModel> _vazhipaduBookingList = [];
   List<UserBookingModel> get vazhipaduBookingList => _vazhipaduBookingList;
 
@@ -100,7 +99,7 @@ class BookingViewmodel extends ChangeNotifier {
 
 
   double _totalAmount = 0.0;
-  double get totalAmount => _totalAmount;
+  double get totalAmount => _totalAmount*noOfBookingVazhipaddu;
   List<double> _vazhipaduAmounts = [];
 
 
@@ -132,6 +131,7 @@ class BookingViewmodel extends ChangeNotifier {
     _repeatDays = days;
     notifyListeners();
   }
+
 
 
 
@@ -256,7 +256,7 @@ class BookingViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void naviagteAdvBookingPreview(BuildContext context) {
+  void navigateAdvBookingPreview(BuildContext context) {
     if (_totalVazhipaduAmt == 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBarWidget(
@@ -267,23 +267,20 @@ class BookingViewmodel extends ChangeNotifier {
       return;
     }
 
-    _vazhipaduAmounts.add(_totalVazhipaduAmt.toDouble());
-
-    // Calculate the total
-    double totalAmount = _vazhipaduAmounts.fold(0, (sum, item) => sum + item);
-
+    final totalAmount = _totalVazhipaduAmt;
+    print("-----------tv----------------");
+   print(_totalVazhipaduAmt);
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => AdvancedBookingPreviewView(
-          totalAmount: totalAmount.toInt(),
+          totalAmount: totalAmount,
           selectedRepMethod: selectedRepMethod,
           selectedDays: context.read<BookingViewmodel>().selectedWeeklyDays,
         ),
       ),
     );
 
-    print("All vazhipadu amounts: $_vazhipaduAmounts");
     print("Total amount: $totalAmount");
 
     notifyListeners();
@@ -404,14 +401,47 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
 
+  // void advBookingAddVazhipadu(
+  //     Map<String, dynamic> selectedVazhipaadu,
+  //     BuildContext context,
+  //     ) {
+  //   bool valid = advBookingKey.currentState?.validate() ?? false;
+  //   if (!valid) return;
+  //
+  //   if (_advBookOption == "") {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBarWidget(
+  //         msg: "Select one option from Star or Date",
+  //         color: kGrey,
+  //       ).build(context),
+  //     );
+  //     return;
+  //   }
+  //
+  //   // Calculate total price: quantity * unit price
+  //   int quantity = selectedVazhipaadu['qty'] ?? 1;
+  //   int unitPrice = selectedVazhipaadu['prize'] ?? 0;
+  //   int totalPrice = quantity * unitPrice;
+  //
+  //   // Add total price into the map before saving
+  //   selectedVazhipaadu['tPrize'] = totalPrice;
+  //
+  //   // Save this total as the advanced booking saved amount
+  //   _advBookingSavedAmt = totalPrice;
+  //
+  //   setVazhipaduAdvBookingList(selectedVazhipaadu, context);
+  //   bookingAddNewDevottee();
+  //   popFunction(context);
+  // }
+
+
   void advBookingAddVazhipadu(
       Map<String, dynamic> selectedVazhipaadu,
       BuildContext context,
       ) {
     bool valid = advBookingKey.currentState?.validate() ?? false;
-    if (!valid) {
-      return;
-    }
+    if (!valid) return;
+
     if (_advBookOption == "") {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBarWidget(
@@ -422,11 +452,24 @@ class BookingViewmodel extends ChangeNotifier {
       return;
     }
 
+    final int repeatCount = selectedRepMethod == "Once"
+        ? 1
+        : int.tryParse(bookingRepController.text) ?? 1;
+
+    final double itemPrice = selectedVazhipaadu["price"] ?? 0.0;
+    final double postalAmt = prasadamSelected ? postalAmount : 0.0;
+
+    // Calculate total
+    _totalVazhipaduAmt = ((itemPrice * repeatCount) + postalAmt) as int;
     _advBookingSavedAmt = _totalVazhipaduAmt;
+
     setVazhipaduAdvBookingList(selectedVazhipaadu, context);
     bookingAddNewDevottee();
     popFunction(context);
   }
+
+
+
 
   void setGod(BookingModel value) {
     _selectedGod = value;
@@ -605,7 +648,7 @@ class BookingViewmodel extends ChangeNotifier {
 
 
     popFunction(context);
-    naviagteAdvBookingPreview(context);
+    navigateAdvBookingPreview(context);
 
 
     notifyListeners();
@@ -631,7 +674,6 @@ class BookingViewmodel extends ChangeNotifier {
       "rep": _noOfBookingVazhipaddu,
       "tPrize": _amtOfBookingVazhipaddu,
     });
-
     // UserBookingModel value = _vazhipaduBookingList.last;
 
     _totalVazhipaduAmt += calculateBookingTotalAmt();
@@ -658,14 +700,21 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void advBookingDeleteVazhipadd(int indexOfVazhipad, int indexOfPooja) {
-    int amt =
-    _vazhipaduBookingList[indexOfVazhipad].vazhiPad[indexOfPooja]["tPrize"];
-    vazhipaduDelete(indexOfVazhipad, indexOfPooja);
+    int amt = _vazhipaduBookingList[indexOfVazhipad].vazhiPad[indexOfPooja]["tPrize"];
+    log("Deleted amount: $amt");
+
+
     _totalAdvBookingAmt -= amt;
-    print("-------------Deleted------------");
-    print(amt);
+
+    _vazhipaduBookingList[indexOfVazhipad].vazhiPad.removeAt(indexOfPooja);
+
+    if (_vazhipaduBookingList[indexOfVazhipad].vazhiPad.isEmpty) {
+      _vazhipaduBookingList.removeAt(indexOfVazhipad);
+    }
+
     notifyListeners();
   }
+
 
   void bookingPreviewSecondFloatButton(
       BuildContext context,

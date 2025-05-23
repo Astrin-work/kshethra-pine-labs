@@ -45,7 +45,7 @@ class AdvancedBookingConfirmView extends StatelessWidget {
                 selectedVazhipaadu,
                 context,
               );
-              bookingViewmodel.naviagteAdvBookingPreview(context);
+              bookingViewmodel.navigateAdvBookingPreview(context);
             },
             addOnTap: () {
               bookingViewmodel.bookingAddNewDevottee();
@@ -64,7 +64,7 @@ class AdvancedBookingConfirmView extends StatelessWidget {
                 selectedVazhipaadu,
                 context,
               );
-              bookingViewmodel.naviagteAdvBookingPreview(context);
+              bookingViewmodel.navigateAdvBookingPreview(context);
             },
             addOnTap: () {
               bookingViewmodel.bookingAddNewDevottee();

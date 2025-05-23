@@ -27,19 +27,19 @@ class AdvancedBookingConfirmForm extends StatefulWidget {
 class _AdvancedBookingConfirmFormState
     extends State<AdvancedBookingConfirmForm> {
   final TextEditingController _nameController = TextEditingController(
-    text: "",
+    text: "Anurag mc",
   );
   final TextEditingController _phoneController = TextEditingController(
-    text: "",
+    text: "7510431565",
   );
   final TextEditingController _repDaysController = TextEditingController(
-    text: "",
+    text: "1",
   );
   final TextEditingController _addressController = TextEditingController(
-    text: "",
+    text: "mannam chira (H) vellamunda po",
   );
   final TextEditingController _pinCodeController = TextEditingController(
-    text: "",
+    text: "670731",
   );
 
   @override
