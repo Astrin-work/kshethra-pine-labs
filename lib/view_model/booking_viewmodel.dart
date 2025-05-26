@@ -100,7 +100,7 @@ class BookingViewmodel extends ChangeNotifier {
 
   double _totalAmount = 0.0;
   double get totalAmount => _totalAmount*noOfBookingVazhipaddu;
-  List<double> _vazhipaduAmounts = [];
+
 
 
   void _updatePostalAmount() {
