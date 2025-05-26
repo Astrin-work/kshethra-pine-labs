@@ -269,7 +269,7 @@ class BookingViewmodel extends ChangeNotifier {
 
     final totalAmount = _totalVazhipaduAmt;
     print("-----------tv----------------");
-   print(_totalVazhipaduAmt);
+    print(_totalVazhipaduAmt);
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -468,7 +468,10 @@ class BookingViewmodel extends ChangeNotifier {
     popFunction(context);
   }
 
-
+  void updateTotalAmount(double value) {
+    _totalAmount = value;
+    notifyListeners();
+  }
 
 
   void setGod(BookingModel value) {
@@ -743,8 +746,8 @@ class BookingViewmodel extends ChangeNotifier {
     //   ),
     // );
     Navigator.push(context,
-      MaterialPageRoute(
-        builder: (context) =>PaymentMethodScreen()));
+        MaterialPageRoute(
+            builder: (context) =>PaymentMethodScreen()));
     notifyListeners();
   }
   void navigateToQrScanner(BuildContext context) {
@@ -765,15 +768,15 @@ class BookingViewmodel extends ChangeNotifier {
       context,
       MaterialPageRoute(
         builder: (context) => CashPayment(
-          amount:totalVazhipaduAmt
+            amount:totalVazhipaduAmt
         ),
       ),
     );
   }
 
-void navigateCardScreen(context){
+  void navigateCardScreen(context){
     Navigator.push(context, MaterialPageRoute(builder: (context) => CardPaymentScreen(),));
-}
+  }
 
   // void switchSelectedRepMethod(String value) {
   //   _selectedRepMethod = value;
@@ -805,5 +808,4 @@ void navigateCardScreen(context){
   List<String> get selectedWeeklyDays => _selectedWeeklyDays.toList();
 
 }
-
 

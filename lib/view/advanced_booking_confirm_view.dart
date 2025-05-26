@@ -25,6 +25,7 @@ class AdvancedBookingConfirmView extends StatelessWidget {
         floatingActionButton: ResponsiveLayout(
           pinelabDevice: BookingFloatButtonWidget(
             payOnTap: () {
+              print("Total amount in pinelabDevice: $totalAmount"); // PRINT HERE
               bookingViewmodel.setVazhipaduAdvBookingList(
                 selectedVazhipaadu,
                 context,
@@ -40,6 +41,7 @@ class AdvancedBookingConfirmView extends StatelessWidget {
           mediumDevice: BookingFloatButtonWidget(
             height: 65,
             payOnTap: () {
+              print("Total amount in mediumDevice: $totalAmount"); // PRINT HERE
               bookingViewmodel.popFunction(context);
               bookingViewmodel.setVazhipaduAdvBookingList(
                 selectedVazhipaadu,
@@ -59,12 +61,13 @@ class AdvancedBookingConfirmView extends StatelessWidget {
           largeDevice: BookingFloatButtonWidget(
             height: 75,
             payOnTap: () {
+              print("Total amount in largeDevice: $totalAmount"); // PRINT HERE
               bookingViewmodel.popFunction(context);
               bookingViewmodel.setVazhipaduAdvBookingList(
                 selectedVazhipaadu,
                 context,
               );
-              bookingViewmodel.navigateAdvBookingPreview(context);
+              bookingViewmodel.navigateAdvBookingPreview(context,);
             },
             addOnTap: () {
               bookingViewmodel.bookingAddNewDevottee();

@@ -13,39 +13,36 @@ import '../utils/components/size_config.dart';
 class AdvancedBookingPreviewView extends StatelessWidget {
   final String selectedRepMethod;
   final List<String> selectedDays;
+  final int totalAmount;
 
   const AdvancedBookingPreviewView({
     super.key,
     required this.selectedRepMethod,
     required this.selectedDays,
-    required int totalAmount,
+    required this.totalAmount,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Consumer<BookingViewmodel>(
-        builder: (context, bookingViewmodel, _) {
-          return ResponsiveLayout(
-            pinelabDevice: FloatButtonWidget(
-              amount: bookingViewmodel.totalAdvBookingAmt,
-              title: 'Advanced Booking',
-              noOfScreens: 4,
-            ),
-            mediumDevice: FloatButtonWidget(
-              height: 65,
-              amount: bookingViewmodel.totalAdvBookingAmt,
-              title: 'Advanced Booking',
-              noOfScreens: 4,
-            ),
-            largeDevice: FloatButtonWidget(
-              height: 75,
-              amount: bookingViewmodel.totalAdvBookingAmt,
-              title: 'Advanced Booking',
-              noOfScreens: 4,
-            ),
-          );
-        },
+      floatingActionButton: ResponsiveLayout(
+        pinelabDevice: FloatButtonWidget(
+          amount: totalAmount,
+          title: 'Advanced Booking',
+          noOfScreens: 4,
+        ),
+        mediumDevice: FloatButtonWidget(
+          height: 65,
+          amount: totalAmount,
+          title: 'Advanced Booking',
+          noOfScreens: 4,
+        ),
+        largeDevice: FloatButtonWidget(
+          height: 75,
+          amount: totalAmount,
+          title: 'Advanced Booking',
+          noOfScreens: 4,
+        ),
       ),
       body: Column(
         children: [
@@ -54,6 +51,7 @@ class AdvancedBookingPreviewView extends StatelessWidget {
             page: 'advanced booking',
             selectedRepMethod: selectedRepMethod,
             selectedDays: selectedDays,
+            tottalAmount:totalAmount
           ),
         ],
       ),
@@ -65,12 +63,14 @@ class AdvPreViewWidget extends StatelessWidget {
   final String page;
   final String selectedRepMethod;
   final List<String> selectedDays;
+  final int tottalAmount;
 
   const AdvPreViewWidget({
     super.key,
     required this.page,
     required this.selectedRepMethod,
     required this.selectedDays,
+    required this.tottalAmount,
   });
 
   @override
@@ -157,11 +157,11 @@ class AdvPreViewWidget extends StatelessWidget {
                                                   ],
                                                 ),
                                               ),
-                                              Text(
-                                                "₹ ${item["tPrize"]}",
-                                                style: styles.blackRegular13,
-                                              ),
-                                              SizedBox(width: 10),
+                                                Text(
+                                                  "₹ ${tottalAmount}",
+                                                  style: styles.blackRegular13,
+                                                ),
+                                              const SizedBox(width: 10),
                                               IconButton(
                                                 icon: const Icon(
                                                   Icons.delete,
@@ -246,18 +246,3 @@ class AdvPreViewWidget extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
