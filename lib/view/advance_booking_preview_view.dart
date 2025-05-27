@@ -102,7 +102,7 @@ class AdvPreViewWidget extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          bookings[index].name.toString(),
+                          booking.name.toString(),
                           style: styles.blackRegular15,
                         ),
                         Text(
@@ -133,7 +133,7 @@ class AdvPreViewWidget extends StatelessWidget {
                                   ),
                                   SizedBox(width: 10,),
                                   Text(
-                                    " ${booking.count} times",
+                                    " ${bookings[index].count} times",
                                     style: styles.blackRegular13,
                                   ),
                                   SizedBox(width: 10,),

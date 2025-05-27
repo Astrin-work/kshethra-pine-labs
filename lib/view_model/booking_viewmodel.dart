@@ -495,22 +495,29 @@ class BookingViewmodel extends ChangeNotifier {
       Map<String, dynamic> selectedVazhipaadu,
       BuildContext context,
       ) {
-    _vazhipaduBookingList.add(
-      UserBookingModel(
-        name: bookingNameController.text.trim(),
-        phno: bookingPhnoController.text.trim(),
-        star: _selectedStar.tr(),
-        godname: selectedGod.god,
-        vazhipadu: selectedVazhipaadu["vazhi"] ?? "",
-        price: selectedVazhipaadu["prize"].toString(),
-        count: _noOfBookingVazhipaddu.toString(),
-        totalPrice: _amtOfBookingVazhipaddu.toString(),
-      ),
+    final newBooking = UserBookingModel(
+      name: bookingNameController.text.trim(),
+      phno: bookingPhnoController.text.trim(),
+      star: _selectedStar.tr(),
+      godname: selectedGod.god,
+      vazhipadu: selectedVazhipaadu["vazhi"] ?? "",
+      price: selectedVazhipaadu["prize"].toString(),
+      count: _noOfBookingVazhipaddu.toString(),
+      totalPrice: _amtOfBookingVazhipaddu.toString(),
     );
 
-    _totalVazhipaduAmt += _amtOfBookingVazhipaddu;
-    log(_totalVazhipaduAmt.toString(), name: "New Devotee");
+    _vazhipaduBookingList.add(newBooking);
 
+
+    print("Added new booking: ${newBooking.toString()}");
+
+
+    print("Current Booking List:");
+    for (var booking in _vazhipaduBookingList) {
+      print(booking.toString());
+    }
+
+    _totalVazhipaduAmt += _amtOfBookingVazhipaddu;
     _isExistedDevotee = true;
     popFunction(context);
     notifyListeners();
@@ -552,7 +559,7 @@ class BookingViewmodel extends ChangeNotifier {
         godname: selectedGod.god,
         vazhipadu: selectedVazhipaadu["vazhi"] ?? "",
         price: unitPrice.toString(),
-        count: repetitions.toString(),
+        count: noOfBookingVazhipaddu.toString(),
         totalPrice: totalAmount.toString(),
       ),
     );

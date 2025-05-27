@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 
 class UserBookingModel {
-  String? name = "";
-  String? star = "".tr();
-  String? date ;
+  String? name;
+  String? star;
+  String? date;
   String? phno;
   String? option;
   String? repMethode;
@@ -31,3 +31,17 @@ class UserBookingModel {
 }
 
 
+final userBooking = UserBookingModel(
+  name: "",
+  star: "".tr(),
+  phno: "",
+  date: "",
+  option: "",
+  repMethode: "",
+  day: "",
+  godname: "",
+  vazhipadu: "",
+  price: "",
+  count: "",
+  totalPrice: "",
+);
