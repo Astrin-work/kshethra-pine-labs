@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 
 class BookingModel {
-  String? god; // store key, not translated text
+  String? god;
   String? godImg;
   List<Map<String, dynamic>>? vazhippad;
 

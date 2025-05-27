@@ -20,18 +20,20 @@ class AdvancedBookingConfirmView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+
     return Consumer<BookingViewmodel>(
       builder: (context, bookingViewmodel, child) => Scaffold(
         floatingActionButton: ResponsiveLayout(
           pinelabDevice: BookingFloatButtonWidget(
             payOnTap: () {
+              print("----------button1---------");
               bookingViewmodel.setVazhipaduAdvBookingList(
                 selectedVazhipaadu,
                 context,
               );
             },
             addOnTap: () {
-              bookingViewmodel.advBookingAddVazhipadu(
+              bookingViewmodel.setVazhipaduAdvBookingList(
                 selectedVazhipaadu,
                 context,
               );
@@ -40,6 +42,7 @@ class AdvancedBookingConfirmView extends StatelessWidget {
           mediumDevice: BookingFloatButtonWidget(
             height: 65,
             payOnTap: () {
+              print("----------button1---------");
               bookingViewmodel.popFunction(context);
               bookingViewmodel.setVazhipaduAdvBookingList(
                 selectedVazhipaadu,
@@ -79,7 +82,7 @@ class AdvancedBookingConfirmView extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              AppBarWidget(title: selectedVazhipaadu["vazhi"]),
+              AppBarWidget(title: selectedVazhipaadu["vazhi"] ?? 'Vazhipadu'),
 
               ResponsiveLayout(
                 pinelabDevice: Padding(
@@ -89,14 +92,6 @@ class AdvancedBookingConfirmView extends StatelessWidget {
                   ),
                 ),
                 mediumDevice: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.screenWidth * 0.125,
-                  ),
-                  child: AdvancedBookingConfirmForm(
-                    selectedVazhipaadu: selectedVazhipaadu,
-                  ),
-                ),
-                semiMediumDevice: Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: SizeConfig.screenWidth * 0.125,
                   ),
@@ -114,7 +109,7 @@ class AdvancedBookingConfirmView extends StatelessWidget {
                 ),
               ),
 
-              125.kH,
+              const SizedBox(height: 125),
             ],
           ),
         ),

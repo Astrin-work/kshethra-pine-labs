@@ -122,15 +122,19 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
                     MaterialButton(
                       minWidth: 101,
                       onPressed: () {
-                        bookingViewmodel.isExistedDevotee
-                            ? bookingViewmodel.addVazhipaddToExisting(
-                              selectedVazhippadu,
-                              context,
-                            )
-                            : bookingViewmodel.setVazhipaduBookingList(
-                              selectedVazhippadu,
-                              context,
-                            );
+                        if (bookingViewmodel.isExistedDevotee) {
+                          bookingViewmodel.addVazhipaddToExisting(
+                            selectedVazhippadu.toString(),
+                            context as int,
+                            true as BuildContext,
+                          );
+                        } else {
+                          bookingViewmodel.setVazhipaduBookingList(
+                            selectedVazhippadu,
+                            context,
+                          );
+                        }
+
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),

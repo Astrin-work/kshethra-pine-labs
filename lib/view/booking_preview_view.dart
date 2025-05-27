@@ -10,12 +10,13 @@ import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-
-
 class BookingPreviewView extends StatelessWidget {
   final String page;
-  const BookingPreviewView({super.key, required this.page, required
-  String selectedRepMethod});
+  const BookingPreviewView({
+    super.key,
+    required this.page,
+    required String selectedRepMethod,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -48,128 +49,126 @@ class BookingPreviewView extends StatelessWidget {
 
 class PreViewWidget extends StatelessWidget {
   final String page;
-  const PreViewWidget({super.key, required this.page, });
+  const PreViewWidget({super.key, required this.page});
 
   @override
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
+
     return Consumer<BookingViewmodel>(
       builder: (context, bookingViewmodel, child) {
-        final vazhipaduList = bookingViewmodel.vazhipaduBookingList;
+        final bookings = bookingViewmodel.vazhipaduBookingList;
+
         return SizedBox(
           height: SizeConfig.screenHeight * 0.8,
           width: SizeConfig.screenWidth,
           child: Padding(
-            padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: ListView.builder(
-              itemCount: vazhipaduList.length,
+              itemCount: bookings.length,
               itemBuilder: (context, index) {
+                final booking = bookings[index];
                 return Padding(
-                  padding: EdgeInsets.only(bottom: 4.0, top: 4.0),
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Container(
                     decoration: BoxDecoration(
                       color: kLightPrimaryColor,
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: Column(
-                      children: [
-                        Text(
-                          vazhipaduList[index].name.toString(),
-                          style: styles.blackRegular15,
-                        ),
-                        page == "booking"
-                            ? Text(
-                              vazhipaduList[index].star ?? "",
-                              style: styles.blackRegular13,
-                            )
-                            : Text(
-                              vazhipaduList[index].option ?? "",
-                              style: styles.blackRegular13,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            booking.name.toString(),
+                            style: styles.blackSemi18,
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            page == "booking"
+                                ? (booking.star ?? "")
+                                : (booking.option ?? ""),
+                            style: styles.blackRegular13,
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 12),
+                          Container(
+                            width: double.maxFinite,
+                            decoration: BoxDecoration(
+                              color: kWhite,
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                        Container(
-                          color: kWhite,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: vazhipaduList[index].vazhiPad.length,
-                            itemBuilder: (context, inde) {
-                              final poojaList = vazhipaduList[index].vazhiPad;
-                              return Padding(
-
-                                padding: const EdgeInsets.only(
-                                  top: 2.0,
-                                  bottom: 2,
-                                  left: 5,
-                                  right: 5,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                            padding: const EdgeInsets.all(12),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
                                   children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                    BuildTextWidget(
+                                      text: booking.vazhipadu?.tr() ?? "",
+                                      size: 15,
+                                      color: kBlack,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    SizedBox(width: 30,),
+                                    Text(
+                                      "₹ ${booking.totalPrice ?? '0'}",
+                                      style: styles.blackRegular15,
+                                    ),
+                                    SizedBox(width: 18,),
+                                    Row(
                                       children: [
-                                        BuildTextWidget(
-                                          text: poojaList[inde]["vazhipadu"].toString().tr(),
-                                          size: 14,
-                                          color: kBlack,
-                                          // toLang: currentLang,
+                                        IconButton(
+                                          color: kRed,
+                                          icon: const Icon(Icons.delete),
+                                          onPressed: () {
+                                            if (page == "booking") {
+                                              bookingViewmodel.vazhipaduDelete(index);
+                                            } else {
+                                              bookingViewmodel.advBookingDeleteVazhipadd(index, 0);
+                                            }
+                                          },
                                         ),
-                                        BuildTextWidget(
-                                          text: poojaList[inde]["godName"].toString().tr(),
-                                          size: 14,
-                                          color: kBlack,
-                                          // toLang: currentLang,
+                                        IconButton(
+                                          icon: const Icon(Icons.add),
+                                          onPressed: () {
+                                            bookingViewmodel.popFunction(context);
+                                          },
                                         ),
-                                        // Text(poojaList[inde]["vazhipadu"]),
-                                        // Text(poojaList[inde]["godName"]),
                                       ],
-                                    ),
-                                    Spacer(),
-                                    Text("(${poojaList[inde]["rep"]})"),
-                                    25.kW,
-                                    SizedBox(
-                                      width: 60,
-                                      //    color: kGreen,
-                                      child: Text(
-                                        "₹ ${poojaList[inde]["tPrize"]}",
-                                      ),
-                                    ),
-                                    10.kW,
-                                    IconButton(
-                                      color: kRed,
-                                      onPressed: () {
-                                        page == "booking"
-                                            ? bookingViewmodel.vazhipaduDelete(
-                                              index,
-                                              inde,
-                                            )
-                                            : bookingViewmodel
-                                                .advBookingDeleteVazhipadd(
-                                                  index,
-                                                  inde,
-                                                );
-                                      },
-                                      icon: Icon(Icons.delete),
-                                    ),
-                                    IconButton(
-                                      icon: Icon(Icons.add),
-                                      onPressed:
-                                          () => BookingViewmodel().popFunction(
-                                            context,
-                                          ),
-                                    ),
+                                    )
                                   ],
                                 ),
-                              );
-                            },
+                                BuildTextWidget(
+                                  text: booking.godname?.tr() ?? "",
+                                  size: 14,
+                                  color: kBlack,
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Qty: ${booking.count ?? '0'}",
+                                      style: styles.blackRegular13,
+                                    ),
+
+
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );
+
               },
             ),
           ),
@@ -178,3 +177,4 @@ class PreViewWidget extends StatelessWidget {
     );
   }
 }
+
