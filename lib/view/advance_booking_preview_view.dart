@@ -13,13 +13,13 @@ import '../utils/components/size_config.dart';
 class AdvancedBookingPreviewView extends StatelessWidget {
   final String selectedRepMethod;
   final List<String> selectedDays;
-  // final int totalAmount;
+  final int totalAmount;
 
   const AdvancedBookingPreviewView({
     super.key,
     required this.selectedRepMethod,
     required this.selectedDays,
-    // required this.totalAmount,
+    required this.totalAmount,
   });
 
   @override

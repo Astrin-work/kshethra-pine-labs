@@ -230,7 +230,18 @@ class BookingViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
+
+
   void navigateAdvBookingPreview(BuildContext context) {
+
+    print('Quantity: $noOfBookingVazhipaddu');
+    print('Total Amount: ₹$totalAmount');
+    print('Total Amount: ₹$advBookingAmt');
+    print('Total Amount: ₹$totalAdvBookingAmt');
+    print('Total Amount: ₹$totalVazhipaduAmt');
+
+
+
     if (_totalVazhipaduAmt == 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBarWidget(
@@ -246,7 +257,6 @@ class BookingViewmodel extends ChangeNotifier {
     bookingNameController.clear();
     _isExistedDevotee = false;
 
-
     final selectedDays = selectedWeeklyDays;
 
     Navigator.push(
@@ -255,13 +265,15 @@ class BookingViewmodel extends ChangeNotifier {
         builder: (context) => AdvancedBookingPreviewView(
           selectedRepMethod: selectedRepMethod,
           selectedDays: selectedDays,
-          // totalAmount: totalAmount,
+          totalAmount: totalVazhipaduAmt,
+
         ),
       ),
     );
 
     notifyListeners();
   }
+
 
   void setAdvBookOption(String value) {
     _advBookOption = value;
@@ -306,8 +318,8 @@ class BookingViewmodel extends ChangeNotifier {
 
     int unitPrice = selectedVazhipaadu["prize"] ?? 0;
     int quantity = bookingViewmodel.noOfBookingVazhipaddu;
-
     _totalVazhipaduAmt = _advBookingSavedAmt + (quantity * unitPrice);
+
 
     Navigator.pushReplacement(
       context,
@@ -396,6 +408,9 @@ class BookingViewmodel extends ChangeNotifier {
 
     _totalVazhipaduAmt = ((itemPrice * repeatCount) + postalAmt) as int;
     _advBookingSavedAmt = _totalVazhipaduAmt;
+    print(totalVazhipaduAmt);
+    print(totalAdvBookingAmt);
+
 
     setVazhipaduAdvBookingList(selectedVazhipaadu, context);
     bookingAddNewDevottee();
@@ -545,7 +560,7 @@ class BookingViewmodel extends ChangeNotifier {
     if (repetitions == 0) repetitions = 1;
 
     int unitPrice = selectedVazhipaadu["prize"] ?? 0;
-    int totalAmount = unitPrice * repetitions;
+    int totalAmount = unitPrice *  noOfBookingVazhipaddu;
 
     _vazhipaduBookingList.add(
       UserBookingModel(
@@ -563,7 +578,10 @@ class BookingViewmodel extends ChangeNotifier {
         totalPrice: totalAmount.toString(),
       ),
     );
-
+    print('------------tyr----------');
+     print(unitPrice);
+     print(noOfBookingVazhipaddu);
+     print(totalAmount);
     _totalAdvBookingAmt += totalAmount;
     log(_totalAdvBookingAmt.toString(), name: "adv booking");
 
