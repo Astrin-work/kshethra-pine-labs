@@ -201,6 +201,15 @@ class BookingViewmodel extends ChangeNotifier {
     }
   }
 
+  int get totalBookingAmount {
+    int total = 0;
+    for (var booking in vazhipaduBookingList) {
+      total += int.tryParse(booking.totalPrice?.toString() ?? '0') ?? 0;
+    }
+    return total;
+  }
+
+
 
   void navigateBookingPreviewView(BuildContext context) {
     if (_totalVazhipaduAmt != 0) {
@@ -231,7 +240,6 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
 
-
   void navigateAdvBookingPreview(BuildContext context) {
 
     print('Quantity: $noOfBookingVazhipaddu');
@@ -243,6 +251,7 @@ class BookingViewmodel extends ChangeNotifier {
 
 
     if (_totalVazhipaduAmt == 0) {
+      print(totalVazhipaduAmt);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBarWidget(
           msg: "Payment request denied!",
@@ -647,17 +656,22 @@ class BookingViewmodel extends ChangeNotifier {
 
 
 
-  void advBookingDeleteVazhipadd(int index, int i) {
-    final booking = _vazhipaduBookingList[index];
+  void advBookingDelete(int index) {
+    if (index < 0 || index >= vazhipaduBookingList.length) return;
 
-    int amt = int.tryParse(booking.totalPrice ?? '0') ?? 0;
-    log("Deleted amount: $amt", name: "advBookingDeleteVazhipadd");
+    final booking = vazhipaduBookingList[index];
+    int amount = int.tryParse(booking.totalPrice ?? '0') ?? 0;
+    _totalAdvBookingAmt -= amount;
 
-    _totalAdvBookingAmt -= amt;
-    _vazhipaduBookingList.removeAt(index);
+    vazhipaduBookingList.removeAt(index);
+
+    print("Deleted advanced booking amount: $amount");
+    print("Updated total advanced booking amount: $_totalAdvBookingAmt");
 
     notifyListeners();
   }
+
+
 
 
   void bookingPreviewSecondFloatButton(

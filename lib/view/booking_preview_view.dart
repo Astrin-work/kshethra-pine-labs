@@ -125,11 +125,7 @@ class PreViewWidget extends StatelessWidget {
                                           color: kRed,
                                           icon: const Icon(Icons.delete),
                                           onPressed: () {
-                                            if (page == "booking") {
                                               bookingViewmodel.vazhipaduDelete(index);
-                                            } else {
-                                              bookingViewmodel.advBookingDeleteVazhipadd(index, 0);
-                                            }
                                           },
                                         ),
                                         IconButton(

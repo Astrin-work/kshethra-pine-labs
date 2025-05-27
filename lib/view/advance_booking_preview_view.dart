@@ -24,26 +24,29 @@ class AdvancedBookingPreviewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bookingViewmodel = Provider.of<BookingViewmodel>(context, listen: false);
+    final total = bookingViewmodel.totalBookingAmount;
     return Scaffold(
       floatingActionButton: ResponsiveLayout(
         pinelabDevice: FloatButtonWidget(
-          // amount: totalAmount,
+          amount: total,
           title: 'Advanced Booking',
           noOfScreens: 4,
         ),
         mediumDevice: FloatButtonWidget(
           height: 65,
-          // amount: totalAmount,
+          amount: total,
           title: 'Advanced Booking',
           noOfScreens: 4,
         ),
         largeDevice: FloatButtonWidget(
           height: 75,
-          // amount: totalAmount,
+          amount: total,
           title: 'Advanced Booking',
           noOfScreens: 4,
         ),
       ),
+
       body: Column(
         children: [
           const AppBarWidget(title: "Advanced Booking"),
@@ -75,6 +78,7 @@ class AdvPreViewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
 
@@ -136,7 +140,7 @@ class AdvPreViewWidget extends StatelessWidget {
                                     " ${bookings[index].count} times",
                                     style: styles.blackRegular13,
                                   ),
-                                  SizedBox(width: 10,),
+                                  // SizedBox(width: 5,),
                                   Text(
                                     "₹ ${booking.totalPrice ?? '0'}",
                                     style: styles.blackRegular15,
@@ -154,15 +158,7 @@ class AdvPreViewWidget extends StatelessWidget {
                                               color: kRed,
                                             ),
                                             onPressed: () {
-                                              // if (page == "booking") {
-                                              //   bookingViewmodel
-                                              //       .vazhipaduDelete(index, 0);
-                                              // } else {
-                                              //   bookingViewmodel
-                                              //       .advBookingDeleteVazhipadd(
-                                              //       index, 0);
-                                              // }
-                                              bookingViewmodel.vazhipaduDelete(index);
+                                                bookingViewmodel.advBookingDelete(index);
                                             },
                                           ),
                                           IconButton(
