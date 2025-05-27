@@ -1,8 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
-import 'package:kshethra_mini/utils/components/responsive_layout.dart';
-import 'package:kshethra_mini/view/widgets/booking_page_widget/float_button_widget.dart';
 import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -25,25 +23,37 @@ class AdvancedBookingPreviewView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: ResponsiveLayout(
-        pinelabDevice: FloatButtonWidget(
-          // amount: totalAmount,
-          title: 'Advanced Booking',
-          noOfScreens: 4,
-        ),
-        mediumDevice: FloatButtonWidget(
-          height: 65,
-          // amount: totalAmount,
-          title: 'Advanced Booking',
-          noOfScreens: 4,
-        ),
-        largeDevice: FloatButtonWidget(
-          height: 75,
-          // amount: totalAmount,
-          title: 'Advanced Booking',
-          noOfScreens: 4,
-        ),
+      floatingActionButton: ElevatedButton(
+        onPressed: () {
+          final bookings = context.read<BookingViewmodel>().vazhipaduBookingList;
+          for (int i = 0; i < bookings.length; i++) {
+            print("Booking $i vazhipadu: ${bookings[i].vazhipadu}");
+            print("Booking $i vazhipadu: ${bookings[i].vazhipadu}");
+
+          }
+        },
+        child: const Text("test"),
       ),
+
+      // floatingActionButton: ResponsiveLayout(
+      //   pinelabDevice: FloatButtonWidget(
+      //     // amount: totalAmount,
+      //     title: 'Advanced Booking',
+      //     noOfScreens: 4,
+      //   ),
+      //   mediumDevice: FloatButtonWidget(
+      //     height: 65,
+      //     // amount: totalAmount,
+      //     title: 'Advanced Booking',
+      //     noOfScreens: 4,
+      //   ),
+      //   largeDevice: FloatButtonWidget(
+      //     height: 75,
+      //     // amount: totalAmount,
+      //     title: 'Advanced Booking',
+      //     noOfScreens: 4,
+      //   ),
+      // ),
       body: Column(
         children: [
           const AppBarWidget(title: "Advanced Booking"),
@@ -102,7 +112,7 @@ class AdvPreViewWidget extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                         booking.name.toString(),
+                          bookings[index].name.toString(),
                           style: styles.blackRegular15,
                         ),
                         Text(
