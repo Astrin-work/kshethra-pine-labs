@@ -14,6 +14,8 @@ class FloatButtonWidget extends StatelessWidget {
   final double? width;
   final String title;
   final int noOfScreens;
+  final VoidCallback? payOnTap;
+
   const FloatButtonWidget({
     super.key,
     this.height,
@@ -21,22 +23,24 @@ class FloatButtonWidget extends StatelessWidget {
     this.amount,
     required this.title,
     required this.noOfScreens,
+    this.payOnTap, // optional
   });
 
   @override
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
+
     return Consumer<BookingViewmodel>(
-      builder:
-          (context, bookingViewmodel, child) => Padding(
+      builder: (context, bookingViewmodel, child) => Padding(
         padding: const EdgeInsets.only(left: 35.0, right: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            // Left button: shows total amount
             InkWell(
               onTap: () {
-                //  homepageViewmodel.navigateBookingPreviewView(context);
+                // Optional: you can also trigger payOnTap here if desired
               },
               child: Container(
                 height: height ?? SizeConfig.screenWidth * 0.135,
@@ -49,24 +53,26 @@ class FloatButtonWidget extends StatelessWidget {
                   ),
                 ),
                 child: Center(
-                  child:
-                  amount != null
+                  child: amount != null
                       ? Text("₹ $amount", style: styles.whiteRegular20)
-                      : Text(
-                    "₹ ${bookingViewmodel.totalVazhipaduAmt}",
-                    style: styles.whiteRegular20,
-                  ),
+                      : Text("₹ ${bookingViewmodel.totalVazhipaduAmt}", style: styles.whiteRegular20),
                 ),
               ),
             ),
+
+            // Right arrow button: calls payOnTap if provided, else fallback
             InkWell(
               onTap: () {
-                bookingViewmodel.bookingPreviewSecondFloatButton(
-                  context,
-                  amount,
-                  noOfScreens,
-                  title,
-                );
+                if (payOnTap != null) {
+                  payOnTap!();
+                } else {
+                  bookingViewmodel.bookingPreviewSecondFloatButton(
+                    context,
+                    amount,
+                    noOfScreens,
+                    title,
+                  );
+                }
               },
               child: Container(
                 height: height ?? SizeConfig.screenWidth * 0.135,
@@ -83,7 +89,7 @@ class FloatButtonWidget extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color:  kWhite,
+                      color: kWhite,
                     ),
                     child: Icon(
                       Icons.arrow_forward,
@@ -99,3 +105,4 @@ class FloatButtonWidget extends StatelessWidget {
     );
   }
 }
+

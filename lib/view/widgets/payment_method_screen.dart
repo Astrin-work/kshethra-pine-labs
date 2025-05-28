@@ -4,6 +4,7 @@ import 'package:kshethra_mini/utils/components/choose_payment_method_widget.dart
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'booking_page_widget/booking_float_button_widget.dart';
+import 'booking_page_widget/float_button_widget.dart';
 
 class PaymentMethodScreen extends StatefulWidget {
   const PaymentMethodScreen({super.key});
@@ -24,7 +25,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   @override
   Widget build(BuildContext context) {
     final bookingViewmodel = Provider.of<BookingViewmodel>(context, listen: false);
-
+    final total = bookingViewmodel.totalBookingAmount;
     return Scaffold(
       body: Column(
         children: [
@@ -40,8 +41,11 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
           ),
         ],
       ),
-      floatingActionButton: BookingFloatButtonWidget(
+      floatingActionButton: FloatButtonWidget(
+        amount: total,
         height: 60,
+        title: 'Confirm',
+        noOfScreens: 1,
         payOnTap: () {
           switch (_selectedMethod) {
             case 'UPI':
@@ -53,13 +57,16 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
             case 'Card':
               bookingViewmodel.navigateCardScreen(context);
               break;
-             default:
+            default:
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Unsupported payment method')),
               );
           }
         },
       ),
+
+
+
 
     );
   }
