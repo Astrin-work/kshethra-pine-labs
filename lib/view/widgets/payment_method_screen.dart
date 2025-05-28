@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:kshethra_mini/utils/components/choose_payment_method_widget.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
-import 'booking_page_widget/booking_float_button_widget.dart';
 import 'booking_page_widget/float_button_widget.dart';
 
 class PaymentMethodScreen extends StatefulWidget {
