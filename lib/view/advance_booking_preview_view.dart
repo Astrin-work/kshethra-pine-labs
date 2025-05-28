@@ -202,7 +202,7 @@ class AdvPreViewWidget extends StatelessWidget {
                                 children: [
                                   BuildTextWidget(
                                     text:
-                                    "Total Postal Charges: ₹${bookingViewmodel.postalAmount}",
+                                    " Postal Charges: ₹${bookingViewmodel.postalAmount}",
                                     size: 14,
                                     color: kBlack,
                                   ),

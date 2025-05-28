@@ -16,6 +16,7 @@ class GodWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
     AppStyles styles = AppStyles();
+    
     SizeConfig().init(context);
     return SizedBox(
       height: 145,

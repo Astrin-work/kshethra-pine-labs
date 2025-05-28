@@ -7,6 +7,8 @@ import 'package:kshethra_mini/view/widgets/home_page_widgets/option_selector_wid
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
 
+import '../../../api_services/api_service.dart';
+import '../../../model/api models/god_model.dart';
 import '../build_text_widget.dart';
 
 class HomeWidget extends StatelessWidget {
@@ -18,6 +20,7 @@ class HomeWidget extends StatelessWidget {
     SizeConfig().init(context);
 
     // final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
+
 
     return Consumer<HomePageViewmodel>(
       builder: (context, homepageViewmodel, child) => SizedBox(
@@ -50,9 +53,11 @@ class HomeWidget extends StatelessWidget {
                     textAlign: TextAlign.center,
                     // toLang: currentLang,
                   ),
-                  onTap: () {
+                  onTap: () async {
+
                     homepageViewmodel.bookingPageNavigate(context);
                   },
+
                 ),
                 OptionSelectorWidget(
                   icon: SizedBox(

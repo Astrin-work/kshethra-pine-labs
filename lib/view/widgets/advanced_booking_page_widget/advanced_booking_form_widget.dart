@@ -21,7 +21,7 @@ class AdvancedBookingFormWidget extends StatelessWidget {
       child: Column(
         children: [
           20.kH,
-          GodWidget(),
+          // GodWidget(),
           20.kH,
           Padding(
             padding: EdgeInsets.only(

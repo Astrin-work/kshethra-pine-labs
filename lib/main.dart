@@ -16,6 +16,7 @@ Box? box;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+
   final dir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(dir.path);
 

@@ -73,8 +73,11 @@ class AppHive {
   }
 
   /// Token
-  Future<void> putToken(String? token) async {
-    await hivePut(key: _TOKEN, value: token);
+  // Future<void> putToken(String? token) async {
+  //   await hivePut(key: _TOKEN, value: token);
+  // }
+  putToken({String? token}) {
+    hivePut(key: _TOKEN, value: token);
   }
 
   String getToken() {

@@ -211,7 +211,6 @@ class BookingViewmodel extends ChangeNotifier {
 
 
 
-
   void navigateBookingPreviewView(BuildContext context) {
     if (_totalVazhipaduAmt != 0) {
       _selectedGod = bList[0];
@@ -225,6 +224,7 @@ class BookingViewmodel extends ChangeNotifier {
           builder: (context) => BookingPreviewView(
             page: 'booking',
             selectedRepMethod: selectedRepMethod,
+
           ),
         ),
       );
@@ -711,14 +711,13 @@ class BookingViewmodel extends ChangeNotifier {
       context,
       MaterialPageRoute(
         builder: (context) => QrScannerComponent(
-          amount: "${totalBookingAmount}", // Use computed total
+          amount: "$totalVazhipaduAmt",
           noOfScreen: 1,
           title: "QR Scanner",
         ),
       ),
     );
   }
-
 
   void navigateToCashPayment(BuildContext context) {
     Navigator.push(
