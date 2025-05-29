@@ -9,7 +9,7 @@ import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 import '../../../api_services/api_service.dart';
-import '../../../model/api models/god_model.dart';
+
 import '../build_text_widget.dart';
 
 class HomeWidget extends StatelessWidget {
@@ -17,7 +17,7 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppStyles styles = AppStyles();
+    // AppStyles styles = AppStyles();
     SizeConfig().init(context);
 
     // final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
