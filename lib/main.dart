@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:kshethra_mini/utils/hive/constants.dart';
@@ -14,8 +16,9 @@ import 'package:easy_localization/easy_localization.dart';
 Box? box;
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
 
+  WidgetsFlutterBinding.ensureInitialized();
 
   final dir = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(dir.path);
@@ -25,7 +28,7 @@ Future<void> main() async {
 
   runApp(
     EasyLocalization(
-      supportedLocales:  [
+      supportedLocales: [
         Locale('en'),
         Locale('ml'),
         Locale('hi'),
@@ -55,11 +58,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: const SplashScreenView(),
+      home: const SplashScreenView(),
       debugShowCheckedModeBanner: false,
       locale: context.locale,
       supportedLocales: context.supportedLocales,
       localizationsDelegates: context.localizationDelegates,
     );
+  }
+}
+
+ // used for the local host
+
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (
+          X509Certificate cert,
+          String host,
+          int port,
+          ) => true;
   }
 }

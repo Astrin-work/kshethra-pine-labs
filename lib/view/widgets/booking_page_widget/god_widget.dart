@@ -6,75 +6,93 @@ import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
-
 import '../../../view_model/home_page_viewmodel.dart';
 
-class GodWidget extends StatelessWidget {
+class GodWidget extends StatefulWidget {
   const GodWidget({super.key});
+
+  @override
+  State<GodWidget> createState() => _GodWidgetState();
+}
+
+class _GodWidgetState extends State<GodWidget> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() =>
+        Provider.of<BookingViewmodel>(context, listen: false).fetchGods());
+  }
 
   @override
   Widget build(BuildContext context) {
     final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
     AppStyles styles = AppStyles();
-    
     SizeConfig().init(context);
-    return SizedBox(
-      height: 145,
-      width: SizeConfig.screenWidth,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: bList.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Consumer<BookingViewmodel>(
-              builder:
-                  (context, bookingViewmodel, child) => Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          bookingViewmodel.setGod(bList[index]);
-                        },
-                        child: Container(
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color:
-                                    bookingViewmodel.selectedGod == bList[index]
-                                        ? kPrimaryColor
-                                        : kTransparent,
-                                blurRadius: 5,
-                                spreadRadius: 5,
-                              ),
-                            ],
-                            image: DecorationImage(
-                              image: AssetImage(bList[index].godImg ?? ""),
+
+    return Consumer<BookingViewmodel>(
+      builder: (context, bookingViewmodel, child) {
+        final godList = bookingViewmodel.gods;
+        final isLoading = bookingViewmodel.isLoading;
+
+        if (isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        return SizedBox(
+          height: 145,
+          width: SizeConfig.screenWidth,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: godList.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        bookingViewmodel.setGod(bList[index]);
+                        print('------pressed-------');
+                      },
+                      child:
+                      Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                              bookingViewmodel.selectedGod == bList[index]
+                                  ? kPrimaryColor
+                                  : kTransparent,
+                              blurRadius: 5,
+                              spreadRadius: 5,
                             ),
-                            // color: Colors.red,
-                            borderRadius: BorderRadius.circular(10.0),
+                          ],
+                          image: DecorationImage(
+                            image: NetworkImage(godList[index].devathaImage),
+                            fit: BoxFit.cover,
                           ),
+                          // color: Colors.red,
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
+                      )
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: BuildTextWidget(
+                        text: godList[index].devathaName,
+                        toLang: currentLang,
                       ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child:
-                        BuildTextWidget(
-                          text: bList[index].god ?? "",
-                          toLang: currentLang,
-                        ),
-                        // Text(
-                        //   bList[index].god ?? "",
-                        //   style: styles.blackRegular15,
-                        // ),
-                      ),
-                    ],
-                  ),
-            ),
-          );
-        },
-      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
+

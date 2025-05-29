@@ -34,6 +34,7 @@ class BookingView extends StatelessWidget {
                 height: 75,
                 payOnTap: () {
                   bookingViewmodel.navigateBookingPreviewView(context);
+
                 },
               ),
             ),

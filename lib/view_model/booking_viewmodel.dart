@@ -13,6 +13,9 @@ import 'package:kshethra_mini/view/booking_preview_view.dart';
 import 'package:kshethra_mini/view/card_payment_screen.dart';
 import 'package:kshethra_mini/view/cash_payment.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_dialogbox_widget.dart';
+import '../api_services/api_service.dart';
+import '../model/api models/god_model.dart';
+import '../model/api models/vazhipadu_model.dart';
 import '../view/widgets/advanced_booking_page_widget/advanced_vazhipaddu_dialog_BoxWidget.dart';
 import '../view/widgets/payment_method_screen.dart';
 
@@ -21,10 +24,16 @@ class BookingViewmodel extends ChangeNotifier {
   bool get isExistedDevotee => _isExistedDevotee;
   bool _isPostalAdded = false;
   bool _prasadamSelected = false;
+  bool _isLoading = false;
   bool get prasadamSelected => _prasadamSelected;
   List<UserBookingModel> _vazhipaduBookingList = [];
+  List<Vazhipadumodel> vazhipaduList = [];
   List<UserBookingModel> get vazhipaduBookingList => _vazhipaduBookingList;
+  List<Godmodel> _gods = [];
 
+
+  List<Godmodel> get gods => _gods;
+  bool get isLoading => _isLoading;
   int _noOfBookingVazhipaddu = 1;
   int get noOfBookingVazhipaddu => _noOfBookingVazhipaddu;
 
@@ -49,6 +58,7 @@ class BookingViewmodel extends ChangeNotifier {
 
   BookingModel _selectedGod = bList[0];
   BookingModel get selectedGod => _selectedGod;
+  Godmodel? selectedGods;
 
   final bookingKey = GlobalKey<FormState>();
   final advBookingKey = GlobalKey<FormState>();
@@ -130,6 +140,32 @@ class BookingViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
+
+
+  Future<void> fetchGods() async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      _gods = await ApiService().getDevatha();
+    } catch (e) {
+      print("Error fetching gods: $e");
+      _gods = [];
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> fetchVazhipadu() async {
+    try {
+      final response = await ApiService().getVazhipadu();
+      vazhipaduList = response;
+      notifyListeners();
+    } catch (e) {
+      print("Error in fetchVazhipadu: $e");
+    }
+  }
 
 
 
@@ -224,7 +260,6 @@ class BookingViewmodel extends ChangeNotifier {
           builder: (context) => BookingPreviewView(
             page: 'booking',
             selectedRepMethod: selectedRepMethod,
-
           ),
         ),
       );
@@ -437,6 +472,10 @@ class BookingViewmodel extends ChangeNotifier {
     _selectedGod = value;
     notifyListeners();
   }
+  // void setGod(Godmodel god) {
+  //   selectedGods = god;
+  //   notifyListeners();
+  // }
 
   void showVazhipadduDialogBox(
       BuildContext context,

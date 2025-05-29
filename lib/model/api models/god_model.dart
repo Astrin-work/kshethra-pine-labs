@@ -12,26 +12,62 @@ class Godmodel {
   int devathaId;
   String devathaName;
   String devathaImage;
-  bool status;
+  List<Vazhipadus> vazhipadus;
 
   Godmodel({
     required this.devathaId,
     required this.devathaName,
     required this.devathaImage,
-    required this.status,
+    required this.vazhipadus,
   });
 
   factory Godmodel.fromJson(Map<String, dynamic> json) => Godmodel(
     devathaId: json["devathaId"],
     devathaName: json["devathaName"],
     devathaImage: json["devathaImage"],
-    status: json["status"],
+    vazhipadus: List<Vazhipadus>.from(json["vazhipadus"].map((x) => Vazhipadus.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "devathaId": devathaId,
     "devathaName": devathaName,
     "devathaImage": devathaImage,
+    "vazhipadus": List<dynamic>.from(vazhipadus.map((x) => x.toJson())),
+  };
+}
+
+class Vazhipadus {
+  int offerId;
+  String offerName;
+  int cost;
+  int limit;
+  DateTime enteryTime;
+  bool status;
+
+  Vazhipadus({
+    required this.offerId,
+    required this.offerName,
+    required this.cost,
+    required this.limit,
+    required this.enteryTime,
+    required this.status,
+  });
+
+  factory Vazhipadus.fromJson(Map<String, dynamic> json) => Vazhipadus(
+    offerId: json["offerId"],
+    offerName: json["offerName"],
+    cost: json["cost"],
+    limit: json["limit"],
+    enteryTime: DateTime.parse(json["enteryTime"]),
+    status: json["status"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "offerId": offerId,
+    "offerName": offerName,
+    "cost": cost,
+    "limit": limit,
+    "enteryTime": enteryTime.toIso8601String(),
     "status": status,
   };
 }

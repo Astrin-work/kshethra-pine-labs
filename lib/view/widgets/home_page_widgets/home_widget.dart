@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:kshethra_mini/model/api%20models/vazhipadu_model.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
@@ -54,7 +55,22 @@ class HomeWidget extends StatelessWidget {
                     // toLang: currentLang,
                   ),
                   onTap: () async {
+                    try {
+                      print("-------calling API----------");
+                      List<Vazhipadumodel> vazhipaduList = await ApiService().getVazhipadu();
 
+                      print('Received ${vazhipaduList.length} items');
+
+                      for (var item in vazhipaduList) {
+                        print('DevathaId: ${item.devathaId}');
+                        print('DevathaName: ${item.offerName}');
+                        print('DevathaCost: ${item.cost}');
+                        print('Status: ${item.status}');
+                        print('-----------------------');
+                      }
+                    } catch (e) {
+                      print('Error fetching devatha: $e');
+                    }
                     homepageViewmodel.bookingPageNavigate(context);
                   },
 

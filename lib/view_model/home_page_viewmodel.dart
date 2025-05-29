@@ -22,7 +22,6 @@ import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
-import '../api_services/api_service.dart';
 import '../model/api models/god_model.dart';
 
 class HomePageViewmodel extends ChangeNotifier {
@@ -44,7 +43,7 @@ class HomePageViewmodel extends ChangeNotifier {
 
   final addDonationKey = GlobalKey<FormState>();
   TextEditingController addDonationNameController = TextEditingController();
-
+  List<Godmodel> devathaList = [];
   Uint8List? _addGodImage;
   Uint8List? get addGodImage => _addGodImage;
 
