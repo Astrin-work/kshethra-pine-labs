@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
+import 'package:kshethra_mini/api_services/api_service.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
@@ -20,14 +20,40 @@ class BookingView extends StatelessWidget {
         builder:
             (context, bookingViewmodel, child) => ResponsiveLayout(
               pinelabDevice: BookingFloatButtonWidget(
-                payOnTap: () {
-                  bookingViewmodel.navigateBookingPreviewView(context);
-                },
+                  payOnTap: () {
+                    bookingViewmodel.navigateBookingPreviewView(context);
+                    print("-------btn pressed------");
+
+                    ApiService().postVazhipaduDetails({
+                      "BankId": "1",
+                      "BankName": "SBI",
+                      "PaymentType": "Cash",
+                      "TransactionId": "TXN123456",
+                      "Receipts": [
+                        {
+                          "ItemId": "123",
+                          "Amount": 1000,
+                          "Type": "CB",
+                          "OfferName": "vazhipadu2",
+                          "PersonName": "1",
+                          "PersonStar": "s6",
+                          "Quantity": 10,
+                          "Rate": 100,
+                          "OfferDate": "2025-05-23",
+                          "ReceiptDate": "2025-05-30"
+                        }
+
+                      ]
+                    });
+                  }
+
               ),
               mediumDevice: BookingFloatButtonWidget(
                 height: 65,
                 payOnTap: () {
                   bookingViewmodel.navigateBookingPreviewView(context);
+
+
                 },
               ),
               largeDevice: BookingFloatButtonWidget(

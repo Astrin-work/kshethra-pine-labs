@@ -84,11 +84,7 @@ class VazhipadduWidget extends StatelessWidget {
                           children: [
                             Text(
                               bookingViewmodel.selectedGods?.vazhipadus != null &&
-                                  bookingViewmodel.selectedGods!.vazhipadus.length > index
-                                  ? bookingViewmodel.selectedGods!.vazhipadus[index].offerName
-                                  .toString()
-                                  .tr()
-                                  : "",
+                                  bookingViewmodel.selectedGods!.vazhipadus.length >index ? bookingViewmodel.selectedGods!.vazhipadus[index].offerName.toString().tr() : "",
                               style: styles.blackRegular15,
                               textAlign: TextAlign.center,
                             ),

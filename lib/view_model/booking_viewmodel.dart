@@ -1,9 +1,7 @@
 import 'dart:developer';
-import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:kshethra_mini/model/demo_model/booking_model.dart';
 import 'package:kshethra_mini/model/user_booking_model.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/components/qr_code_component.dart';
@@ -16,7 +14,6 @@ import 'package:kshethra_mini/view/cash_payment.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_dialogbox_widget.dart';
 import '../api_services/api_service.dart';
 import '../model/api models/god_model.dart';
-import '../model/api models/vazhipadu_model.dart';
 import '../view/widgets/advanced_booking_page_widget/advanced_vazhipaddu_dialog_BoxWidget.dart';
 import '../view/widgets/payment_method_screen.dart';
 
@@ -28,7 +25,7 @@ class BookingViewmodel extends ChangeNotifier {
   bool _isLoading = false;
   bool get prasadamSelected => _prasadamSelected;
   List<UserBookingModel> _vazhipaduBookingList = [];
-  List<Vazhipadumodel> vazhipaduList = [];
+  // List<Vazhipadumodel> vazhipaduList = [];
   List<UserBookingModel> get vazhipaduBookingList => _vazhipaduBookingList;
   List<Godmodel> _gods = [];
 
