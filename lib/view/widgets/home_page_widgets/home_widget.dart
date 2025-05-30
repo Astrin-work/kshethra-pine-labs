@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:kshethra_mini/model/api%20models/god_model.dart';
 import 'package:kshethra_mini/model/api%20models/vazhipadu_model.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
@@ -57,15 +58,17 @@ class HomeWidget extends StatelessWidget {
                   onTap: () async {
                     try {
                       print("-------calling API----------");
-                      List<Vazhipadumodel> vazhipaduList = await ApiService().getVazhipadu();
+                      List<Godmodel> vazhipaduList = await ApiService().getDevatha();
 
                       print('Received ${vazhipaduList.length} items');
 
                       for (var item in vazhipaduList) {
                         print('DevathaId: ${item.devathaId}');
-                        print('DevathaName: ${item.offerName}');
-                        print('DevathaCost: ${item.cost}');
-                        print('Status: ${item.status}');
+                        print('DevathaName: ${item.devathaName}');
+                        print('DevathaCost: ${item.vazhipadus[0].offerId}');
+                        print('offerName: ${item.vazhipadus[0].offerName}');
+                        print('Cost: ${item.vazhipadus[0].cost}');
+
                         print('-----------------------');
                       }
                     } catch (e) {

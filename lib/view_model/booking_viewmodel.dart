@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -56,8 +57,9 @@ class BookingViewmodel extends ChangeNotifier {
 
 
 
-  BookingModel _selectedGod = bList[0];
-  BookingModel get selectedGod => _selectedGod;
+  // // BookingModel _selectedGod = bList[0];
+  // BookingModel get selectedGod => _selectedGod;
+
   Godmodel? selectedGods;
 
   final bookingKey = GlobalKey<FormState>();
@@ -140,8 +142,6 @@ class BookingViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-
-
   Future<void> fetchGods() async {
     _isLoading = true;
     notifyListeners();
@@ -157,17 +157,15 @@ class BookingViewmodel extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchVazhipadu() async {
-    try {
-      final response = await ApiService().getVazhipadu();
-      vazhipaduList = response;
-      notifyListeners();
-    } catch (e) {
-      print("Error in fetchVazhipadu: $e");
-    }
-  }
-
-
+  // Future<void> fetchVazhipadu() async {
+  //   try {
+  //     final response = await ApiService().getVazhipadu();
+  //     vazhipaduList = response;
+  //     notifyListeners();
+  //   } catch (e) {
+  //     print("Error in fetchVazhipadu: $e");
+  //   }
+  // }
 
   void selectPostalOption(String option) {
 
@@ -200,11 +198,30 @@ class BookingViewmodel extends ChangeNotifier {
     _totalAmount = _totalVazhipaduAmt + _postalAmount;
   }
 
+  // void setBookingPage() {
+  //   _advBookOption = "";
+  //   _advBookingSavedAmt = 0;
+  //   _totalAdvBookingAmt = 0;
+  //   _selectedGod = bList[0];
+  //   _selectedStar = "Star".tr();
+  //   _selectedDate = "Date".tr();
+  //   bookingAddressController.clear();
+  //   bookingNameController.clear();
+  //   _isExistedDevotee = false;
+  //   _vazhipaduBookingList = [];
+  //   _totalVazhipaduAmt = 0;
+  //   bookingPhnoController.clear();
+  // }
+
   void setBookingPage() {
     _advBookOption = "";
     _advBookingSavedAmt = 0;
     _totalAdvBookingAmt = 0;
-    _selectedGod = bList[0];
+    if (_gods.isNotEmpty) {
+      selectedGods = _gods[0];
+    } else {
+      selectedGods = null;
+    }
     _selectedStar = "Star".tr();
     _selectedDate = "Date".tr();
     bookingAddressController.clear();
@@ -214,6 +231,7 @@ class BookingViewmodel extends ChangeNotifier {
     _totalVazhipaduAmt = 0;
     bookingPhnoController.clear();
   }
+
 
   void clearBookingControllers() {
     bookingNameController.clear();
@@ -247,9 +265,39 @@ class BookingViewmodel extends ChangeNotifier {
 
 
 
+  // void navigateBookingPreviewView(BuildContext context) {
+  //   if (_totalVazhipaduAmt != 0) {
+  //     _selectedGod = bList[0];
+  //     _selectedStar = "Star".tr();
+  //     bookingNameController.clear();
+  //     _isExistedDevotee = false;
+  //
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => BookingPreviewView(
+  //           page: 'booking',
+  //           selectedRepMethod: selectedRepMethod,
+  //         ),
+  //       ),
+  //     );
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBarWidget(
+  //         msg: "Please select a Vazhippadu",
+  //         color: kGrey,
+  //       ).build(context),
+  //     );
+  //   }
+  //
+  //   notifyListeners();
+  // }
+
   void navigateBookingPreviewView(BuildContext context) {
     if (_totalVazhipaduAmt != 0) {
-      _selectedGod = bList[0];
+      if (_gods.isNotEmpty) {
+        selectedGods = _gods[0];
+      }
       _selectedStar = "Star".tr();
       bookingNameController.clear();
       _isExistedDevotee = false;
@@ -276,18 +324,53 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
 
+
+  // void navigateAdvBookingPreview(BuildContext context) {
+  //
+  //   print('Quantity: $noOfBookingVazhipaddu');
+  //   print('Total Amount: ₹$totalAmount');
+  //   print('Total Amount: ₹$advBookingAmt');
+  //   print('Total Amount: ₹$totalAdvBookingAmt');
+  //   print('Total Amount: ₹$totalVazhipaduAmt');
+  //
+  //
+  //
+  //   if (_totalVazhipaduAmt == 0) {
+  //     print(totalVazhipaduAmt);
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBarWidget(
+  //         msg: "Payment request denied!",
+  //         color: kRed,
+  //       ).build(context),
+  //     );
+  //     return;
+  //   }
+  //
+  //   _selectedGod = bList[0];
+  //   _selectedStar = "Star".tr();
+  //   bookingNameController.clear();
+  //   _isExistedDevotee = false;
+  //
+  //   final selectedDays = selectedWeeklyDays;
+  //
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => AdvancedBookingPreviewView(
+  //         selectedRepMethod: selectedRepMethod,
+  //         selectedDays: selectedDays,
+  //         totalAmount: totalVazhipaduAmt,
+  //
+  //       ),
+  //     ),
+  //   );
+  //
+  //   notifyListeners();
+  // }
+
+
   void navigateAdvBookingPreview(BuildContext context) {
-
-    print('Quantity: $noOfBookingVazhipaddu');
-    print('Total Amount: ₹$totalAmount');
-    print('Total Amount: ₹$advBookingAmt');
-    print('Total Amount: ₹$totalAdvBookingAmt');
-    print('Total Amount: ₹$totalVazhipaduAmt');
-
-
-
     if (_totalVazhipaduAmt == 0) {
-      print(totalVazhipaduAmt);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBarWidget(
           msg: "Payment request denied!",
@@ -297,7 +380,9 @@ class BookingViewmodel extends ChangeNotifier {
       return;
     }
 
-    _selectedGod = bList[0];
+    if (_gods.isNotEmpty) {
+      selectedGods = _gods[0];
+    }
     _selectedStar = "Star".tr();
     bookingNameController.clear();
     _isExistedDevotee = false;
@@ -311,7 +396,6 @@ class BookingViewmodel extends ChangeNotifier {
           selectedRepMethod: selectedRepMethod,
           selectedDays: selectedDays,
           totalAmount: totalVazhipaduAmt,
-
         ),
       ),
     );
@@ -468,30 +552,58 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
 
-  void setGod(BookingModel value) {
-    _selectedGod = value;
+  void setGod(Godmodel value) {
+    selectedGods = value;
     notifyListeners();
   }
-  // void setGod(Godmodel god) {
-  //   selectedGods = god;
+
+
+  // void setGod(BookingModel value) {
+  //   _selectedGod = value;
+  //   notifyListeners();
+  // }
+
+  // void showVazhipadduDialogBox(
+  //     BuildContext context,
+  //     Map<String, dynamic> selectedVazhipaadu,
+  //     ) {
+  //   bool valid = bookingKey.currentState?.validate() ?? false;
+  //   if (!valid) return;
+  //
+  //   _noOfBookingVazhipaddu = 1;
+  //   int x = int.tryParse(selectedVazhipaadu["prize"]?.toString() ?? "0") ?? 0;
+  //   _amtOfBookingVazhipaddu = 1 * x;
+  //
+  //   if (_selectedStar != "Star") {
+  //     showDialog(
+  //       context: context,
+  //       builder: (context) => VazhipadduDialogBoxWidget(
+  //         selectedVazhippadu: selectedVazhipaadu,
+  //       ),
+  //     );
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBarWidget(msg: "Select your star", color: kGrey).build(context),
+  //     );
+  //   }
+  //
   //   notifyListeners();
   // }
 
   void showVazhipadduDialogBox(
       BuildContext context,
-      Map<String, dynamic> selectedVazhipaadu,
+      Vazhipadus selectedVazhipaadu,
       ) {
     bool valid = bookingKey.currentState?.validate() ?? false;
     if (!valid) return;
 
     _noOfBookingVazhipaddu = 1;
-    int x = selectedVazhipaadu["prize"];
-    _amtOfBookingVazhipaddu = 1 * x;
+    _amtOfBookingVazhipaddu = selectedVazhipaadu.cost;
+
     if (_selectedStar != "Star") {
       showDialog(
         context: context,
-        builder:
-            (context) => VazhipadduDialogBoxWidget(
+        builder: (context) => VazhipadduDialogBoxWidget(
           selectedVazhippadu: selectedVazhipaadu,
         ),
       );
@@ -500,8 +612,15 @@ class BookingViewmodel extends ChangeNotifier {
         SnackBarWidget(msg: "Select your star", color: kGrey).build(context),
       );
     }
+
     notifyListeners();
   }
+
+
+
+
+
+
 
   void showAdvancedVazhipadduDialogBox(
       BuildContext context,
@@ -556,19 +675,21 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void setVazhipaduBookingList(
-      Map<String, dynamic> selectedVazhipaadu,
+      String vazhipaduName,
+      String vazhipaduPrice,
       BuildContext context,
       ) {
     final newBooking = UserBookingModel(
       name: bookingNameController.text.trim(),
       phno: bookingPhnoController.text.trim(),
       star: _selectedStar.tr(),
-      godname: selectedGod.god,
-      vazhipadu: selectedVazhipaadu["vazhi"] ?? "",
-      price: selectedVazhipaadu["prize"].toString(),
+      godname: selectedGods?.devathaName.toString(),
+      vazhipadu: vazhipaduName,
+      price: vazhipaduPrice,
       count: _noOfBookingVazhipaddu.toString(),
       totalPrice: _amtOfBookingVazhipaddu.toString(),
     );
+
 
     _vazhipaduBookingList.add(newBooking);
 
@@ -620,7 +741,7 @@ class BookingViewmodel extends ChangeNotifier {
         option: _advBookOption == "star".tr() ? _selectedStar : _selectedDate,
         repMethode: _selectedRepMethod,
         day: _selectedRepMethod == "Weekly" ? _selectedWeeklyDay : '',
-        godname: selectedGod.god,
+        godname: selectedGods?.devathaName.toString(),
         vazhipadu: selectedVazhipaadu["vazhi"] ?? "",
         price: unitPrice.toString(),
         count: noOfBookingVazhipaddu.toString(),
@@ -628,9 +749,9 @@ class BookingViewmodel extends ChangeNotifier {
       ),
     );
     print('------------tyr----------');
-     print(unitPrice);
-     print(noOfBookingVazhipaddu);
-     print(totalAmount);
+    print(unitPrice);
+    print(noOfBookingVazhipaddu);
+    print(totalAmount);
     _totalAdvBookingAmt += totalAmount;
     log(_totalAdvBookingAmt.toString(), name: "adv booking");
 
@@ -663,7 +784,7 @@ class BookingViewmodel extends ChangeNotifier {
       option: lastDevotee.option,
       repMethode: lastDevotee.repMethode,
       day: lastDevotee.day,
-      godname: selectedGod.god ?? "",
+      godname: selectedGods?.devathaName.toString(),
       vazhipadu: vazhipaduName,
       price: price.toString(),
       count: _noOfBookingVazhipaddu.toString(),

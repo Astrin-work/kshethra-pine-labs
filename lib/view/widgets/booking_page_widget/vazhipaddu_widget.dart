@@ -34,9 +34,9 @@ class VazhipadduWidget extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemCount:
-                bookingViewmodel.selectedGod.vazhippad == null
+                bookingViewmodel.selectedGods?.vazhipadus == null
                     ? 0
-                    : bookingViewmodel.selectedGod.vazhippad!.length,
+                    : bookingViewmodel.selectedGods?.vazhipadus.length,
 
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               mainAxisSpacing: mainAxisSpace ?? 30,
@@ -50,15 +50,16 @@ class VazhipadduWidget extends StatelessWidget {
                     print('------pressed1--------');
                     bookingViewmodel.showVazhipadduDialogBox(
                       context,
-                      bookingViewmodel.selectedGod.vazhippad![index],
-                    );
-                  } else {
-                    print('------pressed2--------');
-                    bookingViewmodel.showAdvancedVazhipadduDialogBox(
-                      context,
-                      bookingViewmodel.selectedGod.vazhippad![index],
+                      bookingViewmodel.selectedGods!.vazhipadus[index]
                     );
                   }
+                  // else {
+                  //   print('------pressed2--------');
+                  //   bookingViewmodel.showAdvancedVazhipadduDialogBox(
+                  //     context,
+                  //     bookingViewmodel.selectedGods!.vazhipadus[index]
+                  //   );
+                  // }
                 },
 
                 child: Container(
@@ -81,42 +82,24 @@ class VazhipadduWidget extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            // BuildTextWidget(
-                            //   text:
-                            //       "${bookingViewmodel.selectedGod.vazhippad![index]["vazhi"]}",
-                            //   toLang: currentLang,
-                            //   textAlign: TextAlign.center,
-                            // ),
                             Text(
-                              bookingViewmodel
-                                          .selectedGod
-                                          .vazhippad![index]["vazhi"] !=
-                                      null
-                                  ? bookingViewmodel
-                                      .selectedGod
-                                      .vazhippad![index]["vazhi"]
-                                      .toString()
-                                      .tr()
+                              bookingViewmodel.selectedGods?.vazhipadus != null &&
+                                  bookingViewmodel.selectedGods!.vazhipadus.length > index
+                                  ? bookingViewmodel.selectedGods!.vazhipadus[index].offerName
+                                  .toString()
+                                  .tr()
                                   : "",
                               style: styles.blackRegular15,
                               textAlign: TextAlign.center,
                             ),
                             BuildTextWidget(
-                              text:
-                                  "${bookingViewmodel.selectedGod.vazhippad![index]["prize"]}",
+                              text: bookingViewmodel.selectedGods?.vazhipadus != null &&
+                                  bookingViewmodel.selectedGods!.vazhipadus.length > index
+                                  ? "₹ ${bookingViewmodel.selectedGods!.vazhipadus[index].cost.toString()}"
+                                  : "",
                               toLang: currentLang,
                               textAlign: TextAlign.center,
                             ),
-                            // Text(
-                            //   "${bookingViewmodel.selectedGod.vazhippad![index]["vazhi"]}",
-                            //   style: styles.blackRegular15,
-                            //   textAlign: TextAlign.center,
-                            // ),
-                            // Text(
-                            //   "₹ ${bookingViewmodel.selectedGod.vazhippad![index]["prize"]}",
-                            //   style: styles.blackRegular15,
-                            //   textAlign: TextAlign.center,
-                            // ),
                           ],
                         ),
                       ),

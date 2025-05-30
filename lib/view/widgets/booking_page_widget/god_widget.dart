@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kshethra_mini/model/demo_model/booking_model.dart';
+
 import 'package:kshethra_mini/utils/app_color.dart';
-import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
@@ -51,7 +50,7 @@ class _GodWidgetState extends State<GodWidget> {
                   children: [
                     InkWell(
                       onTap: () {
-                        bookingViewmodel.setGod(bList[index]);
+                        bookingViewmodel.setGod(godList[index]);
                         print('------pressed-------');
                       },
                       child:
@@ -62,7 +61,7 @@ class _GodWidgetState extends State<GodWidget> {
                           boxShadow: [
                             BoxShadow(
                               color:
-                              bookingViewmodel.selectedGod == bList[index]
+                              bookingViewmodel.selectedGods == godList[index]
                                   ? kPrimaryColor
                                   : kTransparent,
                               blurRadius: 5,
