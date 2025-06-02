@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/view/payment_complete_screen.dart';
 import 'package:kshethra_mini/view/widgets/advanced_booking_page_widget/confirm_button_widget.dart';
+import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 import '../utils/app_color.dart';
 import '../utils/app_styles.dart';
@@ -32,7 +34,7 @@ class CashPayment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();
-
+    final bookingViewmodel = Provider.of<BookingViewmodel>(context, listen: false);
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,10 +73,12 @@ class CashPayment extends StatelessWidget {
         ],
       ),
       floatingActionButton: ConfirmButtonWidget(
-        onConfirm: () {
+        onConfirm: () async {
+          await bookingViewmodel.submitVazhipadu(bookingViewmodel.selectedIndex);
           _onConfirmPayment(context);
         },
       ),
+
     );
   }
 }

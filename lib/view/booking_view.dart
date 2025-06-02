@@ -23,8 +23,7 @@ class BookingView extends StatelessWidget {
               bookingViewmodel.navigateBookingPreviewView(context);
               print("-------btn pressed------");
 
-              // Pass the selectedIndex here:
-              await bookingViewmodel.submitVazhipadu(bookingViewmodel.selectedIndex);
+              // await bookingViewmodel.submitVazhipadu(bookingViewmodel.selectedIndex);
             },
           ),
 
