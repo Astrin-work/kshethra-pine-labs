@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view/widgets/build_text_widget.dart';

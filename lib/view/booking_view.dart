@@ -19,51 +19,32 @@ class BookingView extends StatelessWidget {
       floatingActionButton: Consumer<BookingViewmodel>(
         builder:
             (context, bookingViewmodel, child) => ResponsiveLayout(
-              pinelabDevice: BookingFloatButtonWidget(
-                  payOnTap: () {
-                    bookingViewmodel.navigateBookingPreviewView(context);
-                    print("-------btn pressed------");
+          pinelabDevice:BookingFloatButtonWidget(
+            payOnTap: () async {
+              bookingViewmodel.navigateBookingPreviewView(context);
+              print("-------btn pressed------");
 
-                    ApiService().postVazhipaduDetails({
-                      "BankId": "1",
-                      "BankName": "SBI",
-                      "PaymentType": "Cash",
-                      "TransactionId": "TXN123456",
-                      "Receipts": [
-                        {
-                          "ItemId": "123",
-                          "Amount": 1000,
-                          "Type": "CB",
-                          "OfferName": "vazhipadu2",
-                          "PersonName": "1",
-                          "PersonStar": "s6",
-                          "Quantity": 10,
-                          "Rate": 100,
-                          "OfferDate": "2025-05-23",
-                          "ReceiptDate": "2025-05-30"
-                        }
+              // Pass the selectedIndex here:
+              await bookingViewmodel.submitVazhipadu(bookingViewmodel.selectedIndex);
+            },
+          ),
 
-                      ]
-                    });
-                  }
-
-              ),
               mediumDevice: BookingFloatButtonWidget(
-                height: 65,
-                payOnTap: () {
-                  bookingViewmodel.navigateBookingPreviewView(context);
+            height: 65,
+            payOnTap: () {
+              bookingViewmodel.navigateBookingPreviewView(context);
 
 
-                },
-              ),
-              largeDevice: BookingFloatButtonWidget(
-                height: 75,
-                payOnTap: () {
-                  bookingViewmodel.navigateBookingPreviewView(context);
+            },
+          ),
+          largeDevice: BookingFloatButtonWidget(
+            height: 75,
+            payOnTap: () {
+              bookingViewmodel.navigateBookingPreviewView(context);
 
-                },
-              ),
-            ),
+            },
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(

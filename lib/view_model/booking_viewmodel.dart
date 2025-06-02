@@ -28,7 +28,7 @@ class BookingViewmodel extends ChangeNotifier {
   // List<Vazhipadumodel> vazhipaduList = [];
   List<UserBookingModel> get vazhipaduBookingList => _vazhipaduBookingList;
   List<Godmodel> _gods = [];
-
+  int selectedIndex = 0;
 
   List<Godmodel> get gods => _gods;
   bool get isLoading => _isLoading;
@@ -320,6 +320,50 @@ class BookingViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
+
+  Future<void> submitVazhipadu(int index) async {
+    if (index < 0 || index >= vazhipaduBookingList.length) {
+      print('Invalid index: $index');
+      return;
+    }
+
+    final bookingItem = vazhipaduBookingList[index];
+    final devathaId = selectedGods?.devathaId ?? "123";
+    final offerName = selectedGods?.vazhipadus.isNotEmpty == true
+        ? selectedGods!.vazhipadus.first.offerName
+        : "Unknown Offer";
+
+    final today = DateTime.now();
+    final formattedDate = "${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}";
+
+    final postData = {
+      "BankId": "1",
+      "BankName": "SBI",
+      "PaymentType": "Cash",
+      "TransactionId": "TXN123456",
+      "Receipts": [
+        {
+          "ItemId": devathaId,
+          "Amount": bookingItem.totalPrice ?? 1000,
+          "Type": "CB",
+          "OfferName": bookingItem.vazhipadu ?? "Unknown",
+          "PersonName": bookingItem.name ?? "Unknown",
+          "PersonStar": bookingItem.star ?? "Unknown",
+          "Quantity": bookingItem.count ?? 1,
+          "Rate": bookingItem.price ?? 100,
+          "OfferDate": formattedDate,
+          "ReceiptDate": formattedDate,
+        }
+      ]
+    };
+
+    try {
+      await ApiService().postVazhipaduDetails(postData);
+      print("Vazhipadu submitted successfully.");
+    } catch (e) {
+      print("Failed to submit vazhipadu: $e");
+    }
+  }
 
 
   // void navigateAdvBookingPreview(BuildContext context) {

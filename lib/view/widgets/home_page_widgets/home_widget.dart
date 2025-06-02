@@ -55,16 +55,13 @@ class HomeWidget extends StatelessWidget {
                     try {
                       print("-------calling API----------");
                       List<Godmodel> vazhipaduList = await ApiService().getDevatha();
-
                       print('Received ${vazhipaduList.length} items');
-
                       for (var item in vazhipaduList) {
                         print('DevathaId: ${item.devathaId}');
                         print('DevathaName: ${item.devathaName}');
                         print('DevathaCost: ${item.vazhipadus[0].offerId}');
                         print('offerName: ${item.vazhipadus[0].offerName}');
                         print('Cost: ${item.vazhipadus[0].cost}');
-
                         print('-----------------------');
                       }
                     } catch (e) {
