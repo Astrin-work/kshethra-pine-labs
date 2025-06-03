@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/model/api%20models/E_Hundi_Get_Devatha_Model.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/components/qr_code_component.dart';
 import 'package:kshethra_mini/utils/components/snack_bar_widget.dart';
 import 'package:kshethra_mini/view/widgets/e_hundi_page_widgets/e_hundi_dialogbox_widget.dart';
+import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 
 import '../api_services/api_service.dart';
 
@@ -78,7 +80,7 @@ class EHundiViewmodel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _gods = await ApiService().getEbammaramDevetha();
+      _gods = await ApiService().getEbannaramDevetha();
     } catch (e) {
       _gods = [];
     } finally {
@@ -86,6 +88,37 @@ class EHundiViewmodel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<bool> postEhundiDonation(BuildContext context) async {
+    final data = {
+      "devathaName": 'sd',
+      "amount": eHundiAmountController.text.trim(),
+      "personName": eHundiNameController.text.trim(),
+      "phoneNumber": eHundiPhoneController.text.trim(),
+      "personStar": "sdf",
+    };
+
+    try {
+      await ApiService().postEHundiDetails(data);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Donation posted successfully!")),
+        );
+      }
+      return true;
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Failed to post donation: $e")),
+        );
+      }
+      return false;
+    }
+  }
+
+
+
+
 }
 
 

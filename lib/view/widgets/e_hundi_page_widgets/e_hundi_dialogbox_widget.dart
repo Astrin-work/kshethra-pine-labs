@@ -144,8 +144,12 @@ class _EHundiDialogWidgetState extends State<EHundiDialogWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     MaterialButton(
-                      onPressed: () {
-                        eHundiViewmodel.navigateScannerPage(context);
+                      onPressed: () async {
+                        final viewModel = Provider.of<EHundiViewmodel>(context, listen: false);
+                        final success = await viewModel.postEhundiDonation(context);
+                        if (success && context.mounted) {
+                          viewModel.navigateScannerPage(context);
+                        }
                       },
                       shape: RoundedRectangleBorder(
                         side: const BorderSide(
@@ -158,8 +162,9 @@ class _EHundiDialogWidgetState extends State<EHundiDialogWidget> {
                     ),
                     MaterialButton(
                       onPressed: () {
-                        eHundiViewmodel.popFunction(context);
-                        eHundiViewmodel.clearHundiAmount();
+                        final viewModel = Provider.of<EHundiViewmodel>(context, listen: false);
+                        viewModel.popFunction(context);
+                        viewModel.clearHundiAmount();
                       },
                       shape: RoundedRectangleBorder(
                         side: const BorderSide(
@@ -171,6 +176,7 @@ class _EHundiDialogWidgetState extends State<EHundiDialogWidget> {
                       child: Text("Cancel".tr()),
                     ),
                   ],
+
                 ),
               ],
             ),

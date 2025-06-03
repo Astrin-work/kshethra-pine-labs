@@ -145,7 +145,7 @@ class ApiService {
   }
 
 
-  Future<List<Ehundigetdevathamodel>> getEbammaramDevetha() async {
+  Future<List<Ehundigetdevathamodel>> getEbannaramDevetha() async {
     final token = await AppHive().getToken();
 
     final response = await _dio.get(
@@ -155,12 +155,45 @@ class ApiService {
 
     final List<dynamic> dataList = response.data;
 
-    return dataList
-        .map((item) => Ehundigetdevathamodel.fromJson(item))
-        .toList();
+    List<Ehundigetdevathamodel> godListEhundi = [];
+    for (var item in dataList) {
+      godListEhundi.add(Ehundigetdevathamodel.fromJson(item));
+    }
+    return godListEhundi;
   }
 
+  Future<void> postEHundiDetails(Map<String, dynamic> eHundiData) async {
+    final token = await AppHive().getToken();
 
+    try {
+      final response = await _dio.post(
+        '/HundiCash',
+        data: eHundiData,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+          validateStatus: (status) => status != null && status < 500,
+        ),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print(" E-Hundi posted successfully.");
+        print(response.data);
+        print(response.realUri);
+        print(response.statusMessage);
+        print(response.statusCode);
+      } else if (response.statusCode == 409) {
+        throw Exception(" E-Hundi entry already exists.");
+      } else {
+        throw Exception(" Failed with status: ${response.statusCode}");
+      }
+    } catch (e) {
+      print(" Error posting E-Hundi: $e");
+      rethrow;
+    }
+  }
 
 
 
