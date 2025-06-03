@@ -6,7 +6,7 @@ import 'package:kshethra_mini/utils/components/snack_bar_widget.dart';
 import 'package:kshethra_mini/view/widgets/e_hundi_page_widgets/e_hundi_dialogbox_widget.dart';
 
 import '../api_services/api_service.dart';
-import '../model/api models/god_model.dart';
+
 
 class EHundiViewmodel extends ChangeNotifier {
   TextEditingController eHundiAmountController = TextEditingController();
