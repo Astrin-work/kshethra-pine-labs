@@ -88,10 +88,10 @@ class EHundiViewmodel extends ChangeNotifier {
 
   Future<bool> postEhundiDonation(BuildContext context) async {
     final data = {
-      "devathaName": 'sd',
-      "amount": eHundiAmountController.text.trim(),
-      "personName": eHundiNameController.text.trim(),
-      "phoneNumber": eHundiPhoneController.text.trim(),
+      "devathaName": "asdf",
+      "amount":"10000",
+      "personName": "asdf",
+      "phoneNumber": "asdf",
       "personStar": "sdf",
     };
 
