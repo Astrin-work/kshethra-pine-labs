@@ -13,6 +13,7 @@ import 'package:kshethra_mini/view/card_payment_screen.dart';
 import 'package:kshethra_mini/view/cash_payment.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_dialogbox_widget.dart';
 import '../api_services/api_service.dart';
+import '../model/api models/get_donation_model.dart';
 import '../model/api models/god_model.dart';
 import '../view/widgets/advanced_booking_page_widget/advanced_vazhipaddu_dialog_BoxWidget.dart';
 import '../view/widgets/payment_method_screen.dart';
@@ -28,6 +29,7 @@ class BookingViewmodel extends ChangeNotifier {
   // List<Vazhipadumodel> vazhipaduList = [];
   List<UserBookingModel> get vazhipaduBookingList => _vazhipaduBookingList;
   List<Godmodel> _gods = [];
+  List<Getdonationmodel> donations = [];
   int selectedIndex = 0;
 
   List<Godmodel> get gods => _gods;
@@ -153,6 +155,11 @@ class BookingViewmodel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  // Future<void> fetchDonations() async {
+  //   donations = await ApiService().getDonation();
+  //   notifyListeners(); // if using Provider
+  // }
 
   // Future<void> fetchVazhipadu() async {
   //   try {

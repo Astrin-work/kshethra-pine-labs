@@ -7,6 +7,7 @@ import 'package:kshethra_mini/view/widgets/home_page_widgets/option_selector_wid
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
 import '../../../api_services/api_service.dart';
+import '../../../model/api models/get_donation_model.dart';
 import '../build_text_widget.dart';
 
 class HomeWidget extends StatelessWidget {
@@ -108,9 +109,27 @@ class HomeWidget extends StatelessWidget {
                     textAlign: TextAlign.center,
                     // toLang: currentLang,
                   ),
-                  onTap: () {
-                    homepageViewmodel.donationPageNavigate(context);
-                  },
+                    onTap: () async {
+                      try {
+                        print("-------calling API----------");
+                        List<Getdonationmodel> donationList = await ApiService().getDonation();
+                        print('Received ${donationList.length} items');
+
+                        for (var item in donationList) {
+                          print('AcctHeadId: ${item.acctHeadId}');
+                          print('AccName: ${item.acctHeadName}');
+                          print('-----------------------');
+                          print('AccTime: ${item.entryTime}');
+                          print('AccStatus: ${item.status}');
+                        }
+
+                        homepageViewmodel.donationPageNavigate(context, );
+                      } catch (e) {
+                        print('Error while fetching donations: $e');
+                      }
+                    }
+
+
                 ),
                 OptionSelectorWidget(
                   icon: SizedBox(

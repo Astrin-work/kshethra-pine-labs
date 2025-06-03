@@ -6,8 +6,12 @@ import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/utils/validation.dart';
+import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:kshethra_mini/view_model/donation_viewmodel.dart';
 import 'package:provider/provider.dart';
+
+import '../../../api_services/api_service.dart';
+import '../../../model/api models/get_donation_model.dart';
 
 class DonationFormWidget extends StatefulWidget {
   final double crossAxisSpacing;
@@ -28,18 +32,40 @@ class DonationFormWidget extends StatefulWidget {
 class _DonationFormWidgetState extends State<DonationFormWidget> {
   late TextEditingController donationNameController;
   late TextEditingController donationPhnoController;
+  List<Getdonationmodel> donations = [];
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-
     donationNameController = TextEditingController();
     donationPhnoController = TextEditingController();
+    fetchDonations();
   }
+
+  Future<void> fetchDonations() async {
+    try {
+      final fetchedDonations = await ApiService().getDonation();
+      setState(() {
+        donations = fetchedDonations;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      // Handle error appropriately (show snackbar, etc)
+      print("Error fetching donations: $e");
+    }
+  }
+
+
+
+
+
 
   @override
   void dispose() {
-
     donationNameController.dispose();
     donationPhnoController.dispose();
     super.dispose();
@@ -51,8 +77,9 @@ class _DonationFormWidgetState extends State<DonationFormWidget> {
     SizeConfig().init(context);
 
     return Consumer<DonationViewmodel>(
-      builder: (context, donationViewmodel, child) => SizedBox(
-        // height: SizeConfig.screenHeight * 0.8,
+      builder: (context, donationViewmodel, child) => isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SizedBox(
         child: Form(
           key: donationViewmodel.donationFormKey,
           child: Column(
@@ -101,17 +128,22 @@ class _DonationFormWidgetState extends State<DonationFormWidget> {
                   crossAxisCount: widget.crossAxisCount ?? 2,
                 ),
                 itemBuilder: (context, index) {
+                  final donationItem = donations[index];
                   return InkWell(
                     onTap: () {
-                      donationViewmodel.showDonationDialog(context);
+                      donationViewmodel.showDonationDialog(
+                        context,
+                        donationNameController.text,
+                        donationPhnoController.text,
+                        donationItem.acctHeadName,
+                      );
+
                     },
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         image: DecorationImage(
-                          image: AssetImage(
-                            Assets.images.homeBackground.path,
-                          ),
+                          image: AssetImage(Assets.images.homeBackground.path),
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -126,9 +158,8 @@ class _DonationFormWidgetState extends State<DonationFormWidget> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                donations[index].donatKey!.isNotEmpty
-                                    ? donations[index].donatKey!.tr()
-                                    : '', // if empty, show nothing
+                                donationItem.acctHeadName,
+                                style: AppStyles().blackRegular13,
                               ),
                             ),
                           ),
@@ -136,6 +167,7 @@ class _DonationFormWidgetState extends State<DonationFormWidget> {
                       ),
                     ),
                   );
+
                 },
               ),
               15.kH,
@@ -146,3 +178,4 @@ class _DonationFormWidgetState extends State<DonationFormWidget> {
     );
   }
 }
+

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 
+import '../model/api models/get_donation_model.dart';
 import '../model/api models/god_model.dart';
 import '../utils/hive/hive.dart';
 
@@ -13,7 +14,7 @@ class ApiService {
   ApiService() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: 'https://192.168.1.2:7102/api',
+        baseUrl: 'https://192.168.1.6:7102/api',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -92,6 +93,56 @@ class ApiService {
       throw Exception('Error submitting vazhipadu: ${e.response?.data ?? e.message}');
     }
   }
+
+  Future<List<Getdonationmodel>> getDonation() async {
+    final token = await AppHive().getToken();
+
+    final response = await _dio.get(
+      '/Donation',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+
+    if (response.statusCode == 200) {
+      return (response.data as List)
+          .map((e) => Getdonationmodel.fromJson(e))
+          .toList();
+    } else {
+      return [];
+    }
+  }
+
+
+  Future<void> postDonationDetails(Map<String, dynamic> donationData) async {
+    final token = await AppHive().getToken();
+
+    try {
+      final response = await _dio.post(
+        '/Donation/generalreceipt',
+        data: donationData,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+          validateStatus: (status) => status != null && status < 500,
+        ),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print("Donation posted successfully.");
+        print(response.data);
+        print(response.statusMessage);
+      } else if (response.statusCode == 409) {
+        throw Exception("Donation already exists.");
+      } else {
+        throw Exception("Failed with status: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error posting donation: $e");
+      rethrow;
+    }
+  }
+
 
 
 

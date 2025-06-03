@@ -7,17 +7,56 @@ import 'package:kshethra_mini/utils/validation.dart';
 import 'package:kshethra_mini/view_model/donation_viewmodel.dart';
 import 'package:provider/provider.dart';
 
+import '../../../api_services/api_service.dart';
+
 class DonationDialogWidget extends StatelessWidget {
-  const DonationDialogWidget({super.key});
+  final String name;
+  final String phone;
+  final String acctHeadName;
+
+  const DonationDialogWidget({
+    super.key,
+    required this.name,
+    required this.phone,
+    required this.acctHeadName,
+  });
+
+  Future<bool> postDonation(BuildContext context) async {
+    final donationViewmodel = Provider.of<DonationViewmodel>(context, listen: false);
+
+    final donationData = {
+      "name": name,
+      "phoneNumber": phone,
+      "acctHeadName": acctHeadName,
+      "amount": donationViewmodel.donationAmountController.text.trim(),
+      "paymentType": "UPI",
+      "transactionId": "txn_${DateTime.now().millisecondsSinceEpoch}",
+      "bankId": "BANK001",
+      "bankName": "Test Bank",
+    };
+
+    try {
+      await ApiService().postDonationDetails(donationData);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Donation posted successfully!")),
+      );
+      return true;
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to post donation: $e")),
+      );
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
+
     return AlertDialog(
       title: Consumer<DonationViewmodel>(
-        builder:
-            (context, donationViewmodel, child) => Column(
+        builder: (context, donationViewmodel, child) => Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
@@ -31,8 +70,7 @@ class DonationDialogWidget extends StatelessWidget {
               child: TextFormField(
                 autofocus: true,
                 keyboardType: TextInputType.number,
-                validator:
-                    (value) => Validation.numberValidation(
+                validator: (value) => Validation.numberValidation(
                   value,
                   "Enter a amount",
                   "Invalid amount",
@@ -54,8 +92,15 @@ class DonationDialogWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 MaterialButton(
-                  onPressed: () {
-                    donationViewmodel.navigateScannerPage(context);
+                  onPressed: () async {
+                    if (donationViewmodel.donationKey.currentState?.validate() ?? false) {
+                      bool success = await postDonation(context);
+                      if (success) {
+                        donationViewmodel.clearDonationAmount();
+
+                        Navigator.pop(context);
+                      }
+                    }
                   },
                   shape: RoundedRectangleBorder(
                     side: BorderSide(color: kDullPrimaryColor, width: 2),
@@ -75,7 +120,7 @@ class DonationDialogWidget extends StatelessWidget {
                   child: Text("Cancel".tr()),
                 ),
               ],
-            ),
+            )
           ],
         ),
       ),
