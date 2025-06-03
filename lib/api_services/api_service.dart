@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 
+import '../model/api models/E_Hundi_Get_Devatha_Model.dart';
 import '../model/api models/get_donation_model.dart';
 import '../model/api models/god_model.dart';
 import '../utils/hive/hive.dart';
@@ -144,6 +145,20 @@ class ApiService {
   }
 
 
+  Future<List<Ehundigetdevathamodel>> getEbammaramDevetha() async {
+    final token = await AppHive().getToken();
+
+    final response = await _dio.get(
+      '/Devatha',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+
+    final List<dynamic> dataList = response.data;
+
+    return dataList
+        .map((item) => Ehundigetdevathamodel.fromJson(item))
+        .toList();
+  }
 
 
 
