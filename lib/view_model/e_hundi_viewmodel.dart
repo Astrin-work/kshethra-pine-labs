@@ -1,12 +1,9 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/model/api%20models/E_Hundi_Get_Devatha_Model.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/components/qr_code_component.dart';
 import 'package:kshethra_mini/utils/components/snack_bar_widget.dart';
 import 'package:kshethra_mini/view/widgets/e_hundi_page_widgets/e_hundi_dialogbox_widget.dart';
-import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
-
 import '../api_services/api_service.dart';
 
 
