@@ -14,7 +14,7 @@ class EHundiViewmodel extends ChangeNotifier {
   bool _isLoading = false;
   final eHundiKey = GlobalKey<FormState>();
   List<Ehundigetdevathamodel> _gods = [];
-
+  int selectedIndex = 0;
   // Public getters
   List<Ehundigetdevathamodel> get gods => _gods;
   bool get isLoading => _isLoading;
@@ -86,32 +86,6 @@ class EHundiViewmodel extends ChangeNotifier {
     }
   }
 
-  Future<bool> postEhundiDonation(BuildContext context) async {
-    final data = {
-      "devathaName": "asdf",
-      "amount":"10000",
-      "personName": "asdf",
-      "phoneNumber": "asdf",
-      "personStar": "sdf",
-    };
-
-    try {
-      await ApiService().postEHundiDetails(data);
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Donation posted successfully!")),
-        );
-      }
-      return true;
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Failed to post donation: $e")),
-        );
-      }
-      return false;
-    }
-  }
 
 
 

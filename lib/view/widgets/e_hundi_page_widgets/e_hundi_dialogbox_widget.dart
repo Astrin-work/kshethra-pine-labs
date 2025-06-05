@@ -7,6 +7,7 @@ import 'package:kshethra_mini/utils/validation.dart';
 import 'package:kshethra_mini/view_model/e_hundi_viewmodel.dart';
 import 'package:provider/provider.dart';
 
+import '../../../api_services/api_service.dart';
 import '../../../view_model/booking_viewmodel.dart';
 import '../booking_page_widget/star_dialodbox_widget.dart';
 
@@ -21,6 +22,42 @@ class _EHundiDialogWidgetState extends State<EHundiDialogWidget> {
   late TextEditingController _amountController;
   late TextEditingController _nameController;
   late TextEditingController _phoneController;
+
+  Future<bool> postEbannaramiDonation(BuildContext context, int index) async {
+    final eHundiViewModel = Provider.of<EHundiViewmodel>(context, listen: false);
+    final bookingViewModel = Provider.of<BookingViewmodel>(context, listen: false);
+
+    final data = {
+      "devathaName": eHundiViewModel.gods[index].devathaName,
+      "amount": _amountController.text.trim(),
+      "personName": _nameController.text.trim(),
+      "phoneNumber": _phoneController.text.trim(),
+      "personStar": bookingViewModel.selectedStar,
+    };
+
+    try {
+      await ApiService().postEHundiDetails(data);
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Donation posted successfully!")),
+        );
+      }
+      return true;
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Failed to post donation: $e")),
+        );
+      }
+      return false;
+    }
+  }
+
+
+
+
+
+
 
   @override
   void initState() {
@@ -146,7 +183,8 @@ class _EHundiDialogWidgetState extends State<EHundiDialogWidget> {
                     MaterialButton(
                       onPressed: () async {
                         final viewModel = Provider.of<EHundiViewmodel>(context, listen: false);
-                        final success = await viewModel.postEhundiDonation(context);
+                        final success = await postEbannaramiDonation(context, viewModel.selectedIndex);
+
                         if (success && context.mounted) {
                           viewModel.navigateScannerPage(context);
                         }
@@ -160,6 +198,8 @@ class _EHundiDialogWidgetState extends State<EHundiDialogWidget> {
                       ),
                       child: Text("Pay".tr()),
                     ),
+
+
                     MaterialButton(
                       onPressed: () {
                         final viewModel = Provider.of<EHundiViewmodel>(context, listen: false);

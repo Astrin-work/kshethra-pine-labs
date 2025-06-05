@@ -89,31 +89,31 @@ class DonationViewmodel extends ChangeNotifier {
     );
   }
 
-  Future<bool> postDonation(BuildContext context) async {
-    final donationData = {
-      "name": donationNameController.text.trim(),
-      "phoneNumber": donationPhnoController.text.trim(),
-      "acctHeadName": donationNameController.text.trim(),
-      "amount": donationAmountController.text.trim(),
-      "paymentType": "UPI",
-      "transactionId": "txn_${DateTime.now().millisecondsSinceEpoch}",
-      "bankId": "BANK001",
-      "bankName": "Test Bank",
-    };
-
-    try {
-      await ApiService().postDonationDetails(donationData);
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Donation posted successfully!")));
-      return true;
-    } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Failed to post donation: $e")));
-      return false;
-    }
-  }
+  // Future<bool> postDonation(BuildContext context) async {
+  //   final donationData = {
+  //     "name": donationNameController.text.trim(),
+  //     "phoneNumber": donationPhnoController.text.trim(),
+  //     "acctHeadName": donationNameController.text.trim(),
+  //     "amount": donationAmountController.text.trim(),
+  //     "paymentType": "UPI",
+  //     "transactionId": "txn_${DateTime.now().millisecondsSinceEpoch}",
+  //     "bankId": "BANK001",
+  //     "bankName": "Test Bank",
+  //   };
+  //
+  //   try {
+  //     await ApiService().postDonationDetails(donationData);
+  //     ScaffoldMessenger.of(
+  //       context,
+  //     ).showSnackBar(SnackBar(content: Text("Donation posted successfully!")));
+  //     return true;
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(
+  //       context,
+  //     ).showSnackBar(SnackBar(content: Text("Failed to post donation: $e")));
+  //     return false;
+  //   }
+  // }
 
 
 

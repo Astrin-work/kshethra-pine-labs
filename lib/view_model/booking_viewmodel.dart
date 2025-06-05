@@ -327,51 +327,74 @@ class BookingViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-
-  Future<void> submitVazhipadu(int index) async {
-    if (index < 0 || index >= vazhipaduBookingList.length) {
-      print('Invalid index: $index');
+  Future<void> submitVazhipadu() async {
+    if (vazhipaduBookingList.isEmpty) {
+      print(' No vazhipadu bookings to submit.');
       return;
     }
 
-    final bookingItem = vazhipaduBookingList[index];
-    final devathaId = selectedGods?.devathaId ?? "123";
-    final offerName = selectedGods?.vazhipadus.isNotEmpty == true
-        ? selectedGods!.vazhipadus.first.offerName
-        : "Unknown Offer";
+    final now = DateTime.now().toIso8601String();
 
-    final today = DateTime.now();
-    final formattedDate = "${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}";
+    List<Map<String, dynamic>> receipts = [];
+
+    for (var item in vazhipaduBookingList) {
+      final int quantity = int.tryParse(item.count.toString()) ?? 1;
+      final int rate = int.tryParse(item.price.toString()) ?? 0;
+
+      receipts.add({
+        "personName": item.name ?? "Unknown",
+        "personStar": item.star ?? "Unknown",
+        "quantity": quantity,
+        "rate": rate,
+        "offerDate": item.date ?? now,
+        "receiptDate": now,
+        "type": "CB",
+        "offerName": item.vazhipadu ?? "vazhipadu2",
+      });
+    }
+
 
     final postData = {
-      "BankId": "1",
-      "BankName": "SBI",
-      "PaymentType": "Cash",
-      "TransactionId": "TXN123456",
-      "Receipts": [
-        {
-          "ItemId": devathaId,
-          "Amount": bookingItem.totalPrice ?? 1000,
-          "Type": "CB",
-          "OfferName": bookingItem.vazhipadu ?? "Unknown",
-          "PersonName": bookingItem.name ?? "Unknown",
-          "PersonStar": bookingItem.star ?? "Unknown",
-          "Quantity": bookingItem.count ?? 1,
-          "Rate": bookingItem.price ?? 100,
-          "OfferDate": formattedDate,
-          "ReceiptDate": formattedDate,
-        }
-      ]
+      "receipts": receipts,
+      "paymentType": "upi",
+      "transactionId": "1122",
+      "bankId": "",
+      "bankName": "icici"
     };
 
     try {
-      await ApiService().postVazhipaduDetails(postData);
-      print("Vazhipadu submitted successfully.");
+      final response = await ApiService().postVazhipaduDetails(postData);
+
+      if (response is List && response.isNotEmpty) {
+        final List<Map<String, dynamic>> allReceipts = [];
+
+        for (var entry in response) {
+          if (entry is Map<String, dynamic>) {
+            final receiptsList = entry['receipts'];
+            if (receiptsList is List) {
+              allReceipts.addAll(receiptsList.cast<Map<String, dynamic>>());
+            }
+          }
+        }
+
+        final groupedResponse = [
+          {
+            "serialNumber": response.first['serialNumber'],
+            "receipts": allReceipts,
+          }
+        ];
+
+        print(" Submitted ${receipts.length} items successfully.");
+        print("Grouped Response: $groupedResponse");
+      } else {
+        print(" Submitted ${receipts.length} items successfully.");
+        print("Response: $response");
+      }
     } catch (e) {
-      print("Failed to submit vazhipadu: $e");
+      print(" Failed to submit vazhipadu: $e");
     }
   }
-
+  
 
   // void navigateAdvBookingPreview(BuildContext context) {
   //

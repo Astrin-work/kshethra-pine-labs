@@ -15,7 +15,7 @@ class ApiService {
   ApiService() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: 'https://192.168.1.6:7102/api',
+        baseUrl: 'https://192.168.1.7:7102/api',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -70,30 +70,28 @@ class ApiService {
   }
 
 
-  Future<void> postVazhipaduDetails(Map<String, dynamic> postVazhipaduData) async {
+  Future<dynamic> postVazhipaduDetails(Map<String, dynamic> data) async {
     final token = await AppHive().getToken();
-    print(jsonEncode(postVazhipaduData));
 
     try {
       final response = await _dio.post(
         '/vazhipadu/vazhipadureceipt',
-        data: postVazhipaduData,
+        data: data,
         options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-            'Content-Type': 'application/json',
-          },
+          headers: {'Authorization': 'Bearer $token'},
         ),
       );
-      if (response.statusCode == 200) {
-        print("------------API Call Success------------");
-        print('Vazhipadu submitted: ${response.data}');
-      }
-    } on DioException catch (e) {
-      print('Error submitting vazhipadu: ${e.response?.data ?? e.message}');
-      throw Exception('Error submitting vazhipadu: ${e.response?.data ?? e.message}');
+      print(response.data);
+      print(response.statusCode);
+      print(response.statusMessage);
+      // Return the full JSON response
+      return response.data;
+    } catch (e) {
+      print('API call error: $e');
+      rethrow;
     }
   }
+
 
   Future<List<Getdonationmodel>> getDonation() async {
     final token = await AppHive().getToken();
