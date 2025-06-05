@@ -16,45 +16,60 @@ class AdvanceBooking extends StatelessWidget {
         child: Column(
           children: [
             AppBarWidget(title: "Advance Booking".tr()),
-             ResponsiveLayout(
-              pinelabDevice: Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15),
-                child: AdvancedBookingFormWidget(),
-              ),
-              mediumDevice: Padding(
-                padding: EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.125,
-                  right: SizeConfig.screenWidth * 0.125,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 550,),
+                Text(
+                  "Comming Soon",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                child: AdvancedBookingFormWidget(
-                  crossAxisSpace: SizeConfig.screenWidth * 0.15,
-                  mainAxisSpace: SizeConfig.screenWidth * 0.1,
-                ),
-              ),
-              semiMediumDevice: Padding(
-                padding: EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.125,
-                  right: SizeConfig.screenWidth * 0.125,
-                ),
-                child: AdvancedBookingFormWidget(
-                  crossAixisCount: 3,
-                  crossAxisSpace: SizeConfig.screenWidth * 0.05,
-                  mainAxisSpace: SizeConfig.screenWidth * 0.05,
-                ),
-              ),
-              largeDevice: Padding(
-                padding: EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.125,
-                  right: SizeConfig.screenWidth * 0.125,
-                ),
-                child: AdvancedBookingFormWidget(
-                  crossAixisCount: 4,
-                  crossAxisSpace: SizeConfig.screenWidth * 0.015,
-                  mainAxisSpace: SizeConfig.screenWidth * 0.015,
-                ),
-              ),
+              ],
             ),
-          
+
+            //  ResponsiveLayout(
+            //   pinelabDevice: Padding(
+            //     padding: const EdgeInsets.only(left: 15.0, right: 15),
+            //     child: AdvancedBookingFormWidget(),
+            //   ),
+            //   mediumDevice: Padding(
+            //     padding: EdgeInsets.only(
+            //       left: SizeConfig.screenWidth * 0.125,
+            //       right: SizeConfig.screenWidth * 0.125,
+            //     ),
+            //     child: AdvancedBookingFormWidget(
+            //       crossAxisSpace: SizeConfig.screenWidth * 0.15,
+            //       mainAxisSpace: SizeConfig.screenWidth * 0.1,
+            //     ),
+            //   ),
+            //   semiMediumDevice: Padding(
+            //     padding: EdgeInsets.only(
+            //       left: SizeConfig.screenWidth * 0.125,
+            //       right: SizeConfig.screenWidth * 0.125,
+            //     ),
+            //     child: AdvancedBookingFormWidget(
+            //       crossAixisCount: 3,
+            //       crossAxisSpace: SizeConfig.screenWidth * 0.05,
+            //       mainAxisSpace: SizeConfig.screenWidth * 0.05,
+            //     ),
+            //   ),
+            //   largeDevice: Padding(
+            //     padding: EdgeInsets.only(
+            //       left: SizeConfig.screenWidth * 0.125,
+            //       right: SizeConfig.screenWidth * 0.125,
+            //     ),
+            //     child: AdvancedBookingFormWidget(
+            //       crossAixisCount: 4,
+            //       crossAxisSpace: SizeConfig.screenWidth * 0.015,
+            //       mainAxisSpace: SizeConfig.screenWidth * 0.015,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

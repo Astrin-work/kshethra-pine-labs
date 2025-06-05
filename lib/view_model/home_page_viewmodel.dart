@@ -1,5 +1,3 @@
-
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,17 +5,20 @@ import 'package:image_picker/image_picker.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/components/dialog_box_widget.dart';
 import 'package:kshethra_mini/utils/components/snack_bar_widget.dart';
+import 'package:kshethra_mini/utils/hive/hive.dart';
 import 'package:kshethra_mini/view/booking_view.dart';
 import 'package:kshethra_mini/view/donation_view.dart';
 import 'package:kshethra_mini/view/e_hundi_view.dart';
 import 'package:kshethra_mini/view/advance_booking.dart';
 import 'package:kshethra_mini/view/home_view_users.dart';
+import 'package:kshethra_mini/view/login_view.dart';
 import 'package:kshethra_mini/view/super_admin_add_donation_view.dart';
 import 'package:kshethra_mini/view/super_admin_add_prathistta_view.dart';
 import 'package:kshethra_mini/view/super_admin_add_temple_view.dart';
 import 'package:kshethra_mini/view/super_admin_add_vazhipaddu_view.dart';
 import 'package:kshethra_mini/view/super_admin_god_list_view.dart';
 import 'package:kshethra_mini/view/super_admin_home_view.dart';
+import 'package:kshethra_mini/view_model/auth_viewmodel.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -71,7 +72,6 @@ class HomePageViewmodel extends ChangeNotifier {
     );
   }
 
-
   void bookingPageNavigate(BuildContext context) {
     context.read<BookingViewmodel>().setBookingPage();
     Navigator.push(
@@ -116,14 +116,16 @@ class HomePageViewmodel extends ChangeNotifier {
       popFunction(context);
     }
   }
+
   void backtoHomePageView(BuildContext context) {
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => HomeViewUsers()), // Replace with your actual home view
-          (Route<dynamic> route) => false,
+      MaterialPageRoute(
+        builder: (context) => HomeViewUsers(),
+      ), // Replace with your actual home view
+      (Route<dynamic> route) => false,
     );
   }
-
 
   String setQrAmount(String amount) {
     String value = "upi://pay?pa=astrinstechnologies@okaxis&am=$amount&cu=INR";
@@ -134,16 +136,21 @@ class HomePageViewmodel extends ChangeNotifier {
   void showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder:
-          (context) => DialogBoxWidget(
-            title: 'Do you want to Logout?'.tr(),
-            fButton: 'Logout'.tr(),
-            fOnTap: () {},
-            sButton: 'Cancel'.tr(),
-            sOnTap: () => popFunction(context),
-          ),
+      builder: (context) => DialogBoxWidget(
+        title: 'Do you want to Logout?'.tr(),
+        fButton: 'Logout'.tr(),
+        fOnTap: () async {
+          final token = await AppHive().getToken();
+          print("Deleting token: $token");
+          await AppHive().clearHive();
+          AuthViewmodel().logout(context);
+        },
+        sButton: 'Cancel'.tr(),
+        sOnTap: () => Navigator.pop(context),
+      ),
     );
   }
+
 
   void navigateSuperAdminHomeView(BuildContext context) {
     Navigator.push(

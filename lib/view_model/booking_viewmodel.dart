@@ -394,7 +394,7 @@ class BookingViewmodel extends ChangeNotifier {
       print(" Failed to submit vazhipadu: $e");
     }
   }
-  
+
 
   // void navigateAdvBookingPreview(BuildContext context) {
   //

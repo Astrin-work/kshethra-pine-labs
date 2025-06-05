@@ -4,6 +4,8 @@ import 'package:kshethra_mini/view/language_select_view.dart';
 import 'package:kshethra_mini/view/login_view.dart';
 
 import '../api_services/api_service.dart';
+import '../utils/app_color.dart';
+import '../utils/components/snack_bar_widget.dart';
 
 class AuthViewmodel extends ChangeNotifier {
   TextEditingController userNameController = TextEditingController(text: 'u');
@@ -39,6 +41,9 @@ class AuthViewmodel extends ChangeNotifier {
       try {
         final token = await ApiService().login(username, password);
         print('Token: $token');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBarWidget(msg: "Login successful", color: Colors.green).build(context),
+        );
 
         Navigator.pushReplacement(
           context,
@@ -53,4 +58,15 @@ class AuthViewmodel extends ChangeNotifier {
     }
   }
 
+  void logout(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBarWidget(msg: "Logout successful", color: kRed).build(context),
+    );
+
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (_) => LoginView()),
+          (route) => false,
+    );
+  }
 }

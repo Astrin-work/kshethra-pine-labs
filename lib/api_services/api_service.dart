@@ -12,6 +12,8 @@ import '../utils/hive/hive.dart';
 class ApiService {
   late final Dio _dio;
 
+
+
   ApiService() {
     _dio = Dio(
       BaseOptions(
@@ -192,9 +194,5 @@ class ApiService {
       rethrow;
     }
   }
-
-
-
-
 
 }
