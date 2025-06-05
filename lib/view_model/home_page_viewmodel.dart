@@ -11,7 +11,6 @@ import 'package:kshethra_mini/view/donation_view.dart';
 import 'package:kshethra_mini/view/e_hundi_view.dart';
 import 'package:kshethra_mini/view/advance_booking.dart';
 import 'package:kshethra_mini/view/home_view_users.dart';
-import 'package:kshethra_mini/view/login_view.dart';
 import 'package:kshethra_mini/view/super_admin_add_donation_view.dart';
 import 'package:kshethra_mini/view/super_admin_add_prathistta_view.dart';
 import 'package:kshethra_mini/view/super_admin_add_temple_view.dart';

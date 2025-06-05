@@ -1,9 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
-import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
-import 'package:kshethra_mini/view/widgets/advanced_booking_page_widget/advanced_booking_form_widget.dart';
 
 class AdvanceBooking extends StatelessWidget {
   const AdvanceBooking({super.key});

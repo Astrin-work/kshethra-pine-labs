@@ -4,7 +4,6 @@ import 'package:kshethra_mini/utils/components/qr_code_component.dart';
 import 'package:kshethra_mini/utils/components/snack_bar_widget.dart';
 import 'package:kshethra_mini/view/widgets/donation_page_widgets/donation_dialogbox_widget.dart';
 
-import '../api_services/api_service.dart';
 import '../view/widgets/payment_method_screen.dart';
 
 class DonationViewmodel extends ChangeNotifier {
