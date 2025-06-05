@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';

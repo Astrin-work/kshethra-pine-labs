@@ -68,15 +68,15 @@ class QrScannerComponent extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder:
-                                  (context) => PaymentCompleteScreen(
-                                    amount: amount,
-                                    noOfScreen: noOfScreen,
-                                  ),
+                              builder: (context) => PaymentCompleteScreen(
+                                amount: amount,
+                                noOfScreen: noOfScreen,
+                              ),
                             ),
                           );
                         },
                       ),
+
                     ],
                   ),
                 ),

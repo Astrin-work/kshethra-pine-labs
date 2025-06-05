@@ -9,17 +9,25 @@ import '../utils/components/snack_bar_widget.dart';
 
 class AuthViewmodel extends ChangeNotifier {
   TextEditingController userNameController = TextEditingController(text: 'u');
-  TextEditingController passwordController = TextEditingController(text: 'u');
+  TextEditingController passwordController = TextEditingController(text: "u");
 
   final loginKey = GlobalKey<FormState>();
 
   bool _isPassVissible = false;
   bool get isPassVissible => _isPassVissible;
 
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
   final ApiService _apiService = ApiService();
 
   void tooglePass() {
     _isPassVissible = !_isPassVissible;
+    notifyListeners();
+  }
+
+  void setLoading(bool value) {
+    _isLoading = value;
     notifyListeners();
   }
 

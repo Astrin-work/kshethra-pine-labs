@@ -22,7 +22,10 @@ class DonationDialogWidget extends StatelessWidget {
   });
 
   Future<bool> postDonation(BuildContext context) async {
-    final donationViewmodel = Provider.of<DonationViewmodel>(context, listen: false);
+    final donationViewmodel = Provider.of<DonationViewmodel>(
+      context,
+      listen: false,
+    );
 
     final donationData = {
       "name": name,
@@ -37,14 +40,14 @@ class DonationDialogWidget extends StatelessWidget {
 
     try {
       await ApiService().postDonationDetails(donationData);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Donation posted successfully!")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Donation posted successfully!")));
       return true;
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Failed to post donation: $e")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Failed to post donation: $e")));
       return false;
     }
   }
@@ -56,73 +59,77 @@ class DonationDialogWidget extends StatelessWidget {
 
     return AlertDialog(
       title: Consumer<DonationViewmodel>(
-        builder: (context, donationViewmodel, child) => Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              textAlign: TextAlign.center,
-              "Enter the amount to Donate".tr(),
-              style: styles.blackRegular18,
-            ),
-            10.kH,
-            Form(
-              key: donationViewmodel.donationKey,
-              child: TextFormField(
-                autofocus: true,
-                keyboardType: TextInputType.number,
-                validator: (value) => Validation.numberValidation(
-                  value,
-                  "Enter a amount",
-                  "Invalid amount",
-                ),
-                controller: donationViewmodel.donationAmountController,
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    onPressed: donationViewmodel.clearDonationAmount,
-                    icon: Icon(Icons.close),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              ),
-            ),
-            10.kH,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        builder:
+            (context, donationViewmodel, child) => Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                MaterialButton(
-                  onPressed: () async {
-                    if (donationViewmodel.donationKey.currentState?.validate() ?? false) {
-                      bool success = await postDonation(context);
-                      if (success) {
-                        donationViewmodel.clearDonationAmount();
-
-                        Navigator.pop(context);
-                      }
-                    }
-                  },
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(color: kDullPrimaryColor, width: 2),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Text("Pay".tr()),
+                Text(
+                  textAlign: TextAlign.center,
+                  "Enter the amount to Donate".tr(),
+                  style: styles.blackRegular18,
                 ),
-                MaterialButton(
-                  onPressed: () {
-                    donationViewmodel.popFunction(context);
-                    donationViewmodel.clearDonationAmount();
-                  },
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(color: kDullPrimaryColor, width: 2),
-                    borderRadius: BorderRadius.circular(15),
+                10.kH,
+                Form(
+                  key: donationViewmodel.donationKey,
+                  child: TextFormField(
+                    autofocus: true,
+                    keyboardType: TextInputType.number,
+                    validator:
+                        (value) => Validation.numberValidation(
+                          value,
+                          "Enter a amount",
+                          "Invalid amount",
+                        ),
+                    controller: donationViewmodel.donationAmountController,
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        onPressed: donationViewmodel.clearDonationAmount,
+                        icon: Icon(Icons.close),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
                   ),
-                  child: Text("Cancel".tr()),
+                ),
+                10.kH,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    MaterialButton(
+                      onPressed: () async {
+                        if (donationViewmodel.donationKey.currentState
+                                ?.validate() ??
+                            false) {
+                          bool success = await postDonation(context);
+                          if (success) {
+                            donationViewmodel.clearDonationAmount();
+
+                            Navigator.pop(context);
+                          }
+                        }
+                      },
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: kDullPrimaryColor, width: 2),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Text("Pay".tr()),
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        donationViewmodel.popFunction(context);
+                        donationViewmodel.clearDonationAmount();
+                      },
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: kDullPrimaryColor, width: 2),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Text("Cancel".tr()),
+                    ),
+                  ],
                 ),
               ],
-            )
-          ],
-        ),
+            ),
       ),
     );
   }

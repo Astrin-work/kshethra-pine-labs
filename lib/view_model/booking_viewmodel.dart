@@ -989,6 +989,9 @@ class BookingViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
+
+
+
   bool toggleSelectedWeeklyDay(String day) {
     return _selectedWeeklyDays.contains(day);
   }

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/model/api%20models/E_Hundi_Get_Devatha_Model.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
@@ -15,6 +16,8 @@ class EHundiViewmodel extends ChangeNotifier {
   final eHundiKey = GlobalKey<FormState>();
   List<Ehundigetdevathamodel> _gods = [];
   int selectedIndex = 0;
+  String _selectedStar = "Star".tr();
+  String get selectedStar => _selectedStar;
   // Public getters
   List<Ehundigetdevathamodel> get gods => _gods;
   bool get isLoading => _isLoading;
@@ -86,9 +89,11 @@ class EHundiViewmodel extends ChangeNotifier {
     }
   }
 
-
-
-
+  void setStar(String star, BuildContext context) {
+    _selectedStar = star.tr();
+    popFunction(context);
+    notifyListeners();
+  }
 
 }
 

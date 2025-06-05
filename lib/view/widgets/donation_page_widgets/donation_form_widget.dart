@@ -58,10 +58,6 @@ class _DonationFormWidgetState extends State<DonationFormWidget> {
   }
 
 
-
-
-
-
   @override
   void dispose() {
     donationNameController.dispose();

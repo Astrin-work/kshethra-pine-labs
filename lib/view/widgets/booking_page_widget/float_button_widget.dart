@@ -37,10 +37,10 @@ class FloatButtonWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Left button: shows total amount
+
             InkWell(
               onTap: () {
-                // Optional: you can also trigger payOnTap here if desired
+
               },
               child: Container(
                 height: height ?? SizeConfig.screenWidth * 0.135,

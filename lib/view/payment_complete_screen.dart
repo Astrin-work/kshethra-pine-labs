@@ -42,7 +42,7 @@ class PaymentCompleteScreen extends StatelessWidget {
                     ),
                     SizedBox(
                       height: SizeConfig.screenHeight * 0.45,
-                      child: Lottie.asset(Assets.gifs.paymentSuccess),
+                      child: Lottie.asset(Assets.gifs.paymentSuccess,repeat: false),
                     ),
                     Text(
                       "Your payment was sucessfull".tr(),

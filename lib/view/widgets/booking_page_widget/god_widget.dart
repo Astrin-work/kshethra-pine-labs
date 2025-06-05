@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
@@ -79,7 +80,7 @@ class _GodWidgetState extends State<GodWidget> {
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: BuildTextWidget(
-                        text: godList[index].devathaName,
+                        text: godList[index].devathaName.tr(),
                         toLang: currentLang,
                       ),
                     ),
