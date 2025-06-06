@@ -8,6 +8,7 @@ import 'package:kshethra_mini/view_model/donation_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 import '../../../api_services/api_service.dart';
+import '../payment_method_screen.dart';
 
 class DonationDialogWidget extends StatelessWidget {
   final String name;
@@ -97,18 +98,43 @@ class DonationDialogWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     MaterialButton(
+                      // onPressed: () async {
+                      //   if (donationViewmodel.donationKey.currentState
+                      //           ?.validate() ??
+                      //       false) {
+                      //     bool success = await postDonation(context);
+                      //     if (success) {
+                      //       donationViewmodel.clearDonationAmount();
+                      //
+                      //       Navigator.pop(context);
+                      //     }
+                      //   }
+                      // },
                       onPressed: () async {
-                        if (donationViewmodel.donationKey.currentState
-                                ?.validate() ??
-                            false) {
-                          bool success = await postDonation(context);
-                          if (success) {
-                            donationViewmodel.clearDonationAmount();
+                        final donationViewmodel = Provider.of<DonationViewmodel>(context, listen: false);
 
-                            Navigator.pop(context);
+                        if (donationViewmodel.donationKey.currentState?.validate() ?? false) {
+                          final success = await postDonation(context);
+
+                          if (success && context.mounted) {
+                            // Navigate to PaymentMethodScreen passing the amount
+                            final amount = donationViewmodel.donationAmountController.text.trim();
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PaymentMethodScreen(
+                                ),
+                              ),
+                            );
+
+                            // Optionally clear after navigation
+                            donationViewmodel.clearDonationAmount();
+                            donationViewmodel.popFunction(context); // Close the dialog
                           }
                         }
                       },
+
                       shape: RoundedRectangleBorder(
                         side: BorderSide(color: kDullPrimaryColor, width: 2),
                         borderRadius: BorderRadius.circular(15),

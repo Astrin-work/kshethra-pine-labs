@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:kshethra_mini/model/star_model.dart';
 import 'package:kshethra_mini/model/user_booking_model.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/components/qr_code_component.dart';
@@ -147,6 +148,11 @@ class BookingViewmodel extends ChangeNotifier {
 
     try {
       _gods = await ApiService().getDevatha();
+
+
+      if (_gods.isNotEmpty) {
+        selectedGods = _gods[0];
+      }
     } catch (e) {
       print("Error fetching gods: $e");
       _gods = [];
@@ -155,6 +161,7 @@ class BookingViewmodel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
 
   // Future<void> fetchDonations() async {
   //   donations = await ApiService().getDonation();
@@ -732,10 +739,18 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void setStar(String star, BuildContext context) {
-    _selectedStar = star.tr();
+    _selectedStar = star;
     popFunction(context);
     notifyListeners();
   }
+
+  void clearSelectedStar() {
+    _selectedStar = "";
+    notifyListeners();
+  }
+
+
+
 
   void bookingAddNewDevottee() {
     bookingNameController.clear();

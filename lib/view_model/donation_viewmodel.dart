@@ -115,12 +115,8 @@ class DonationViewmodel extends ChangeNotifier {
   //   }
   // }
 
- void navigateToPaymentMethodPage(context){
-   Navigator.push(context,
-       MaterialPageRoute(
-           builder: (context) =>PaymentMethodScreen()));
-   notifyListeners();
- }
+
+
 
 
 

@@ -17,7 +17,7 @@ class ApiService {
   ApiService() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: 'https://192.168.1.7:7102/api',
+        baseUrl: 'https://192.168.1.5:7102/api',
         headers: {
           'Content-Type': 'application/json',
         },

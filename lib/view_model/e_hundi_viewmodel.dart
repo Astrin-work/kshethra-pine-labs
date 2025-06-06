@@ -16,8 +16,8 @@ class EHundiViewmodel extends ChangeNotifier {
   final eHundiKey = GlobalKey<FormState>();
   List<Ehundigetdevathamodel> _gods = [];
   int selectedIndex = 0;
-  String _selectedStar = "Star".tr();
-  String get selectedStar => _selectedStar;
+  String? _selectedStar = "Star".tr();
+  String? get selectedStar => _selectedStar;
   // Public getters
   List<Ehundigetdevathamodel> get gods => _gods;
   bool get isLoading => _isLoading;
@@ -94,6 +94,13 @@ class EHundiViewmodel extends ChangeNotifier {
     popFunction(context);
     notifyListeners();
   }
+
+
+  void clearSelectedStar() {
+    _selectedStar = null;
+    notifyListeners();
+  }
+
 
 }
 
