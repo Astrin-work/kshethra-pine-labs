@@ -184,8 +184,7 @@ class TerminalProvider with ChangeNotifier {
   bool _isBound = false;
   bool _isBindingInitiated = false; // Add this flag
   ScrollController scrollController = ScrollController();
-  int _paymentAmount = 100; // Store the payment amount
-
+  int _paymentAmount = 100;
   String get bindingStatus => _bindingStatus;
   bool get isBound => _isBound;
   bool get isBindingInitiated => _isBindingInitiated;

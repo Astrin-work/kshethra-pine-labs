@@ -8,18 +8,15 @@ import '../utils/app_color.dart';
 import '../utils/components/snack_bar_widget.dart';
 
 class AuthViewmodel extends ChangeNotifier {
-  TextEditingController userNameController = TextEditingController(text: 'u');
-  TextEditingController passwordController = TextEditingController(text: "u");
-
+  // final ApiService _apiService = ApiService();
   final loginKey = GlobalKey<FormState>();
-
+  TextEditingController userNameController = TextEditingController(text: 'uu');
+  TextEditingController passwordController = TextEditingController(text: "uu");
   bool _isPassVissible = false;
   bool get isPassVissible => _isPassVissible;
-
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  final ApiService _apiService = ApiService();
 
   void tooglePass() {
     _isPassVissible = !_isPassVissible;

@@ -152,8 +152,6 @@ class PreViewWidget extends StatelessWidget {
                                       "Qty: ${booking.count ?? '0'}",
                                       style: styles.blackRegular13,
                                     ),
-
-
                                   ],
                                 ),
                               ],

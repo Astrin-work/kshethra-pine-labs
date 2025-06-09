@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
-import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view/widgets/laguage_select_widgets/language_box.dart';
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';

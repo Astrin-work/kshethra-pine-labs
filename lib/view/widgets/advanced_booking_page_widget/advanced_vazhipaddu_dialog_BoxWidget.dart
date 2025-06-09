@@ -6,12 +6,15 @@ import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
 
+import '../../../model/api models/god_model.dart';
+
 
 class AdvancedVazhipadduDialogBoxwidget extends StatelessWidget {
-  final Map<String, dynamic> selectedVazhippadu;
+  // final Map<String, dynamic> selectedVazhippadu;
+  final Vazhipadus selectedVazhippadu;
   const AdvancedVazhipadduDialogBoxwidget({
-    super.key,
-    required this.selectedVazhippadu,
+    super.key, required this.selectedVazhippadu,
+    // required this.selectedVazhippadu,
   });
 
   @override
@@ -23,10 +26,7 @@ class AdvancedVazhipadduDialogBoxwidget extends StatelessWidget {
         builder:
             (context, bookingViewmodel, child) => Column(
               children: [
-                Text(
-                  selectedVazhippadu["vazhi"],
-                  style: styles.blackSemi18,
-                ).tr(),
+                Text(selectedVazhippadu.offerName, style: styles.blackSemi18).tr(),
                 10.kH,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -34,7 +34,7 @@ class AdvancedVazhipadduDialogBoxwidget extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         bookingViewmodel.removeNoOfBookingVazhipaddu(
-                          selectedVazhippadu["prize"],
+                          selectedVazhippadu.cost,
                         );
                       },
                       child: Container(
@@ -72,7 +72,7 @@ class AdvancedVazhipadduDialogBoxwidget extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         bookingViewmodel.addNoOfBookingVazhipaddu(
-                          selectedVazhippadu["prize"],
+                          selectedVazhippadu.cost,
                         );
                       },
                       child: Container(

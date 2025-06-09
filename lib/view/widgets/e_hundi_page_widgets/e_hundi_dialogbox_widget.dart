@@ -40,6 +40,10 @@ class _EHundiDialogWidgetState extends State<EHundiDialogWidget> {
       "personName": _nameController.text.trim(),
       "phoneNumber": _phoneController.text.trim(),
       "personStar": bookingViewModel.selectedStar,
+      "paymentType": "lsk",
+      "transactionId": "11221",
+      "bankId": "131333",
+      "bankName": "sbi"
     };
 
     try {
@@ -237,7 +241,6 @@ class _EHundiDialogWidgetState extends State<EHundiDialogWidget> {
                         ),
                       ],
                     )
-
                   ],
                 ),
               ),

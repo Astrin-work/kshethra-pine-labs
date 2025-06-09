@@ -11,16 +11,30 @@ import '../api_services/api_service.dart';
 class EHundiViewmodel extends ChangeNotifier {
   TextEditingController eHundiAmountController = TextEditingController();
   TextEditingController eHundiNameController = TextEditingController();
-  final TextEditingController eHundiPhoneController = TextEditingController();
+  TextEditingController eHundiPhoneController = TextEditingController();
   bool _isLoading = false;
   final eHundiKey = GlobalKey<FormState>();
   List<Ehundigetdevathamodel> _gods = [];
   int selectedIndex = 0;
   String? _selectedStar = "Star".tr();
   String? get selectedStar => _selectedStar;
-  // Public getters
   List<Ehundigetdevathamodel> get gods => _gods;
   bool get isLoading => _isLoading;
+
+
+  Future<void> fetchEhundiGods() async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      _gods = await ApiService().getEbannaramDevetha();
+    } catch (e) {
+      _gods = [];
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
 
   void clearHundiAmount() {
     eHundiAmountController.clear();
@@ -75,26 +89,11 @@ class EHundiViewmodel extends ChangeNotifier {
     );
   }
 
-  Future<void> fetchEhundiGods() async {
-    _isLoading = true;
-    notifyListeners();
-
-    try {
-      _gods = await ApiService().getEbannaramDevetha();
-    } catch (e) {
-      _gods = [];
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
-  }
-
   void setStar(String star, BuildContext context) {
     _selectedStar = star.tr();
     popFunction(context);
     notifyListeners();
   }
-
 
   void clearSelectedStar() {
     _selectedStar = null;

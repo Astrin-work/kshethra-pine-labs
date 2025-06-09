@@ -98,139 +98,144 @@ class AdvPreViewWidget extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5.0),
                   child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: kLightPrimaryColor,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          booking.name.toString(),
-                          style: styles.blackRegular15,
-                        ),
-                        Text(
-                          bookings[index].star.toString(),
-                          style: styles.blackRegular15,
-                        ),
-                        // Text(
-                        //   page == "booking" ? (booking.star ?? "") : (booking.option ?? ""),
-                        //   style: styles.blackRegular13,
-                        // ),
-                        const SizedBox(height: 10),
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: kWhite,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: kLightPrimaryColor,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Row(
-                                children: [
-                                  BuildTextWidget(
-                                    text: booking.vazhipadu!.tr(),
-                                    size: 14,
-                                    color: kBlack,
-                                  ),
-                                  SizedBox(width: 10,),
-                                  Text(
-                                    " ${bookings[index].count} times",
-                                    style: styles.blackRegular13,
-                                  ),
-                                  // SizedBox(width: 5,),
-                                  Text(
-                                    "₹ ${booking.totalPrice ?? '0'}",
-                                    style: styles.blackRegular15,
-                                  ),
-                                  SizedBox(width: 8,),
-                                  Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 110),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Row(
-                                        children: [
-                                          IconButton(
-                                            icon: const Icon(
-                                              Icons.delete,
-                                              color: kRed,
-                                            ),
-                                            onPressed: () {
-                                                bookingViewmodel.advBookingDelete(index);
-                                            },
-                                          ),
-                                          IconButton(
-                                            icon: const Icon(Icons.add),
-                                            onPressed: () {
-                                              bookingViewmodel.popFunction(context);
-                                            },
-                                          ),
-                                        ],
+                                      Text(
+                                        booking.name.toString(),
+                                        style: styles.blackRegular18,
+                                      ),
+                                      Text(
+                                        bookings[index].star.toString(),
+                                        style: styles.blackRegular13,
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                              BuildTextWidget(
-                                text: booking.godname.toString(),
-                                size: 14,
-                                color: kBlack,
-                              ),
-                              const SizedBox(height: 6),
-                              Row(
-                                children: [
-                                  BuildTextWidget(
-                                    text: "Repeat: $selectedRepMethod",
-                                    size: 14,
-                                    color: kBlack,
-                                  ),
-                                  const SizedBox(width: 10),
-                                  if (selectedRepMethod != "Once")
-                                    Text(
-                                      "${bookingViewmodel.repeatDays} times",
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: kBlack,
-                                      ),
-                                    ),
-                                ],
-                              ),
-                              const SizedBox(height: 6),
-                              Row(
-                                children: [
-                                  BuildTextWidget(
-                                    text:
-                                    " Postal Charges: ₹${bookingViewmodel.postalAmount}",
-                                    size: 14,
-                                    color: kBlack,
-                                  ),
-                                ],
-                              ),
-                              if (selectedRepMethod != "Once" &&
-                                  selectedDays.isNotEmpty)
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 6),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Wrap(
-                                      spacing: 8.0,
-                                      children: selectedDays
-                                          .map((day) => Chip(
-                                        label: Text(day),
-                                        backgroundColor: kLightPrimaryColor
-                                            .withOpacity(0.8),
-                                      ))
-                                          .toList(),
-                                    ),
-                                  ),
                                 ),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: kRed,
+                                    ),
+                                    onPressed: () {
+                                      bookingViewmodel.advBookingDelete(index);
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.add),
+                                    onPressed: () {
+                                      bookingViewmodel.popFunction(context);
+                                    },
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
-                        ),
-                      ],
-                    ),
+                          const SizedBox(height: 10),
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: kWhite,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    BuildTextWidget(
+                                      text: booking.vazhipadu!.tr(),
+                                      size: 14,
+                                      color: kBlack,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      " ${bookings[index].count}  times",
+                                      style: styles.blackRegular13,
+                                    ),
+                                    SizedBox(width:10 ,),
+                                    Text(
+                                      "₹ ${booking.totalPrice ?? '0'}",
+                                      style: styles.blackRegular15,
+                                    ),
+                                  ],
+                                ),
+                                BuildTextWidget(
+                                  text: booking.godname.toString(),
+                                  size: 14,
+                                  color: kBlack,
+                                ),
+                                const SizedBox(height: 6),
+                                Row(
+                                  children: [
+                                    BuildTextWidget(
+                                      text: "Repeat: $selectedRepMethod",
+                                      size: 14,
+                                      color: kBlack,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    if (selectedRepMethod != "Once")
+                                      Text(
+                                        "${bookingViewmodel.repeatDays} times",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: kBlack,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                                const SizedBox(height: 6),
+                                Row(
+                                  children: [
+                                    BuildTextWidget(
+                                      text: " Postal Charges: ₹${bookingViewmodel.postalAmount}",
+                                      size: 14,
+                                      color: kBlack,
+                                    ),
+                                  ],
+                                ),
+                                if (selectedRepMethod != "Once" && selectedDays.isNotEmpty)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 6),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Wrap(
+                                        spacing: 8.0,
+                                        children: selectedDays
+                                            .map(
+                                              (day) => Chip(
+                                            label: Text(day),
+                                            backgroundColor: kLightPrimaryColor.withOpacity(0.8),
+                                          ),
+                                        )
+                                            .toList(),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+
                   ),
                 );
               },

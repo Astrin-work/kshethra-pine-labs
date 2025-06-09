@@ -11,21 +11,18 @@ import 'package:kshethra_mini/view/donation_view.dart';
 import 'package:kshethra_mini/view/e_hundi_view.dart';
 import 'package:kshethra_mini/view/advance_booking.dart';
 import 'package:kshethra_mini/view/home_view_users.dart';
-import 'package:kshethra_mini/view/super_admin_add_donation_view.dart';
-import 'package:kshethra_mini/view/super_admin_add_prathistta_view.dart';
-import 'package:kshethra_mini/view/super_admin_add_temple_view.dart';
-import 'package:kshethra_mini/view/super_admin_add_vazhipaddu_view.dart';
-import 'package:kshethra_mini/view/super_admin_god_list_view.dart';
-import 'package:kshethra_mini/view/super_admin_home_view.dart';
 import 'package:kshethra_mini/view_model/auth_viewmodel.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-
 import '../model/api models/god_model.dart';
 
 class HomePageViewmodel extends ChangeNotifier {
   final addTempleFormKey = GlobalKey<FormState>();
+  final addPrathishttaKey = GlobalKey<FormState>();
+  final addVazhippaduKey = GlobalKey<FormState>();
+  final addDonationKey = GlobalKey<FormState>();
+  final ImagePicker _imagePicker = ImagePicker();
+
   TextEditingController addTempleName = TextEditingController();
   TextEditingController addTempleAdminUname = TextEditingController();
   TextEditingController addTempleAdminPass = TextEditingController();
@@ -33,36 +30,25 @@ class HomePageViewmodel extends ChangeNotifier {
   TextEditingController addTempleDevoteePass = TextEditingController();
   TextEditingController addTemplePhno = TextEditingController();
   TextEditingController addTempleAddress = TextEditingController();
-
-  final addPrathishttaKey = GlobalKey<FormState>();
   TextEditingController addPrathishttaNameController = TextEditingController();
-
-  final addVazhippaduKey = GlobalKey<FormState>();
   TextEditingController addVazhippaduNameController = TextEditingController();
   TextEditingController addVazhippaduPrizeController = TextEditingController();
-
-  final addDonationKey = GlobalKey<FormState>();
   TextEditingController addDonationNameController = TextEditingController();
   List<Godmodel> devathaList = [];
   Uint8List? _addGodImage;
   Uint8List? get addGodImage => _addGodImage;
-
   String _selectedPrathishtta = "Add prathishtta";
   String get selectedPrathishtta => _selectedPrathishtta;
-
   String _selectedTemple = "Select temple".tr();
   String get selectedTemple => _selectedTemple;
-
   bool _isDropdownVissible = false;
   bool get isDropdownVissible => _isDropdownVissible;
-
   bool _isTempleDropdownVissible = false;
   bool get isTempleDropdownVissible => _isTempleDropdownVissible;
   String _currentLanguage = "en";
-
   String get currentLanguage => _currentLanguage;
 
-  final ImagePicker _imagePicker = ImagePicker();
+
 
   void homePageNavigate(BuildContext context) {
     Navigator.push(
@@ -150,173 +136,172 @@ class HomePageViewmodel extends ChangeNotifier {
     );
   }
 
+  // void navigateSuperAdminHomeView(BuildContext context) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => SuperAdminHomeView()),
+  //   );
+  // }
 
-  void navigateSuperAdminHomeView(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SuperAdminHomeView()),
-    );
-  }
+  // void navigateSuperAdminAddTempleView(BuildContext context) {
+  //   clearController();
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => SuperAdminAddTempleView()),
+  //   );
+  // }
 
-  void navigateSuperAdminAddTempleView(BuildContext context) {
-    clearController();
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SuperAdminAddTempleView()),
-    );
-  }
+  // void navigateSuperAdminAddPrathisttaView(BuildContext context) {
+  //   clearController();
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => SuperAdminAddPrathisttaView()),
+  //   );
+  // }
 
-  void navigateSuperAdminAddPrathisttaView(BuildContext context) {
-    clearController();
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SuperAdminAddPrathisttaView()),
-    );
-  }
+  // void showAddPrsthishttaFirstDialog(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder:
+  //         (context) => DialogBoxWidget(
+  //           title: "Where should you add the picture from ?",
+  //           fButton: "Storage",
+  //           fOnTap: () {
+  //             popFunction(context);
+  //             showAddImageBottomSheet(context);
+  //           },
+  //           sButton: "Images",
+  //           sOnTap: () {
+  //             popFunction(context);
+  //             navigateSuperAdminGodListView(context);
+  //           },
+  //         ),
+  //   );
+  // }
+  //
+  // void showAddImageBottomSheet(BuildContext context) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (context) {
+  //       return CameraAndGalleryBottomSheet(
+  //         cameraButton: () {
+  //           pickImageFromCamera(context);
+  //         },
+  //         galleryButton: () {
+  //           pickImageFromGallery(context);
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
 
-  void showAddPrsthishttaFirstDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder:
-          (context) => DialogBoxWidget(
-            title: "Where should you add the picture from ?",
-            fButton: "Storage",
-            fOnTap: () {
-              popFunction(context);
-              showAddImageBottomSheet(context);
-            },
-            sButton: "Images",
-            sOnTap: () {
-              popFunction(context);
-              navigateSuperAdminGodListView(context);
-            },
-          ),
-    );
-  }
+  // Future<void> pickImageFromCamera(BuildContext context) async {
+  //   popFunction(context);
+  //   try {
+  //     final img = await _imagePicker.pickImage(source: ImageSource.camera);
+  //     if (img != null) {
+  //       _addGodImage = await img.readAsBytes();
+  //     }
+  //   } catch (e) {
+  //     DialogBoxWidget(
+  //       title: "Camera permission required !",
+  //       fButton: "Allow",
+  //       fOnTap: () async {
+  //         popFunction(context);
+  //         await openAppSettings();
+  //       },
+  //       sButton: "Cancel",
+  //       sOnTap: () => popFunction(context),
+  //     );
+  //   }
+  //   notifyListeners();
+  // }
 
-  void showAddImageBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return CameraAndGalleryBottomSheet(
-          cameraButton: () {
-            pickImageFromCamera(context);
-          },
-          galleryButton: () {
-            pickImageFromGallery(context);
-          },
-        );
-      },
-    );
-  }
+  // Future<void> pickImageFromGallery(BuildContext context) async {
+  //   popFunction(context);
+  //   try {
+  //     final img = await _imagePicker.pickImage(source: ImageSource.gallery);
+  //     if (img != null) {
+  //       _addGodImage = await img.readAsBytes();
+  //     }
+  //   } catch (e) {
+  //     DialogBoxWidget(
+  //       title: "Camera permission required !",
+  //       fButton: "Allow",
+  //       fOnTap: () async {
+  //         popFunction(context);
+  //         await openAppSettings();
+  //       },
+  //       sButton: "Cancel",
+  //       sOnTap: () => popFunction(context),
+  //     );
+  //   }
+  //   notifyListeners();
+  // }
 
-  Future<void> pickImageFromCamera(BuildContext context) async {
-    popFunction(context);
-    try {
-      final img = await _imagePicker.pickImage(source: ImageSource.camera);
-      if (img != null) {
-        _addGodImage = await img.readAsBytes();
-      }
-    } catch (e) {
-      DialogBoxWidget(
-        title: "Camera permission required !",
-        fButton: "Allow",
-        fOnTap: () async {
-          popFunction(context);
-          await openAppSettings();
-        },
-        sButton: "Cancel",
-        sOnTap: () => popFunction(context),
-      );
-    }
-    notifyListeners();
-  }
+  // void addGodFloatButton(BuildContext context) {
+  //   bool valid = addPrathishttaKey.currentState?.validate() ?? false;
+  //
+  //   if (!valid) {
+  //     return;
+  //   }
+  //
+  //   if (_addGodImage == null) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBarWidget(
+  //         msg: "Please add Prathishtta image",
+  //         color: kGrey,
+  //       ).build(context),
+  //     );
+  //     return;
+  //   }
+  //
+  //   if (_selectedTemple == "Select temple".tr()) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBarWidget(
+  //         msg: "Please Select a temple",
+  //         color: kGrey,
+  //       ).build(context),
+  //     );
+  //     return;
+  //   }
+  //   popFunction(context);
+  // }
 
-  Future<void> pickImageFromGallery(BuildContext context) async {
-    popFunction(context);
-    try {
-      final img = await _imagePicker.pickImage(source: ImageSource.gallery);
-      if (img != null) {
-        _addGodImage = await img.readAsBytes();
-      }
-    } catch (e) {
-      DialogBoxWidget(
-        title: "Camera permission required !",
-        fButton: "Allow",
-        fOnTap: () async {
-          popFunction(context);
-          await openAppSettings();
-        },
-        sButton: "Cancel",
-        sOnTap: () => popFunction(context),
-      );
-    }
-    notifyListeners();
-  }
+  // void navigateSuperAdminGodListView(BuildContext context) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => SuperAdminGodListView()),
+  //   );
+  // }
 
-  void addGodFloatButton(BuildContext context) {
-    bool valid = addPrathishttaKey.currentState?.validate() ?? false;
+  // Future<void> stringImageToUint(String image) async {
+  //   final ByteData data = await rootBundle.load(image);
+  //
+  //   _addGodImage = data.buffer.asUint8List();
+  //   notifyListeners();
+  // }
 
-    if (!valid) {
-      return;
-    }
+  // void navigateSuperAdminAddVazhipadduView(BuildContext context) {
+  //   clearController();
+  //
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => SuperAdminAddVazhipadduView()),
+  //   );
+  // }
 
-    if (_addGodImage == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBarWidget(
-          msg: "Please add Prathishtta image",
-          color: kGrey,
-        ).build(context),
-      );
-      return;
-    }
+  // void addPoojaDropDownOnchange(String value) {
+  //   _selectedPrathishtta = value;
+  //   _isDropdownVissible = false;
+  //   notifyListeners();
+  // }
 
-    if (_selectedTemple == "Select temple".tr()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBarWidget(
-          msg: "Please Select a temple",
-          color: kGrey,
-        ).build(context),
-      );
-      return;
-    }
-    popFunction(context);
-  }
-
-  void navigateSuperAdminGodListView(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SuperAdminGodListView()),
-    );
-  }
-
-  Future<void> stringImageToUint(String image) async {
-    final ByteData data = await rootBundle.load(image);
-
-    _addGodImage = data.buffer.asUint8List();
-    notifyListeners();
-  }
-
-  void navigateSuperAdminAddVazhipadduView(BuildContext context) {
-    clearController();
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SuperAdminAddVazhipadduView()),
-    );
-  }
-
-  void addPoojaDropDownOnchange(String value) {
-    _selectedPrathishtta = value;
-    _isDropdownVissible = false;
-    notifyListeners();
-  }
-
-  void templeDropDownOnchange(String value) {
-    _selectedTemple = value;
-    _isTempleDropdownVissible = false;
-    notifyListeners();
-  }
+  // void templeDropDownOnchange(String value) {
+  //   _selectedTemple = value;
+  //   _isTempleDropdownVissible = false;
+  //   notifyListeners();
+  // }
 
   void toggleIsDropdownVissible() {
     _isDropdownVissible = !_isDropdownVissible;
@@ -328,68 +313,68 @@ class HomePageViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addVazhipaddFloatButton(BuildContext context) {
-    bool valid = addVazhippaduKey.currentState?.validate() ?? false;
+  // void addVazhipaddFloatButton(BuildContext context) {
+  //   bool valid = addVazhippaduKey.currentState?.validate() ?? false;
+  //
+  //   if (!valid) {
+  //     return;
+  //   }
+  //
+  //   if (_selectedTemple == "Select temple".tr()) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBarWidget(
+  //         msg: "Please Select a temple",
+  //         color: kGrey,
+  //       ).build(context),
+  //     );
+  //     return;
+  //   }
+  //
+  //   if (_selectedPrathishtta == "Add prathishtta") {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBarWidget(
+  //         msg: "Please select a Prathishtta",
+  //         color: kGrey,
+  //       ).build(context),
+  //     );
+  //     return;
+  //   }
+  //
+  //   popFunction(context);
+  // }
 
-    if (!valid) {
-      return;
-    }
+  // void navigateSuperAdminAddDonationView(BuildContext context) {
+  //   clearController();
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => SuperAdminAddDonationView()),
+  //   );
+  // }
 
-    if (_selectedTemple == "Select temple".tr()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBarWidget(
-          msg: "Please Select a temple",
-          color: kGrey,
-        ).build(context),
-      );
-      return;
-    }
+  // void addDonationFloatButton(BuildContext context) {
+  //   bool valid = addDonationKey.currentState?.validate() ?? false;
+  //   if (!valid) {
+  //     return;
+  //   }
+  //   if (_selectedTemple == "Select temple") {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBarWidget(
+  //         msg: "Please Select a temple",
+  //         color: kGrey,
+  //       ).build(context),
+  //     );
+  //     return;
+  //   }
+  //   popFunction(context);
+  // }
 
-    if (_selectedPrathishtta == "Add prathishtta") {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBarWidget(
-          msg: "Please select a Prathishtta",
-          color: kGrey,
-        ).build(context),
-      );
-      return;
-    }
-
-    popFunction(context);
-  }
-
-  void navigateSuperAdminAddDonationView(BuildContext context) {
-    clearController();
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SuperAdminAddDonationView()),
-    );
-  }
-
-  void addDonationFloatButton(BuildContext context) {
-    bool valid = addDonationKey.currentState?.validate() ?? false;
-    if (!valid) {
-      return;
-    }
-    if (_selectedTemple == "Select temple") {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBarWidget(
-          msg: "Please Select a temple",
-          color: kGrey,
-        ).build(context),
-      );
-      return;
-    }
-    popFunction(context);
-  }
-
-  void addTempleFloatButton(BuildContext context) {
-    bool valid = addTempleFormKey.currentState?.validate() ?? false;
-    if (!valid) {
-      return;
-    }
-    popFunction(context);
-  }
+  // void addTempleFloatButton(BuildContext context) {
+  //   bool valid = addTempleFormKey.currentState?.validate() ?? false;
+  //   if (!valid) {
+  //     return;
+  //   }
+  //   popFunction(context);
+  // }
 
   void clearController() {
     addTempleName.clear();

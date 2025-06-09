@@ -7,8 +7,8 @@ import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
-
 import '../../../view_model/home_page_viewmodel.dart';
+
 
 class VazhipadduWidget extends StatelessWidget {
   final double? crossAxisSpace;
@@ -53,13 +53,13 @@ class VazhipadduWidget extends StatelessWidget {
                       bookingViewmodel.selectedGods!.vazhipadus[index]
                     );
                   }
-                  // else {
-                  //   print('------pressed2--------');
-                  //   bookingViewmodel.showAdvancedVazhipadduDialogBox(
-                  //     context,
-                  //     bookingViewmodel.selectedGods!.vazhipadus[index]
-                  //   );
-                  // }
+                  else {
+                    print('------pressed2--------');
+                    bookingViewmodel.showAdvancedVazhipadduDialogBox(
+                      context,
+                      bookingViewmodel.selectedGods!.vazhipadus[index]
+                    );
+                  }
                 },
 
                 child: Container(

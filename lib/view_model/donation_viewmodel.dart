@@ -3,17 +3,16 @@ import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/components/qr_code_component.dart';
 import 'package:kshethra_mini/utils/components/snack_bar_widget.dart';
 import 'package:kshethra_mini/view/widgets/donation_page_widgets/donation_dialogbox_widget.dart';
-
 import '../view/widgets/payment_method_screen.dart';
 
 class DonationViewmodel extends ChangeNotifier {
+  final donationFormKey = GlobalKey<FormState>();
+  final donationKey = GlobalKey<FormState>();
+
   TextEditingController donationAmountController = TextEditingController();
   TextEditingController donationNameController = TextEditingController();
   TextEditingController donationPhnoController = TextEditingController();
 
-  final donationFormKey = GlobalKey<FormState>();
-
-  final donationKey = GlobalKey<FormState>();
 
   void clearController() {
     donationAmountController.clear();
@@ -115,10 +114,16 @@ class DonationViewmodel extends ChangeNotifier {
   //   }
   // }
 
+  void navigateToPaymentMethodPage(BuildContext context, ) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PaymentMethodScreen(
 
-
-
-
-
+        ),
+      ),
+    );
+    notifyListeners();
+  }
 
 }
