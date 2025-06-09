@@ -83,7 +83,7 @@ class _AdvancedBookingConfirmFormState
                   TextFormField(
                     autofocus: true,
                     validator: Validation.nameValidation,
-                    controller: bookingViewmodel.bookingNameController,
+                    controller: _nameController,
                     textAlign: TextAlign.center,
                     style: styles.blackRegular15,
                     decoration: InputDecoration(
@@ -97,7 +97,7 @@ class _AdvancedBookingConfirmFormState
                   TextFormField(
                     keyboardType: TextInputType.number,
                     validator: (value) => Validation.phoneValidation(value),
-                    controller: bookingViewmodel.bookingPhnoController,
+                    controller: _phoneController,
                     textAlign: TextAlign.center,
                     style: styles.blackRegular15,
                     maxLength: 10,
