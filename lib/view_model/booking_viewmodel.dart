@@ -39,6 +39,7 @@ class BookingViewmodel extends ChangeNotifier {
   List<Godmodel> _gods = [];
   List<Getdonationmodel> donations = [];
   int selectedIndex = 0;
+  int get combinedTotalAmount => _totalAdvBookingAmt + _postalAmount.toInt();
 
   List<Godmodel> get gods => _gods;
   bool get isLoading => _isLoading;
@@ -76,7 +77,7 @@ class BookingViewmodel extends ChangeNotifier {
   double get postalAmount => _postalAmount;
   double _totalAmount = 0.0;
   double get totalAmount => _totalAmount*noOfBookingVazhipaddu;
-
+  bool _shouldResetPrasadam = false;
 
   Future<void> submitVazhipadu() async {
     if (vazhipaduBookingList.isEmpty) {
@@ -195,6 +196,19 @@ class BookingViewmodel extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void setShouldResetPrasadam(bool value) {
+    _shouldResetPrasadam = value;
+  }
+
+  void resetPrasadamSelection() {
+    _prasadamSelected = false;
+    _postalOption = '';
+    _postalAmount = 0.0;
+    notifyListeners();
+  }
+
+
 
   void selectPostalOption(String option) {
     if (_isPostalAdded) {
@@ -777,6 +791,7 @@ class BookingViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
+
   // void setVazhipaduAdvBookingList(
   //     Map<String, dynamic> selectedVazhipaadu,
   //     BuildContext context,
@@ -938,15 +953,17 @@ class BookingViewmodel extends ChangeNotifier {
 
     final booking = vazhipaduBookingList[index];
     int amount = int.tryParse(booking.totalPrice ?? '0') ?? 0;
+
     _totalAdvBookingAmt -= amount;
 
     vazhipaduBookingList.removeAt(index);
 
-    print("Deleted advanced booking amount: $amount");
+    print("Deleted advanced booking combined amount: $amount");
     print("Updated total advanced booking amount: $_totalAdvBookingAmt");
 
     notifyListeners();
   }
+
 
   void bookingPreviewSecondFloatButton(
       BuildContext context,

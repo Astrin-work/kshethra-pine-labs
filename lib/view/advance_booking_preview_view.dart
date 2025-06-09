@@ -9,7 +9,6 @@ import '../utils/app_color.dart';
 import '../utils/app_styles.dart';
 import '../utils/components/responsive_layout.dart';
 import '../utils/components/size_config.dart';
-
 class AdvancedBookingPreviewView extends StatelessWidget {
   final String selectedRepMethod;
   final List<String> selectedDays;
@@ -24,29 +23,33 @@ class AdvancedBookingPreviewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bookingViewmodel = Provider.of<BookingViewmodel>(context, listen: false);
-    final total = bookingViewmodel.totalBookingAmount;
-    return Scaffold(
-      floatingActionButton: ResponsiveLayout(
-        pinelabDevice: FloatButtonWidget(
-          amount: total,
-          title: 'Advanced Booking',
-          noOfScreens: 4,
-        ),
-        mediumDevice: FloatButtonWidget(
-          height: 65,
-          amount: total,
-          title: 'Advanced Booking',
-          noOfScreens: 4,
-        ),
-        largeDevice: FloatButtonWidget(
-          height: 75,
-          amount: total,
-          title: 'Advanced Booking',
-          noOfScreens: 4,
-        ),
-      ),
+    final bookingViewmodel = Provider.of<BookingViewmodel>(context);
 
+    return Scaffold(
+      floatingActionButton: Consumer<BookingViewmodel>(
+        builder: (context, bookingViewmodel, child) {
+          final total = bookingViewmodel.combinedTotalAmount;
+          return ResponsiveLayout(
+            pinelabDevice: FloatButtonWidget(
+              amount: total,
+              title: 'Advanced Booking',
+              noOfScreens: 4,
+            ),
+            mediumDevice: FloatButtonWidget(
+              height: 65,
+              amount: total,
+              title: 'Advanced Booking',
+              noOfScreens: 4,
+            ),
+            largeDevice: FloatButtonWidget(
+              height: 75,
+              amount: total,
+              title: 'Advanced Booking',
+              noOfScreens: 4,
+            ),
+          );
+        },
+      ),
       body: Column(
         children: [
           const AppBarWidget(title: "Advanced Booking"),
@@ -61,6 +64,7 @@ class AdvancedBookingPreviewView extends StatelessWidget {
     );
   }
 }
+
 
 class AdvPreViewWidget extends StatelessWidget {
   final String page;
@@ -240,9 +244,6 @@ class AdvPreViewWidget extends StatelessWidget {
                 );
               },
             ),
-
-
-
           ),
         );
       },
