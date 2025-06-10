@@ -29,19 +29,19 @@ class AdvancedBookingConfirmForm extends StatefulWidget {
 class _AdvancedBookingConfirmFormState
     extends State<AdvancedBookingConfirmForm> {
   final TextEditingController _nameController = TextEditingController(
-    text: "Anurag mc",
+    // text: "Anurag mc",
   );
   final TextEditingController _phoneController = TextEditingController(
-    text: "7510431565",
+    // text: "7510431565",
   );
   final TextEditingController _repDaysController = TextEditingController(
-    text: "1",
+    // text: "1",
   );
   final TextEditingController _addressController = TextEditingController(
-    text: "mannam chira (H) vellamunda po",
+    // text: "mannam chira (H) vellamunda po",
   );
   final TextEditingController _pinCodeController = TextEditingController(
-    text: "670731",
+    // text: "670731",
   );
   @override
   void initState() {
@@ -83,7 +83,7 @@ class _AdvancedBookingConfirmFormState
                   TextFormField(
                     autofocus: true,
                     validator: Validation.nameValidation,
-                    controller: _nameController,
+                    controller: bookingViewmodel.bookingNameController,
                     textAlign: TextAlign.center,
                     style: styles.blackRegular15,
                     decoration: InputDecoration(
@@ -97,7 +97,7 @@ class _AdvancedBookingConfirmFormState
                   TextFormField(
                     keyboardType: TextInputType.number,
                     validator: (value) => Validation.phoneValidation(value),
-                    controller: _phoneController,
+                    controller: bookingViewmodel.bookingPhnoController,
                     textAlign: TextAlign.center,
                     style: styles.blackRegular15,
                     maxLength: 10,
@@ -352,7 +352,7 @@ class _AdvancedBookingConfirmFormState
                           value,
                           "Enter your address",
                         ),
-                    controller: _addressController,
+                    controller: bookingViewmodel.bookingAddressController,
                     maxLines: 4,
                     style: styles.blackRegular15,
                     decoration: InputDecoration(
@@ -373,7 +373,7 @@ class _AdvancedBookingConfirmFormState
                           ),
                       maxLength: 6,
                       keyboardType: TextInputType.number,
-                      controller: _pinCodeController,
+                      controller: bookingViewmodel.bookingPinCodeController,
                       maxLines: 1,
                       style: styles.blackRegular15,
                       decoration: InputDecoration(

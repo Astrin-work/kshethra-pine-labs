@@ -75,7 +75,8 @@ class CashPayment extends StatelessWidget {
       floatingActionButton: ConfirmButtonWidget(
         onConfirm: () async {
             // await bookingViewmodel.submitVazhipadu(bookingViewmodel.selectedIndex);
-          await bookingViewmodel.submitVazhipadu();
+          // await bookingViewmodel.submitVazhipadu();
+          await bookingViewmodel.submitAdvVazhipadu();
           _onConfirmPayment(context);
         },
       ),

@@ -24,7 +24,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   @override
   Widget build(BuildContext context) {
     final bookingViewmodel = Provider.of<BookingViewmodel>(context, listen: false);
-    final total = bookingViewmodel.totalBookingAmount;
+    final total = bookingViewmodel.combinedTotalAmount;
     return Scaffold(
       body: Column(
         children: [

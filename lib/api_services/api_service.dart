@@ -17,7 +17,7 @@ class ApiService {
   ApiService() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: 'https://192.168.1.5:7102/api',
+        baseUrl: 'https://192.168.1.3:7102/api',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -70,7 +70,6 @@ class ApiService {
     }
     return godList;
   }
-
 
   Future<dynamic> postVazhipaduDetails(Map<String, dynamic> data) async {
     final token = await AppHive().getToken();
@@ -162,6 +161,7 @@ class ApiService {
     return godListEhundi;
   }
 
+
   Future<void> postEHundiDetails(Map<String, dynamic> eHundiData) async {
     final token = await AppHive().getToken();
 
@@ -191,6 +191,28 @@ class ApiService {
       }
     } catch (e) {
       print(" Error posting E-Hundi: $e");
+      rethrow;
+    }
+  }
+
+  Future<dynamic> postAdvVazhipaduDetails(Map<String, dynamic> data) async {
+    final token = await AppHive().getToken();
+
+    try {
+      final response = await _dio.post(
+        '/vazhipadu/AdvanceVazhipadureceipt',
+        data: data,
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+      print(response.data);
+      print(response.statusCode);
+      print(response.statusMessage);
+      // Return the full JSON response
+      return response.data;
+    } catch (e) {
+      print('API call error: $e');
       rethrow;
     }
   }
