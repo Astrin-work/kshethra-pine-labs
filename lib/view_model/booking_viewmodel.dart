@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:ffi';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -578,7 +577,7 @@ class BookingViewmodel extends ChangeNotifier {
     _repeatDays = repCount;
     print("Number of repeat days: $_repeatDays");
 
-    int unitPrice = selectedVazhipaadu.cost ?? 0;
+    int unitPrice = selectedVazhipaadu.cost;
     int quantity = noOfBookingVazhipaddu;
     int baseAmount = unitPrice * quantity;
 
@@ -942,7 +941,7 @@ class BookingViewmodel extends ChangeNotifier {
         repMethode: _selectedRepMethod,
         day: _selectedRepMethod == "Weekly" ? _selectedWeeklyDay : '',
         godname: selectedGods?.devathaName.toString(),
-        vazhipadu: selectedVazhipaadu.offerName ?? "", // use model field
+        vazhipadu: selectedVazhipaadu.offerName,
         price: unitPrice.toString(),
         count: noOfBookingVazhipaddu.toString(),
         totalPrice: totalAmount.toString(),
