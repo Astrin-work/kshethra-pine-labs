@@ -70,7 +70,7 @@ class _GodWidgetState extends State<GodWidget> {
                           ],
                           image: DecorationImage(
                             image: NetworkImage(godList[index].devathaImage),
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                           ),
                           // color: Colors.red,
                           borderRadius: BorderRadius.circular(10.0),

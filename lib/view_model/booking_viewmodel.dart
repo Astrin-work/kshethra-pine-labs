@@ -13,6 +13,7 @@ import 'package:kshethra_mini/view/booking_preview_view.dart';
 import 'package:kshethra_mini/view/card_payment_screen.dart';
 import 'package:kshethra_mini/view/cash_payment.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_dialogbox_widget.dart';
+import 'package:kshethra_mini/view/widgets/home_page_widgets/home_widget.dart';
 import '../api_services/api_service.dart';
 import '../model/api models/get_donation_model.dart';
 import '../model/api models/god_model.dart';
@@ -205,8 +206,6 @@ class BookingViewmodel extends ChangeNotifier {
       "bankId": "333/sbi",
       "bankName": "canara",
     };
-
-    // 🔍 Print full data to debug before sending
     print("🧾 Final POST Data:\n${jsonEncode(postData)}");
 
     try {
@@ -232,6 +231,44 @@ class BookingViewmodel extends ChangeNotifier {
       }
     }
   }
+
+
+  void onConfirmPayment(BuildContext context) {
+    int countdown = 5;
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            Future.delayed(const Duration(seconds: 1), () {
+              if (countdown > 1) {
+                setState(() {
+                  countdown--;
+                });
+              } else {
+                Navigator.of(context).pop();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  HomeWidget()),
+                      (route) => false,
+                );
+              }
+            });
+
+            return AlertDialog(
+              content: Text(
+                "Redirecting to home in $countdown...",
+                style: const TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
 
 
   Future<void> fetchGods() async {
@@ -1109,13 +1146,11 @@ class BookingViewmodel extends ChangeNotifier {
   //   return _selectedRepMethod == value;
   // }
   void switchSelectedWeeklyDay(String day) {
-    if (_selectedWeeklyDays.contains(day)) {
-      _selectedWeeklyDays.remove(day);
-    } else {
-      _selectedWeeklyDays.add(day);
-    }
+    _selectedWeeklyDays.clear();
+    _selectedWeeklyDays.add(day);
     notifyListeners();
   }
+
 
   bool toggleSelectedWeeklyDay(String day) {
     return _selectedWeeklyDays.contains(day);

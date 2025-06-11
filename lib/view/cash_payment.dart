@@ -20,7 +20,7 @@ class CashPayment extends StatelessWidget {
       ),
     );
 
-    Navigator.push(
+    Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
         builder: (context) => PaymentCompleteScreen(
@@ -28,6 +28,7 @@ class CashPayment extends StatelessWidget {
           noOfScreen: 1,
         ),
       ),
+      (route) => false,
     );
   }
 
@@ -78,6 +79,7 @@ class CashPayment extends StatelessWidget {
           await bookingViewmodel.submitVazhipadu();
           await bookingViewmodel.submitAdvVazhipadu();
           _onConfirmPayment(context);
+          
         },
       ),
 
