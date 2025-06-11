@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:kshethra_mini/utils/hive/constants.dart';
 import 'package:kshethra_mini/view/splash_screen_view.dart';
+import 'package:kshethra_mini/view/widgets/button.dart';
 import 'package:kshethra_mini/view_model/auth_viewmodel.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:kshethra_mini/view_model/donation_viewmodel.dart';

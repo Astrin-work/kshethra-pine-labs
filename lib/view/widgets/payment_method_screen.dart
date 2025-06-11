@@ -63,10 +63,6 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
           }
         },
       ),
-
-
-
-
     );
   }
 }
