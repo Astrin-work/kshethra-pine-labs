@@ -215,7 +215,7 @@ class BookingViewmodel extends ChangeNotifier {
         List<dynamic> successList = response['successList'];
         for (int i = 0; i < successList.length; i++) {
           final item = successList[i];
-          print("✅ Booking ${i + 1}: ${item['offerName']} for ${item['personName']}");
+          print(" Booking ${i + 1}: ${item['offerName']} for ${item['personName']}");
         }
       } else {
         print("⚠️ Submission failed or no successList.");
@@ -223,7 +223,7 @@ class BookingViewmodel extends ChangeNotifier {
       }
     } catch (e) {
       if (e is DioException) {
-        print("❌ DioException (400 Bad Request):");
+        print("DioException (400 Bad Request):");
         print("Status: ${e.response?.statusCode}");
         print("Error Body: ${e.response?.data}");
       } else {
@@ -298,7 +298,7 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void _updatePostalAmount() {
-    if (_postalOption == 'Postal') {
+    if (_postalOption == 'Ordinary Postal') {
       _postalAmount = 5.0 * _repeatDays;
     } else if (_postalOption == 'Speed Post') {
       _postalAmount = 45.0 * _repeatDays;
@@ -948,6 +948,59 @@ class BookingViewmodel extends ChangeNotifier {
   //   notifyListeners();
   // }
 
+  // void setVazhipaduAdvBookingList(
+  //     Vazhipadus selectedVazhipaadu,
+  //     BuildContext context,
+  //     ) {
+  //   bool valid = advBookingKey.currentState?.validate() ?? false;
+  //   if (!valid) return;
+  //
+  //   if (_advBookOption.isEmpty) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBarWidget(
+  //         msg: "Select one option from Star or Date",
+  //         color: kGrey,
+  //       ).build(context),
+  //     );
+  //     return;
+  //   }
+  //
+  //   int repetitions = int.tryParse(bookingRepController.text.trim()) ?? 1;
+  //   if (repetitions == 0) repetitions = 1;
+  //
+  //   int unitPrice = selectedVazhipaadu.cost; // use model field directly
+  //   int totalAmount = unitPrice * noOfBookingVazhipaddu;
+  //
+  //   _vazhipaduBookingList.add(
+  //     UserBookingModel(
+  //       name: bookingNameController.text.trim(),
+  //       phno: bookingPhnoController.text.trim(),
+  //       star: _selectedStar.tr(),
+  //       date: _selectedDate,
+  //       option: _advBookOption == "star".tr() ? _selectedStar : _selectedDate,
+  //       repMethode: _selectedRepMethod,
+  //       day: _selectedRepMethod == "Weekly" ? _selectedWeeklyDay : '',
+  //       godname: selectedGods?.devathaName.toString(),
+  //       vazhipadu: selectedVazhipaadu.offerName,
+  //       price: unitPrice.toString(),
+  //       count: noOfBookingVazhipaddu.toString(),
+  //       totalPrice: totalAmount.toString(),
+  //     ),
+  //   );
+  //
+  //   print('------------debug values----------');
+  //   print(unitPrice);
+  //   print(noOfBookingVazhipaddu);
+  //   print(totalAmount);
+  //
+  //   _totalAdvBookingAmt += totalAmount;
+  //   log(_totalAdvBookingAmt.toString(), name: "adv booking");
+  //
+  //   popFunction(context);
+  //   navigateAdvBookingPreview(context);
+  //   notifyListeners();
+  // }
+
   void setVazhipaduAdvBookingList(
       Vazhipadus selectedVazhipaadu,
       BuildContext context,
@@ -955,11 +1008,13 @@ class BookingViewmodel extends ChangeNotifier {
     bool valid = advBookingKey.currentState?.validate() ?? false;
     if (!valid) return;
 
-    if (_advBookOption.isEmpty) {
+    // Check for empty or default placeholder values
+    if (_selectedStar.isEmpty || _selectedStar == "Star" ||
+        _selectedDate.isEmpty || _selectedDate == "Date") {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBarWidget(
-          msg: "Select one option from Star or Date",
-          color: kGrey,
+          msg: "Please select both Star and Date",
+          color: kRed,
         ).build(context),
       );
       return;
@@ -968,7 +1023,7 @@ class BookingViewmodel extends ChangeNotifier {
     int repetitions = int.tryParse(bookingRepController.text.trim()) ?? 1;
     if (repetitions == 0) repetitions = 1;
 
-    int unitPrice = selectedVazhipaadu.cost; // use model field directly
+    int unitPrice = selectedVazhipaadu.cost;
     int totalAmount = unitPrice * noOfBookingVazhipaddu;
 
     _vazhipaduBookingList.add(
@@ -977,7 +1032,7 @@ class BookingViewmodel extends ChangeNotifier {
         phno: bookingPhnoController.text.trim(),
         star: _selectedStar.tr(),
         date: _selectedDate,
-        option: _advBookOption == "star".tr() ? _selectedStar : _selectedDate,
+        option: _selectedStar,
         repMethode: _selectedRepMethod,
         day: _selectedRepMethod == "Weekly" ? _selectedWeeklyDay : '',
         godname: selectedGods?.devathaName.toString(),
@@ -988,11 +1043,6 @@ class BookingViewmodel extends ChangeNotifier {
       ),
     );
 
-    print('------------debug values----------');
-    print(unitPrice);
-    print(noOfBookingVazhipaddu);
-    print(totalAmount);
-
     _totalAdvBookingAmt += totalAmount;
     log(_totalAdvBookingAmt.toString(), name: "adv booking");
 
@@ -1000,6 +1050,9 @@ class BookingViewmodel extends ChangeNotifier {
     navigateAdvBookingPreview(context);
     notifyListeners();
   }
+
+
+
 
   int calculateBookingTotalAmt() {
     if (_vazhipaduBookingList.isEmpty) return 0;

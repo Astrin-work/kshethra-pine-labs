@@ -16,7 +16,7 @@ class AuthViewmodel extends ChangeNotifier {
   bool get isPassVissible => _isPassVissible;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-
+  final ValueNotifier<bool> isLoginLoading = ValueNotifier<bool>(false);
 
   void tooglePass() {
     _isPassVissible = !_isPassVissible;
@@ -37,7 +37,7 @@ class AuthViewmodel extends ChangeNotifier {
     );
   }
 
-  void selectLanguagePageNavigate(BuildContext context) async {
+  Future<void> selectLanguagePageNavigate(BuildContext context) async {
     bool valid = loginKey.currentState?.validate() ?? false;
     if (valid) {
       final username = userNameController.text.trim();
@@ -49,7 +49,6 @@ class AuthViewmodel extends ChangeNotifier {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBarWidget(msg: "Login successful", color: Colors.green).build(context),
         );
-
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => LanguageSelectView()),
@@ -61,6 +60,12 @@ class AuthViewmodel extends ChangeNotifier {
         );
       }
     }
+  }
+
+
+  void setLoginLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
   }
 
   void logout(BuildContext context) {
