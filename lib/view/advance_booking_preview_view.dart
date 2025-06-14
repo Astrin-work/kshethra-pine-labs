@@ -25,7 +25,7 @@ class AdvancedBookingPreviewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bookingViewmodel = Provider.of<BookingViewmodel>(context);
+
 
     return Scaffold(
       floatingActionButton: Consumer<BookingViewmodel>(
@@ -111,7 +111,7 @@ class AdvPreViewWidget extends StatelessWidget {
                 final booking = bookings[index];
                 final bookingPrice = int.tryParse(booking.totalPrice ?? '0') ?? 0;
                 final postal = bookingViewmodel.postalAmount.toInt();
-                final perBookingTotal = bookingPrice + postal;
+
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5.0),
