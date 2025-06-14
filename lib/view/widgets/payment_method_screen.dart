@@ -51,7 +51,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
               bookingViewmodel.navigateToQrScanner(context);
               break;
             case 'Cash':
-              bookingViewmodel.navigateToCashPayment(context);
+              bookingViewmodel.navigateToCashPayment(context,total);
               break;
             case 'Card':
               bookingViewmodel.navigateCardScreen(context);

@@ -23,10 +23,9 @@ class CashPayment extends StatelessWidget {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: (context) => PaymentCompleteScreen(
-          amount: amount.toString(),
-          noOfScreen: 1,
-        ),
+        builder:
+            (context) =>
+                PaymentCompleteScreen(amount: amount.toString(), noOfScreen: 1),
       ),
       (route) => false,
     );
@@ -35,7 +34,10 @@ class CashPayment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();
-    final bookingViewmodel = Provider.of<BookingViewmodel>(context, listen: false);
+    final bookingViewmodel = Provider.of<BookingViewmodel>(
+      context,
+      listen: false,
+    );
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,10 +49,7 @@ class CashPayment extends StatelessWidget {
               width: 120,
               height: 100,
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: kDullPrimaryColor,
-                  width: 5,
-                ),
+                border: Border.all(color: kDullPrimaryColor, width: 5),
                 borderRadius: BorderRadius.circular(8),
                 image: const DecorationImage(
                   image: AssetImage('assets/icons/donation.png'),
@@ -75,14 +74,12 @@ class CashPayment extends StatelessWidget {
       ),
       floatingActionButton: ConfirmButtonWidget(
         onConfirm: () async {
-            // await bookingViewmodel.submitVazhipadu(bookingViewmodel.selectedIndex);
+          // await bookingViewmodel.submitVazhipadu(bookingViewmodel.selectedIndex);
           await bookingViewmodel.submitVazhipadu();
           await bookingViewmodel.submitAdvVazhipadu();
           _onConfirmPayment(context);
-          
         },
       ),
-
     );
   }
 }

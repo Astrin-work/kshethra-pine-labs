@@ -44,7 +44,7 @@ class BookingViewmodel extends ChangeNotifier {
   List<Godmodel> _gods = [];
   List<Getdonationmodel> donations = [];
   int selectedIndex = 0;
-  int get combinedTotalAmount => _totalAdvBookingAmt + _postalAmount.toInt();
+  // int get combinedTotalAmount => _totalAdvBookingAmt + _postalAmount.toInt();
 
   List<Godmodel> get gods => _gods;
   bool get isLoading => _isLoading;
@@ -63,7 +63,9 @@ class BookingViewmodel extends ChangeNotifier {
   // // BookingModel _selectedGod = bList[0];
   // BookingModel get selectedGod => _selectedGod;
   Godmodel? selectedGods;
+  bool _isPrasadamSelected = false;
 
+  bool get isPrasadamSelected => _isPrasadamSelected;
   String _selectedStar = "Star".tr();
   String get selectedStar => _selectedStar;
   String _selectedRepMethod = "Once";
@@ -171,10 +173,10 @@ class BookingViewmodel extends ChangeNotifier {
       String formattedDate = "${DateFormat('yyyy-MM-dd').format(selectedDate)}T00:00:00";
 
       return {
-      // "devathaName": "ഭഗവതി",
-      // "offerName": "കുങ്കുമാര്ചന",
-      // "personName": "vvv",
-      // "personStar": "Makayiram"
+        // "devathaName": "ഭഗവതി",
+        // "offerName": "കുങ്കുമാര്ചന",
+        // "personName": "vvv",
+        // "personStar": "Makayiram"
         "devathaName": item.godname??"",
         "offerName": item.vazhipadu ?? "vazhipadu2",
         "personName": item.name ?? "",
@@ -218,16 +220,16 @@ class BookingViewmodel extends ChangeNotifier {
           print(" Booking ${i + 1}: ${item['offerName']} for ${item['personName']}");
         }
       } else {
-        print("⚠️ Submission failed or no successList.");
+        print(" Submission failed or no successList.");
         print("Response: $response");
       }
     } catch (e) {
       if (e is DioException) {
-        print("DioException (400 Bad Request):");
+        print(" DioException (400 Bad Request):");
         print("Status: ${e.response?.statusCode}");
         print("Error Body: ${e.response?.data}");
       } else {
-        print("❌ Unexpected exception: $e");
+        print(" Unexpected exception: $e");
       }
     }
   }
@@ -298,7 +300,7 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void _updatePostalAmount() {
-    if (_postalOption == 'Ordinary Postal') {
+    if (_postalOption == 'Postal') {
       _postalAmount = 5.0 * _repeatDays;
     } else if (_postalOption == 'Speed Post') {
       _postalAmount = 45.0 * _repeatDays;
@@ -379,6 +381,28 @@ class BookingViewmodel extends ChangeNotifier {
   //   bookingPhnoController.clear();
   // }
 
+
+  int get combinedTotalAmount {
+    int total = 0;
+    for (var booking in _vazhipaduBookingList) {
+      final int unitPrice = int.tryParse(booking.price ?? '0') ?? 0;
+      final int count = int.tryParse(booking.count ?? '1') ?? 1;
+      final int repeat = booking.repMethode == 'Once' ? 1 : repeatDays;
+      final int baseTotal = unitPrice * count * repeat;
+      final int postal = isPrasadamSelected ? postalAmount.toInt() : 0;
+
+      total += baseTotal + postal;
+    }
+    return total;
+  }
+
+
+
+
+
+
+
+
   void setBookingPage() {
     _advBookOption = "";
     _advBookingSavedAmt = 0;
@@ -421,17 +445,10 @@ class BookingViewmodel extends ChangeNotifier {
   }
 
   void navigateAdvBookingPreview(BuildContext context) {
-    print('Quantity: $noOfBookingVazhipaddu');
-    print('Total Amount: ₹$totalAmount');
-    print('Total Amount: ₹$advBookingAmt');
-    print('Total Amount: ₹$totalAdvBookingAmt');
-    print('Total Amount: ₹$totalVazhipaduAmt');
-
     if (_totalVazhipaduAmt == 0) {
-      print(totalVazhipaduAmt);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBarWidget(
-          msg: "Payment request denied!",
+          msg: "Please select a Vazhippadu",
           color: kRed,
         ).build(context),
       );
@@ -448,17 +465,17 @@ class BookingViewmodel extends ChangeNotifier {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder:
-            (context) => AdvancedBookingPreviewView(
+        builder: (context) => AdvancedBookingPreviewView(
           selectedRepMethod: selectedRepMethod,
           selectedDays: selectedDays,
-          totalAmount: totalVazhipaduAmt,
+          totalAmount:_amtOfBookingVazhipaddu,
         ),
       ),
     );
 
     notifyListeners();
   }
+
 
   // void navigateAdvBookingPreview(BuildContext context) {
   //   if (_totalVazhipaduAmt == 0) {
@@ -948,58 +965,23 @@ class BookingViewmodel extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  // void setVazhipaduAdvBookingList(
-  //     Vazhipadus selectedVazhipaadu,
-  //     BuildContext context,
-  //     ) {
-  //   bool valid = advBookingKey.currentState?.validate() ?? false;
-  //   if (!valid) return;
+  // int calculateVazhipaduTotal({
+  //   required String? price,
+  //   required String? count,
+  //   required String repMethod,
+  //   required int repeatDays,
+  //   required bool includePostal,
+  //   required int postalAmount,
+  // }) {
+  //   final int unitPrice = int.tryParse(price ?? '0') ?? 0;
+  //   final int quantity = int.tryParse(count ?? '1') ?? 1;
+  //   final int repeat = repMethod == 'Once' ? 1 : repeatDays;
+  //   final int baseTotal = unitPrice * quantity * repeat;
+  //   final int postal = includePostal ? postalAmount : 0;
   //
-  //   if (_advBookOption.isEmpty) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBarWidget(
-  //         msg: "Select one option from Star or Date",
-  //         color: kGrey,
-  //       ).build(context),
-  //     );
-  //     return;
-  //   }
-  //
-  //   int repetitions = int.tryParse(bookingRepController.text.trim()) ?? 1;
-  //   if (repetitions == 0) repetitions = 1;
-  //
-  //   int unitPrice = selectedVazhipaadu.cost; // use model field directly
-  //   int totalAmount = unitPrice * noOfBookingVazhipaddu;
-  //
-  //   _vazhipaduBookingList.add(
-  //     UserBookingModel(
-  //       name: bookingNameController.text.trim(),
-  //       phno: bookingPhnoController.text.trim(),
-  //       star: _selectedStar.tr(),
-  //       date: _selectedDate,
-  //       option: _advBookOption == "star".tr() ? _selectedStar : _selectedDate,
-  //       repMethode: _selectedRepMethod,
-  //       day: _selectedRepMethod == "Weekly" ? _selectedWeeklyDay : '',
-  //       godname: selectedGods?.devathaName.toString(),
-  //       vazhipadu: selectedVazhipaadu.offerName,
-  //       price: unitPrice.toString(),
-  //       count: noOfBookingVazhipaddu.toString(),
-  //       totalPrice: totalAmount.toString(),
-  //     ),
-  //   );
-  //
-  //   print('------------debug values----------');
-  //   print(unitPrice);
-  //   print(noOfBookingVazhipaddu);
-  //   print(totalAmount);
-  //
-  //   _totalAdvBookingAmt += totalAmount;
-  //   log(_totalAdvBookingAmt.toString(), name: "adv booking");
-  //
-  //   popFunction(context);
-  //   navigateAdvBookingPreview(context);
-  //   notifyListeners();
+  //   return baseTotal + postal;
   // }
+
 
   void setVazhipaduAdvBookingList(
       Vazhipadus selectedVazhipaadu,
@@ -1050,8 +1032,6 @@ class BookingViewmodel extends ChangeNotifier {
     navigateAdvBookingPreview(context);
     notifyListeners();
   }
-
-
 
 
   int calculateBookingTotalAmt() {
@@ -1166,11 +1146,11 @@ class BookingViewmodel extends ChangeNotifier {
     );
   }
 
-  void navigateToCashPayment(BuildContext context) {
+  void navigateToCashPayment(BuildContext context, int total) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CashPayment(amount: totalVazhipaduAmt),
+        builder: (context) => CashPayment(amount: total),
       ),
     );
   }

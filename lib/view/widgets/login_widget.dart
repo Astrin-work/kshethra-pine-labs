@@ -91,7 +91,7 @@ class LoginWidget extends StatelessWidget {
                                   height: 20,
                                   child: CircularProgressIndicator(
                                     strokeWidth: 3,
-                                    color: kWhite,
+                                    color: kBlack,
                                   ),
                                 )
                                 : Text("LOGIN", style: styles.blackRegular18),

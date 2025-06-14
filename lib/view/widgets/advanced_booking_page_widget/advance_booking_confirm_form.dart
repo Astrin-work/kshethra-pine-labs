@@ -10,7 +10,6 @@ import 'package:kshethra_mini/view/widgets/advanced_booking_page_widget/weeklywi
 import 'package:kshethra_mini/view/widgets/booking_page_widget/star_dialodbox_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
-
 import '../../../model/api models/god_model.dart';
 
 class AdvancedBookingConfirmForm extends StatefulWidget {
@@ -66,7 +65,7 @@ class _AdvancedBookingConfirmFormState
 
   double _TottalAmount = 0.0;
 
-  final Map<String, double> postalRates = {"Postal": 5.0, "Speed Post": 45.0};
+  final Map<String, double> postalRates = {"Postal": 5.0, "Speed ": 45.0};
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
@@ -235,10 +234,10 @@ class _AdvancedBookingConfirmFormState
                                   keyboardType: TextInputType.number,
                                   validator:
                                       (value) => Validation.numberValidation(
-                                        value,
-                                        "Count",
-                                        "Enter valid days",
-                                      ),
+                                    value,
+                                    "Count",
+                                    "Enter valid days",
+                                  ),
                                   controller: _repDaysController,
                                   onChanged: (value) {
                                     bookingViewmodel.bookingRepOnchange(
@@ -286,58 +285,59 @@ class _AdvancedBookingConfirmFormState
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
                                   children:
-                                      postalRates.keys.map((option) {
-                                        final isSelected =
-                                            bookingViewmodel.postalOption ==
+                                  postalRates.keys.map((option) {
+                                    final isSelected =
+                                        bookingViewmodel.postalOption ==
                                             option;
-                                        final totalCharge =
-                                            bookingViewmodel.postalAmount;
-                                        return Row(
-                                          children: [
-                                            Radio<String>(
-                                              value: option,
-                                              groupValue:
-                                                  bookingViewmodel.postalOption,
-                                              onChanged: (value) {
-                                                if (value != null) {
-                                                  bookingViewmodel
-                                                      .selectPostalOption(
-                                                        value,
-                                                      );
-                                                }
-                                              },
-                                              activeColor: kPrimaryColor,
+                                    final totalCharge =
+                                        bookingViewmodel.postalAmount;
+                                    return Row(
+                                      children: [
+                                        Radio<String>(
+                                          value: option,
+                                          groupValue:
+                                          bookingViewmodel.postalOption,
+                                          onChanged: (value) {
+                                            if (value != null) {
+                                              bookingViewmodel
+                                                  .selectPostalOption(
+                                                value,
+
+                                              );
+                                            }
+                                          },
+                                          activeColor: kPrimaryColor,
+                                        ),
+                                        Text(
+                                          option,
+                                          style: styles.blackRegular15,
+                                        ),
+                                        if (isSelected)
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                              left: 8,
                                             ),
-                                            Text(
-                                              option,
-                                              style: styles.blackRegular15,
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 12,
+                                              vertical: 6,
                                             ),
-                                            if (isSelected)
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  left: 8,
-                                                ),
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal: 12,
-                                                  vertical: 6,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.grey[200],
-                                                  borderRadius:
-                                                      BorderRadius.circular(6),
-                                                  border: Border.all(
-                                                    color: Colors.grey.shade400,
-                                                  ),
-                                                ),
-                                                child: Text(
-                                                  "₹${totalCharge.toStringAsFixed(2)}",
-                                                  style: styles.blackRegular13,
-                                                ),
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[200],
+                                              borderRadius:
+                                              BorderRadius.circular(6),
+                                              border: Border.all(
+                                                color: Colors.grey.shade400,
                                               ),
-                                            SizedBox(width: 20),
-                                          ],
-                                        );
-                                      }).toList(),
+                                            ),
+                                            child: Text(
+                                              "₹${totalCharge.toStringAsFixed(2)}",
+                                              style: styles.blackRegular13,
+                                            ),
+                                          ),
+                                        SizedBox(width: 20),
+                                      ],
+                                    );
+                                  }).toList(),
                                 ),
                               ),
                               10.kH,
@@ -391,3 +391,21 @@ class _AdvancedBookingConfirmFormState
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
