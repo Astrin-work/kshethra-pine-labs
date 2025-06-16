@@ -17,16 +17,17 @@ class SplashScreenView extends StatelessWidget {
           height: SizeConfig.screenHeight,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(Assets.images.homeBackground.path),
+              image: AssetImage(Assets.images.splashBackground.path),
               fit: BoxFit.fill,
             ),
           ),
           child: Column(
+
             children: [
               15.kH,
               Spacer(),
               SizedBox(
-                width: 140,
+                width: 180,
                 child: Image.asset(Assets.icons.kshethraLogo.path),
               ),
               Spacer(),

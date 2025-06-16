@@ -12,7 +12,10 @@ import 'package:kshethra_mini/view/advance_booking_preview_view.dart';
 import 'package:kshethra_mini/view/booking_preview_view.dart';
 import 'package:kshethra_mini/view/card_payment_screen.dart';
 import 'package:kshethra_mini/view/cash_payment.dart';
+import 'package:kshethra_mini/view/widgets/advanced_booking_page_widget/cash_payment_advance_booking.dart';
+import 'package:kshethra_mini/view/widgets/advanced_booking_page_widget/payment_method_screen_advance_booking.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_dialogbox_widget.dart';
+import 'package:kshethra_mini/view/widgets/donation_page_widgets/qr_scanner_component_donations.dart';
 import 'package:kshethra_mini/view/widgets/home_page_widgets/home_widget.dart';
 import '../api_services/api_service.dart';
 import '../model/api models/get_donation_model.dart';
@@ -295,7 +298,7 @@ class BookingViewmodel extends ChangeNotifier {
   set repeatDays(int value) {
     _repeatDays = value;
     _updatePostalAmount();
-    _recalculateTotalAmount();
+    recalculateTotalAmount();
     notifyListeners();
   }
 
@@ -339,7 +342,9 @@ class BookingViewmodel extends ChangeNotifier {
       _totalVazhipaduAmt -= _postalAmount.toInt();
       _isPostalAdded = false;
     }
-    _postalOption = option;
+
+    _postalOption = option.trim();
+
     if (_postalOption.isNotEmpty) {
       _updatePostalAmount();
       _totalVazhipaduAmt += _postalAmount.toInt();
@@ -347,23 +352,22 @@ class BookingViewmodel extends ChangeNotifier {
     } else {
       _postalAmount = 0.0;
     }
-    _recalculateTotalAmount();
 
-    print("Selected Postal Option: $_postalOption");
-    print("Repeat Days: $_repeatDays");
-    print("Postal Amount: ₹$_postalAmount");
-    print("Total Vazhipaadu Amount (with postal): ₹$_totalVazhipaduAmt");
+    recalculateTotalAmount();
 
     notifyListeners();
   }
+
 
   void updateRepeatDays(int days) {
     _repeatDays = days;
     notifyListeners();
   }
 
-  void _recalculateTotalAmount() {
-    _totalAmount = _totalVazhipaduAmt + _postalAmount;
+  void recalculateTotalAmount() {
+    _totalAmount = combinedTotalAmount.toDouble();
+
+    notifyListeners(); // Triggers UI updates
   }
 
   // void setBookingPage() {
@@ -384,17 +388,26 @@ class BookingViewmodel extends ChangeNotifier {
 
   int get combinedTotalAmount {
     int total = 0;
+
     for (var booking in _vazhipaduBookingList) {
       final int unitPrice = int.tryParse(booking.price ?? '0') ?? 0;
       final int count = int.tryParse(booking.count ?? '1') ?? 1;
       final int repeat = booking.repMethode == 'Once' ? 1 : repeatDays;
       final int baseTotal = unitPrice * count * repeat;
-      final int postal = isPrasadamSelected ? postalAmount.toInt() : 0;
 
-      total += baseTotal + postal;
+      total += baseTotal;
     }
+    print("-----------postals-----------");
+    print(postalAmount);
+    print(_postalAmount);
+    print(_postalOption);
+    if (isPrasadamSelected) {
+      total += postalAmount.toInt();
+    }
+
     return total;
   }
+
 
 
 
@@ -1114,20 +1127,9 @@ class BookingViewmodel extends ChangeNotifier {
       );
       return;
     }
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder:
-    //         (context) => QrScannerComponent(
-    //       amount: amount != null ? "$amount" : "$totalVazhipaduAmt",
-    //       noOfScreen: noOfScreens,
-    //       title: title,
-    //     ),
-    //   ),
-    // );
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => PaymentMethodScreen()),
+      MaterialPageRoute(builder: (context) => PaymentMethodScreenAdvanceBooking()),
     );
     notifyListeners();
   }
@@ -1137,7 +1139,7 @@ class BookingViewmodel extends ChangeNotifier {
       context,
       MaterialPageRoute(
         builder:
-            (context) => QrScannerComponent(
+            (context) => QrScannerComponentDonations(
           amount: "$totalVazhipaduAmt",
           noOfScreen: 1,
           title: "QR Scanner",
@@ -1155,6 +1157,15 @@ class BookingViewmodel extends ChangeNotifier {
     );
   }
 
+  void navigateToCashPaymentAdvanceBooking(BuildContext context, int total) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CashPaymentAdvanceBooking(amount: total),
+      ),
+    );
+  }
+
   void navigateCardScreen(context) {
     Navigator.push(
       context,
@@ -1162,10 +1173,6 @@ class BookingViewmodel extends ChangeNotifier {
     );
   }
 
-  // void switchSelectedRepMethod(String value) {
-  //   _selectedRepMethod = value;
-  //   notifyListeners();
-  // }
   void switchSelectedRepMethod(String method) {
     _selectedRepMethod = method;
     notifyListeners();

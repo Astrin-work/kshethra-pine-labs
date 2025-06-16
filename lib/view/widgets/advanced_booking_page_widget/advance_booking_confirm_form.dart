@@ -65,7 +65,11 @@ class _AdvancedBookingConfirmFormState
 
   double _TottalAmount = 0.0;
 
-  final Map<String, double> postalRates = {"Postal": 5.0, "Speed ": 45.0};
+  final Map<String, double> postalRates = {
+    "Postal": 5.0,
+    "Speed Post": 45.0,
+  };
+
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
@@ -299,13 +303,13 @@ class _AdvancedBookingConfirmFormState
                                           bookingViewmodel.postalOption,
                                           onChanged: (value) {
                                             if (value != null) {
-                                              bookingViewmodel
-                                                  .selectPostalOption(
-                                                value,
-
-                                              );
+                                              print("Clicked: '$value'");
+                                              print("Before: '${bookingViewmodel.postalOption}'");
+                                              bookingViewmodel.selectPostalOption(value);
+                                              print("After: '${bookingViewmodel.postalOption}'");
                                             }
                                           },
+
                                           activeColor: kPrimaryColor,
                                         ),
                                         Text(

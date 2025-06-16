@@ -17,7 +17,6 @@ import 'package:easy_localization/easy_localization.dart';
 Box? box;
 
 Future<void> main() async {
-  HttpOverrides.global = MyHttpOverrides();
 
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -68,17 +67,4 @@ class MyApp extends StatelessWidget {
   }
 }
 
- // used for the local host
 
-
-class MyHttpOverrides extends HttpOverrides {
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (
-          X509Certificate cert,
-          String host,
-          int port,
-          ) => true;
-  }
-}

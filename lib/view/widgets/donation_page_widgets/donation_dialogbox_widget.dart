@@ -22,36 +22,36 @@ class DonationDialogWidget extends StatelessWidget {
     required this.acctHeadName,
   });
 
-  Future<bool> postDonation(BuildContext context) async {
-    final donationViewmodel = Provider.of<DonationViewmodel>(
-      context,
-      listen: false,
-    );
-
-    final donationData = {
-      "name": name,
-      "phoneNumber": phone,
-      "acctHeadName": acctHeadName,
-      "amount": donationViewmodel.donationAmountController.text.trim(),
-      "paymentType": "UPI",
-      "transactionId": "txn_${DateTime.now().millisecondsSinceEpoch}",
-      "bankId": "BANK001",
-      "bankName": "Test Bank",
-    };
-
-    try {
-      await ApiService().postDonationDetails(donationData);
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Donation posted successfully!")));
-      return true;
-    } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Failed to post donation: $e")));
-      return false;
-    }
-  }
+  // Future<bool> postDonation(BuildContext context) async {
+  //   final donationViewmodel = Provider.of<DonationViewmodel>(
+  //     context,
+  //     listen: false,
+  //   );
+  //
+  //   final donationData = {
+  //     "name": name,
+  //     "phoneNumber": phone,
+  //     "acctHeadName": acctHeadName,
+  //     "amount": donationViewmodel.donationAmountController.text.trim(),
+  //     "paymentType": "UPI",
+  //     "transactionId": "txn_${DateTime.now().millisecondsSinceEpoch}",
+  //     "bankId": "BANK001",
+  //     "bankName": "Test Bank",
+  //   };
+  //
+  //   try {
+  //     await ApiService().postDonationDetails(donationData);
+  //     ScaffoldMessenger.of(
+  //       context,
+  //     ).showSnackBar(SnackBar(content: Text("Donation posted successfully!")));
+  //     return true;
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(
+  //       context,
+  //     ).showSnackBar(SnackBar(content: Text("Failed to post donation: $e")));
+  //     return false;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -98,49 +98,37 @@ class DonationDialogWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     MaterialButton(
-                      // onPressed: () async {
-                      //   if (donationViewmodel.donationKey.currentState
-                      //           ?.validate() ??
-                      //       false) {
-                      //     bool success = await postDonation(context);
-                      //     if (success) {
-                      //       donationViewmodel.clearDonationAmount();
-                      //
-                      //       Navigator.pop(context);
-                      //     }
-                      //   }
-                      // },
-                      onPressed: () async {
-                        final donationViewmodel = Provider.of<DonationViewmodel>(context, listen: false);
-
-                        if (donationViewmodel.donationKey.currentState?.validate() ?? false) {
-                          final success = await postDonation(context);
-
-                          if (success && context.mounted) {
-                            // Navigate to PaymentMethodScreen passing the amount
-                            final amount = donationViewmodel.donationAmountController.text.trim();
-
-                            Navigator.push(
+                      onPressed: () {
+                        final donationViewmodel =
+                            Provider.of<DonationViewmodel>(
                               context,
-                              MaterialPageRoute(
-                                builder: (context) => PaymentMethodScreen(
-                                ),
-                              ),
+                              listen: false,
                             );
 
-                            // Optionally clear after navigation
-                            donationViewmodel.clearDonationAmount();
-                            donationViewmodel.popFunction(context); // Close the dialog
-                          }
+                        if (donationViewmodel.donationKey.currentState
+                                ?.validate() ??
+                            false) {
+                          final amount =
+                              donationViewmodel.donationAmountController.text
+                                  .trim();
+                          print("-----------amount---------");
+                          print(amount);
+                          donationViewmodel.navigateToPaymentMethodPage(
+                            context,
+                            amount,
+                            name,
+                            phone,
+                            acctHeadName,
+                          );
                         }
                       },
-
                       shape: RoundedRectangleBorder(
                         side: BorderSide(color: kDullPrimaryColor, width: 2),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Text("Pay".tr()),
                     ),
+
                     MaterialButton(
                       onPressed: () {
                         donationViewmodel.popFunction(context);

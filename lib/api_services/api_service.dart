@@ -16,7 +16,7 @@ class ApiService {
   ApiService() {
     _dio = Dio(
       BaseOptions(
-          baseUrl: 'https://192.168.1.4:7102/api',
+          baseUrl: 'https://online.astrins.com/api',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -84,7 +84,7 @@ class ApiService {
       print(response.data);
       print(response.statusCode);
       print(response.statusMessage);
-      // Return the full JSON response
+
       return response.data;
     } catch (e) {
       print('API call error: $e');

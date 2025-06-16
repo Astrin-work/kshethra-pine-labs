@@ -30,26 +30,23 @@ class AdvancedBookingPreviewView extends StatelessWidget {
     return Scaffold(
       floatingActionButton: Consumer<BookingViewmodel>(
         builder: (context, bookingViewmodel, child) {
-          // final bookings = bookingViewmodel.vazhipaduBookingList;
-          final total = bookingViewmodel.combinedTotalAmount;
-
-
+          final total = bookingViewmodel.combinedTotalAmount+bookingViewmodel.postalAmount;
 
           return ResponsiveLayout(
             pinelabDevice: FloatButtonWidget(
-              amount: total,
+              amount: total.toInt(),
               title: 'Advanced Booking',
               noOfScreens: 4,
             ),
             mediumDevice: FloatButtonWidget(
               height: 65,
-              amount: total,
+              amount: total.toInt(),
               title: 'Advanced Booking',
               noOfScreens: 4,
             ),
             largeDevice: FloatButtonWidget(
               height: 75,
-              amount: total,
+              amount: total.toInt(),
               title: 'Advanced Booking',
               noOfScreens: 4,
             ),

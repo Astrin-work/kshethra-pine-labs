@@ -6,7 +6,8 @@ import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'booking_page_widget/float_button_widget.dart';
 
 class PaymentMethodScreen extends StatefulWidget {
-  const PaymentMethodScreen({super.key});
+  final String?amount;
+  const PaymentMethodScreen({super.key,this.amount});
 
   @override
   State<PaymentMethodScreen> createState() => _PaymentMethodScreenState();
@@ -24,7 +25,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   @override
   Widget build(BuildContext context) {
     final bookingViewmodel = Provider.of<BookingViewmodel>(context, listen: false);
-    final total = bookingViewmodel.combinedTotalAmount;
+    final total = bookingViewmodel.combinedTotalAmount+bookingViewmodel.postalAmount;
     return Scaffold(
       body: Column(
         children: [
@@ -41,7 +42,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
         ],
       ),
       floatingActionButton: FloatButtonWidget(
-        amount: total,
+        amount: total.toInt(),
         height: 60,
         title: 'Confirm',
         noOfScreens: 1,
@@ -51,7 +52,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
               bookingViewmodel.navigateToQrScanner(context);
               break;
             case 'Cash':
-              bookingViewmodel.navigateToCashPayment(context,total);
+              bookingViewmodel.navigateToCashPayment(context,total.toInt());
               break;
             case 'Card':
               bookingViewmodel.navigateCardScreen(context);

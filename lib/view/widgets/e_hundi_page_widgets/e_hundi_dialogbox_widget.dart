@@ -4,6 +4,7 @@ import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/utils/validation.dart';
+import 'package:kshethra_mini/view/widgets/e_hundi_page_widgets/payment_method_screen_e_hundi.dart';
 import 'package:kshethra_mini/view_model/e_hundi_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -200,6 +201,7 @@ class _EHundiDialogWidgetState extends State<EHundiDialogWidget> {
                               context,
                               listen: false,
                             );
+
                             if (eHundiViewModel.eHundiKey.currentState?.validate() ?? false) {
                               final success = await postEbannaramiDonation(
                                 context,
@@ -207,19 +209,32 @@ class _EHundiDialogWidgetState extends State<EHundiDialogWidget> {
                               );
 
                               if (success && context.mounted) {
-                                eHundiViewModel.navigateScannerPage(context);
+                                final amount = eHundiViewModel.eHundiAmountController.text.trim();
+                                final name = eHundiViewModel.eHundiNameController.text.trim();
+                                final phone = eHundiViewModel.eHundiPhoneController.text.trim();
+                                // final acctHeadName = eHundiViewModel.selectedAcctHead ?? '';
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PaymentMethodScreenEHundi(
+                                      amount: amount,
+                                      name: name,
+                                      phone: phone,
+                                      // acctHeadName: acctHeadName,
+                                    ),
+                                  ),
+                                );
                               }
                             }
                           },
                           shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                              color: kDullPrimaryColor,
-                              width: 2,
-                            ),
+                            side: const BorderSide(color: kDullPrimaryColor, width: 2),
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Text("Pay".tr()),
                         ),
+
 
                         MaterialButton(
                           onPressed: () {

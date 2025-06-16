@@ -76,7 +76,7 @@ class CashPayment extends StatelessWidget {
         onConfirm: () async {
           // await bookingViewmodel.submitVazhipadu(bookingViewmodel.selectedIndex);
           await bookingViewmodel.submitVazhipadu();
-          await bookingViewmodel.submitAdvVazhipadu();
+
           _onConfirmPayment(context);
         },
       ),

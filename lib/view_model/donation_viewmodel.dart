@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/components/qr_code_component.dart';
 import 'package:kshethra_mini/utils/components/snack_bar_widget.dart';
+import 'package:kshethra_mini/view/widgets/donation_page_widgets/card_payment_donation_screen.dart';
+import 'package:kshethra_mini/view/widgets/donation_page_widgets/cash_payment_donation.dart';
 import 'package:kshethra_mini/view/widgets/donation_page_widgets/donation_dialogbox_widget.dart';
-import '../view/widgets/payment_method_screen.dart';
+import 'package:kshethra_mini/view/widgets/donation_page_widgets/payment_method_screen_donation.dart';
+import '../view/widgets/donation_page_widgets/qr_scanner_component_donations.dart';
 
 class DonationViewmodel extends ChangeNotifier {
   final donationFormKey = GlobalKey<FormState>();
@@ -114,16 +117,72 @@ class DonationViewmodel extends ChangeNotifier {
   //   }
   // }
 
-  void navigateToPaymentMethodPage(BuildContext context, ) {
-    Navigator.push(
-      context,
+  void navigateToPaymentMethodPage(
+      BuildContext context,
+      String amount,
+      String name,
+      String phone,
+      String acctHeadName,
+      ) {
+    Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => PaymentMethodScreen(
-
+        builder: (context) => PaymentMethodScreenDonation(
+          amount: amount,
+          name: name,
+          phone: phone,
+          acctHeadName: acctHeadName,
         ),
       ),
     );
-    notifyListeners();
+  }
+
+
+  void navigateToQrScanner(BuildContext context, String amount) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder:
+            (context) => QrScannerComponentDonations(
+              amount: amount,
+          noOfScreen: 1,
+          title: "QR Scanner",
+        ),
+      ),
+    );
+  }
+
+  void navigateToCashPayment(
+      BuildContext context, {
+        required String amount,
+        required String name,
+        required String phone,
+        required String acctHeadName,
+      }) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CashPaymentDonation(
+          amount: amount,
+          name: name,
+          phone: phone,
+          acctHeadName: acctHeadName,
+        ),
+      ),
+    );
+  }
+
+
+  void navigateCardScreen(context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CardPaymentDonationScreen()),
+    );
   }
 
 }
+
+
+
+
+
+
