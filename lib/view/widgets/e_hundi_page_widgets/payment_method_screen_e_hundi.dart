@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kshethra_mini/view/widgets/e_hundi_page_widgets/choose_payment_method_e_hundi_widget.dart';
 import 'package:kshethra_mini/view_model/donation_viewmodel.dart';
 import 'package:provider/provider.dart';
-import 'package:kshethra_mini/utils/components/choose_payment_method_widget.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import '../booking_page_widget/float_button_widget.dart';
@@ -23,7 +23,6 @@ class PaymentMethodScreenEHundi extends StatefulWidget {
   State<PaymentMethodScreenEHundi> createState() =>
       _PaymentMethodScreenState();
 }
-
 class _PaymentMethodScreenState extends State<PaymentMethodScreenEHundi> {
   String _selectedMethod = 'Cash';
 
@@ -47,7 +46,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreenEHundi> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
-              child: ChoosePaymentMethodWidget(
+              child: ChoosePaymentMethodEHundiWidget(
                 selectedMethod: _selectedMethod,
                 onMethodSelected: _onMethodSelected,
               ),
@@ -61,35 +60,39 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreenEHundi> {
         title: 'Confirm',
         noOfScreens: 1,
         payOnTap: () {
+          final donationViewmodel = Provider.of<DonationViewmodel>(
+            context,
+            listen: false,
+          );
+          final amount = widget.amount ?? '0';
+          final name = widget.name ?? '';
+          final phone = widget.phone ?? '';
           switch (_selectedMethod) {
             case 'UPI':
-              final donationViewmodel = Provider.of<DonationViewmodel>(
-                context,
-                listen: false,
-              );
-              final amount =
-                  donationViewmodel.donationAmountController.text.trim();
-              DonationViewmodel().navigateToQrScanner(context, amount);
-              break;
-            case 'Cash':
-              final donationViewmodel = Provider.of<DonationViewmodel>(context, listen: false);
-              final amount = donationViewmodel.donationAmountController.text.trim();
+              print("Navigating to UPI QR Scanner with:");
+              print("Amount: $amount, Name: $name, Phone: $phone");
 
-              donationViewmodel.navigateToCashPayment(
+              donationViewmodel.navigateToQrScanner(
                 context,
-                amount: amount,
-                name: widget.name ?? '',
-                phone: widget.phone ?? '',
-                acctHeadName: widget.acctHeadName ?? '',
+                amount,
+                name: name,
+                phone: phone,
               );
               break;
 
             case 'Card':
-              DonationViewmodel().navigateCardScreen(context);
+              print("Navigating to Card Payment");
+              donationViewmodel.navigateCardScreen(
+                context,
+                amount: amount,
+                name: name,
+                phone: phone,
+              );
               break;
+
             default:
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Unsupported payment method')),
+                const SnackBar(content: Text('Unsupported payment method')),
               );
           }
         },

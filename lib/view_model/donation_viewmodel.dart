@@ -6,6 +6,7 @@ import 'package:kshethra_mini/view/widgets/donation_page_widgets/card_payment_do
 import 'package:kshethra_mini/view/widgets/donation_page_widgets/cash_payment_donation.dart';
 import 'package:kshethra_mini/view/widgets/donation_page_widgets/donation_dialogbox_widget.dart';
 import 'package:kshethra_mini/view/widgets/donation_page_widgets/payment_method_screen_donation.dart';
+import 'package:kshethra_mini/view/widgets/e_hundi_page_widgets/qr_scanner_component_e_hundi.dart';
 import '../view/widgets/donation_page_widgets/qr_scanner_component_donations.dart';
 
 class DonationViewmodel extends ChangeNotifier {
@@ -137,12 +138,14 @@ class DonationViewmodel extends ChangeNotifier {
   }
 
 
-  void navigateToQrScanner(BuildContext context, String amount) {
+  void navigateToQrScanner(BuildContext context, String amount, {required String name, required String phone}) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder:
-            (context) => QrScannerComponentDonations(
+            (context) => QrScannerComponentEHundi(
+              name: name,
+              phone: phone,
               amount: amount,
           noOfScreen: 1,
           title: "QR Scanner",
@@ -172,7 +175,7 @@ class DonationViewmodel extends ChangeNotifier {
   }
 
 
-  void navigateCardScreen(context) {
+  void navigateCardScreen(context, {required String amount, required String name, required String phone}) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => CardPaymentDonationScreen()),

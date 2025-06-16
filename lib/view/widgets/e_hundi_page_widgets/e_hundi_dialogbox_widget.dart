@@ -8,8 +8,6 @@ import 'package:kshethra_mini/view/widgets/e_hundi_page_widgets/payment_method_s
 import 'package:kshethra_mini/view_model/e_hundi_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-import '../../../api_services/api_service.dart';
-import '../../../utils/components/snack_bar_widget.dart';
 import '../../../view_model/booking_viewmodel.dart';
 import '../booking_page_widget/star_dialodbox_widget.dart';
 
@@ -25,53 +23,53 @@ class _EHundiDialogWidgetState extends State<EHundiDialogWidget> {
   late TextEditingController _nameController;
   late TextEditingController _phoneController;
 
-  Future<bool> postEbannaramiDonation(BuildContext context, int index) async {
-    final eHundiViewModel = Provider.of<EHundiViewmodel>(
-      context,
-      listen: false,
-    );
-    final bookingViewModel = Provider.of<BookingViewmodel>(
-      context,
-      listen: false,
-    );
-
-    final data = {
-      "devathaName": eHundiViewModel.gods[index].devathaName,
-      "amount": _amountController.text.trim(),
-      "personName": _nameController.text.trim(),
-      "phoneNumber": _phoneController.text.trim(),
-      "personStar": bookingViewModel.selectedStar,
-      "paymentType": "lsk",
-      "transactionId": "11221",
-      "bankId": "131333",
-      "bankName": "sbi"
-    };
-
-    try {
-      await ApiService().postEHundiDetails(data);
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBarWidget(
-            msg: "Donation posted successfully!",
-            color: Colors.green,
-          ).build(context),
-        );
-      }
-      return true;
-    } catch (e) {
-      final errorMessage = e?.toString() ?? "Unknown error occurred";
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBarWidget(
-            msg: "Failed to post donation: $errorMessage",
-            color: Colors.red,
-          ).build(context),
-        );
-      }
-      return false;
-    }
-
-  }
+  // Future<bool> postEbannaramiDonation(BuildContext context, int index) async {
+  //   final eHundiViewModel = Provider.of<EHundiViewmodel>(
+  //     context,
+  //     listen: false,
+  //   );
+  //   final bookingViewModel = Provider.of<BookingViewmodel>(
+  //     context,
+  //     listen: false,
+  //   );
+  //
+  //   final data = {
+  //     "devathaName": eHundiViewModel.gods[index].devathaName,
+  //     "amount": _amountController.text.trim(),
+  //     "personName": _nameController.text.trim(),
+  //     "phoneNumber": _phoneController.text.trim(),
+  //     "personStar": bookingViewModel.selectedStar,
+  //     "paymentType": "lsk",
+  //     "transactionId": "11221",
+  //     "bankId": "131333",
+  //     "bankName": "sbi"
+  //   };
+  //
+  //   try {
+  //     await ApiService().postEHundiDetails(data);
+  //     if (context.mounted) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBarWidget(
+  //           msg: "Donation posted successfully!",
+  //           color: Colors.green,
+  //         ).build(context),
+  //       );
+  //     }
+  //     return true;
+  //   } catch (e) {
+  //     final errorMessage = e?.toString() ?? "Unknown error occurred";
+  //     if (context.mounted) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBarWidget(
+  //           msg: "Failed to post donation: $errorMessage",
+  //           color: Colors.red,
+  //         ).build(context),
+  //       );
+  //     }
+  //     return false;
+  //   }
+  //
+  // }
 
   @override
   void initState() {
@@ -196,36 +194,28 @@ class _EHundiDialogWidgetState extends State<EHundiDialogWidget> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MaterialButton(
-                          onPressed: () async {
+                          onPressed: () {
                             final eHundiViewModel = Provider.of<EHundiViewmodel>(
                               context,
                               listen: false,
                             );
 
                             if (eHundiViewModel.eHundiKey.currentState?.validate() ?? false) {
-                              final success = await postEbannaramiDonation(
+                              final amount = eHundiViewModel.eHundiAmountController.text.trim();
+                              final name = _nameController.text.trim();
+                              final phone = _phoneController.text.trim();
+                              print("Navigating with amount: $amount");
+
+                              Navigator.push(
                                 context,
-                                eHundiViewModel.selectedIndex,
-                              );
-
-                              if (success && context.mounted) {
-                                final amount = eHundiViewModel.eHundiAmountController.text.trim();
-                                final name = eHundiViewModel.eHundiNameController.text.trim();
-                                final phone = eHundiViewModel.eHundiPhoneController.text.trim();
-                                // final acctHeadName = eHundiViewModel.selectedAcctHead ?? '';
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PaymentMethodScreenEHundi(
-                                      amount: amount,
-                                      name: name,
-                                      phone: phone,
-                                      // acctHeadName: acctHeadName,
-                                    ),
+                                MaterialPageRoute(
+                                  builder: (context) => PaymentMethodScreenEHundi(
+                                    amount: amount,
+                                    name: name,
+                                    phone: phone,
                                   ),
-                                );
-                              }
+                                ),
+                              );
                             }
                           },
                           shape: RoundedRectangleBorder(

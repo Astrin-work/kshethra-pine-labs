@@ -62,39 +62,42 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreenDonation> {
         title: 'Confirm',
         noOfScreens: 1,
         payOnTap: () {
+          final donationViewmodel = Provider.of<DonationViewmodel>(
+            context,
+            listen: false,
+          );
+
+          final amount = widget.amount ?? '0';
+          final name = widget.name ?? '';
+          final phone = widget.phone ?? '';
+
           switch (_selectedMethod) {
             case 'UPI':
-              final donationViewmodel = Provider.of<DonationViewmodel>(
+              donationViewmodel.navigateToQrScanner(
                 context,
-                listen: false,
-              );
-              final amount =
-                  donationViewmodel.donationAmountController.text.trim();
-              DonationViewmodel().navigateToQrScanner(context, amount);
-              break;
-            case 'Cash':
-              final donationViewmodel = Provider.of<DonationViewmodel>(context, listen: false);
-              final amount = donationViewmodel.donationAmountController.text.trim();
-
-              donationViewmodel.navigateToCashPayment(
-                context,
-                amount: amount,
-                name: widget.name ?? '',
-                phone: widget.phone ?? '',
-                acctHeadName: widget.acctHeadName ?? '',
+                amount,
+                name: name,
+                phone: phone,
               );
               break;
 
             case 'Card':
-              DonationViewmodel().navigateCardScreen(context);
+              donationViewmodel.navigateCardScreen(
+                context,
+                amount: amount,
+                name: name,
+                phone: phone,
+              );
               break;
+
             default:
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Unsupported payment method')),
+                const SnackBar(content: Text('Unsupported payment method')),
               );
           }
         },
       ),
+
     );
   }
 }

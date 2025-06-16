@@ -28,7 +28,7 @@ class LanguageSelectView extends StatelessWidget {
                       image: AssetImage(
                         Assets.images.loardShivaBackground.path,
                       ),
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   child: Align(
