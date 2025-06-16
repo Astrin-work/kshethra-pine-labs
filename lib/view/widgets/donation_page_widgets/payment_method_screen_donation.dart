@@ -6,12 +6,12 @@ import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import '../booking_page_widget/float_button_widget.dart';
 
-class PaymentMethodScreenEHundi extends StatefulWidget {
+class PaymentMethodScreenDonation extends StatefulWidget {
   final String? amount;
   final String? name;
   final String? phone;
   final String? acctHeadName;
-  const PaymentMethodScreenEHundi({
+  const PaymentMethodScreenDonation({
     super.key,
     this.amount,
     this.name,
@@ -20,11 +20,11 @@ class PaymentMethodScreenEHundi extends StatefulWidget {
   });
 
   @override
-  State<PaymentMethodScreenEHundi> createState() =>
+  State<PaymentMethodScreenDonation> createState() =>
       _PaymentMethodScreenState();
 }
 
-class _PaymentMethodScreenState extends State<PaymentMethodScreenEHundi> {
+class _PaymentMethodScreenState extends State<PaymentMethodScreenDonation> {
   String _selectedMethod = 'Cash';
 
   void _onMethodSelected(String method) {
@@ -39,7 +39,8 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreenEHundi> {
       context,
       listen: false,
     );
-
+    final total =
+        bookingViewmodel.combinedTotalAmount + bookingViewmodel.postalAmount;
     return Scaffold(
       body: Column(
         children: [

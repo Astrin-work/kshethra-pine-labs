@@ -106,8 +106,7 @@ class AdvPreViewWidget extends StatelessWidget {
               itemCount: bookings.length,
               itemBuilder: (context, index) {
                 final booking = bookings[index];
-                final bookingPrice = int.tryParse(booking.totalPrice ?? '0') ?? 0;
-                final postal = bookingViewmodel.postalAmount.toInt();
+
 
 
                 return Padding(

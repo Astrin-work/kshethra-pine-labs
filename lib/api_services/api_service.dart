@@ -23,10 +23,10 @@ class ApiService {
       ),
     );
 
-    (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
-      client.badCertificateCallback = (cert, host, port) => true;
-      return client;
-    };
+    // (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
+    //   client.badCertificateCallback = (cert, host, port) => true;
+    //   return client;
+    // };
   }
 
   Future<String> login(String username, String password) async {

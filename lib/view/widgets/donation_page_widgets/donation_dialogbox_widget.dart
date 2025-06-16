@@ -7,9 +7,6 @@ import 'package:kshethra_mini/utils/validation.dart';
 import 'package:kshethra_mini/view_model/donation_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-import '../../../api_services/api_service.dart';
-import '../payment_method_screen.dart';
-
 class DonationDialogWidget extends StatelessWidget {
   final String name;
   final String phone;

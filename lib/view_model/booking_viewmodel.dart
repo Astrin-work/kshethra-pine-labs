@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/model/user_booking_model.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
-import 'package:kshethra_mini/utils/components/qr_code_component.dart';
 import 'package:kshethra_mini/utils/components/snack_bar_widget.dart';
 import 'package:kshethra_mini/view/advance_booking_preview_view.dart';
 import 'package:kshethra_mini/view/booking_preview_view.dart';
@@ -22,7 +21,6 @@ import '../model/api models/get_donation_model.dart';
 import '../model/api models/god_model.dart';
 import '../view/advanced_booking_confirm_view.dart';
 import '../view/widgets/advanced_booking_page_widget/advanced_vazhipaddu_dialog_BoxWidget.dart';
-import '../view/widgets/payment_method_screen.dart';
 
 class BookingViewmodel extends ChangeNotifier {
   final bookingKey = GlobalKey<FormState>();

@@ -182,7 +182,7 @@ class _EHundiDialogWidgetState extends State<EHundiDialogWidget> {
                               child: Consumer<BookingViewmodel>(
                                 builder:
                                     (context, bookingViewmodel, child) => Text(
-                                      bookingViewmodel.selectedStar ?? "",
+                                      bookingViewmodel.selectedStar,
                                       style: styles.blackRegular13,
                                     ),
                               ),

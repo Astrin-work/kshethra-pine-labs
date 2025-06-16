@@ -1,30 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:kshethra_mini/view_model/donation_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:kshethra_mini/utils/components/choose_payment_method_widget.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
+
 import '../booking_page_widget/float_button_widget.dart';
 
-class PaymentMethodScreenEHundi extends StatefulWidget {
-  final String? amount;
-  final String? name;
-  final String? phone;
-  final String? acctHeadName;
-  const PaymentMethodScreenEHundi({
-    super.key,
-    this.amount,
-    this.name,
-    this.phone,
-    this.acctHeadName,
-  });
+
+class PaymentMethodScreenAdvanceBooking extends StatefulWidget {
+  final String?amount;
+  const PaymentMethodScreenAdvanceBooking({super.key,this.amount});
 
   @override
-  State<PaymentMethodScreenEHundi> createState() =>
-      _PaymentMethodScreenState();
+  State<PaymentMethodScreenAdvanceBooking> createState() => _PaymentMethodScreenState();
 }
 
-class _PaymentMethodScreenState extends State<PaymentMethodScreenEHundi> {
+class _PaymentMethodScreenState extends State<PaymentMethodScreenAdvanceBooking> {
   String _selectedMethod = 'Cash';
 
   void _onMethodSelected(String method) {
@@ -35,11 +26,8 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreenEHundi> {
 
   @override
   Widget build(BuildContext context) {
-    final bookingViewmodel = Provider.of<BookingViewmodel>(
-      context,
-      listen: false,
-    );
-
+    final bookingViewmodel = Provider.of<BookingViewmodel>(context, listen: false);
+    final total = bookingViewmodel.combinedTotalAmount+bookingViewmodel.postalAmount;
     return Scaffold(
       body: Column(
         children: [
@@ -56,36 +44,20 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreenEHundi> {
         ],
       ),
       floatingActionButton: FloatButtonWidget(
-        amount: int.tryParse(widget.amount ?? '0') ?? 0,
+        amount: total.toInt(),
         height: 60,
         title: 'Confirm',
         noOfScreens: 1,
         payOnTap: () {
           switch (_selectedMethod) {
             case 'UPI':
-              final donationViewmodel = Provider.of<DonationViewmodel>(
-                context,
-                listen: false,
-              );
-              final amount =
-                  donationViewmodel.donationAmountController.text.trim();
-              DonationViewmodel().navigateToQrScanner(context, amount);
+              bookingViewmodel.navigateToQrScanner(context);
               break;
             case 'Cash':
-              final donationViewmodel = Provider.of<DonationViewmodel>(context, listen: false);
-              final amount = donationViewmodel.donationAmountController.text.trim();
-
-              donationViewmodel.navigateToCashPayment(
-                context,
-                amount: amount,
-                name: widget.name ?? '',
-                phone: widget.phone ?? '',
-                acctHeadName: widget.acctHeadName ?? '',
-              );
+              bookingViewmodel.navigateToCashPaymentAdvanceBooking(context,total.toInt());
               break;
-
             case 'Card':
-              DonationViewmodel().navigateCardScreen(context);
+              bookingViewmodel.navigateCardScreen(context);
               break;
             default:
               ScaffoldMessenger.of(context).showSnackBar(
