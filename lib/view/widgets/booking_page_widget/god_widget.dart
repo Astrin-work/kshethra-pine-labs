@@ -34,7 +34,7 @@ class _GodWidgetState extends State<GodWidget> {
         final isLoading = bookingViewmodel.isLoading;
 
         if (isLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator(color: kDullPrimaryColor,));
         }
 
         return SizedBox(

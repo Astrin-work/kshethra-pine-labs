@@ -39,7 +39,7 @@ class _GodListWidgetState extends State<GodListWidget> {
     return Consumer<EHundiViewmodel>(
       builder: (context, viewmodel, child) {
         if (viewmodel.isLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator(color: kDullPrimaryColor,));
         }
 
         final godList = viewmodel.gods;

@@ -71,7 +71,7 @@ class _DonationFormWidgetState extends State<DonationFormWidget> {
 
     return Consumer<DonationViewmodel>(
       builder: (context, donationViewmodel, child) => isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? Center(child: CircularProgressIndicator(color: kDullPrimaryColor,))
           : SizedBox(
         child: Form(
           key: donationViewmodel.donationFormKey,

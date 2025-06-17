@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/view/widgets/e_hundi_page_widgets/choose_payment_method_e_hundi_widget.dart';
 import 'package:kshethra_mini/view_model/donation_viewmodel.dart';
+import 'package:kshethra_mini/view_model/e_hundi_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
@@ -72,7 +73,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreenEHundi> {
               print("Navigating to UPI QR Scanner with:");
               print("Amount: $amount, Name: $name, Phone: $phone");
 
-              donationViewmodel.navigateToQrScanner(
+              EHundiViewmodel().navigateToQrScanner(
                 context,
                 amount,
                 name: name,

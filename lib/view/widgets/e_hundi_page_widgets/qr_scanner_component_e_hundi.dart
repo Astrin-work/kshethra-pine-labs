@@ -15,7 +15,7 @@ import '../../../utils/components/snack_bar_widget.dart';
 import '../../../view_model/booking_viewmodel.dart';
 import '../../../view_model/e_hundi_viewmodel.dart';
 
-class QrScannerComponentEHundi extends StatelessWidget {
+class QrScannerComponentEHundi extends StatefulWidget {
   final String amount;
   final int noOfScreen;
   final String title;
@@ -31,15 +31,22 @@ class QrScannerComponentEHundi extends StatelessWidget {
     required this.phone,
   });
 
+  @override
+  State<QrScannerComponentEHundi> createState() => _QrScannerComponentEHundiState();
+}
+
+class _QrScannerComponentEHundiState extends State<QrScannerComponentEHundi> {
+  bool isLoading = false;
+
   Future<bool> postEbannaramiDonation(BuildContext context, int index) async {
     final eHundiViewModel = Provider.of<EHundiViewmodel>(context, listen: false);
     final bookingViewModel = Provider.of<BookingViewmodel>(context, listen: false);
 
     final data = {
       "devathaName": eHundiViewModel.gods[index].devathaName,
-      "amount": amount,
-      "personName": name,
-      "phoneNumber": phone,
+      "amount": widget.amount,
+      "personName": widget.name,
+      "phoneNumber": widget.phone,
       "personStar": bookingViewModel.selectedStar,
       "paymentType": "lsk",
       "transactionId": "11221",
@@ -85,7 +92,7 @@ class QrScannerComponentEHundi extends StatelessWidget {
       body: Consumer<HomePageViewmodel>(
         builder: (context, homepageViewmodel, child) => Column(
           children: [
-            AppBarWidget(title: title.tr()),
+            AppBarWidget(title: widget.title.tr()),
             SizedBox(
               height: SizeConfig.screenHeight * 0.8,
               width: SizeConfig.screenWidth,
@@ -93,7 +100,7 @@ class QrScannerComponentEHundi extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   BuildTextWidget(
-                    text: "Amount ₹$amount",
+                    text: "Amount ₹${widget.amount}",
                     color: kBlack,
                     size: 23,
                     fontWeight: FontWeight.w400,
@@ -109,22 +116,26 @@ class QrScannerComponentEHundi extends StatelessWidget {
                   ),
                   QrImageView(
                     size: 300,
-                    data: homepageViewmodel.setQrAmount(amount),
+                    data: homepageViewmodel.setQrAmount(widget.amount),
                   ),
                   Text("demotemple@okicici", style: styles.blackRegular13),
-                  MaterialButton(
+                  isLoading
+                      ? const CircularProgressIndicator(color: kDullPrimaryColor,)
+                      : MaterialButton(
                     color: Colors.green,
                     textColor: Colors.white,
                     child: const Text("Submit Payment"),
                     onPressed: () async {
+                      setState(() => isLoading = true);
                       final success = await postEbannaramiDonation(context, index);
+                      setState(() => isLoading = false);
                       if (success && context.mounted) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => PaymentCompleteScreen(
-                              amount: amount,
-                              noOfScreen: noOfScreen,
+                              amount: widget.amount,
+                              noOfScreen: widget.noOfScreen,
                             ),
                           ),
                         );
@@ -140,3 +151,4 @@ class QrScannerComponentEHundi extends StatelessWidget {
     );
   }
 }
+

@@ -5,6 +5,7 @@ import '../../../api_services/api_service.dart';
 import '../../../utils/app_color.dart';
 import '../../../utils/app_styles.dart';
 import '../../../utils/components/app_bar_widget.dart';
+import '../../../utils/components/snack_bar_widget.dart';
 
 class CashPaymentDonation extends StatelessWidget {
   final String? amount;
@@ -40,12 +41,12 @@ class CashPaymentDonation extends StatelessWidget {
     try {
       await ApiService().postDonationDetails(donationData);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Donation posted successfully!")),
+        SnackBarWidget(msg: "Donation posted successfully!", color: Colors.green).build(context),
       );
       return true;
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Failed to post donation: $e")),
+        SnackBarWidget(msg: "Failed to post donation: $e", color: Colors.red).build(context),
       );
       return false;
     }
@@ -103,11 +104,12 @@ class CashPaymentDonation extends StatelessWidget {
       floatingActionButton: ConfirmButtonWidget(
         onConfirm: () async {
           final success = await postDonation(context);
-          if (success) {
+          if (success && context.mounted) {
             _onConfirmPayment(context);
           }
         },
       ),
+
     );
   }
 }

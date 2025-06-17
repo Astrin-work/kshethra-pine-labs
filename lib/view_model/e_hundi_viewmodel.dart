@@ -5,6 +5,7 @@ import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/components/qr_code_component.dart';
 import 'package:kshethra_mini/utils/components/snack_bar_widget.dart';
 import 'package:kshethra_mini/view/widgets/e_hundi_page_widgets/e_hundi_dialogbox_widget.dart';
+import 'package:kshethra_mini/view/widgets/e_hundi_page_widgets/qr_scanner_component_e_hundi.dart';
 import '../api_services/api_service.dart';
 
 
@@ -62,33 +63,47 @@ class EHundiViewmodel extends ChangeNotifier {
     showDialog(context: context, builder: (context) => EHundiDialogWidget());
   }
 
-  void navigateScannerPage(BuildContext context) {
-    bool valid = eHundiKey.currentState?.validate() ?? false;
-    if (!valid) {
-      return;
-    }
-    if (eHundiAmountController.text.trim() == "0") {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBarWidget(
-          msg: "Payment request denied",
-          color: kRed,
-        ).build(context),
-      );
-      return;
-    }
-    popFunction(context);
+  // void navigateScannerPage(BuildContext context, String amount, {required String name, required String phone}) {
+  //   bool valid = eHundiKey.currentState?.validate() ?? false;
+  //   if (!valid) {
+  //     return;
+  //   }
+  //   if (eHundiAmountController.text.trim() == "0") {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBarWidget(
+  //         msg: "Payment request denied",
+  //         color: kRed,
+  //       ).build(context),
+  //     );
+  //     return;
+  //   }
+  //   popFunction(context);
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => QrScannerComponent(
+  //         amount: eHundiAmountController.text.trim(),
+  //         noOfScreen: 3,
+  //         title: 'E-Hundi',
+  //       ),
+  //     ),
+  //   );
+  // }
+  void navigateToQrScanner(BuildContext context, String amount, {required String name, required String phone}) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => QrScannerComponent(
-          amount: eHundiAmountController.text.trim(),
-          noOfScreen: 3,
-          title: 'E-Hundi',
+        builder:
+            (context) => QrScannerComponentEHundi(
+          name: name,
+          phone: phone,
+          amount: amount,
+          noOfScreen: 1,
+          title: "QR Scanner",
         ),
       ),
     );
   }
-
   void setStar(String star, BuildContext context) {
     _selectedStar = star.tr();
     popFunction(context);

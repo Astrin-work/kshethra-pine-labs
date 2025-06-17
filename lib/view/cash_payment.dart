@@ -4,9 +4,11 @@ import 'package:kshethra_mini/view/widgets/advanced_booking_page_widget/confirm_
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
 
+import '../services/plutus_smart.dart';
 import '../utils/app_color.dart';
 import '../utils/app_styles.dart';
 import '../utils/components/app_bar_widget.dart';
+import '../utils/logger.dart';
 
 class CashPayment extends StatelessWidget {
   final int amount;
@@ -31,8 +33,31 @@ class CashPayment extends StatelessWidget {
     );
   }
 
+  Future<void> _bindService() async {
+
+    Logger.info('BINDING STARTED.');
+
+    try {
+      final result = await PlutusSmart.bindToService();
+      Logger.info('Binding result: $result');
+
+      if (result == "SUCCESS" || result == "BINDING SUCCESS.") {
+        Logger.success("BINDING SUCCESS.");
+      } else if (result == "FAILED") {
+        Logger.error("BINDING FAILED. ${result.toString()}");
+      } else {
+        Logger.error("BINDING UNKNOWN RESULT. ${result.toString()}");
+      }
+    } catch (e) {
+      Logger.error("BINDING EXCEPTION. ${e.toString()}");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _bindService();
+    });
     AppStyles styles = AppStyles();
     final bookingViewmodel = Provider.of<BookingViewmodel>(
       context,
@@ -74,10 +99,11 @@ class CashPayment extends StatelessWidget {
       ),
       floatingActionButton: ConfirmButtonWidget(
         onConfirm: () async {
-          // await bookingViewmodel.submitVazhipadu(bookingViewmodel.selectedIndex);
-          await bookingViewmodel.submitVazhipadu();
 
-          _onConfirmPayment(context);
+          // await bookingViewmodel.submitVazhipadu(bookingViewmodel.selectedIndex);
+          // await bookingViewmodel.submitVazhipadu();
+          //
+          // _onConfirmPayment(context);
         },
       ),
     );

@@ -100,7 +100,7 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/home_background.png');
 
   AssetGenImage get splashBackground =>
-      const AssetGenImage('assets/images/image_bg1.png');
+      const AssetGenImage('assets/images/image_bg10.png');
   /// File path: assets/images/lang_background.png
   AssetGenImage get langBackground =>
       const AssetGenImage('assets/images/lang_background.png');

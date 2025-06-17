@@ -1140,7 +1140,7 @@ class BookingViewmodel extends ChangeNotifier {
             (context) => QrScannerComponentDonations(
           amount: "$totalVazhipaduAmt",
           noOfScreen: 1,
-          title: "QR Scanner",
+          title: "QR Scanner", name: '', phone: '',
         ),
       ),
     );

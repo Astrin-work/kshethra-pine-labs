@@ -61,41 +61,52 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreenDonation> {
         height: 60,
         title: 'Confirm',
         noOfScreens: 1,
-        payOnTap: () {
-          final donationViewmodel = Provider.of<DonationViewmodel>(
-            context,
-            listen: false,
-          );
+          payOnTap: () {
+            final donationViewmodel = Provider.of<DonationViewmodel>(
+              context,
+              listen: false,
+            );
 
-          final amount = widget.amount ?? '0';
-          final name = widget.name ?? '';
-          final phone = widget.phone ?? '';
+            final amount = widget.amount ?? '0';
+            final name = widget.name ?? '';
+            final phone = widget.phone ?? '';
 
-          switch (_selectedMethod) {
-            case 'UPI':
-              donationViewmodel.navigateToQrScanner(
-                context,
-                amount,
-                name: name,
-                phone: phone,
-              );
-              break;
+            switch (_selectedMethod) {
+              case 'UPI':
+                donationViewmodel.navigateToQrScanner(
+                  context,
+                  amount,
+                  name: name,
+                  phone: phone,
+                );
+                break;
 
-            case 'Card':
-              donationViewmodel.navigateCardScreen(
-                context,
-                amount: amount,
-                name: name,
-                phone: phone,
-              );
-              break;
+              case 'Card':
+                donationViewmodel.navigateCardScreen(
+                  context,
+                  amount: amount,
+                  name: name,
+                  phone: phone,
+                );
+                break;
 
-            default:
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Unsupported payment method')),
-              );
+              case 'Cash':
+                donationViewmodel.navigateToCashPayment(
+                  context,
+                  amount: amount,
+                  name: name,
+                  phone: phone,
+                  acctHeadName: '',
+                );
+                break;
+
+              default:
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Unsupported payment method')),
+                );
+            }
           }
-        },
+
       ),
 
     );

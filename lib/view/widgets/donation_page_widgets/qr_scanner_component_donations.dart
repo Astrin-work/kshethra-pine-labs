@@ -19,6 +19,8 @@ class QrScannerComponentDonations extends StatelessWidget {
     required this.amount,
     required this.noOfScreen,
     required this.title,
+    required String name,
+    required String phone,
   });
 
   @override

@@ -143,7 +143,7 @@ class DonationViewmodel extends ChangeNotifier {
       context,
       MaterialPageRoute(
         builder:
-            (context) => QrScannerComponentEHundi(
+            (context) => QrScannerComponentDonations(
               name: name,
               phone: phone,
               amount: amount,

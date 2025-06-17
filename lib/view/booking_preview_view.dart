@@ -113,12 +113,12 @@ class PreViewWidget extends StatelessWidget {
                                       color: kBlack,
                                       fontWeight: FontWeight.w500,
                                     ),
-                                    SizedBox(width: 30,),
+                                    SizedBox(width: 20,),
                                     Text(
                                       "₹ ${booking.totalPrice ?? '0'}",
                                       style: styles.blackRegular15,
                                     ),
-                                    SizedBox(width: 18,),
+                                    SizedBox(width: 10,),
                                     Row(
                                       children: [
                                         IconButton(
