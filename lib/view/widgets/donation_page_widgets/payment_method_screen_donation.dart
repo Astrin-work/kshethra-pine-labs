@@ -39,8 +39,6 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreenDonation> {
       context,
       listen: false,
     );
-    final total =
-        bookingViewmodel.combinedTotalAmount + bookingViewmodel.postalAmount;
     return Scaffold(
       body: Column(
         children: [
@@ -70,7 +68,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreenDonation> {
             final amount = widget.amount ?? '0';
             final name = widget.name ?? '';
             final phone = widget.phone ?? '';
-
+            final acctHeadName =widget.acctHeadName ??'';
             switch (_selectedMethod) {
               case 'UPI':
                 donationViewmodel.navigateToQrScanner(
@@ -78,6 +76,8 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreenDonation> {
                   amount,
                   name: name,
                   phone: phone,
+                  acctHeadName: acctHeadName,
+
                 );
                 break;
 
@@ -96,7 +96,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreenDonation> {
                   amount: amount,
                   name: name,
                   phone: phone,
-                  acctHeadName: '',
+                  acctHeadName: acctHeadName,
                 );
                 break;
 

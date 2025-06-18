@@ -16,7 +16,6 @@ class DonationViewmodel extends ChangeNotifier {
   TextEditingController donationNameController = TextEditingController();
   TextEditingController donationPhnoController = TextEditingController();
 
-
   void clearController() {
     donationAmountController.clear();
     donationNameController.clear();
@@ -118,26 +117,32 @@ class DonationViewmodel extends ChangeNotifier {
   // }
 
   void navigateToPaymentMethodPage(
-      BuildContext context,
-      String amount,
-      String name,
-      String phone,
-      String acctHeadName,
-      ) {
+    BuildContext context,
+    String amount,
+    String name,
+    String phone,
+    String acctHeadName,
+  ) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => PaymentMethodScreenDonation(
-          amount: amount,
-          name: name,
-          phone: phone,
-          acctHeadName: acctHeadName,
-        ),
+        builder:
+            (context) => PaymentMethodScreenDonation(
+              amount: amount,
+              name: name,
+              phone: phone,
+              acctHeadName: acctHeadName,
+            ),
       ),
     );
   }
 
-
-  void navigateToQrScanner(BuildContext context, String amount, {required String name, required String phone}) {
+  void navigateToQrScanner(
+    BuildContext context,
+    String amount, {
+    required String name,
+    required String phone,
+    required String acctHeadName,
+  }) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -146,45 +151,44 @@ class DonationViewmodel extends ChangeNotifier {
               name: name,
               phone: phone,
               amount: amount,
-          noOfScreen: 1,
-          title: "QR Scanner",
-        ),
+              acctHeadName: acctHeadName,
+              noOfScreen: 1,
+              title: "QR Scanner",
+            ),
       ),
     );
   }
 
   void navigateToCashPayment(
-      BuildContext context, {
-        required String amount,
-        required String name,
-        required String phone,
-        required String acctHeadName,
-      }) {
+    BuildContext context, {
+    required String amount,
+    required String name,
+    required String phone,
+    required String acctHeadName,
+  }) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CashPaymentDonation(
-          amount: amount,
-          name: name,
-          phone: phone,
-          acctHeadName: acctHeadName,
-        ),
+        builder:
+            (context) => CashPaymentDonation(
+              amount: amount,
+              name: name,
+              phone: phone,
+              acctHeadName: acctHeadName,
+            ),
       ),
     );
   }
 
-
-  void navigateCardScreen(context, {required String amount, required String name, required String phone}) {
+  void navigateCardScreen(
+    context, {
+    required String amount,
+    required String name,
+    required String phone,
+  }) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => CardPaymentDonationScreen()),
     );
   }
-
 }
-
-
-
-
-
-

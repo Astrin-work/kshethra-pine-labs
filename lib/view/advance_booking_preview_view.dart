@@ -179,7 +179,7 @@ class AdvPreViewWidget extends StatelessWidget {
                                 children: [
                                   BuildTextWidget(
                                     text:
-                                    "${booking.vazhipadu!.tr()}   (${bookings[index].count})",
+                                    "${booking.vazhipadu!.tr()}  (Qty -${bookings[index].count})",
                                     size: 14,
                                     color: kBlack,
                                   ),
@@ -206,7 +206,7 @@ class AdvPreViewWidget extends StatelessWidget {
                                   BuildTextWidget(
                                     text: booking.repMethode == "Once"
                                         ? "Repeat: Once"
-                                        : "Repeat: ${booking.repMethode} ${booking.day} ${bookingViewmodel.repeatDays} times",
+                                        : "Repeat: ${booking.repMethode} ${booking.day} ( ${bookingViewmodel.repeatDays} times)",
                                     size: 14,
                                     color: kBlack,
                                   ),

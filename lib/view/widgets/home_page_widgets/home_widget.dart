@@ -4,6 +4,7 @@ import 'package:kshethra_mini/model/api%20models/god_model.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view/widgets/home_page_widgets/option_selector_widget.dart';
+import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
 import '../../../api_services/api_service.dart';
@@ -53,21 +54,23 @@ class HomeWidget extends StatelessWidget {
                     // toLang: currentLang,
                   ),
                   onTap: () async {
-                    try {
-                      print("-------calling API----------");
-                      List<Godmodel> vazhipaduList = await ApiService().getDevatha();
-                      print('Received ${vazhipaduList.length} items');
-                      for (var item in vazhipaduList) {
-                        print('DevathaId: ${item.devathaId}');
-                        print('DevathaName: ${item.devathaName}');
-                        print('DevathaCost: ${item.vazhipadus[0].offerId}');
-                        print('offerName: ${item.vazhipadus[0].offerName}');
-                        print('Cost: ${item.vazhipadus[0].cost}');
-                        print('-----------------------');
-                      }
-                    } catch (e) {
-                      print('Error fetching devatha: $e');
-                    }
+                    // try {
+                    //   print("-------calling API----------");
+                    //   List<Godmodel> vazhipaduList = await ApiService().getDevatha();
+                    //   print('Received ${vazhipaduList.length} items');
+                    //   for (var item in vazhipaduList) {
+                    //     print('DevathaId: ${item.devathaId}');
+                    //     print('DevathaName: ${item.devathaName}');
+                    //     print('DevathaCost: ${item.vazhipadus[0].offerId}');
+                    //     print('offerName: ${item.vazhipadus[0].offerName}');
+                    //     print('Cost: ${item.vazhipadus[0].cost}');
+                    //     print('-----------------------');
+                    //   }
+                    // } catch (e) {
+                    //   print('Error fetching devatha: $e');
+                    // }
+
+
                     homepageViewmodel.bookingPageNavigate(context);
                   },
 

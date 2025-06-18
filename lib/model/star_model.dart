@@ -1,5 +1,5 @@
 class StarModel {
-  String? starKey;  // <-- rename 'star' to 'starKey' for clarity
+  String? starKey;
 
   StarModel({required this.starKey});
 }

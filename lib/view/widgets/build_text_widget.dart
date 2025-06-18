@@ -9,6 +9,7 @@ class BuildTextWidget extends StatefulWidget {
   final int? maxLines;
   final TextAlign? textAlign;
   final String? toLang;
+  final String? fromLang;
   final bool? softWrap;
   final TextOverflow? overflow;
   final Function(String)? onTranslated;
@@ -22,6 +23,7 @@ class BuildTextWidget extends StatefulWidget {
     this.maxLines = 1,
     this.textAlign = TextAlign.left,
     this.toLang,
+    this.fromLang,
     this.softWrap,
     this.overflow,
     this.onTranslated,
@@ -38,18 +40,20 @@ class _BuildTextWidgetState extends State<BuildTextWidget> {
   @override
   void initState() {
     super.initState();
-    _translate(widget.text, widget.toLang);
+    _translate(widget.text, widget.fromLang, widget.toLang);
   }
 
   @override
   void didUpdateWidget(covariant BuildTextWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.toLang != widget.toLang || oldWidget.text != widget.text) {
-      _translate(widget.text, widget.toLang);
+    if (oldWidget.text != widget.text ||
+        oldWidget.fromLang != widget.fromLang ||
+        oldWidget.toLang != widget.toLang) {
+      _translate(widget.text, widget.fromLang, widget.toLang);
     }
   }
 
-  Future<void> _translate(String text, String? toLang) async {
+  Future<void> _translate(String text, String? fromLang, String? toLang) async {
     if (toLang == null || toLang.isEmpty) {
       setState(() {
         translatedText = text;
@@ -63,7 +67,11 @@ class _BuildTextWidgetState extends State<BuildTextWidget> {
 
     try {
       final translator = GoogleTranslator();
-      final translation = await translator.translate(text, to: toLang);
+      final translation = await translator.translate(
+        text,
+        from: fromLang ?? 'auto',
+        to: toLang,
+      );
 
       if (!mounted) return;
 

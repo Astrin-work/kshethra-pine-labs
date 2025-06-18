@@ -16,8 +16,10 @@ import 'package:kshethra_mini/view/widgets/advanced_booking_page_widget/payment_
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_dialogbox_widget.dart';
 import 'package:kshethra_mini/view/widgets/donation_page_widgets/qr_scanner_component_donations.dart';
 import 'package:kshethra_mini/view/widgets/home_page_widgets/home_widget.dart';
+import 'package:kshethra_mini/view/widgets/payment_method_screen.dart';
 import '../api_services/api_service.dart';
 import '../model/api models/get_donation_model.dart';
+import '../model/api models/get_temple_model.dart';
 import '../model/api models/god_model.dart';
 import '../view/advanced_booking_confirm_view.dart';
 import '../view/widgets/advanced_booking_page_widget/advanced_vazhipaddu_dialog_BoxWidget.dart';
@@ -39,13 +41,15 @@ class BookingViewmodel extends ChangeNotifier {
   bool _isLoading = false;
   bool get prasadamSelected => _prasadamSelected;
   List<UserBookingModel> _vazhipaduBookingList = [];
-  // List<UserBookingModel> _AdvvazhipaduBookingList = [];
   List<UserBookingModel> get vazhipaduBookingList => _vazhipaduBookingList;
-  // List<UserBookingModel> get AdvVazhipaduBookingList => _AdvvazhipaduBookingList;
   List<Godmodel> _gods = [];
   List<Getdonationmodel> donations = [];
+  List<GetTemplemodel> templeList = [];
   int selectedIndex = 0;
-  // int get combinedTotalAmount => _totalAdvBookingAmt + _postalAmount.toInt();
+
+  Map<String, dynamic> _fullSubmittedData = {};
+  Map<String, dynamic> get fullSubmittedData => _fullSubmittedData;
+
 
   List<Godmodel> get gods => _gods;
   bool get isLoading => _isLoading;
@@ -61,10 +65,13 @@ class BookingViewmodel extends ChangeNotifier {
   int get advBookingSavedAmt => _advBookingSavedAmt;
   int _amtOfBookingVazhipaddu = 0;
   int get amtOfBookingVazhipaddu => _amtOfBookingVazhipaddu;
-  // // BookingModel _selectedGod = bList[0];
-  // BookingModel get selectedGod => _selectedGod;
   Godmodel? selectedGods;
   bool _isPrasadamSelected = false;
+
+  List<Map<String, dynamic>> _submittedGroups = [];
+  List<Map<String, dynamic>> get submittedGroups => _submittedGroups;
+
+
 
   bool get isPrasadamSelected => _isPrasadamSelected;
   String _selectedStar = "Star".tr();
@@ -96,14 +103,79 @@ class BookingViewmodel extends ChangeNotifier {
     super.dispose();
   }
 
-  Future<void> submitVazhipadu() async {
+  // Future<void> submitVazhipadu() async {
+  //   if (vazhipaduBookingList.isEmpty) {
+  //     print(' No vazhipadu bookings to submit.');
+  //     return;
+  //   }
+  //
+  //   final now = DateTime.now().toIso8601String();
+  //
+  //   List<Map<String, dynamic>> receipts = [];
+  //
+  //   for (var item in vazhipaduBookingList) {
+  //     final int quantity = int.tryParse(item.count.toString()) ?? 1;
+  //     final int rate = int.tryParse(item.price.toString()) ?? 0;
+  //
+  //     receipts.add({
+  //       "personName": item.name ?? "Unknown",
+  //       "personStar": item.star ?? "Unknown",
+  //       "quantity": quantity,
+  //       "rate": rate,
+  //       "offerDate": item.date ?? now,
+  //       "receiptDate": now,
+  //       "type": "CB",
+  //       "offerName": item.vazhipadu ?? "vazhipadu2",
+  //     });
+  //
+  //   }
+  //
+  //   final postData = {
+  //     "receipts": receipts,
+  //     "paymentType": "upi",
+  //     "transactionId": "1122",
+  //     "bankId": "",
+  //     "bankName": "icici",
+  //   };
+  //   try {
+  //     final response = await ApiService().postVazhipaduDetails(postData);
+  //
+  //     if (response is List && response.isNotEmpty) {
+  //       final List<Map<String, dynamic>> allReceipts = [];
+  //
+  //       for (var entry in response) {
+  //         if (entry is Map<String, dynamic>) {
+  //           final receiptsList = entry['receipts'];
+  //           if (receiptsList is List) {
+  //             allReceipts.addAll(receiptsList.cast<Map<String, dynamic>>());
+  //           }
+  //         }
+  //       }
+  //
+  //       final groupedResponse = [
+  //         {
+  //           "serialNumber": response.first['serialNumber'],
+  //           "receipts": allReceipts,
+  //         },
+  //       ];
+  //
+  //       print(" Submitted ${receipts.length} items successfully.");
+  //       print("Grouped Response: $groupedResponse");
+  //     } else {
+  //       print(" Submitted ${receipts.length} items successfully.");
+  //       print("Response: $response");
+  //     }
+  //   } catch (e) {
+  //     print(" Failed to submit vazhipadu: $e");
+  //   }
+  // }
+  Future<List<Map<String, dynamic>>> submitVazhipadu() async {
     if (vazhipaduBookingList.isEmpty) {
-      print(' No vazhipadu bookings to submit.');
-      return;
+      print('No vazhipadu bookings to submit.');
+      return [];
     }
 
     final now = DateTime.now().toIso8601String();
-
     List<Map<String, dynamic>> receipts = [];
 
     for (var item in vazhipaduBookingList) {
@@ -134,34 +206,64 @@ class BookingViewmodel extends ChangeNotifier {
       final response = await ApiService().postVazhipaduDetails(postData);
 
       if (response is List && response.isNotEmpty) {
-        final List<Map<String, dynamic>> allReceipts = [];
+        final List<Map<String, dynamic>> groupedResponse = [];
 
         for (var entry in response) {
           if (entry is Map<String, dynamic>) {
+            final serial = entry['serialNumber'];
             final receiptsList = entry['receipts'];
-            if (receiptsList is List) {
-              allReceipts.addAll(receiptsList.cast<Map<String, dynamic>>());
+            if (serial != null && receiptsList is List) {
+              groupedResponse.add({
+                "serialNumber": serial,
+                "receipts": receiptsList.cast<Map<String, dynamic>>(),
+              });
             }
           }
         }
 
-        final groupedResponse = [
-          {
-            "serialNumber": response.first['serialNumber'],
-            "receipts": allReceipts,
-          },
-        ];
+        print(" Submitted ${receipts.length} items successfully.");
+        print(" Grouped Response:");
+        for (var group in groupedResponse) {
+          print(JsonEncoder.withIndent('  ').convert(group));
+        }
 
-        print(" Submitted ${receipts.length} items successfully.");
-        print("Grouped Response: $groupedResponse");
+        return groupedResponse;
       } else {
-        print(" Submitted ${receipts.length} items successfully.");
+        print("Submitted ${receipts.length} items successfully.");
         print("Response: $response");
       }
     } catch (e) {
-      print(" Failed to submit vazhipadu: $e");
+      print("Failed to submit vazhipadu: $e");
+    }
+
+    return []; // return empty list if failure
+  }
+
+  Future<void> fetchTempleData() async {
+    try {
+      final data = await ApiService().getTemple();
+
+      if (data.isNotEmpty) {
+        templeList = data;
+        notifyListeners();
+      } else {
+        print("No temple data received.");
+      }
+    } catch (e) {
+      print("Error fetching temple data: $e");
     }
   }
+
+
+
+  void storeGroupedResponses(List<Map<String, dynamic>> responses) {
+    _submittedGroups = responses;
+    notifyListeners();
+  }
+
+
+
+
 
   Future<void> submitAdvVazhipadu() async {
     if (vazhipaduBookingList.isEmpty) {
@@ -1127,7 +1229,7 @@ class BookingViewmodel extends ChangeNotifier {
     }
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => PaymentMethodScreenAdvanceBooking()),
+      MaterialPageRoute(builder: (context) => PaymentMethodScreen()),
     );
     notifyListeners();
   }
@@ -1140,7 +1242,7 @@ class BookingViewmodel extends ChangeNotifier {
             (context) => QrScannerComponentDonations(
           amount: "$totalVazhipaduAmt",
           noOfScreen: 1,
-          title: "QR Scanner", name: '', phone: '',
+          title: "QR Scanner", name: '', phone: '',acctHeadName: '',
         ),
       ),
     );

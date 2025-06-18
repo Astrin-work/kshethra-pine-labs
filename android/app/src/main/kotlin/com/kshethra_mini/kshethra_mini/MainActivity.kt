@@ -147,6 +147,8 @@ class MainActivity : FlutterActivity() {
         }
     }
 
+
+
     override fun onDestroy() {
         super.onDestroy()
         if (isServiceBound) {

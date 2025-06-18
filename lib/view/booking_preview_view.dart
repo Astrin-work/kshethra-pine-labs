@@ -60,6 +60,7 @@ class PreViewWidget extends StatelessWidget {
       builder: (context, bookingViewmodel, child) {
         final bookings = bookingViewmodel.vazhipaduBookingList;
 
+
         return SizedBox(
           height: SizeConfig.screenHeight * 0.8,
           width: SizeConfig.screenWidth,
@@ -68,6 +69,7 @@ class PreViewWidget extends StatelessWidget {
             child: ListView.builder(
               itemCount: bookings.length,
               itemBuilder: (context, index) {
+                List<dynamic> vazhipaduResponseList = [];
                 final booking = bookings[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
