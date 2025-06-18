@@ -4,13 +4,10 @@ import 'package:kshethra_mini/view/payment_complete_screen.dart';
 import 'package:kshethra_mini/view/widgets/advanced_booking_page_widget/confirm_button_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
-import '../model/api models/get_temple_model.dart';
-import '../model/demo_model/temple_model.dart';
 import '../print_service/print_service.dart';
 import '../utils/app_color.dart';
 import '../utils/app_styles.dart';
 import '../utils/components/app_bar_widget.dart';
-import '../utils/logger.dart';
 
 class CashPayment extends StatelessWidget {
   final int amount;
@@ -84,7 +81,7 @@ class CashPayment extends StatelessWidget {
 
           final response = await viewmodel.submitVazhipadu();
 
-          final temple = BookingViewmodel().templeList;
+
           for (int index = 0; index < response.length; index++) {
             final group = response[index];
 

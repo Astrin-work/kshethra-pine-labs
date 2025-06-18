@@ -69,7 +69,6 @@ class PreViewWidget extends StatelessWidget {
             child: ListView.builder(
               itemCount: bookings.length,
               itemBuilder: (context, index) {
-                List<dynamic> vazhipaduResponseList = [];
                 final booking = bookings[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),

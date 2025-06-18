@@ -10,7 +10,6 @@ import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-import '../../print_service/print_service.dart';
 
 class QrScannerComponent extends StatelessWidget {
   final String amount;

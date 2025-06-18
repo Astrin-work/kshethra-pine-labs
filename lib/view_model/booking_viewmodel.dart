@@ -12,7 +12,6 @@ import 'package:kshethra_mini/view/booking_preview_view.dart';
 import 'package:kshethra_mini/view/card_payment_screen.dart';
 import 'package:kshethra_mini/view/cash_payment.dart';
 import 'package:kshethra_mini/view/widgets/advanced_booking_page_widget/cash_payment_advance_booking.dart';
-import 'package:kshethra_mini/view/widgets/advanced_booking_page_widget/payment_method_screen_advance_booking.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_dialogbox_widget.dart';
 import 'package:kshethra_mini/view/widgets/donation_page_widgets/qr_scanner_component_donations.dart';
 import 'package:kshethra_mini/view/widgets/home_page_widgets/home_widget.dart';
