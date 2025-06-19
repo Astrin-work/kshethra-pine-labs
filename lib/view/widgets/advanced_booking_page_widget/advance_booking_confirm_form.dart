@@ -65,7 +65,7 @@ class _AdvancedBookingConfirmFormState
 
   double _TottalAmount = 0.0;
 
-  final Map<String, double> postalRates = {"Postal": 5.0, "Speed Post": 45.0};
+  final Map<String, double> postalRates = {"Postal".tr(): 5.0, "Speed Post": 45.0};
 
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();

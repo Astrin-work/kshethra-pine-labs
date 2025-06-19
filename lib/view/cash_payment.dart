@@ -1,13 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kshethra_mini/view/payment_complete_screen.dart';
+import 'package:kshethra_mini/view/print/plutus_bridge.dart';
 import 'package:kshethra_mini/view/widgets/advanced_booking_page_widget/confirm_button_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
 import '../print_service/print_service.dart';
+import '../services/plutus_smart.dart';
 import '../utils/app_color.dart';
 import '../utils/app_styles.dart';
 import '../utils/components/app_bar_widget.dart';
+import '../utils/logger.dart';
 
 class CashPayment extends StatelessWidget {
   final int amount;
@@ -21,14 +26,14 @@ class CashPayment extends StatelessWidget {
       ),
     );
 
-    Navigator.pushAndRemoveUntil(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder:
             (context) =>
                 PaymentCompleteScreen(amount: amount.toString(), noOfScreen: 1),
       ),
-      (route) => false,
+      // (route) => false,
     );
   }
 
@@ -81,17 +86,58 @@ class CashPayment extends StatelessWidget {
 
           final response = await viewmodel.submitVazhipadu();
 
+          try {
+            final bindResult = await PlutusSmart.bindToService();
+            Logger.info("Service Bind Result: $bindResult");
+
+            if (bindResult != "SUCCESS") {
+              Logger.error("Failed to bind to service. Aborting transaction.");
+              return;
+            }
+          } catch (e) {
+            Logger.error("Service bind error: $e");
+            return;
+          }
 
           for (int index = 0; index < response.length; index++) {
-            final group = response[index];
+            // final group = response[index];
+            //
+            // await PrintService.printReceipt(
+            //   serialNumber: '${group['serialNumber']}',
+            //   receipts: List<Map<String, dynamic>>.from(group['receipts']),
+            //   temples: bookingViewmodel.templeList,
+            //   index: index,
+            // );
 
-            await PrintService.printReceipt(
-              serialNumber: '${group['serialNumber']}',
-              receipts: List<Map<String, dynamic>>.from(group['receipts']),
-              temples: bookingViewmodel.templeList,
-              index: index,
-            );
+            final now = DateTime.now();
+            final formattedDate = now.toIso8601String();
 
+            final payload = {
+              "Header": {
+                "ApplicationId": "f0d097be4df3441196d1e37cb2c98875",
+                "MethodId": "1001",
+                "UserId": "user1234",
+                "VersionNo": "1.0",
+              },
+              "Detail": {
+                "BillingRefNo": "TX98765432",
+                "PaymentAmount": 100,
+                "TransactionType": 4001,
+              }
+            };
+
+
+            final transactionDataJson = jsonEncode(payload);
+            Logger.info("Sending: $transactionDataJson");
+
+            try {
+              print("-----------payment working-----------");
+              final result = await PlutusSmart.startTransaction(transactionDataJson);
+              Logger.info("TRANSACTION RESULT: $result");
+            } catch (e) {
+              Logger.error("Transaction failed: $e");
+              return;
+            }
           }
 
           _onConfirmPayment(context);

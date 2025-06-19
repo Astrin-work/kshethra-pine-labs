@@ -158,7 +158,7 @@
 //             // final result = await PlutusSmart.startPrintJob(printDataJson);
 //             // print(result);
 //             await PrintService.printReceipt(
-//               serialNumber: "1234", receipts: [],
+//               serialNumber: "1234", receipts: [], temples: [], index:1,
 //             );
 //           }, child: Text("Print"),),
 //         ),

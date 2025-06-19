@@ -15,7 +15,7 @@ import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.MethodCall
 
 class MainActivity : FlutterActivity() {
-    private val CHANNEL = "KSHETRA-CHANNEL"
+    private val CHANNEL = "plutus_channel"
     private val PLUTUS_SMART_ACTION = "com.pinelabs.masterapp.SERVER"
     private val PLUTUS_SMART_PACKAGE = "com.pinelabs.masterapp"
     private var isServiceBound = false
@@ -91,7 +91,7 @@ class MainActivity : FlutterActivity() {
             val intent = Intent("com.pinelabs.masterapp.HYBRID_REQUEST").apply {
                 setPackage(PLUTUS_SMART_PACKAGE)
                 putExtra("REQUEST_DATA", transactionData)
-                putExtra("packageName", "com.pl.plutusapp_new")
+                putExtra("packageName", "com.kshethra_mini.kshethra_mini")
             }
             startActivityForResult(intent, 1001)
         } catch (e: Exception) {

@@ -3,15 +3,15 @@ import 'package:flutter/services.dart';
 import '../utils/logger.dart';
 
 class PlutusSmart {
-  static const MethodChannel _channel = MethodChannel('KSHETRA-CHANNEL');
+  static const MethodChannel _channel = MethodChannel('plutus_channel');
 
   static Future<String> bindToService() async {
     try {
       final result = await _channel.invokeMethod('bindToService');
-      Logger.info('bindToService result: $result'); // Log the result
+      Logger.info('bindToService result: $result');
       return result;
     } catch (e) {
-      Logger.error('bindToService error: $e'); // Log the error
+      Logger.error('bindToService error: $e');
       return e.toString();
     }
   }
