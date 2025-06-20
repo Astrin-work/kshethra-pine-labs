@@ -65,35 +65,37 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreenDonation> {
               listen: false,
             );
 
-            final amount = widget.amount ?? '0';
+            final amount = widget.amount;
             final name = widget.name ?? '';
             final phone = widget.phone ?? '';
             final acctHeadName =widget.acctHeadName ??'';
             switch (_selectedMethod) {
               case 'UPI':
-                donationViewmodel.navigateToQrScanner(
-                  context,
-                  amount,
-                  name: name,
-                  phone: phone,
-                  acctHeadName: acctHeadName,
-
-                );
+                // donationViewmodel.navigateToQrScanner(
+                //   context,
+                //   amount,
+                //   name: name,
+                //   phone: phone,
+                //   acctHeadName: acctHeadName,
+                //
+                // );
+                donationViewmodel.handleUpiPayment(int.parse(amount!));
                 break;
 
               case 'Card':
-                donationViewmodel.navigateCardScreen(
-                  context,
-                  amount: amount,
-                  name: name,
-                  phone: phone,
-                );
+                donationViewmodel.handleUpiPayment(int.parse(amount!));
+                // donationViewmodel.navigateCardScreen(
+                //   context,
+                //   amount: amount,
+                //   name: name,
+                //   phone: phone,
+                // );
                 break;
 
               case 'Cash':
                 donationViewmodel.navigateToCashPayment(
                   context,
-                  amount: amount,
+                  amount: amount.toString(),
                   name: name,
                   phone: phone,
                   acctHeadName: acctHeadName,

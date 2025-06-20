@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:kshethra_mini/utils/components/choose_payment_method_widget.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
+import '../../services/plutus_smart.dart';
+import '../../utils/logger.dart';
 import 'booking_page_widget/float_button_widget.dart';
 
 class PaymentMethodScreen extends StatefulWidget {
@@ -49,13 +53,15 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
         payOnTap: () {
           switch (_selectedMethod) {
             case 'UPI':
-              bookingViewmodel.navigateToQrScanner(context);
+               bookingViewmodel.handleUpiPayment(total.toInt());
+              // bookingViewmodel.navigateToQrScanner(context);
               break;
             case 'Cash':
               bookingViewmodel.navigateToCashPayment(context,total.toInt());
               break;
             case 'Card':
-              bookingViewmodel.navigateCardScreen(context);
+               bookingViewmodel.handleCardPayment(total.toInt());
+              // bookingViewmodel.navigateCardScreen(context);
               break;
             default:
               ScaffoldMessenger.of(context).showSnackBar(

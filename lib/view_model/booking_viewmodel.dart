@@ -20,6 +20,8 @@ import '../api_services/api_service.dart';
 import '../model/api models/get_donation_model.dart';
 import '../model/api models/get_temple_model.dart';
 import '../model/api models/god_model.dart';
+import '../services/plutus_smart.dart';
+import '../utils/logger.dart';
 import '../view/advanced_booking_confirm_view.dart';
 import '../view/widgets/advanced_booking_page_widget/advanced_vazhipaddu_dialog_BoxWidget.dart';
 
@@ -27,7 +29,6 @@ class BookingViewmodel extends ChangeNotifier {
   final bookingKey = GlobalKey<FormState>();
   final advBookingKey = GlobalKey<FormState>();
   final Set<String> _selectedWeeklyDays = {};
-
   TextEditingController bookingNameController = TextEditingController();
   TextEditingController bookingPhnoController = TextEditingController();
   TextEditingController bookingRepController = TextEditingController();
@@ -38,20 +39,22 @@ class BookingViewmodel extends ChangeNotifier {
   bool _isPostalAdded = false;
   bool _prasadamSelected = false;
   bool _isLoading = false;
+  bool get isLoading => _isLoading;
   bool get prasadamSelected => _prasadamSelected;
+  bool _isPrasadamSelected = false;
+  bool get isPrasadamSelected => _isPrasadamSelected;
+  bool _shouldResetPrasadam = false;
   List<UserBookingModel> _vazhipaduBookingList = [];
   List<UserBookingModel> get vazhipaduBookingList => _vazhipaduBookingList;
   List<Godmodel> _gods = [];
   List<Getdonationmodel> donations = [];
   List<GetTemplemodel> templeList = [];
-  int selectedIndex = 0;
-
+  List<Godmodel> get gods => _gods;
+  List<Map<String, dynamic>> _submittedGroups = [];
+  List<Map<String, dynamic>> get submittedGroups => _submittedGroups;
   Map<String, dynamic> _fullSubmittedData = {};
   Map<String, dynamic> get fullSubmittedData => _fullSubmittedData;
-
-
-  List<Godmodel> get gods => _gods;
-  bool get isLoading => _isLoading;
+  int selectedIndex = 0;
   int _noOfBookingVazhipaddu = 1;
   int get noOfBookingVazhipaddu => _noOfBookingVazhipaddu;
   int _advBookingAmt = 0;
@@ -64,15 +67,9 @@ class BookingViewmodel extends ChangeNotifier {
   int get advBookingSavedAmt => _advBookingSavedAmt;
   int _amtOfBookingVazhipaddu = 0;
   int get amtOfBookingVazhipaddu => _amtOfBookingVazhipaddu;
+  int _repeatDays = 1;
+  int get repeatDays => _repeatDays;
   Godmodel? selectedGods;
-  bool _isPrasadamSelected = false;
-
-  List<Map<String, dynamic>> _submittedGroups = [];
-  List<Map<String, dynamic>> get submittedGroups => _submittedGroups;
-
-
-
-  bool get isPrasadamSelected => _isPrasadamSelected;
   String _selectedStar = "Star".tr();
   String get selectedStar => _selectedStar;
   String _selectedRepMethod = "Once";
@@ -85,13 +82,11 @@ class BookingViewmodel extends ChangeNotifier {
   String get selectedDate => _selectedDate;
   String _postalOption = '';
   String get postalOption => _postalOption;
-  int _repeatDays = 1;
-  int get repeatDays => _repeatDays;
   double _postalAmount = 0.0;
   double get postalAmount => _postalAmount;
   double _totalAmount = 0.0;
   double get totalAmount => _totalAmount * noOfBookingVazhipaddu;
-  bool _shouldResetPrasadam = false;
+
 
   @override
   void dispose() {
@@ -235,8 +230,9 @@ class BookingViewmodel extends ChangeNotifier {
       print("Failed to submit vazhipadu: $e");
     }
 
-    return []; // return empty list if failure
+    return [];
   }
+
 
   Future<void> fetchTempleData() async {
     try {
@@ -253,15 +249,10 @@ class BookingViewmodel extends ChangeNotifier {
     }
   }
 
-
-
   void storeGroupedResponses(List<Map<String, dynamic>> responses) {
     _submittedGroups = responses;
     notifyListeners();
   }
-
-
-
 
 
   Future<void> submitAdvVazhipadu() async {
@@ -275,10 +266,6 @@ class BookingViewmodel extends ChangeNotifier {
       String formattedDate = "${DateFormat('yyyy-MM-dd').format(selectedDate)}T00:00:00";
 
       return {
-        // "devathaName": "ഭഗവതി",
-        // "offerName": "കുങ്കുമാര്ചന",
-        // "personName": "vvv",
-        // "personStar": "Makayiram"
         "devathaName": item.godname??"",
         "offerName": item.vazhipadu ?? "vazhipadu2",
         "personName": item.name ?? "",
@@ -336,7 +323,6 @@ class BookingViewmodel extends ChangeNotifier {
     }
   }
 
-
   void onConfirmPayment(BuildContext context) {
     int countdown = 5;
     showDialog(
@@ -372,8 +358,6 @@ class BookingViewmodel extends ChangeNotifier {
       },
     );
   }
-
-
 
   Future<void> fetchGods() async {
     _isLoading = true;
@@ -457,7 +441,6 @@ class BookingViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-
   void updateRepeatDays(int days) {
     _repeatDays = days;
     notifyListeners();
@@ -466,7 +449,7 @@ class BookingViewmodel extends ChangeNotifier {
   void recalculateTotalAmount() {
     _totalAmount = combinedTotalAmount.toDouble();
 
-    notifyListeners(); // Triggers UI updates
+    notifyListeners();
   }
 
   // void setBookingPage() {
@@ -483,7 +466,6 @@ class BookingViewmodel extends ChangeNotifier {
   //   _totalVazhipaduAmt = 0;
   //   bookingPhnoController.clear();
   // }
-
 
   int get combinedTotalAmount {
     int total = 0;
@@ -506,14 +488,6 @@ class BookingViewmodel extends ChangeNotifier {
 
     return total;
   }
-
-
-
-
-
-
-
-
 
   void setBookingPage() {
     _advBookOption = "";
@@ -783,7 +757,7 @@ class BookingViewmodel extends ChangeNotifier {
     int unitPrice = selectedVazhipaadu.cost;
     int quantity = bookingViewmodel.noOfBookingVazhipaddu;
     _totalVazhipaduAmt = _advBookingSavedAmt + (quantity * unitPrice);
-    //
+
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -1000,6 +974,7 @@ class BookingViewmodel extends ChangeNotifier {
       String vazhipaduPrice,
       BuildContext context,
       ) {
+
     final newBooking = UserBookingModel(
       name: bookingNameController.text.trim(),
       phno: bookingPhnoController.text.trim(),
@@ -1102,7 +1077,7 @@ class BookingViewmodel extends ChangeNotifier {
     bool valid = advBookingKey.currentState?.validate() ?? false;
     if (!valid) return;
 
-    // Check for empty or default placeholder values
+
     if (_selectedStar.isEmpty || _selectedStar == "Star" ||
         _selectedDate.isEmpty || _selectedDate == "Date") {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -1232,6 +1207,57 @@ class BookingViewmodel extends ChangeNotifier {
     );
     notifyListeners();
   }
+  Future<void> handleCardPayment(int amount) async {
+    final payload = {
+      "Header": {
+        "ApplicationId": "f0d097be4df3441196d1e37cb2c98875",
+        "MethodId": "1001",
+        "UserId": "user1234",
+        "VersionNo": "1.0",
+      },
+      "Detail": {
+        "BillingRefNo": "TX98765432",
+        "PaymentAmount": amount,
+        "TransactionType": 4001,
+      }
+    };
+    final transactionDataJson = jsonEncode(payload);
+    Logger.info("Card Sending: $transactionDataJson");
+
+    try {
+      Logger.info("-----------Card payment initiated-----------");
+      final result = await PlutusSmart.startTransaction(transactionDataJson);
+      Logger.info("CARD TRANSACTION RESULT: $result");
+    } catch (e) {
+      Logger.error("Card Transaction failed: $e");
+    }
+  }
+
+  Future<void> handleUpiPayment(int amount) async {
+    final payload = {
+      "Header": {
+        "ApplicationId": "f0d097be4df3441196d1e37cb2c98875",
+        "MethodId": "1001",
+        "UserId": "user1234",
+        "VersionNo": "1.0",
+      },
+      "Detail": {
+        "BillingRefNo": "TX98765432",
+        "PaymentAmount": amount,
+        "TransactionType": 5120,
+      }
+    };
+    final transactionDataJson = jsonEncode(payload);
+    Logger.info("UPI Sending: $transactionDataJson");
+
+    try {
+      Logger.info("-----------UPI payment initiated-----------");
+      final result = await PlutusSmart.startTransaction(transactionDataJson);
+      Logger.info("UPI TRANSACTION RESULT: $result");
+    } catch (e) {
+      Logger.error("UPI Transaction failed: $e");
+    }
+  }
 
   void navigateToQrScanner(BuildContext context) {
     Navigator.push(
@@ -1289,7 +1315,6 @@ class BookingViewmodel extends ChangeNotifier {
     _selectedWeeklyDays.add(day);
     notifyListeners();
   }
-
 
   bool toggleSelectedWeeklyDay(String day) {
     return _selectedWeeklyDays.contains(day);

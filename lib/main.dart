@@ -8,6 +8,7 @@ import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:kshethra_mini/view_model/donation_viewmodel.dart';
 import 'package:kshethra_mini/view_model/e_hundi_viewmodel.dart';
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
+import 'package:kshethra_mini/view_model/terminal_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:easy_localization/easy_localization.dart';
@@ -43,6 +44,7 @@ Future<void> main() async {
           ChangeNotifierProvider(create: (_) => DonationViewmodel()),
           ChangeNotifierProvider(create: (_) => AuthViewmodel()),
           ChangeNotifierProvider(create: (_) => BookingViewmodel()),
+          ChangeNotifierProvider(create: (_) =>TerminalViewmodel()),
         ],
         child: const MyApp(),
       ),

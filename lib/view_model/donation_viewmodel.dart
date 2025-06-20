@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/components/qr_code_component.dart';
@@ -6,6 +8,8 @@ import 'package:kshethra_mini/view/widgets/donation_page_widgets/card_payment_do
 import 'package:kshethra_mini/view/widgets/donation_page_widgets/cash_payment_donation.dart';
 import 'package:kshethra_mini/view/widgets/donation_page_widgets/donation_dialogbox_widget.dart';
 import 'package:kshethra_mini/view/widgets/donation_page_widgets/payment_method_screen_donation.dart';
+import '../services/plutus_smart.dart';
+import '../utils/logger.dart';
 import '../view/widgets/donation_page_widgets/qr_scanner_component_donations.dart';
 
 class DonationViewmodel extends ChangeNotifier {
@@ -191,4 +195,60 @@ class DonationViewmodel extends ChangeNotifier {
       MaterialPageRoute(builder: (context) => CardPaymentDonationScreen()),
     );
   }
+  Future<void> handleCardPayment(int amount) async {
+    final payload = {
+      "Header": {
+        "ApplicationId": "f0d097be4df3441196d1e37cb2c98875",
+        "MethodId": "1001",
+        "UserId": "user1234",
+        "VersionNo": "1.0",
+      },
+      "Detail": {
+        "BillingRefNo": "TX98765432",
+        "PaymentAmount": amount,
+        "TransactionType": 4001,
+      }
+    };
+    final transactionDataJson = jsonEncode(payload);
+    Logger.info("Card Sending: $transactionDataJson");
+
+    try {
+      Logger.info("-----------Card payment initiated-----------");
+      final result = await PlutusSmart.startTransaction(transactionDataJson);
+      Logger.info("CARD TRANSACTION RESULT: $result");
+    } catch (e) {
+      Logger.error("Card Transaction failed: $e");
+    }
+  }
+
+  Future<void> handleUpiPayment(int amount) async {
+    final payload = {
+      "Header": {
+        "ApplicationId": "f0d097be4df3441196d1e37cb2c98875",
+        "MethodId": "1001",
+        "UserId": "user1234",
+        "VersionNo": "1.0",
+      },
+      "Detail": {
+        "BillingRefNo": "TX98765432",
+        "PaymentAmount": amount,
+        "TransactionType": 5120,
+      }
+    };
+    final transactionDataJson = jsonEncode(payload);
+    Logger.info("UPI Sending: $transactionDataJson");
+
+    try {
+      Logger.info("-----------UPI payment initiated-----------");
+      final result = await PlutusSmart.startTransaction(transactionDataJson);
+      Logger.info("UPI TRANSACTION RESULT: $result");
+    } catch (e) {
+      Logger.error("UPI Transaction failed: $e");
+    }
+  }
+
+
+
+
+
 }

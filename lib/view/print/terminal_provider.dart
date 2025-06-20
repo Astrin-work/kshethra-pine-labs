@@ -2,14 +2,16 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:kshethra_mini/model/demo_model/temple_model.dart';
+import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 
+import '../../model/api models/get_temple_model.dart';
 import '../../utils/logger.dart';
 
 
 
 
 class TerminalProvider with ChangeNotifier {
-  // State variables
   String _selectedTransaction = 'SALE';
   bool _isChecked = false;
   List<String> statusMessages = [];
@@ -35,7 +37,7 @@ class TerminalProvider with ChangeNotifier {
       "VersionNo": "1.0",
     },
     "Detail": {
-      "PrintRefNo": "RECEIPT123456",
+      "PrintRefNo": "RECEIPT12345",
       "SavePrintData": false,
       "Data": [
         {

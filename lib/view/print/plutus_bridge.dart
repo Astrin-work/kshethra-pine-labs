@@ -1,4 +1,3 @@
-// lib/bridge/plutus_bridge.dart
 import 'package:flutter/services.dart';
 
 class PlutusBridge {
