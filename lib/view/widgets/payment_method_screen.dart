@@ -1,12 +1,9 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:kshethra_mini/utils/components/choose_payment_method_widget.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
-import '../../services/plutus_smart.dart';
-import '../../utils/logger.dart';
 import 'booking_page_widget/float_button_widget.dart';
 
 class PaymentMethodScreen extends StatefulWidget {

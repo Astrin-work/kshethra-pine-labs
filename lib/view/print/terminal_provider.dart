@@ -2,10 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:kshethra_mini/model/demo_model/temple_model.dart';
-import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
-
-import '../../model/api models/get_temple_model.dart';
 import '../../utils/logger.dart';
 
 

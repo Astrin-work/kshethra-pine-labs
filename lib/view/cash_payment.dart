@@ -6,7 +6,6 @@ import 'package:kshethra_mini/view/widgets/advanced_booking_page_widget/confirm_
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:kshethra_mini/view_model/terminal_viewmodel.dart';
 import 'package:provider/provider.dart';
-import '../print_service/print_service.dart';
 import '../services/plutus_smart.dart';
 import '../utils/app_color.dart';
 import '../utils/app_styles.dart';
