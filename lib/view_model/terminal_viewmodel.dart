@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_widget.dart';
-import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import '../utils/logger.dart';
 
 class TerminalViewmodel with ChangeNotifier {
