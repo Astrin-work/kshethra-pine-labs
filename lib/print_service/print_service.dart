@@ -1,11 +1,9 @@
 import 'dart:convert';
-
 import '../model/api models/get_temple_model.dart';
 import '../services/plutus_smart.dart';
 import '../utils/logger.dart';
 
 class PrintService {
-  /// Public method to print a formatted receipt
   static Future<void> printReceipt({
     required String serialNumber,
     required List<Map<String, dynamic>> receipts,
@@ -15,30 +13,17 @@ class PrintService {
     try {
       final currentTemple = temples[index];
       final receiptDate = _formattedDate();
-      final vazhipaduDate = receipts.first['date'] ?? receiptDate;
+      final timeNow = _formattedTime();
 
-      final vazhipaduItems =
-          receipts
-              .map(
-                (item) => {
-                  'vazhipadu': item['name'] ?? '',
-                  'name': item['personName'] ?? '',
-                  'amount': item['amount'] ?? 0,
-                  'qty': item['count'] ?? 1,
-                },
-              )
-              .toList();
+      final formattedLines = buildTempleReceiptPrintData(
+        currentTemple: currentTemple,
+        receipts: receipts,
+        receiptNo: serialNumber,
+        receiptDate: receiptDate,
+        receiptTime: timeNow,
+      );
 
-      final List<Map<String, dynamic>> formattedLines =
-          buildTempleReceiptPrintData(
-            currentTemple: currentTemple,
-            vazhipaduItems: vazhipaduItems,
-            receiptNo: serialNumber,
-            receiptDate: receiptDate,
-            vazhipaduDate: vazhipaduDate,
-          );
-
-      Map<String, dynamic> printData = {
+      final printData = {
         "Header": {
           "ApplicationId": "f0d097be4df3441196d1e37cb2c98875",
           "UserId": "user1234",
@@ -64,52 +49,91 @@ class PrintService {
       } else {
         Logger.error("Binding failed: $bindResult");
       }
-    } catch (e, stack) {
+    } catch (e) {
       Logger.error("Exception during printing: ${e.toString()}");
     }
   }
 
   static List<Map<String, dynamic>> buildTempleReceiptPrintData({
     required GetTemplemodel currentTemple,
-    required List<Map<String, dynamic>> vazhipaduItems,
+    required List<Map<String, dynamic>> receipts,
     required String receiptNo,
     required String receiptDate,
-    required String vazhipaduDate,
+    required String receiptTime,
   }) {
-    String formatRow(
-      int sl,
-      String vazhipadu,
-      String name,
-      int amount,
-      int qty,
-    ) {
-      return '${sl.toString().padRight(3)}'
-          '${vazhipadu.padRight(15)}'
-          '${name.padRight(8)}'
-          '${amount.toString().padRight(6)}'
-          '$qty';
-    }
+    int totalAmount = 0;
 
     final List<Map<String, dynamic>> lines = [
-      _printLine(currentTemple.templeName),
-      _printLine(currentTemple.address),
+      _printLine(currentTemple.templeName, fontSize: 2),
+      _printLine(currentTemple.address, fontSize: 1),
+      _printLine("Phone: ${currentTemple.phoneNumber}", fontSize: 1),
+      _dividerLine(),
+      _leftLine("Date: $receiptDate    Time: $receiptTime"),
+      _leftLine("Receipt No: $receiptNo"),
+      _dividerLine(),
+      _leftLine("Sl Name   Star   Vazhi   Qty Amt", fontSize: 1),
+      _dividerLine(),
     ];
 
+    for (int i = 0; i < receipts.length; i++) {
+      final item = receipts[i];
+      final name = (item['personName'] ?? '').toString();
+      final star = (item['personStar'] ?? '').toString();
+      final vazhipadu = (item['offerName'] ?? '').toString();
+      final qty = int.tryParse(item['quantity']?.toString() ?? '1') ?? 1;
+      final rate = int.tryParse(item['rate']?.toString() ?? '0') ?? 0;
+      final amt = qty * rate;
+      totalAmount += amt;
+
+
+      final row =
+          '${(i + 1).toString().padRight(2)} '
+          '${_clip(name, 6)} '
+          '${_clip(star, 5)} '
+          '${_clip(vazhipadu, 6)} '
+          '${qty.toString().padLeft(2)} '
+          '${'₹$amt'.padLeft(5)}';
+
+      lines.add(_leftLine(row));
+    }
+
+    lines.add(_dividerLine());
+    lines.add(_printLine("Total: ₹$totalAmount", fontSize: 2));
     return lines;
   }
 
-  /// Formats a line for printing
-  static Map<String, dynamic> _printLine(
-    String data, ) {
+  static Map<String, dynamic> _printLine(String data, {int fontSize = 1}) {
     return {
       "PrintDataType": "0",
-      "PrinterWidth": 24,
+      "PrinterWidth": 32,
       "IsCenterAligned": true,
+      "FontSize": fontSize,
+      "IsBold": false,
       "DataToPrint": data,
       "ImagePath": "0",
-      "ImageData": "0"
-
+      "ImageData": "0",
     };
+  }
+
+  static Map<String, dynamic> _leftLine(String data, {int fontSize = 1}) {
+    return {
+      "PrintDataType": "0",
+      "PrinterWidth": 32,
+      "IsCenterAligned": false,
+      "FontSize": fontSize,
+      "IsBold": false,
+      "DataToPrint": data,
+      "ImagePath": "0",
+      "ImageData": "0",
+    };
+  }
+
+  static Map<String, dynamic> _dividerLine() {
+    return _leftLine("-" * 32);
+  }
+
+  static String _clip(String text, int width) {
+    return text.length > width ? text.substring(0, width) : text.padRight(width);
   }
 
   static String _formattedDate() {
@@ -117,5 +141,10 @@ class PrintService {
     return '${now.day.toString().padLeft(2, '0')}/'
         '${now.month.toString().padLeft(2, '0')}/'
         '${now.year}';
+  }
+
+  static String _formattedTime() {
+    final now = DateTime.now();
+    return '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
   }
 }
