@@ -5,6 +5,7 @@ import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/utils/validation.dart';
+import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/donation_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -66,6 +67,7 @@ class _DonationFormWidgetState extends State<DonationFormWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final fromLang = "en";
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
 
@@ -147,9 +149,10 @@ class _DonationFormWidgetState extends State<DonationFormWidget> {
                           child: Center(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text(
+                              child: BuildTextWidget(
+                                text:
                                 donationItem.acctHeadName,
-                                style: AppStyles().blackRegular13,
+                                fromLang:fromLang ,
                               ),
                             ),
                           ),

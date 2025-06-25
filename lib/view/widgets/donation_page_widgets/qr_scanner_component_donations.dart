@@ -47,7 +47,6 @@ class QrScannerComponentDonations extends StatelessWidget {
                     color: kBlack,
                     size: 23,
                     fontWeight: FontWeight.w400,
-                    toLang: currentLang,
                   ),
                   // Text("Amount ₹ $amount", style: styles.blackRegular22),
                   BuildTextWidget(
@@ -55,7 +54,6 @@ class QrScannerComponentDonations extends StatelessWidget {
                     color: kBlack,
                     size: 18,
                     fontWeight: FontWeight.w300,
-                    toLang: currentLang,
                     textAlign: TextAlign.center,
                   ),
 

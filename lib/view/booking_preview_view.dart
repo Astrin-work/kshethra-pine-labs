@@ -59,8 +59,7 @@ class PreViewWidget extends StatelessWidget {
     return Consumer<BookingViewmodel>(
       builder: (context, bookingViewmodel, child) {
         final bookings = bookingViewmodel.vazhipaduBookingList;
-
-
+        final fromLang = "en";
         return SizedBox(
           height: SizeConfig.screenHeight * 0.8,
           width: SizeConfig.screenWidth,
@@ -82,10 +81,11 @@ class PreViewWidget extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
+                          BuildTextWidget(text:
                             booking.name.toString(),
-                            style: styles.blackSemi18,
+                            // style: styles.blackSemi18,
                             textAlign: TextAlign.center,
+                            fromLang: fromLang,
                           ),
                           const SizedBox(height: 4),
                           Text(
@@ -113,6 +113,7 @@ class PreViewWidget extends StatelessWidget {
                                       size: 15,
                                       color: kBlack,
                                       fontWeight: FontWeight.w500,
+                                      fromLang:fromLang,
                                     ),
                                     SizedBox(width: 20,),
                                     Text(
@@ -143,6 +144,7 @@ class PreViewWidget extends StatelessWidget {
                                   text: booking.godname?.tr() ?? "",
                                   size: 14,
                                   color: kBlack,
+                                  fromLang: fromLang,
                                 ),
                                 const SizedBox(height: 10),
                                 Row(
