@@ -87,6 +87,19 @@ class BookingViewmodel extends ChangeNotifier {
   double _totalAmount = 0.0;
   double get totalAmount => _totalAmount * noOfBookingVazhipaddu;
 
+  int _selectedCounterIndex = 0;
+  int get selectedCounterIndex => _selectedCounterIndex;
+
+  int _selectedCategoryIndex = 0;
+  int get selectedCategoryIndex => _selectedCategoryIndex;
+
+  int _selectedAdvancedBookingCategoryIndex = 0;
+  int get selectedAdvancedBookingCategoryIndex => _selectedAdvancedBookingCategoryIndex;
+
+  void setSelectedAdvancedBookingCategoryIndex(int index) {
+    _selectedAdvancedBookingCategoryIndex = index;
+    notifyListeners();
+  }
 
   @override
   void dispose() {
@@ -96,6 +109,28 @@ class BookingViewmodel extends ChangeNotifier {
     bookingAddressController.dispose();
     super.dispose();
   }
+
+
+
+  Vazhipadus? _selectedVazhipaddu;
+  Vazhipadus? get selectedVazhipaddu => _selectedVazhipaddu;
+
+
+  void selectVazhipaddu(Vazhipadus vazhipaddu) {
+    if (_selectedVazhipaddu != vazhipaddu) {
+      _selectedVazhipaddu = vazhipaddu;
+      notifyListeners();
+    }
+  }
+
+
+  void setSelectedCategoryIndex(int index) {
+    _selectedCategoryIndex = index;
+    notifyListeners();
+  }
+
+
+
 
   // Future<void> submitVazhipadu() async {
   //   if (vazhipaduBookingList.isEmpty) {

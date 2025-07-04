@@ -5,6 +5,8 @@ import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/back_button_component.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 
+import '../../view/widgets/build_text_widget.dart';
+
 
 class AppBarWidget extends StatelessWidget {
   final String title;
@@ -16,7 +18,7 @@ class AppBarWidget extends StatelessWidget {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return Container(
-      height: SizeConfig.screenHeight * 0.2,
+      height: SizeConfig.screenHeight * 0.13,
       width: SizeConfig.screenWidth,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -31,7 +33,7 @@ class AppBarWidget extends StatelessWidget {
       child: Column(
         children: [
           BackButtonComponent(),
-          Text(title.tr(), style: styles.blackRegular20),
+          Text(title.tr(), style: styles.blackRegular15),
           // BuildTextWidget(text: title, size: 20),
         ],
       ),

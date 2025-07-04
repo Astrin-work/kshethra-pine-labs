@@ -99,6 +99,7 @@ class CashPayment extends StatelessWidget {
       ),
       floatingActionButton: ConfirmButtonWidget(
         onConfirm: () async {
+          print("hi"*100);
           final viewmodel = context.read<BookingViewmodel>();
           print("--------------temple name------------");
           await viewmodel.fetchTempleData();
@@ -119,7 +120,7 @@ class CashPayment extends StatelessWidget {
 
           for (int index = 0; index < response.length; index++) {
             final group = response[index];
-
+            //
             // await PrintService.printReceipt(
             //   serialNumber: '${group['serialNumber']}',
             //   receipts: List<Map<String, dynamic>>.from(group['receipts']),
@@ -139,7 +140,7 @@ class CashPayment extends StatelessWidget {
                 "Detail": {
                   "BillingRefNo": "TX98765432",
                   "PaymentAmount": amount,
-                  "TransactionType": 4001,
+                  "TransactionType": 5120,
                 }
               };
 
@@ -156,7 +157,7 @@ class CashPayment extends StatelessWidget {
                 return;
               }
           }
-          // _handlePrint(TerminalViewmodel());
+          _handlePrint(TerminalViewmodel());
 
           _onConfirmPayment(context);
         },

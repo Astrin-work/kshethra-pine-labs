@@ -192,6 +192,7 @@ class ApiService {
     }
   }
 
+
   Future<dynamic> postAdvVazhipaduDetails(Map<String, dynamic> data) async {
     final token = await AppHive().getToken();
 
@@ -213,6 +214,7 @@ class ApiService {
       rethrow;
     }
   }
+
 
   Future<List<GetTemplemodel>> getTemple() async {
     try {

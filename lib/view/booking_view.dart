@@ -14,32 +14,25 @@ class BookingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+
     return Scaffold(
       floatingActionButton: Consumer<BookingViewmodel>(
-        builder:
-            (context, bookingViewmodel, child) => ResponsiveLayout(
-          pinelabDevice:BookingFloatButtonWidget(
-            payOnTap: () async {
+        builder: (context, bookingViewmodel, child) => ResponsiveLayout(
+          pinelabDevice: BookingFloatButtonWidget(
+            payOnTap: () {
               bookingViewmodel.navigateBookingPreviewView(context);
-              print("-------btn pressed------");
-
-              // await bookingViewmodel.submitVazhipadu(bookingViewmodel.selectedIndex);
             },
           ),
-
-              mediumDevice: BookingFloatButtonWidget(
+          mediumDevice: BookingFloatButtonWidget(
             height: 65,
             payOnTap: () {
               bookingViewmodel.navigateBookingPreviewView(context);
-
-
             },
           ),
           largeDevice: BookingFloatButtonWidget(
             height: 75,
             payOnTap: () {
               bookingViewmodel.navigateBookingPreviewView(context);
-
             },
           ),
         ),
@@ -49,40 +42,37 @@ class BookingView extends StatelessWidget {
           children: [
             AppBarWidget(title: 'Vazhipaddu'.tr()),
             ResponsiveLayout(
-              pinelabDevice: Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15),
+              pinelabDevice: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
                 child: BookingFormWidget(),
               ),
               mediumDevice: Padding(
-                padding: EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.125,
-                  right: SizeConfig.screenWidth * 0.125,
+                padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.screenWidth * 0.125,
                 ),
                 child: BookingFormWidget(
-                  crossAxisSpace: SizeConfig.screenWidth * 0.15,
-                  mainAxisSpace: SizeConfig.screenWidth * 0.1,
+                  crossAxisSpacing: SizeConfig.screenWidth * 0.15,
+                  mainAxisSpacing: SizeConfig.screenWidth * 0.1,
                 ),
               ),
               semiMediumDevice: Padding(
-                padding: EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.125,
-                  right: SizeConfig.screenWidth * 0.125,
+                padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.screenWidth * 0.125,
                 ),
                 child: BookingFormWidget(
-                  crossAixisCount: 3,
-                  crossAxisSpace: SizeConfig.screenWidth * 0.05,
-                  mainAxisSpace: SizeConfig.screenWidth * 0.05,
+                  crossAxisCount: 3,
+                  crossAxisSpacing: SizeConfig.screenWidth * 0.05,
+                  mainAxisSpacing: SizeConfig.screenWidth * 0.05,
                 ),
               ),
               largeDevice: Padding(
-                padding: EdgeInsets.only(
-                  left: SizeConfig.screenWidth * 0.125,
-                  right: SizeConfig.screenWidth * 0.125,
+                padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.screenWidth * 0.125,
                 ),
                 child: BookingFormWidget(
-                  crossAixisCount: 4,
-                  crossAxisSpace: SizeConfig.screenWidth * 0.015,
-                  mainAxisSpace: SizeConfig.screenWidth * 0.015,
+                  crossAxisCount: 4,
+                  crossAxisSpacing: SizeConfig.screenWidth * 0.015,
+                  mainAxisSpacing: SizeConfig.screenWidth * 0.015,
                 ),
               ),
             ),
