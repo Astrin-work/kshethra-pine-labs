@@ -1,8 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
+import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
+import '../../../view_model/home_page_viewmodel.dart';
 
 class GodWidget extends StatefulWidget {
   const GodWidget({super.key});
@@ -35,7 +38,7 @@ class _GodWidgetState extends State<GodWidget> {
         }
 
         return SizedBox(
-          height: 130,
+          height: SizeConfig.screenHeight*0.280,
           width: SizeConfig.screenWidth,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -43,48 +46,62 @@ class _GodWidgetState extends State<GodWidget> {
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        bookingViewmodel.setGod(godList[index]);
-                        print('------pressed-------');
-                      },
-                      child:
-                      Container(
-                        height: 90,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color:
-                              bookingViewmodel.selectedGods == godList[index]
-                                  ? kPrimaryColor
-                                  : kTransparent,
-                              blurRadius: 5,
-                              spreadRadius: 5,
+                child: SingleChildScrollView(
+                  physics: NeverScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      InkWell(
+                          onTap: () {
+                            bookingViewmodel.setGod(godList[index]);
+                            print('------pressed-------');
+                          },
+                          child:
+                          Container(
+                            height: SizeConfig.screenHeight * 0.160,
+                            width: SizeConfig.screenWidth * 0.220,
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: bookingViewmodel.selectedGods == godList[index]
+                                      ? kPrimaryColor
+                                      : kTransparent,
+                                  blurRadius: 5,
+                                  spreadRadius: 5,
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(10.0),
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/img.png'),
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ],
-                          image: DecorationImage(
-                            image: NetworkImage(godList[index].devathaImage),
-                            fit: BoxFit.contain,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(godList[index].devathaImage),
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                      ),
+                      Padding(
+                        padding:  EdgeInsets.only(top: 10),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: BuildTextWidget(
+                            text: godList[index].devathaName,
+                            fromLang: fromLang,
+                            size: 13,
+                            fontWeight: FontWeight.w500,
                           ),
-                          // color: Colors.red,
-                          borderRadius: BorderRadius.circular(10.0),
                         ),
-                      )
-                    ),
-                    SizedBox(height: 8,),
-                    // Align(
-                    //   alignment: Alignment.bottomCenter,
-                    //   child: BuildTextWidget(
-                    //     text: godList[index].devathaName,
-                    //     fromLang: fromLang,
-                    //     size: 12,
-                    //     fontWeight: FontWeight.w500,
-                    //   ),
-                    // ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               );
             },

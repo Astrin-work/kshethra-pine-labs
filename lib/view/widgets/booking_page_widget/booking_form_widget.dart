@@ -37,73 +37,80 @@ class BookingFormWidget extends StatelessWidget {
         children: [
           25.kH,
 
-          Form(
-            key: bookingViewmodel.bookingKey,
-            child: SizedBox(
-              height: 50,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                physics: const ClampingScrollPhysics(),
-                child: TextFormField(
-                  autofocus: true,
-                  validator: Validation.nameValidation,
-                  controller: bookingViewmodel.bookingNameController,
-                  textAlign: TextAlign.center,
-                  style: styles.blackRegular15,
-                  decoration: InputDecoration(
-                    hintText: 'Name'.tr(),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+          Row(
+            children: [
+
+              Expanded(
+                flex: 2,
+                child: Form(
+                  key: bookingViewmodel.bookingKey,
+                  child: SizedBox(
+                    height: 50,
+                    child: TextFormField(
+                      autofocus: true,
+                      validator: Validation.nameValidation,
+                      controller: bookingViewmodel.bookingNameController,
+                      textAlign: TextAlign.center,
+                      style: styles.blackRegular15,
+                      decoration: InputDecoration(
+                        hintText: 'Name'.tr(),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ),
-
-          15.kH,
-          MaterialButton(
-            minWidth: SizeConfig.screenWidth,
-            height: 45,
-            shape: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => ResponsiveLayout(
-                  pinelabDevice: StarDialogBox(),
-                  mediumDevice: StarDialogBox(
-                    borderRadius: 25,
-                    mainAxisSpace: 30,
-                    crossAxisSpace: 45,
-                  ),
-                  semiMediumDevice: StarDialogBox(
-                    borderRadius: 25,
-                    mainAxisSpace: 30,
-                    crossAxisSpace: 45,
-                    axisCount: 3,
-                  ),
-                  semiLargeDevice: StarDialogBox(
-                    borderRadius: 30,
-                    mainAxisSpace: 30,
-                    crossAxisSpace: 45,
-                    axisCount: 3,
-                  ),
-                  largeDevice: StarDialogBox(
-                    borderRadius: 35,
-                    mainAxisSpace: 30,
-                    crossAxisSpace: 45,
-                    axisCount: 4,
+              SizedBox(width: 10),
+              Expanded(
+                flex: 1,
+                child: SizedBox(
+                  height: 50,
+                  child: MaterialButton(
+                    shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ResponsiveLayout(
+                          pinelabDevice: StarDialogBox(),
+                          mediumDevice: StarDialogBox(
+                            borderRadius: 25,
+                            mainAxisSpace: 30,
+                            crossAxisSpace: 45,
+                          ),
+                          semiMediumDevice: StarDialogBox(
+                            borderRadius: 25,
+                            mainAxisSpace: 30,
+                            crossAxisSpace: 45,
+                            axisCount: 3,
+                          ),
+                          semiLargeDevice: StarDialogBox(
+                            borderRadius: 30,
+                            mainAxisSpace: 30,
+                            crossAxisSpace: 45,
+                            axisCount: 3,
+                          ),
+                          largeDevice: StarDialogBox(
+                            borderRadius: 35,
+                            mainAxisSpace: 30,
+                            crossAxisSpace: 45,
+                            axisCount: 4,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      bookingViewmodel.selectedStar,
+                      style: styles.blackRegular15,
+                    ),
                   ),
                 ),
-              );
-            },
-            child: Text(
-              bookingViewmodel.selectedStar,
-              style: styles.blackRegular15,
-            ),
+              ),
+            ],
           ),
 
           15.kH,

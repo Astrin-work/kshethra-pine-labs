@@ -27,7 +27,6 @@ class VazhipadduWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     const fromLang = "en";
-
     return Consumer<BookingViewmodel>(
       builder: (context, bookingViewmodel, _) {
         final selectedGod = bookingViewmodel.selectedGods;
@@ -40,7 +39,6 @@ class VazhipadduWidget extends StatelessWidget {
             : bookingViewmodel.selectedAdvancedBookingCategoryIndex;
 
         List<Vazhipadus> vazhipadus = [];
-
         if (currentCategoryIndex == 0) {
           for (var counter in selectedGod.counters) {
             vazhipadus.addAll(counter.vazhipadus);
@@ -51,13 +49,11 @@ class VazhipadduWidget extends StatelessWidget {
             vazhipadus = selectedGod.counters[counterIndex].vazhipadus;
           }
         }
-
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             SizedBox(
-              height: 35   ,
+              height: 30  ,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: selectedGod.counters.length + 1,
@@ -67,7 +63,6 @@ class VazhipadduWidget extends StatelessWidget {
                   final title = isAllSelected
                       ? "All"
                       : selectedGod.counters[index - 1].counterName;
-
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: ChoiceChip(
@@ -93,8 +88,6 @@ class VazhipadduWidget extends StatelessWidget {
                 },
               ),
             ),
-            // const SizedBox(height: 12),
-
             vazhipadus.isEmpty
                 ? const Center(child: Text("No vazhipadu found"))
                 : GridView.builder(
@@ -148,10 +141,10 @@ class VazhipadduWidget extends StatelessWidget {
                             text: item.offerName,
                             fromLang: fromLang,
                             textAlign: TextAlign.center,
-                            size: 15,
+                            size: 14,
                             fontWeight: FontWeight.w400,
                             maxLines: 3,
-                            style: AppStyles().blackRegular15,
+                            style: AppStyles().blackRegular13,
                           ),
                           const SizedBox(height: 5),
                           BuildTextWidget(

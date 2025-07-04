@@ -1,11 +1,9 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/back_button_component.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
-
-
+import '../../view/widgets/build_text_widget.dart';
 
 class AppBarWidget extends StatelessWidget {
   final String title;
@@ -13,14 +11,13 @@ class AppBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
     return Container(
       height: SizeConfig.screenHeight * 0.13,
       width: SizeConfig.screenWidth,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(25),
           bottomRight: Radius.circular(25),
         ),
@@ -29,11 +26,18 @@ class AppBarWidget extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: Column(
+      child: Stack(
+        alignment: Alignment.center,
         children: [
-          BackButtonComponent(),
-          Text(title.tr(), style: styles.blackRegular15),
-          // BuildTextWidget(text: title, size: 20),
+          BuildTextWidget(
+            text: title,
+            size: 20,
+          ),
+          const Positioned(
+            top: 8,
+            left: 8,
+            child: BackButtonComponent(),
+          ),
         ],
       ),
     );
