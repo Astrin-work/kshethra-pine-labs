@@ -5,7 +5,6 @@ import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/back_button_component.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 
-import '../../view/widgets/build_text_widget.dart';
 
 
 class AppBarWidget extends StatelessWidget {
