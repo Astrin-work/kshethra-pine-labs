@@ -22,6 +22,7 @@ import '../model/api models/get_temple_model.dart';
 import '../model/api models/god_model.dart';
 import '../services/plutus_smart.dart';
 import '../utils/logger.dart';
+import '../utils/validation.dart';
 import '../view/advanced_booking_confirm_view.dart';
 import '../view/widgets/advanced_booking_page_widget/advanced_vazhipaddu_dialog_BoxWidget.dart';
 
@@ -92,7 +93,7 @@ class BookingViewmodel extends ChangeNotifier {
 
   int _selectedCategoryIndex = 0;
   int get selectedCategoryIndex => _selectedCategoryIndex;
-
+  String? starError;
   int _selectedAdvancedBookingCategoryIndex = 0;
   int get selectedAdvancedBookingCategoryIndex => _selectedAdvancedBookingCategoryIndex;
 
@@ -112,6 +113,13 @@ class BookingViewmodel extends ChangeNotifier {
 
 
 
+
+
+  void validateStar() {
+    starError = Validation.validateStarSelection(selectedStar);
+    notifyListeners();
+  }
+
   Vazhipadus? _selectedVazhipaddu;
   Vazhipadus? get selectedVazhipaddu => _selectedVazhipaddu;
 
@@ -128,7 +136,11 @@ class BookingViewmodel extends ChangeNotifier {
     _selectedCategoryIndex = index;
     notifyListeners();
   }
-
+  bool validateForm() {
+    final isFormValid = bookingKey.currentState?.validate() ?? false;
+    validateStar();
+    return isFormValid && starError == null;
+  }
 
 
 
@@ -597,7 +609,6 @@ class BookingViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-
   // void navigateAdvBookingPreview(BuildContext context) {
   //   if (_totalVazhipaduAmt == 0) {
   //     ScaffoldMessenger.of(context).showSnackBar(
@@ -674,36 +685,92 @@ class BookingViewmodel extends ChangeNotifier {
   //     print("Error in fetchVazhipadu: $e");
   //   }
   // }
-  void navigateBookingPreviewView(BuildContext context) {
-    if (_totalVazhipaduAmt != 0) {
-      if (_gods.isNotEmpty) {
-        selectedGods = _gods[0];
-      }
-      _selectedStar = "Star".tr();
-      bookingNameController.clear();
-      _isExistedDevotee = false;
+  // void navigateBookingPreviewView(BuildContext context) {
+  //   if (_totalVazhipaduAmt != 0) {
+  //     if (_gods.isNotEmpty) {
+  //       selectedGods = _gods[0];
+  //     }
+  //     _selectedStar = "Star".tr();
+  //     bookingNameController.clear();
+  //     _isExistedDevotee = false;
+  //
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder:
+  //             (context) => BookingPreviewView(
+  //           page: 'booking',
+  //           selectedRepMethod: selectedRepMethod,
+  //         ),
+  //       ),
+  //     );
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBarWidget(
+  //         msg: "Please select a Vazhippadu",
+  //         color: kGrey,
+  //       ).build(context),
+  //     );
+  //   }
+  //
+  //   notifyListeners();
+  // }
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder:
-              (context) => BookingPreviewView(
-            page: 'booking',
-            selectedRepMethod: selectedRepMethod,
-          ),
-        ),
-      );
-    } else {
+  void navigateBookingPreviewView(BuildContext context) {
+    final name = bookingNameController.text.trim();
+    final isStarValid = _selectedStar != "Star".tr() && _selectedStar.isNotEmpty;
+    final isNameValid = Validation.nameValidation(name) == null;
+    final hasVazhipadu = _totalVazhipaduAmt != 0;
+
+    if (!hasVazhipadu) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBarWidget(
           msg: "Please select a Vazhippadu",
           color: kGrey,
         ).build(context),
       );
+      return;
     }
+
+    if (!isNameValid) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBarWidget(
+          msg: "Please enter a valid name",
+          color: kGrey,
+        ).build(context),
+      );
+      return;
+    }
+
+    if (!isStarValid) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBarWidget(
+          msg: "Please select a star",
+          color: kGrey,
+        ).build(context),
+      );
+      return;
+    }
+
+    if (_gods.isNotEmpty) {
+      selectedGods = _gods[0];
+    }
+    _isExistedDevotee = false;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BookingPreviewView(
+          page: 'booking',
+          selectedRepMethod: selectedRepMethod,
+        ),
+      ),
+    );
 
     notifyListeners();
   }
+
+
 
   void setAdvBookOption(String value) {
     _advBookOption = value;

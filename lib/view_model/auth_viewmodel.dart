@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 
 import 'package:kshethra_mini/view/language_select_view.dart';
@@ -79,4 +82,34 @@ class AuthViewmodel extends ChangeNotifier {
           (route) => false,
     );
   }
+
+  Future<void> printDeviceDetails() async {
+    final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
+    try {
+      if (Platform.isAndroid) {
+        AndroidDeviceInfo android = await deviceInfo.androidInfo;
+        print('Device Info [Android]:');
+        print('Brand: ${android.brand}');
+        print('Device: ${android.device}');
+        print('Model: ${android.model}');
+        print('Android Version: ${android.version.release}');
+        print('Android SDK: ${android.version.sdkInt}');
+        print('serial number: ${android.serialNumber}');
+        print('id: ${android.id}');
+      } else if (Platform.isIOS) {
+        IosDeviceInfo ios = await deviceInfo.iosInfo;
+        print('Device Info [iOS]:');
+        print('Name: ${ios.name}');
+        print('Model: ${ios.model}');
+        print('System Version: ${ios.systemVersion}');
+        print('Identifier for Vendor: ${ios.identifierForVendor}');
+      }
+    } catch (e) {
+      print('Failed to get device info: $e');
+    }
+  }
+
+
+
 }

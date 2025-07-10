@@ -36,7 +36,6 @@ class _GodWidgetState extends State<GodWidget> {
         if (isLoading) {
           return const Center(child: CircularProgressIndicator(color: kDullPrimaryColor,));
         }
-
         return SizedBox(
           height: SizeConfig.screenHeight*0.280,
           width: SizeConfig.screenWidth,

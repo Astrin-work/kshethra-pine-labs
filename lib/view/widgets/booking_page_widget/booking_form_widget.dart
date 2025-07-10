@@ -9,7 +9,6 @@ import 'package:kshethra_mini/view/widgets/booking_page_widget/star_dialodbox_wi
 import 'package:kshethra_mini/view/widgets/booking_page_widget/vazhipaddu_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
-
 import '../../../view_model/home_page_viewmodel.dart';
 
 class BookingFormWidget extends StatelessWidget {
@@ -29,108 +28,122 @@ class BookingFormWidget extends StatelessWidget {
     final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
-    final selectedCategoryIndex =
-        BookingViewmodel().selectedAdvancedBookingCategoryIndex;
 
     return Consumer<BookingViewmodel>(
-      builder: (context, bookingViewmodel, child) => Column(
-        children: [
-          25.kH,
+      builder: (context, bookingViewmodel, child) {
+        final selectedCategoryIndex =
+            bookingViewmodel.selectedAdvancedBookingCategoryIndex;
 
-          Row(
+        return Form(
+          key: bookingViewmodel.bookingKey,
+          child: Column(
             children: [
+              25.kH,
 
-              Expanded(
-                flex: 2,
-                child: Form(
-                  key: bookingViewmodel.bookingKey,
-                  child: SizedBox(
-                    height: 50,
-                    child: TextFormField(
-                      autofocus: true,
-                      validator: Validation.nameValidation,
-                      controller: bookingViewmodel.bookingNameController,
-                      textAlign: TextAlign.center,
-                      style: styles.blackRegular15,
-                      decoration: InputDecoration(
-                        hintText: 'Name'.tr(),
-                        contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: SizedBox(
+                      height: 50,
+                      child: TextFormField(
+                        autofocus: true,
+                        validator: Validation.nameValidation,
+                        controller: bookingViewmodel.bookingNameController,
+                        textAlign: TextAlign.center,
+                        style: styles.blackRegular15,
+                        decoration: InputDecoration(
+                          hintText: 'Name'.tr(),
+                          contentPadding:
+                          const EdgeInsets.symmetric(vertical: 10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                flex: 1,
-                child: SizedBox(
-                  height: 50,
-                  child: MaterialButton(
-                    shape: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => ResponsiveLayout(
-                          pinelabDevice: StarDialogBox(),
-                          mediumDevice: StarDialogBox(
-                            borderRadius: 25,
-                            mainAxisSpace: 30,
-                            crossAxisSpace: 45,
-                          ),
-                          semiMediumDevice: StarDialogBox(
-                            borderRadius: 25,
-                            mainAxisSpace: 30,
-                            crossAxisSpace: 45,
-                            axisCount: 3,
-                          ),
-                          semiLargeDevice: StarDialogBox(
-                            borderRadius: 30,
-                            mainAxisSpace: 30,
-                            crossAxisSpace: 45,
-                            axisCount: 3,
-                          ),
-                          largeDevice: StarDialogBox(
-                            borderRadius: 35,
-                            mainAxisSpace: 30,
-                            crossAxisSpace: 45,
-                            axisCount: 4,
+                  const SizedBox(width: 10),
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SizedBox(
+                          height: 50,
+                          child: MaterialButton(
+                            shape: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            onPressed: () async {
+                              await showDialog(
+                                context: context,
+                                builder: (context) => ResponsiveLayout(
+                                  pinelabDevice: StarDialogBox(),
+                                  mediumDevice: StarDialogBox(
+                                    borderRadius: 25,
+                                    mainAxisSpace: 30,
+                                    crossAxisSpace: 45,
+                                  ),
+                                  semiMediumDevice: StarDialogBox(
+                                    borderRadius: 25,
+                                    mainAxisSpace: 30,
+                                    crossAxisSpace: 45,
+                                    axisCount: 3,
+                                  ),
+                                  semiLargeDevice: StarDialogBox(
+                                    borderRadius: 30,
+                                    mainAxisSpace: 30,
+                                    crossAxisSpace: 45,
+                                    axisCount: 3,
+                                  ),
+                                  largeDevice: StarDialogBox(
+                                    borderRadius: 35,
+                                    mainAxisSpace: 30,
+                                    crossAxisSpace: 45,
+                                    axisCount: 4,
+                                  ),
+                                ),
+                              );
+
+                              bookingViewmodel.validateStar();
+                            },
+                            child: Text(
+                              bookingViewmodel.selectedStar,
+                              style: styles.blackRegular15,
+                            ),
                           ),
                         ),
-                      );
-                    },
-                    child: Text(
-                      bookingViewmodel.selectedStar,
-                      style: styles.blackRegular15,
+                        if (bookingViewmodel.starError != null)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                            child: Text(
+                              bookingViewmodel.starError!,
+                              style: const TextStyle(
+                                color: Colors.red,
+                                fontSize: 12,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                      ],
                     ),
                   ),
-                ),
+                ],
+              ),
+              15.kH,
+              const GodWidget(),
+              VazhipadduWidget(
+                crossAxisCount: crossAxisCount ?? 3,
+                crossAxisSpacing: crossAxisSpacing ?? 15,
+                mainAxisSpacing: mainAxisSpacing ?? 15,
+                screeName: 'bookingPage',
+                selectedCategoryIndex: selectedCategoryIndex,
               ),
             ],
           ),
-
-          15.kH,
-          const GodWidget(),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 15.0,
-              right: 15,
-              bottom: SizeConfig.screenWidth * 0.2,
-            ),
-            child: VazhipadduWidget(
-              crossAxisCount: crossAxisCount ?? 3,
-              crossAxisSpacing: crossAxisSpacing ?? 15,
-              mainAxisSpacing: mainAxisSpacing ?? 15,
-              screeName: 'bookingPage',
-              selectedCategoryIndex: selectedCategoryIndex,
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

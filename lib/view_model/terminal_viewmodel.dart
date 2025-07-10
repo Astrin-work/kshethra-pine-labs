@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../utils/logger.dart';
+import '../model/api models/get_temple_model.dart';
+import '../services/plutus_smart.dart';
 
 class TerminalViewmodel with ChangeNotifier {
   String _selectedTransaction = 'SALE';
@@ -10,77 +12,7 @@ class TerminalViewmodel with ChangeNotifier {
   List<String> statusMessages = [];
   bool printerEnabled = false;
 
-  void setPrintDataFromVazhipadu(List<Map<String, dynamic>> groupedData) {
-    List<Map<String, dynamic>> dataToPrint = [];
-
-    for (var group in groupedData) {
-      final int serial = group['serialNumber'] ?? 'NoSerial';
-      final List receipts = group['receipts'] ?? [];
-
-      dataToPrint.add({
-        "PrintDataType": "0",
-        "PrinterWidth": 24,
-        "IsCenterAligned": true,
-        "DataToPrint": "Receipt Number: $serial",
-        "ImagePath": "0",
-        "ImageData": "0"
-      });
-
-      dataToPrint.add({
-        "PrintDataType": "0",
-        "PrinterWidth": 24,
-        "IsCenterAligned": true,
-        "DataToPrint": "------------------------",
-        "ImagePath": "0",
-        "ImageData": "0"
-      });
-
-      for (var item in receipts) {
-        final name = item['personName'] ?? 'Unknown';
-        final offerName = item['offerName'] ?? 'Unknown';
-        final qty = item['quantity'] ?? 1;
-        final rate = item['rate'] ?? 0;
-        final total = qty * rate;
-
-        dataToPrint.add({
-          "PrintDataType": "0",
-          "PrinterWidth": 24,
-          "IsCenterAligned": false,
-          "DataToPrint": "$name - $offerName: ₹$total",
-          "ImagePath": "0",
-          "ImageData": "0"
-        });
-      }
-
-      dataToPrint.add({
-        "PrintDataType": "0",
-        "PrinterWidth": 24,
-        "IsCenterAligned": true,
-        "DataToPrint": "------------------------",
-        "ImagePath": "0",
-        "ImageData": "0"
-      });
-    }
-
-    printData = {
-      "Header": {
-        "ApplicationId": "f0d097be4df3441196d1e37cb2c98875",
-        "UserId": "user1234",
-        "MethodId": "1002",
-        "VersionNo": "1.0",
-      },
-      "Detail": {
-        "PrintRefNo": "RECEIPT${DateTime.now().millisecondsSinceEpoch}",
-        "SavePrintData": false,
-        "Data": dataToPrint,
-      }
-    };
-
-    notifyListeners();
-  }
-
-
-
+  Map<String, dynamic> printData = {};
   Map<String, dynamic> payload = {
     "Detail": {
       "BillingRefNo": "TX98765432",
@@ -94,132 +26,7 @@ class TerminalViewmodel with ChangeNotifier {
       "VersionNo": "1.0",
     }
   };
-  Map<String, dynamic> printData = {
-    "Header": {
-      "ApplicationId": "f0d097be4df3441196d1e37cb2c98875",
-      "UserId": "user1234",
-      "MethodId": "1002",
-      "VersionNo": "1.0",
-    },
-    "Detail": {
-      "PrintRefNo": "RECEIPT123456",
-      "SavePrintData": false,
-      "Data": [
-        {
-          "PrintDataType": "0",
-          "PrinterWidth": 24,
-          "IsCenterAligned": true,
-          "DataToPrint": 'asdfasdf',
-          "ImagePath": "0",
-          "ImageData": "0"
-        },
-        {
-          "PrintDataType": "0",
-          "PrinterWidth": 24,
-          "IsCenterAligned": true,
-          "DataToPrint": "123 Main Street",
-          "ImagePath": "0",
-          "ImageData": "0"
-        },
-        {
-          "PrintDataType": "0",
-          "PrinterWidth": 24,
-          "IsCenterAligned": true,
-          "DataToPrint": "City, State, ZIP",
-          "ImagePath": "0",
-          "ImageData": "0"
-        },
-        {
-          "PrintDataType": "0",
-          "PrinterWidth": 24,
-          "IsCenterAligned": true,
-          "DataToPrint": "Receipt Number: RECEIPT12345",
-          "ImagePath": "0",
-          "ImageData": "0"
-        },
-        {
-          "PrintDataType": "0",
-          "PrinterWidth": 24,
-          "IsCenterAligned": true,
-          "DataToPrint": "Date: 2024-10-27 10:30 AM",
-          "ImagePath": "0",
-          "ImageData": "0"
-        },
-        {
-          "PrintDataType": "0",
-          "PrinterWidth": 24,
-          "IsCenterAligned": true,
-          "DataToPrint": "------------------------",
-          "ImagePath": "0",
-          "ImageData": "0"
-        },
-        {
-          "PrintDataType": "0",
-          "PrinterWidth": 24,
-          "IsCenterAligned": false,
-          "DataToPrint": "Item 1: INR 10.00",
-          "ImagePath": "0",
-          "ImageData": "0"
-        },
-        {
-          "PrintDataType": "0",
-          "PrinterWidth": 24,
-          "IsCenterAligned": false,
-          "DataToPrint": "Item 2: INR 20.00",
-          "ImagePath": "0",
-          "ImageData": "0"
-        },
-        {
-          "PrintDataType": "0",
-          "PrinterWidth": 24,
-          "IsCenterAligned": true,
-          "DataToPrint": "------------------------",
-          "ImagePath": "0",
-          "ImageData": "0"
-        },
-        {
-          "PrintDataType": "0",
-          "PrinterWidth": 24,
-          "IsCenterAligned": false,
-          "DataToPrint": "Total: INR 30.00",
-          "ImagePath": "0",
-          "ImageData": "0"
-        },
-        {
-          "PrintDataType": "0",
-          "PrinterWidth": 24,
-          "IsCenterAligned": true,
-          "DataToPrint": "------------------------",
-          "ImagePath": "0",
-          "ImageData": "0"
-        },
-        {
-          "PrintDataType": "3",
-          "PrinterWidth": 24,
-          "IsCenterAligned": true,
-          "DataToPrint": "RECEIPT12345",
-          "ImagePath": "",
-          "ImageData": ""
-        },
-        {
-          "PrintDataType": "4",
-          "PrinterWidth": 24,
-          "IsCenterAligned": true,
-          "DataToPrint": "https://example.com/receipt/RECEIPT12345",
-          "ImagePath": "",
-          "ImageData": ""
-        },
-        {
-          "PrintDataType": "0",
-          "PrinterWidth": 24,
-          "IsCenterAligned": true,
-          "DataToPrint": "Thank You!",
-          "ImagePath": "0",
-          "ImageData": "0"
-        }
-      ]
-    },
-  };
+
   TextEditingController jsonController = TextEditingController(
       text: const JsonEncoder.withIndent('').convert({
         "Header": {
@@ -249,9 +56,9 @@ class TerminalViewmodel with ChangeNotifier {
 
   String _bindingStatus = "Not Bound";
   bool _isBound = false;
-  bool _isBindingInitiated = false; // Add this flag
+  bool _isBindingInitiated = false;
   ScrollController scrollController = ScrollController();
-  int _paymentAmount = 100; // Store the payment amount
+  int _paymentAmount = 100;
 
   String get bindingStatus => _bindingStatus;
   bool get isBound => _isBound;
@@ -285,14 +92,11 @@ class TerminalViewmodel with ChangeNotifier {
     notifyListeners();
   }
 
-  // Getters
   String get selectedTransaction => _selectedTransaction;
   bool get isChecked => _isChecked;
 
-  // Setters
   void setSelectedTransaction(String value) {
     _selectedTransaction = value;
-    // Update printerEnabled based on the selected transaction
     printerEnabled = value == 'PRINT';
     Logger.info('Selected Transaction: $value, Printer Enabled: $printerEnabled');
     notifyListeners();
@@ -303,7 +107,6 @@ class TerminalViewmodel with ChangeNotifier {
     notifyListeners();
   }
 
-  // Methods
   void addStatusMessage(String message) {
     String currentTime = DateFormat('hh:mm:ss a').format(DateTime.now());
     statusMessages.add('$currentTime :  $message');
@@ -339,9 +142,155 @@ class TerminalViewmodel with ChangeNotifier {
     return result;
   }
 
-  Future<void> process(BuildContext context) async {
-    if(printerEnabled) {
+  /// Set print data for temple receipt (from PrintService logic), using only supported fields
+  void setPrintDataFromTempleReceipt({
+    required String serialNumber,
+    required List<Map<String, dynamic>> receipts,
+    required List<GetTemplemodel> temples,
+    required int index,
+  }) {
+    final currentTemple = temples[index];
+    final receiptDate = _formattedDate();
+    final timeNow = _formattedTime();
 
+    final formattedLines = _buildTempleReceiptPrintData(
+      currentTemple: currentTemple,
+      receipts: receipts,
+      receiptNo: serialNumber,
+      receiptDate: receiptDate,
+      receiptTime: timeNow,
+    );
+
+    printData = {
+      "Header": {
+        "ApplicationId": "f0d097be4df3441196d1e37cb2c98875",
+        "UserId": "user1234",
+        "MethodId": "1002",
+        "VersionNo": "1.0",
+      },
+      "Detail": {
+        "PrintRefNo": serialNumber,
+        "SavePrintData": false,
+        "Data": formattedLines,
+      },
+    };
+
+    notifyListeners();
+  }
+
+  /// Print the current printData using PlutusSmart
+  Future<void> printTempleReceipt() async {
+    try {
+      final printDataJson = jsonEncode(printData);
+
+      Logger.info('🖨️ Binding to Plutus service...');
+      final bindResult = await PlutusSmart.bindToService();
+
+      if (bindResult == "SUCCESS" || bindResult == "BINDING SUCCESS.") {
+        Logger.success("Service bound successfully.");
+        final result = await PlutusSmart.startPrintJob(printDataJson);
+        Logger.success("🧾 Print result: $result");
+        addStatusMessage("Print Success: $result");
+      } else {
+        Logger.error("Binding failed: $bindResult");
+        addStatusMessage("Binding failed: $bindResult");
+      }
+    } catch (e) {
+      Logger.error("Exception during printing: "+e.toString());
+      addStatusMessage("Exception during printing: "+e.toString());
     }
   }
+
+  /// Helper: Build print data lines for temple receipt, using only supported fields
+  List<Map<String, dynamic>> _buildTempleReceiptPrintData({
+    required GetTemplemodel currentTemple,
+    required List<Map<String, dynamic>> receipts,
+    required String receiptNo,
+    required String receiptDate,
+    required String receiptTime,
+  }) {
+    int totalAmount = 0;
+
+    final List<Map<String, dynamic>> lines = [
+      _printLine(currentTemple.templeName),
+      _printLine(currentTemple.address),
+      _printLine("Phone: "+currentTemple.phoneNumber),
+      _dividerLine(),
+      _leftLine("Date: $receiptDate    Time: $receiptTime"),
+      _leftLine("Receipt No: $receiptNo"),
+      _dividerLine(),
+      _leftLine("Sl Name   Star   Vazhi   Qty Amt"),
+      _dividerLine(),
+    ];
+
+    for (int i = 0; i < receipts.length; i++) {
+      final item = receipts[i];
+      final name = (item['personName'] ?? '').toString();
+      final star = (item['personStar'] ?? '').toString();
+      final vazhipadu = (item['offerName'] ?? '').toString();
+      final qty = int.tryParse(item['quantity']?.toString() ?? '1') ?? 1;
+      final rate = int.tryParse(item['rate']?.toString() ?? '0') ?? 0;
+      final amt = qty * rate;
+      totalAmount += amt;
+
+      final row =
+          '${(i + 1).toString().padRight(2)} '
+          '${_clip(name, 6)} '
+          '${_clip(star, 5)} '
+          '${_clip(vazhipadu, 6)} '
+          '${qty.toString().padLeft(2)} '
+          '${'₹$amt'.padLeft(5)}';
+
+      lines.add(_leftLine(row));
+    }
+
+    lines.add(_dividerLine());
+    lines.add(_printLine("Total: ₹$totalAmount"));
+    return lines;
+  }
+
+  // Only supported fields, PrinterWidth=24, IsCenterAligned as int (1/0)
+  Map<String, dynamic> _printLine(String data) {
+    return {
+      "PrintDataType": "0",
+      "PrinterWidth": 24,
+      "IsCenterAligned": 1, // 1 for true
+      "DataToPrint": data,
+      "ImagePath": "0",
+      "ImageData": "0",
+    };
+  }
+
+  Map<String, dynamic> _leftLine(String data) {
+    return {
+      "PrintDataType": "0",
+      "PrinterWidth": 24,
+      "IsCenterAligned": 0, // 0 for false
+      "DataToPrint": data,
+      "ImagePath": "0",
+      "ImageData": "0",
+    };
+  }
+
+  Map<String, dynamic> _dividerLine() {
+    return _leftLine("-" * 24);
+  }
+
+  String _clip(String text, int width) {
+    return text.length > width ? text.substring(0, width) : text.padRight(width);
+  }
+
+  String _formattedDate() {
+    final now = DateTime.now();
+    return '${now.day.toString().padLeft(2, '0')}/'
+        '${now.month.toString().padLeft(2, '0')}/'
+        '${now.year}';
+  }
+
+  String _formattedTime() {
+    final now = DateTime.now();
+    return '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
+  }
+
+// You can keep your other methods (setPrintDataFromVazhipadu, etc.) as needed.
 }

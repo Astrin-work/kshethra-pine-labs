@@ -25,20 +25,13 @@ class AdvancedBookingFormWidget extends StatelessWidget {
       children: [
         20.kH,
         GodWidget(),
-        20.kH,
-        Padding(
-          padding: const EdgeInsets.only(
-            left: 15.0,
-            right: 15,
-            bottom: 10,
-          ),
-          child: VazhipadduWidget(
-            crossAxisCount: crossAxisCount ?? 3,
-            crossAxisSpacing: crossAxisSpacing ?? 15,
-            mainAxisSpacing: mainAxisSpacing ?? 15,
-            screeName: 'advancedBookingPage',
-            selectedCategoryIndex: selectedCategoryIndex,
-          ),
+
+        VazhipadduWidget(
+          crossAxisCount: crossAxisCount ?? 3,
+          crossAxisSpacing: crossAxisSpacing ?? 15,
+          mainAxisSpacing: mainAxisSpacing ?? 15,
+          screeName: 'advancedBookingPage',
+          selectedCategoryIndex: selectedCategoryIndex,
         ),
       ],
     );

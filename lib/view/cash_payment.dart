@@ -6,6 +6,8 @@ import 'package:kshethra_mini/view/widgets/advanced_booking_page_widget/confirm_
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:kshethra_mini/view_model/terminal_viewmodel.dart';
 import 'package:provider/provider.dart';
+import '../model/api models/get_temple_model.dart';
+import '../print_service/print_service.dart';
 import '../services/plutus_smart.dart';
 import '../utils/app_color.dart';
 import '../utils/app_styles.dart';
@@ -40,14 +42,11 @@ class CashPayment extends StatelessWidget {
       provider.addStatusMessage("INITIATING PRINT JOB.");
       Logger.info('INITIATING PRINT JOB.');
 
-      // Get the print data from the provider
       final printData = provider.printData;
       final printDataJson = jsonEncode(printData);
 
-      // Call the print job method
       final result = await PlutusSmart.startPrintJob(printDataJson);
 
-      // Log the result
       provider.addStatusMessage("PRINT JOB RESULT: $result");
       Logger.info('PRINT JOB RESULT: $result');
     } catch (e) {
@@ -55,6 +54,33 @@ class CashPayment extends StatelessWidget {
       Logger.error('PRINT JOB ERROR: $e');
     }
   }
+
+
+  Future<void> printAllReceipts({
+    required List<Map<String, dynamic>> groupedData,
+    required List<GetTemplemodel> temples,
+  }) async {
+    for (int index = 0; index < groupedData.length; index++) {
+      if (index >= temples.length) {
+        continue;
+      }
+
+      final group = groupedData[index];
+      final serial = group['serialNumber'];
+      final receipts = List<Map<String, dynamic>>.from(group['receipts'] ?? []);
+
+      if (serial != null && receipts.isNotEmpty) {
+        await PrintService.printReceipt(
+          serialNumber: '$serial',
+          receipts: receipts,
+          temples: temples,
+          index: index,
+        );
+      }
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +146,7 @@ class CashPayment extends StatelessWidget {
 
           for (int index = 0; index < response.length; index++) {
             final group = response[index];
-            //
+
             // await PrintService.printReceipt(
             //   serialNumber: '${group['serialNumber']}',
             //   receipts: List<Map<String, dynamic>>.from(group['receipts']),
@@ -129,7 +155,6 @@ class CashPayment extends StatelessWidget {
             //
             // );
 
-              //
               final payload = {
                 "Header": {
                   "ApplicationId": "f0d097be4df3441196d1e37cb2c98875",
@@ -144,7 +169,6 @@ class CashPayment extends StatelessWidget {
                 }
               };
 
-              //
               final transactionDataJson = jsonEncode(payload);
               Logger.info("Sending: $transactionDataJson");
 
@@ -157,9 +181,13 @@ class CashPayment extends StatelessWidget {
                 return;
               }
           }
+          // await printAllReceipts(
+          //   groupedData: response,
+          //   temples: bookingViewmodel.templeList,
+          // );
+          _onConfirmPayment(context);
           _handlePrint(TerminalViewmodel());
 
-          _onConfirmPayment(context);
         },
       ),
     );

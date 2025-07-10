@@ -49,6 +49,7 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   dio: ^5.8.0+1
   intl: ^0.20.2
+  device_info_plus: ^11.5.0
 
 
 #  google_cloud_translation: ^0.0.4

@@ -66,16 +66,17 @@ class LoginWidget extends StatelessWidget {
                     ),
                     55.kH,
                     MaterialButton(
-                      onPressed:
-                          authViewmodel.isLoading
-                              ? null
-                              : () async {
-                                authViewmodel.setLoginLoading(true);
-                                await authViewmodel.selectLanguagePageNavigate(
-                                  context,
-                                );
-                                authViewmodel.setLoginLoading(false);
-                              },
+                      onPressed: authViewmodel.isLoading
+                          ? null
+                          : () async {
+                        authViewmodel.setLoading(true);
+                        print('-----------Device Details--------------');
+                        await authViewmodel.printDeviceDetails();
+
+                        await authViewmodel.selectLanguagePageNavigate(context);
+
+                        authViewmodel.setLoading(false);
+                      },
                       minWidth: 150,
                       height: 45,
                       shape: RoundedRectangleBorder(
@@ -83,20 +84,27 @@ class LoginWidget extends StatelessWidget {
                       ),
                       color: kWhite,
                       child: AnimatedSwitcher(
-                        duration: Duration(milliseconds: 300),
-                        child:
-                            authViewmodel.isLoading
-                                ? SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 3,
-                                    color: kBlack,
-                                  ),
-                                )
-                                : Text("LOGIN", style: styles.blackRegular18),
+                        duration: const Duration(milliseconds: 300),
+                        transitionBuilder: (child, animation) =>
+                            FadeTransition(opacity: animation, child: child),
+                        child: authViewmodel.isLoading
+                            ? const SizedBox(
+                          key: ValueKey('loader'),
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 3,
+                            color: kBlack,
+                          ),
+                        )
+                            : Text(
+                          "LOGIN",
+                          key: const ValueKey('loginText'),
+                          style: styles.blackRegular18,
+                        ),
                       ),
                     ),
+
                   ],
                 ),
               ),
