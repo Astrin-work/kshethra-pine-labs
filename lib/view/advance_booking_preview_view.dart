@@ -5,7 +5,6 @@ import 'package:kshethra_mini/view/widgets/booking_page_widget/float_button_widg
 import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
-import '../utils/app_color.dart';
 import '../utils/app_styles.dart';
 import '../utils/components/responsive_layout.dart';
 import '../utils/components/size_config.dart';
