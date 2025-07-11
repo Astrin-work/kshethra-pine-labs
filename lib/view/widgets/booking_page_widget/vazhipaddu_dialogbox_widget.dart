@@ -8,7 +8,6 @@ import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/api models/god_model.dart';
-import '../../../view_model/home_page_viewmodel.dart';
 
 class VazhipadduDialogBoxWidget extends StatelessWidget {
   // final Map<String, dynamic> selectedVazhippadu;
