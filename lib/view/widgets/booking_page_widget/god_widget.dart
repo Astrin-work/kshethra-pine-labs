@@ -35,75 +35,77 @@ class _GodWidgetState extends State<GodWidget> {
           return const Center(child: CircularProgressIndicator(color: kDullPrimaryColor,));
         }
         return SizedBox(
-          height: SizeConfig.screenHeight*0.280,
+          height: SizeConfig.screenHeight * 0.280,
           width: SizeConfig.screenWidth,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: godList.length,
             itemBuilder: (context, index) {
+              final itemWidth = (SizeConfig.screenWidth - 20) / 4;
+
               return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SingleChildScrollView(
-                  physics: NeverScrollableScrollPhysics(),
-                  child: Column(
-                    children: [
-                      InkWell(
-                          onTap: () {
-                            bookingViewmodel.setGod(godList[index]);
-                            print('------pressed-------');
-                          },
-                          child:
-                          Container(
-                            height: SizeConfig.screenHeight * 0.160,
-                            width: SizeConfig.screenWidth * 0.220,
+                padding: const EdgeInsets.all(5.0),
+                child: Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        bookingViewmodel.setGod(godList[index]);
+                        print('------pressed-------');
+                      },
+                      child: Container(
+                        height: SizeConfig.screenHeight * 0.200,
+                        width: itemWidth,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: bookingViewmodel.selectedGods == godList[index]
+                                  ? kPrimaryColor
+                                  : kTransparent,
+                              blurRadius: 5,
+                              spreadRadius: 5,
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(10.0),
+                          image: const DecorationImage(
+                            image: AssetImage('assets/images/img.png'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: Container(
                             decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: bookingViewmodel.selectedGods == godList[index]
-                                      ? kPrimaryColor
-                                      : kTransparent,
-                                  blurRadius: 5,
-                                  spreadRadius: 5,
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(10.0),
                               image: DecorationImage(
-                                image: AssetImage('assets/images/img.png'),
-                                fit: BoxFit.cover,
+                                image: NetworkImage(godList[index].devathaImage),
+                                fit: BoxFit.contain,
                               ),
                             ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(godList[index].devathaImage),
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                      ),
-                      Padding(
-                        padding:  EdgeInsets.only(top: 10),
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: BuildTextWidget(
-                            text: godList[index].devathaName,
-                            fromLang: fromLang,
-                            size: 13,
-                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: itemWidth,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: BuildTextWidget(
+                          text: godList[index].devathaName,
+                          fromLang: fromLang,
+                          size: 13,
+                          fontWeight: FontWeight.w500,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               );
             },
           ),
         );
+
       },
     );
   }

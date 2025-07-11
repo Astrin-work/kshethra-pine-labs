@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../utils/app_styles.dart';
 import '../../../utils/asset/assets.gen.dart';
 import '../../../utils/components/size_config.dart';
+import '../../../view_model/booking_viewmodel.dart';
 import '../../../view_model/home_page_viewmodel.dart';
 
 class LangWidget extends StatelessWidget {
@@ -31,6 +32,17 @@ class LangWidget extends StatelessWidget {
         //
         // },
         onTap: () async {
+          print('hi' * 100);
+
+          final bookingViewmodel = Provider.of<BookingViewmodel>(context, listen: false);
+          await bookingViewmodel.fetchTempleData();
+
+          if (bookingViewmodel.templeList.isNotEmpty) {
+            print(bookingViewmodel.templeList.first.templeName);
+          } else {
+            print("No temple data found.");
+          }
+
           await context.setLocale(Locale(locale.languageCode));
           homepageViewmodel.updateLanguage(locale.languageCode);
           homepageViewmodel.homePageNavigate(context);

@@ -91,6 +91,13 @@ class _DonationFormWidgetState extends State<DonationFormWidget> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(
+                      color:kDullPrimaryColor ,
+                      width: 2.0,
+                    ),
+                  ),
                 ),
               ),
               25.kH,
@@ -106,6 +113,13 @@ class _DonationFormWidgetState extends State<DonationFormWidget> {
                   counterText: "",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: const BorderSide(
+                      color:kDullPrimaryColor ,
+                      width: 2.0,
+                    ),
                   ),
                 ),
               ),

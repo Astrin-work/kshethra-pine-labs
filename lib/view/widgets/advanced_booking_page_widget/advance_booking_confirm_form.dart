@@ -11,6 +11,7 @@ import 'package:kshethra_mini/view/widgets/booking_page_widget/star_dialodbox_wi
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:provider/provider.dart';
 import '../../../model/api models/god_model.dart';
+import '../build_text_widget.dart';
 
 class AdvancedBookingConfirmForm extends StatefulWidget {
   final Vazhipadus selectedVazhipaadu;
@@ -66,7 +67,7 @@ class _AdvancedBookingConfirmFormState
   double _TottalAmount = 0.0;
 
   final Map<String, double> postalRates = {"Postal".tr(): 5.0, "Speed Post": 45.0};
-
+  final fromLang = "en";
   Widget build(BuildContext context) {
     AppStyles styles = AppStyles();
     SizeConfig().init(context);
@@ -91,6 +92,13 @@ class _AdvancedBookingConfirmFormState
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: const BorderSide(
+                          color:kDullPrimaryColor ,
+                          width: 2.0,
+                        ),
+                      ),
                     ),
                   ),
                   25.kH,
@@ -106,9 +114,16 @@ class _AdvancedBookingConfirmFormState
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: const BorderSide(
+                          color:kDullPrimaryColor ,
+                          width: 2.0,
+                        ),
+                      ),
                     ),
                   ),
-                  25.kH,
+                  10.kH,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -196,7 +211,7 @@ class _AdvancedBookingConfirmFormState
                             child: Text(
                               bookingViewmodel.selectedDate.isNotEmpty
                                   ? bookingViewmodel.selectedDate
-                                  : "Date",
+                                  : "Select Date",
                               style:
                                   bookingViewmodel.selectedDate.isNotEmpty
                                       ? styles.whiteSemi15
@@ -207,7 +222,16 @@ class _AdvancedBookingConfirmFormState
                       ),
                     ],
                   ),
-                  25.kH,
+                  SizedBox(height: 18,),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: BuildTextWidget(
+                      text: "Repeat Type :",
+                      size: 17,
+                      textAlign: TextAlign.center,
+                      fromLang: fromLang,
+                    ),
+                  ),
                   const RepCheckBoxWidget(),
                   Visibility(
                     visible: bookingViewmodel.selectedRepMethod == "Weekly",
@@ -223,22 +247,28 @@ class _AdvancedBookingConfirmFormState
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text(
-                                "Number of Days for Repeat".tr(),
-                                style: styles.blackRegular15,
-                                textAlign: TextAlign.center,
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 25),
+                                child: Text(
+                                  "Number of Times to Repeat".tr(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    color: Colors.black,
+                                  ),
+                                ),
                               ),
                               Text(":", style: styles.blackSemi18),
                               SizedBox(
-                                width: SizeConfig.screenWidth * 0.2,
+                                width: SizeConfig.screenWidth * 0.1,
                                 child: TextFormField(
                                   keyboardType: TextInputType.number,
                                   validator:
                                       (value) => Validation.numberValidation(
-                                        value,
-                                        "Count",
-                                        "Enter valid days",
-                                      ),
+                                    value,
+                                    "Count",
+                                    "Enter valid days",
+                                  ),
                                   controller: _repDaysController,
                                   onChanged: (value) {
                                     bookingViewmodel.bookingRepOnchange(
@@ -255,30 +285,74 @@ class _AdvancedBookingConfirmFormState
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      borderSide: const BorderSide(
+                                        color:kDullPrimaryColor ,
+                                        width: 2.0,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
                             ],
                           ),
                         if (bookingViewmodel.selectedRepMethod != "Once") 15.kH,
-                        CheckboxListTile(
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(
-                            "Prasadam".tr(),
-                            style: styles.blackRegular15,
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12.0,
+                            vertical: 8.0,
                           ),
-                          value: bookingViewmodel.prasadamSelected,
-                          onChanged: (value) {
-                            bookingViewmodel.togglePrasadam(value!);
-                          },
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: CheckboxListTile(
+                            activeColor:kDullPrimaryColor,
+                            contentPadding: EdgeInsets.zero,
+                            title: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                BuildTextWidget(
+                                  text: "Need Prasadam? ",
+                                  fromLang: "en",
+                                  size: 14,
+                                  fontWeight: FontWeight.w500,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                BuildTextWidget(
+                                  text: "(If Required)",
+                                  fromLang: "en",
+                                  size: 14,
+                                  fontWeight: FontWeight.normal,
+                                  style: const TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 12,
+                                  ),
+                                 maxLines: 2,
+                                ),
+                              ],
+                            ),
+
+                            value: bookingViewmodel.prasadamSelected,
+                            onChanged: (value) {
+                              bookingViewmodel.togglePrasadam(value!);
+                            },
+                            controlAffinity: ListTileControlAffinity.trailing,
+                          ),
                         ),
                         15.kH,
+                        SizedBox(height: 20,),
                         if (bookingViewmodel.prasadamSelected)
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Select Postel Option".tr(),
+                                "Select Postel".tr(),
                                 style: styles.blackRegular15,
                               ),
                               20.kH,
@@ -286,77 +360,77 @@ class _AdvancedBookingConfirmFormState
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
                                   children:
-                                      postalRates.keys.map((option) {
-                                        final isSelected =
-                                            bookingViewmodel.postalOption ==
+                                  postalRates.keys.map((option) {
+                                    final isSelected =
+                                        bookingViewmodel.postalOption ==
                                             option;
-                                        final totalCharge =
-                                            bookingViewmodel.postalAmount;
-                                        return Row(
-                                          children: [
-                                            Radio<String>(
-                                              value: option,
-                                              groupValue:
-                                                  bookingViewmodel.postalOption,
-                                              onChanged: (value) {
-                                                if (value != null) {
-                                                  print("Clicked: '$value'");
-                                                  print(
-                                                    "Before: '${bookingViewmodel.postalOption}'",
-                                                  );
-                                                  bookingViewmodel
-                                                      .selectPostalOption(
-                                                        value,
-                                                      );
-                                                  print(
-                                                    "After: '${bookingViewmodel.postalOption}'",
-                                                  );
-                                                }
-                                              },
-                                              activeColor: kPrimaryColor,
+                                    final totalCharge =
+                                        bookingViewmodel.postalAmount;
+                                    return Row(
+                                      children: [
+                                        Radio<String>(
+                                          value: option,
+                                          groupValue:
+                                          bookingViewmodel.postalOption,
+                                          onChanged: (value) {
+                                            if (value != null) {
+                                              print("Clicked: '$value'");
+                                              print(
+                                                "Before: '${bookingViewmodel.postalOption}'",
+                                              );
+                                              bookingViewmodel
+                                                  .selectPostalOption(
+                                                value,
+                                              );
+                                              print(
+                                                "After: '${bookingViewmodel.postalOption}'",
+                                              );
+                                            }
+                                          },
+                                          activeColor: kPrimaryColor,
+                                        ),
+                                        Text(
+                                          option,
+                                          style: styles.blackRegular15,
+                                        ),
+                                        if (isSelected)
+                                          Container(
+                                            margin: const EdgeInsets.only(
+                                              left: 8,
                                             ),
-                                            Text(
-                                              option,
-                                              style: styles.blackRegular15,
+                                            padding:
+                                            const EdgeInsets.symmetric(
+                                              horizontal: 12,
+                                              vertical: 6,
                                             ),
-                                            if (isSelected)
-                                              Container(
-                                                margin: const EdgeInsets.only(
-                                                  left: 8,
-                                                ),
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                      horizontal: 12,
-                                                      vertical: 6,
-                                                    ),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.grey[200],
-                                                  borderRadius:
-                                                      BorderRadius.circular(6),
-                                                  border: Border.all(
-                                                    color: Colors.grey.shade400,
-                                                  ),
-                                                ),
-                                                child: Text(
-                                                  "₹${totalCharge.toStringAsFixed(2)}",
-                                                  style: styles.blackRegular13,
-                                                ),
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[200],
+                                              borderRadius:
+                                              BorderRadius.circular(6),
+                                              border: Border.all(
+                                                color: Colors.grey.shade400,
                                               ),
-                                            const SizedBox(width: 20),
-                                          ],
-                                        );
-                                      }).toList(),
+                                            ),
+                                            child: Text(
+                                              "₹${totalCharge.toStringAsFixed(2)}",
+                                              style: styles.blackRegular13,
+                                            ),
+                                          ),
+                                        const SizedBox(width: 20),
+                                      ],
+                                    );
+                                  }).toList(),
                                 ),
                               ),
                               10.kH,
                               TextFormField(
                                 validator:
                                     (value) => Validation.emptyValidation(
-                                      value,
-                                      "Enter your address",
-                                    ),
+                                  value,
+                                  "Enter your address",
+                                ),
                                 controller:
-                                    bookingViewmodel.bookingAddressController,
+                                bookingViewmodel.bookingAddressController,
                                 maxLines: 4,
                                 style: styles.blackRegular15,
                                 decoration: InputDecoration(
@@ -364,25 +438,39 @@ class _AdvancedBookingConfirmFormState
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
                                   ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: const BorderSide(
+                                      color:kDullPrimaryColor ,
+                                      width: 2.0,
+                                    ),
+                                  ),
                                 ),
                               ),
                               10.kH,
                               TextFormField(
                                 validator:
                                     (value) => Validation.emptyValidation(
-                                      value,
-                                      "Enter your Pincode",
-                                    ),
+                                  value,
+                                  "Enter your Pincode",
+                                ),
                                 maxLength: 6,
                                 keyboardType: TextInputType.number,
                                 controller:
-                                    bookingViewmodel.bookingPinCodeController,
+                                bookingViewmodel.bookingPinCodeController,
                                 maxLines: 1,
                                 style: styles.blackRegular15,
                                 decoration: InputDecoration(
                                   hintText: "Pincode".tr(),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: const BorderSide(
+                                      color:kDullPrimaryColor ,
+                                      width: 2.0,
+                                    ),
                                   ),
                                 ),
                               ),

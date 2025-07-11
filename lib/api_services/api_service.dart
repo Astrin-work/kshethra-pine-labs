@@ -1,54 +1,96 @@
-
+import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:kshethra_mini/model/api%20models/get_temple_model.dart';
 import '../model/api models/E_Hundi_Get_Devatha_Model.dart';
 import '../model/api models/get_donation_model.dart';
 import '../model/api models/god_model.dart';
 import '../utils/hive/hive.dart';
 
-
 class ApiService {
   late final Dio _dio;
-
-
 
   ApiService() {
     _dio = Dio(
       BaseOptions(
-          baseUrl: 'https://online.astrins.com/api',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        baseUrl: 'https://online.astrins.com/api',
+        headers: {'Content-Type': 'application/json'},
       ),
     );
 
-    // (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
-    //   client.badCertificateCallback = (cert, host, port) => true;
-    //   return client;
-    // };
+
+  }
+
+  Future<void> printDeviceDetails() async {
+    final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
+    try {
+      if (Platform.isAndroid) {
+        AndroidDeviceInfo android = await deviceInfo.androidInfo;
+        print('Device Info [Android]:');
+        print('Brand: ${android.brand}');
+        print('Device: ${android.device}');
+        print('Model: ${android.model}');
+        print('Android Version: ${android.version.release}');
+        print('Android SDK: ${android.version.sdkInt}');
+        print('serial number: ${android.serialNumber}');
+        print('id: ${android.id}');
+      } else if (Platform.isIOS) {
+        IosDeviceInfo ios = await deviceInfo.iosInfo;
+        print('Device Info [iOS]:');
+        print('Name: ${ios.name}');
+        print('Model: ${ios.model}');
+        print('System Version: ${ios.systemVersion}');
+        print('Identifier for Vendor: ${ios.identifierForVendor}');
+      }
+    } catch (e) {
+      print('Failed to get device info: $e');
+    }
   }
 
   Future<String> login(String username, String password) async {
     try {
+      final deviceInfo = DeviceInfoPlugin();
+      String deviceId = '';
+
+      if (Platform.isAndroid) {
+        final androidInfo = await deviceInfo.androidInfo;
+        deviceId = androidInfo.id ?? '';
+      } else if (Platform.isIOS) {
+        final iosInfo = await deviceInfo.iosInfo;
+        deviceId = iosInfo.identifierForVendor ?? '';
+      }
+
+      if (deviceId.isEmpty) {
+        throw Exception("Device ID is empty. Cannot proceed with login.");
+      }
+
+      print('Using DeviceId: $deviceId');
+
       final response = await _dio.post(
         '/Login',
         data: {
           'userUserName': username,
           'userPassword': password,
+          'deviceId': deviceId,
         },
       );
 
       print('Response data: ${response.data}');
       final token = response.data['accessToken'];
       print('Token: $token');
+
       await AppHive().putToken(token: token);
       return token;
-
     } on DioException catch (e) {
       print('Error response: ${e.response}');
       print('Error data: ${e.response?.data}');
       print('Error message: ${e.message}');
       throw ('${e.response?.data ?? e.message}');
+    } catch (e) {
+      print('Unexpected error: $e');
+      rethrow;
     }
   }
 
@@ -76,9 +118,7 @@ class ApiService {
       final response = await _dio.post(
         '/vazhipadu/vazhipadureceipt',
         data: data,
-        options: Options(
-          headers: {'Authorization': 'Bearer $token'},
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
       print(response.data);
       print(response.statusCode);
@@ -89,7 +129,6 @@ class ApiService {
       rethrow;
     }
   }
-
 
   Future<List<Getdonationmodel>> getDonation() async {
     final token = await AppHive().getToken();
@@ -107,7 +146,6 @@ class ApiService {
       return [];
     }
   }
-
 
   Future<void> postDonationDetails(Map<String, dynamic> donationData) async {
     final token = await AppHive().getToken();
@@ -140,7 +178,6 @@ class ApiService {
     }
   }
 
-
   Future<List<Ehundigetdevathamodel>> getEbannaramDevetha() async {
     final token = await AppHive().getToken();
 
@@ -157,7 +194,6 @@ class ApiService {
     }
     return godListEhundi;
   }
-
 
   Future<void> postEHundiDetails(Map<String, dynamic> eHundiData) async {
     final token = await AppHive().getToken();
@@ -192,7 +228,6 @@ class ApiService {
     }
   }
 
-
   Future<dynamic> postAdvVazhipaduDetails(Map<String, dynamic> data) async {
     final token = await AppHive().getToken();
 
@@ -200,9 +235,7 @@ class ApiService {
       final response = await _dio.post(
         '/vazhipadu/AdvanceVazhipadureceipt',
         data: data,
-        options: Options(
-          headers: {'Authorization': 'Bearer $token'},
-        ),
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
       print(response.data);
       print(response.statusCode);
@@ -215,13 +248,12 @@ class ApiService {
     }
   }
 
-
-  Future<List<GetTemplemodel>> getTemple() async {
+  Future<List<GetTemplemodel>> getTemple(String dbName) async {
     try {
       final token = await AppHive().getToken();
 
       final response = await _dio.get(
-        '/Temple/astripri_db_kshetra_android_SreeKrishna',
+        '/Temple/$dbName',
         options: Options(headers: {
           'Authorization': 'Bearer $token',
         }),
@@ -231,10 +263,8 @@ class ApiService {
 
       if (responseData is Map<String, dynamic> && responseData['data'] is List) {
         final dataList = responseData['data'] as List;
-
         return dataList.map((item) => GetTemplemodel.fromJson(item)).toList();
       } else if (responseData is Map<String, dynamic>) {
-        // Handle single temple object
         return [GetTemplemodel.fromJson(responseData)];
       } else {
         return [];
@@ -245,7 +275,27 @@ class ApiService {
     }
   }
 
+  Future<String?> getDatabaseNameFromToken() async {
+    try {
+      final token = await AppHive().getToken();
 
+      if (token != null && token.isNotEmpty) {
+        final Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
 
+        print("Decoded Token: $decodedToken");
 
+        if (decodedToken.containsKey('DatabaseName')) {
+          return decodedToken['DatabaseName'] as String;
+        } else {
+          print("Key 'DatabaseName' not found in token.");
+        }
+      } else {
+        print("JWT token is null or empty.");
+      }
+    } catch (e) {
+      print("Error decoding token: $e");
+    }
+
+    return null;
+  }
 }

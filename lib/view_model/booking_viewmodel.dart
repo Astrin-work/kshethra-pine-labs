@@ -283,13 +283,17 @@ class BookingViewmodel extends ChangeNotifier {
 
   Future<void> fetchTempleData() async {
     try {
-      final data = await ApiService().getTemple();
-
-      if (data.isNotEmpty) {
-        templeList = data;
-        notifyListeners();
+      final dbName = await ApiService().getDatabaseNameFromToken();
+      if (dbName != null && dbName.isNotEmpty) {
+        final data = await ApiService().getTemple(dbName);
+        if (data.isNotEmpty) {
+          templeList = data;
+          notifyListeners();
+        } else {
+          print("No temple data received.");
+        }
       } else {
-        print("No temple data received.");
+        print("Database name missing or invalid.");
       }
     } catch (e) {
       print("Error fetching temple data: $e");
@@ -300,7 +304,6 @@ class BookingViewmodel extends ChangeNotifier {
     _submittedGroups = responses;
     notifyListeners();
   }
-
 
   Future<void> submitAdvVazhipadu() async {
     if (vazhipaduBookingList.isEmpty) {
@@ -770,8 +773,6 @@ class BookingViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-
-
   void setAdvBookOption(String value) {
     _advBookOption = value;
     notifyListeners();
@@ -782,11 +783,22 @@ class BookingViewmodel extends ChangeNotifier {
       context: context,
       firstDate: getTomorrow(),
       lastDate: getOneYear(),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData(
+            colorScheme: ColorScheme.light(
+              primary: kDullPrimaryColor,
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
+
     if (value != null) {
       _selectedDate = formatDateTime(value);
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   String formatDateTime(DateTime dateTime) {
@@ -987,6 +999,21 @@ class BookingViewmodel extends ChangeNotifier {
   //
   //   notifyListeners();
   // }
+
+
+  void clearBookingForm() {
+    bookingNameController.clear();
+    bookingPhnoController.clear();
+    _selectedStar = "Star";
+    selectedGods = null;
+    _isExistedDevotee = false;
+    notifyListeners();
+  }
+
+
+
+
+
 
   void showVazhipadduDialogBox(
       BuildContext context,

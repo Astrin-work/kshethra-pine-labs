@@ -24,13 +24,13 @@
       SizeConfig().init(context);
       return Scaffold(
         floatingActionButton: ResponsiveLayout(
-          pinelabDevice: FloatButtonWidget(title: 'Booking', noOfScreens: 4),
+          pinelabDevice: BookingActionBar(title: 'Booking', noOfScreens: 4),
           mediumDevice: BookingActionBar(
             title: 'Booking',
             noOfScreens: 4,
             height: 65,
           ),
-          largeDevice: FloatButtonWidget(
+          largeDevice: BookingActionBar(
             title: 'Booking',
             noOfScreens: 4,
             height: 75,
@@ -75,7 +75,7 @@
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: kDefaultIconLightColor,
+                        color:  Color(0xFFFFF8E1),
                         borderRadius: BorderRadius.circular(15),
                         boxShadow: const [
                           BoxShadow(
@@ -128,17 +128,15 @@
                                 ),
                               ],
                             ),
-
                             const SizedBox(height: 5),
-
                             Row(
                               children: [
                                 SizedBox(
                                   width: 120,
                                   child: BuildTextWidget(
-                                    text: "Name",
+                                    text: "Name".tr(),
                                     style: styles.blackRegular13,
-                                    fromLang: fromLang,
+                                    // fromLang: fromLang,
                                   ),
                                 ),
                                 const Text(":"),
@@ -177,7 +175,6 @@
                               ],
                             ),
                             const SizedBox(height: 6),
-
                             Row(
                               children: [
                                 SizedBox(

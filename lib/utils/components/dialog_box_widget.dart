@@ -9,6 +9,7 @@ class DialogBoxWidget extends StatelessWidget {
   final void Function()? fOnTap;
   final String sButton;
   final void Function()? sOnTap;
+
   const DialogBoxWidget({
     super.key,
     required this.title,
@@ -27,27 +28,34 @@ class DialogBoxWidget extends StatelessWidget {
           Text(title, style: styles.blackRegular18),
           15.kH,
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              MaterialButton(
-                minWidth: 85,
-                height: 42,
-                onPressed: fOnTap,
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(color: kBlack),
-                  borderRadius: BorderRadius.circular(15),
+              Flexible(
+                child: MaterialButton(
+                  height: 42,
+                  onPressed: fOnTap,
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(color: kBlack),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: FittedBox(
+                    child: Text(fButton, style: styles.blackRegular15),
+                  ),
                 ),
-                child: Text(fButton, style: styles.blackRegular15),
               ),
-              MaterialButton(
-                minWidth: 85,
-                height: 42,
-                onPressed: sOnTap,
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(color: kBlack),
-                  borderRadius: BorderRadius.circular(15),
+              15.kW,
+              Flexible(
+                child: MaterialButton(
+                  height: 42,
+                  onPressed: sOnTap,
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(color: kBlack),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: FittedBox(
+                    child: Text(sButton, style: styles.blackRegular15),
+                  ),
                 ),
-                child: Text(sButton, style: styles.blackRegular15),
               ),
             ],
           ),

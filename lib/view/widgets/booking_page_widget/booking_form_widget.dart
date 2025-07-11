@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:kshethra_mini/utils/app_color.dart';
 import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/components/responsive_layout.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
@@ -39,7 +40,6 @@ class BookingFormWidget extends StatelessWidget {
           child: Column(
             children: [
               25.kH,
-
               Row(
                 children: [
                   Expanded(
@@ -54,10 +54,16 @@ class BookingFormWidget extends StatelessWidget {
                         style: styles.blackRegular15,
                         decoration: InputDecoration(
                           hintText: 'Name'.tr(),
-                          contentPadding:
-                          const EdgeInsets.symmetric(vertical: 10),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 10),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: const BorderSide(
+                              color: kDullPrimaryColor,
+                              width: 2,
+                            ),
                           ),
                         ),
                       ),
@@ -105,7 +111,6 @@ class BookingFormWidget extends StatelessWidget {
                                   ),
                                 ),
                               );
-
                               bookingViewmodel.validateStar();
                             },
                             child: Text(
@@ -143,6 +148,7 @@ class BookingFormWidget extends StatelessWidget {
             ],
           ),
         );
+
       },
     );
   }

@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:kshethra_mini/utils/app_styles.dart';
 import 'package:kshethra_mini/utils/asset/assets.gen.dart';
 import 'package:kshethra_mini/utils/components/size_config.dart';
 import 'package:kshethra_mini/view/widgets/home_page_widgets/option_selector_widget.dart';
+import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
 import 'package:kshethra_mini/view_model/home_page_viewmodel.dart';
 import 'package:provider/provider.dart';
 import '../../../api_services/api_service.dart';
@@ -14,106 +16,102 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // AppStyles styles = AppStyles();
     SizeConfig().init(context);
-
-    // final currentLang = Provider.of<HomePageViewmodel>(context).currentLanguage;
-
-
-    return Consumer<HomePageViewmodel>(
-      builder: (context, homepageViewmodel, child) => SizedBox(
-        height: SizeConfig.screenHeight * 0.6,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            BuildTextWidget(
-              text: "Welcome".tr(),
-              color: Colors.black,
-              size: 20,
-              fontWeight: FontWeight.w500,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                OptionSelectorWidget(
-                  icon: SizedBox(
-                    height: 52,
-                    child: Image.asset(Assets.icons.pray.path),
+    final fromLang = "en";
+    return Consumer2<HomePageViewmodel, BookingViewmodel>(
+      builder: (context, homepageViewmodel, bookingViewmodel, child) {
+        final templeList = bookingViewmodel.templeList;
+        final String welcomeText = templeList.isNotEmpty
+            ? " ${templeList.last.templeName}"
+            : "Welcome";
+        return SizedBox(
+          width: SizeConfig.screenWidth,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(height: 10,),
+              BuildTextWidget(
+                text: 'Welcome',
+                color: Colors.black,
+                size: 24,
+                fontWeight: FontWeight.w400,
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                // style: AppStyles().blackRegular22,
+                fromLang: fromLang,
+              ),
+              BuildTextWidget(
+                text: welcomeText,
+                color: Colors.black,
+                size: 22,
+                fontWeight: FontWeight.w400,
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                // style: AppStyles().blackRegular18,
+                fromLang: fromLang,
+              ),
+              SizedBox(height: 16,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  OptionSelectorWidget(
+                    icon: SizedBox(
+                      height: 52,
+                      child: Image.asset(Assets.icons.pray.path),
+                    ),
+                    titleWidget: BuildTextWidget(
+                      text: 'Vazhipaddu Booking'.tr(),
+                      color: Colors.black,
+                      size: 14,
+                      fontWeight: FontWeight.w500,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                    ),
+                    onTap: () {
+                      homepageViewmodel.bookingPageNavigate(context);
+                    },
                   ),
-                  titleWidget: BuildTextWidget(
-                    text: 'Vazhipaddu Booking'.tr(),
-                    color: Colors.black,
-                    size: 16,
-                    fontWeight: FontWeight.w500,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    // toLang: currentLang,
+                  OptionSelectorWidget(
+                    icon: SizedBox(
+                      height: 45,
+                      child: Image.asset(Assets.icons.preBooking.path),
+                    ),
+                    titleWidget: BuildTextWidget(
+                      text: 'Advance Booking'.tr(),
+                      color: Colors.black,
+                      size: 16,
+                      fontWeight: FontWeight.w500,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                    ),
+                    onTap: () {
+                      homepageViewmodel.preBookingPageNavigate(context);
+                    },
                   ),
-                  onTap: () async {
-                    // try {
-                    //   print("-------calling API----------");
-                    //   List<Godmodel> vazhipaduList = await ApiService().getDevatha();
-                    //   print('Received ${vazhipaduList.length} items');
-                    //   for (var item in vazhipaduList) {
-                    //     print('DevathaId: ${item.devathaId}');
-                    //     print('DevathaName: ${item.devathaName}');
-                    //     print('DevathaCost: ${item.vazhipadus[0].offerId}');
-                    //     print('offerName: ${item.vazhipadus[0].offerName}');
-                    //     print('Cost: ${item.vazhipadus[0].cost}');
-                    //     print('-----------------------');
-                    //   }
-                    // } catch (e) {
-                    //   print('Error fetching devatha: $e');
-                    // }
-
-
-                    homepageViewmodel.bookingPageNavigate(context);
-                  },
-
-                ),
-                OptionSelectorWidget(
-                  icon: SizedBox(
-                    height: 45,
-                    child: Image.asset(Assets.icons.preBooking.path),
-                  ),
-                  titleWidget: BuildTextWidget(
-                    text: 'Advance Booking'.tr(),
-                    color: Colors.black,
-                    size: 16,
-                    fontWeight: FontWeight.w500,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    // toLang: currentLang,
-                  ),
-                  onTap: () {
-                    homepageViewmodel.preBookingPageNavigate(context);
-                  },
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                OptionSelectorWidget(
-                  icon: SizedBox(
-                    height: 50,
-                    child: Image.asset(Assets.icons.donation.path),
-                  ),
-                  titleWidget: BuildTextWidget(
-                    text: 'Donations'.tr(),
-                    color: Colors.black,
-                    size: 16,
-                    fontWeight: FontWeight.w500,
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    // toLang: currentLang,
-                  ),
+                ],
+              ),
+              SizedBox(height: 25,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  OptionSelectorWidget(
+                    icon: SizedBox(
+                      height: 50,
+                      child: Image.asset(Assets.icons.donation.path),
+                    ),
+                    titleWidget: BuildTextWidget(
+                      text: 'Donations'.tr(),
+                      color: Colors.black,
+                      size: 14,
+                      fontWeight: FontWeight.w500,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                    ),
                     onTap: () async {
                       try {
                         print("-------calling API----------");
-                        List<Getdonationmodel> donationList = await ApiService().getDonation();
+                        List<Getdonationmodel> donationList =
+                        await ApiService().getDonation();
                         print('Received ${donationList.length} items');
 
                         for (var item in donationList) {
@@ -124,37 +122,42 @@ class HomeWidget extends StatelessWidget {
                           print('AccStatus: ${item.status}');
                         }
 
-                        homepageViewmodel.donationPageNavigate(context, );
+                        homepageViewmodel.donationPageNavigate(context);
                       } catch (e) {
                         print('Error while fetching donations: $e');
                       }
-                    }
-
-
-                ),
-                OptionSelectorWidget(
-                  icon: SizedBox(
-                    height: 50,
-                    child: Image.asset(Assets.icons.eHundi.path),
+                    },
                   ),
-                  titleWidget: BuildTextWidget(
-                    text: 'E- Bhandaram'.tr(),
-                    color: Colors.black,
-                    size: 16,
-                    fontWeight: FontWeight.w500,
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    // toLang: currentLang,
+                  OptionSelectorWidget(
+                    icon: SizedBox(
+                      height: 50,
+                      child: Image.asset(Assets.icons.eHundi.path),
+                    ),
+                    titleWidget: BuildTextWidget(
+                      text: 'E- Bhandaram'.tr(),
+                      color: Colors.black,
+                      size: 14,
+                      fontWeight: FontWeight.w500,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                    ),
+                    onTap: () {
+                      homepageViewmodel.eHundiPageNavigate(context);
+                    },
                   ),
-                  onTap: () {
-                    homepageViewmodel.eHundiPageNavigate(context);
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+                ],
+              ),
+              SizedBox(height: SizeConfig.screenHeight * 0.003),
+              SizedBox(
+                height: SizeConfig.screenHeight * 0.070,
+                child: Image.asset(Assets.icons.astrinsLogo.path),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
+
 }
+

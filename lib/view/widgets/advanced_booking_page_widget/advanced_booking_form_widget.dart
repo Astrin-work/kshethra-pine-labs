@@ -25,7 +25,6 @@ class AdvancedBookingFormWidget extends StatelessWidget {
       children: [
         20.kH,
         GodWidget(),
-
         VazhipadduWidget(
           crossAxisCount: crossAxisCount ?? 3,
           crossAxisSpacing: crossAxisSpacing ?? 15,

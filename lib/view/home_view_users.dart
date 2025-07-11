@@ -18,7 +18,7 @@ class HomeViewUsers extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              height: SizeConfig.screenHeight * 0.4,
+              height: SizeConfig.screenHeight * 0.330,
               width: SizeConfig.screenWidth,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -45,16 +45,6 @@ class HomeViewUsers extends StatelessWidget {
                               height: 20,
                               child: Row(
                                 children: [
-                                  // IconButton(
-                                  //   iconSize: 30,
-                                  //   onPressed: () {
-                                  //     homePageViewmodel
-                                  //         .navigateSuperAdminHomeView(
-                                  //       context,
-                                  //     );
-                                  //   },
-                                  //   icon: Icon(Icons.settings),
-                                  // ),
                                   5.kW,
                                   IconButton(
                                     iconSize: 30,

@@ -68,8 +68,8 @@ class _GodListWidgetState extends State<GodListWidget> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        image:  DecorationImage(
-                          image: AssetImage('assets/images/make_image.png'),
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/img.png'),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(12),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kshethra_mini/api_services/api_service.dart';
 import 'package:provider/provider.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_styles.dart';
@@ -71,8 +72,7 @@ class LoginWidget extends StatelessWidget {
                           : () async {
                         authViewmodel.setLoading(true);
                         print('-----------Device Details--------------');
-                        await authViewmodel.printDeviceDetails();
-
+                        await ApiService().printDeviceDetails();
                         await authViewmodel.selectLanguagePageNavigate(context);
 
                         authViewmodel.setLoading(false);
@@ -104,7 +104,6 @@ class LoginWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ),

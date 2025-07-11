@@ -24,8 +24,8 @@ class OptionSelectorWidget extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: 140,
-        width: 150,
+        height: 130,
+        width: 145,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           image: DecorationImage(

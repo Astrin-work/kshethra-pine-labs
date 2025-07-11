@@ -51,6 +51,7 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: kWhite,
                           borderRadius: BorderRadius.circular(360),
+                          border: Border.all(color: kDullPrimaryColor),
                           boxShadow: [
                             BoxShadow(
                               color: kGrey4,
@@ -66,7 +67,7 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
                       height: 40,
                       width: 70,
                       decoration: BoxDecoration(
-                        border: Border.all(color: kBlack),
+                        border: Border.all(color: kDullPrimaryColor),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Center(
@@ -87,7 +88,7 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
                         height: 35,
                         width: 35,
                         decoration: BoxDecoration(
-                          color: kWhite,
+                          border: Border.all(color: kDullPrimaryColor),
                           borderRadius: BorderRadius.circular(360),
                           boxShadow: [
                             BoxShadow(
@@ -107,7 +108,7 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
                   height: 40,
                   width: 90,
                   decoration: BoxDecoration(
-                    border: Border.all(color: kBlack),
+                    border: Border.all(color: kDullPrimaryColor),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
@@ -141,6 +142,7 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
 
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
+                          side: BorderSide(color: kDullPrimaryColor)
                       ),
                       color: kWhite,
                       child: Text(
@@ -155,6 +157,7 @@ class VazhipadduDialogBoxWidget extends StatelessWidget {
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
+                          side: BorderSide(color: kDullPrimaryColor)
                       ),
                       color: kWhite,
                       child: Text("Cancel".tr(), style: styles.blackRegular15),

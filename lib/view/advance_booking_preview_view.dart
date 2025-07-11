@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:kshethra_mini/utils/components/app_bar_widget.dart';
+import 'package:kshethra_mini/view/widgets/booking_page_widget/booking_action_bar.dart';
 import 'package:kshethra_mini/view/widgets/booking_page_widget/float_button_widget.dart';
 import 'package:kshethra_mini/view/widgets/build_text_widget.dart';
 import 'package:kshethra_mini/view_model/booking_viewmodel.dart';
@@ -32,7 +33,7 @@ class AdvancedBookingPreviewView extends StatelessWidget  {
           final total = bookingViewmodel.combinedTotalAmount+bookingViewmodel.postalAmount;
 
           return ResponsiveLayout(
-            pinelabDevice: FloatButtonWidget(
+            pinelabDevice: BookingActionBar(
               amount: total.toInt(),
               title: 'Advanced Booking',
               noOfScreens: 4,
@@ -53,7 +54,6 @@ class AdvancedBookingPreviewView extends StatelessWidget  {
         },
       ),
 
-
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -71,7 +71,6 @@ class AdvancedBookingPreviewView extends StatelessWidget  {
     );
   }
 }
-
 
 class AdvPreViewWidget extends StatelessWidget {
   final String page;
@@ -106,7 +105,6 @@ class AdvPreViewWidget extends StatelessWidget {
               itemCount: bookings.length,
               itemBuilder: (context, index) {
                 final booking = bookings[index];
-
                 final count = int.tryParse(booking.count ?? '1') ?? 1;
                 final price = int.tryParse(booking.price ?? '0') ?? 0;
                 final repeatCount =
@@ -149,7 +147,6 @@ class AdvPreViewWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-
                           BuildTextWidget(
                             text: "Qty : ${booking.count ?? '0'}",
                             style: styles.blackRegular13,
@@ -168,9 +165,7 @@ class AdvPreViewWidget extends StatelessWidget {
                             style: styles.blackRegular13,
                             fromLang: fromLang,
                           ),
-
                           const SizedBox(height: 10),
-
                           BuildTextWidget(
                             text:
                             "Vazhipadu Date : ${booking.date ?? DateFormat('dd-MM-yyyy').format(DateTime.now())}",
@@ -185,9 +180,7 @@ class AdvPreViewWidget extends StatelessWidget {
                             style: styles.blackRegular13,
                             fromLang: fromLang,
                           ),
-
                           const SizedBox(height: 6),
-
                           BuildTextWidget(
                             text: booking.repMethode == "Once"
                                 ? "Repeat : Once"
@@ -195,19 +188,14 @@ class AdvPreViewWidget extends StatelessWidget {
                             style: styles.blackRegular13,
                             fromLang: fromLang,
                           ),
-
                           const SizedBox(height: 6),
-
                           BuildTextWidget(
                             text: "Postal Charges : ₹${bookingViewmodel.postalAmount}",
                             style: styles.blackRegular13,
                             fromLang: fromLang,
                           ),
-
                           const SizedBox(height: 12),
-
                           const Divider(),
-
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
